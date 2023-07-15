@@ -13,7 +13,7 @@ all:	c so exe
 c:
 	cython $(PYX)
 
-so:	$(SRC)
+so:
 	@PYPATH=`which python | awk -F '/bin/python' '{print $$1}'`;\
 	LIBPATH=$$PYPATH/lib;\
 	H5INCPATH=$$PYPATH/include;\
@@ -37,4 +37,4 @@ exe:
 	echo "Generate $(EXE)"
 
 clean: 
-	rm -f $(SO) $(EXE)
+	rm -f $(SO1) $(SO2) $(EXE)
