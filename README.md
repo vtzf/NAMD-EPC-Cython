@@ -104,5 +104,5 @@ fssh_pop_ph-*.npy(nt,nm,nb): PHPROP.*[:,2:nb+2]
 ## Notes
 
 1. This implementation might be not efficient enough in large CPU core number.
-2. Range of k points should be the subset of range of q points  in all HDF5 files, which means that `nk<=nq`.
-3. Whole 3D q points should be used with row-major order, which means that `nqx*nqy*nqz==nq` and `for iqx in range(nqx): for for iqy in range(nqy): for iqz in range(nqz)` should be used.
+2. k-grid and q-grid should be the same with (nqx,nqy,nqz) shape.
+3. Range of k points should be the subset of range of q points in all HDF5 files, which means that `nk<=nq`.

@@ -48,7 +48,7 @@ def SurfHop():
 
     for i in range(split_num):
         if color == i:
-            nk,nk_a,nq,nmodes,nbands,ekidx,ebidx,kqidx_p,\
+            nk,nk_a,nq,n_p,nmodes,nbands,ekidx,ebidx,kqidx_p,\
             k_proc,k_proc_num,energy,phonon,epc_a\
             = readh5.ReadH5(
                 comm_split,
@@ -58,7 +58,7 @@ def SurfHop():
                 Args.LTRANS.encode('utf-8')
             )
             if color == 0 and myid_split == 0:
-                Args.WriteInp(nbands,nk,nq)
+                Args.WriteInp(nbands,nk,n_p)
                 np.save(Args.namddir+'/bassel.npy',\
                         np.vstack([ekidx[0:nk_a],ebidx[0:nk_a]]).T)
             nk_proc = k_proc_num[myid_split]
@@ -75,7 +75,7 @@ def SurfHop():
                 CalFunc.fssh(
                     comm_split,Args.namddir,j,istep_s,istate_s,
                     Args.NTRAJ,Args.NSW,Args.NELM,Args.KbT,Args.edt,Args.hbar,
-                    Args.SIGMA,Args.dt,k_proc,k_proc_num,nk_a,nq,nmodes,
+                    Args.SIGMA,Args.dt,k_proc,k_proc_num,nk_a,nq,n_p,nmodes,
                     kqidx_p,epc_a,energy,phonon,Args.LHOLE
                 )
 

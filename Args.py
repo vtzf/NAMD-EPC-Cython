@@ -62,7 +62,7 @@ def ReadInp():
     namddir = inp['NAMDDIR']
 
     
-def WriteInp(nbands,nk,nq):
+def WriteInp(nbands,nk,n_p):
     with open(namddir+'/inp','w') as f:
         f.write('&NAMDPARA\n')
         f.write("  {:<11}= ".format('BMIN')+"%d\n"%(1))
@@ -71,7 +71,7 @@ def WriteInp(nbands,nk,nq):
         f.write("  {:<11}= ".format('EMAX')+"%d\n"%(EMAX))
         f.write("  {:<11}= ".format('NBANDS')+"%d\n"%(nbands))
         f.write("  {:<11}= ".format('NKPOINTS')+"%d\n"%(nk))
-        f.write("  {:<11}= ".format('Np')+"%d\n\n"%(nq))
+        f.write("  {:<11}= ".format('Np')+"%d\n\n"%(n_p))
         f.write("  {:<11}= ".format('NSW')+"%d\n"%(NSW))
         f.write("  {:<11}= ".format('POTIM')+"%.1f\n"%(POTIM))
         f.write("  {:<11}= ".format('TEMP')+"%.1f\n\n"%(TEMP))

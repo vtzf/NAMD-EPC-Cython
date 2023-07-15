@@ -8,8 +8,8 @@ cimport numpy as np
 from mpi4py import MPI
 from mpi4py cimport MPI
 from mpi4py cimport libmpi as mpi
-from libc.math cimport cos, sin, sqrt, exp, fabs, fmod, M_PI
-from libc.stdio cimport sscanf, sprintf, printf
+from libc.math cimport fmod, round
+from libc.stdio cimport sprintf, printf
 from libc.string cimport memcpy, memset, strcmp
 from libc.stdlib cimport malloc, calloc, free, qsort
 
@@ -37,29 +37,58 @@ cdef extern from "hdf5.h":
 
 cdef extern from "complex.h":
     double complex conj(double complex)
-    double creal(double complex)
-    double cimag(double complex)
-    double complex cexp(double complex)
-    double complex ccos(double complex)
-    double complex csin(double complex)
     double cabs(double complex)
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
+cdef int Cmp(void * pa, void * pb) nogil:
+    cdef int *pa1 = <int*>pa
+    cdef int *pb1 = <int*>pb
+
+    if pa1[0]>pb1[0]:
+        return 1
+    elif pa1[0]<pb1[0]:
+        return -1
+    else:
+        return 0
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void GetKqidx(
-    int myid, int nk, double[:,::1] k_list,
+    int myid, int nk, int nq, 
+    double[:,::1] k_list, double[:,::1] q_list,
     int nqx, int nqy, int nqz, int nk_set, int nk_p_set,
     int * ekidx_set_a, int * ekidx_count_a, 
     int * ekidx_set, int * ekidx_count,
     int[:,::1] kqidx, int[:,::1] k1qidx
 ):
     cdef int i, j, k, l, m, n, qxidx, qyidx, qzidx, \
-             qidx0, qidx1, idx_s, idx_e, k0, k1
-    cdef double k_list_x, k_list_y, k_list_z, kkx, kky, kkz
-    cdef double[::1] qxlist = np.arange(0,1,1.0/nqx)
-    cdef double[::1] qylist = np.arange(0,1,1.0/nqy)
-    cdef double[::1] qzlist = np.arange(0,1,1.0/nqz)
+             qidx0, qidx1, idx_s, idx_e, idx_t0, idx_t1, k0, k1
+    cdef double k_list_x, k_list_y, k_list_z, kkx, kky, kkz,\
+                q_list_x, q_list_y, q_list_z
+    cdef int * q2qmap = <int*>malloc(nq*2*sizeof(int))
+
+    for i in range(nq):
+        q_list_x = fmod(q_list[i,0],1.0)
+        if q_list_x<0:
+            q_list_x += 1
+        q_list_y = fmod(q_list[i,1],1.0)
+        if q_list_y<0:
+            q_list_y += 1
+        q_list_z = fmod(q_list[i,2],1.0)
+        if q_list_z<0:
+            q_list_z += 1
+
+        qxidx = <int>round(q_list_x*nqx)
+        qyidx = <int>round(q_list_y*nqy)
+        qzidx = <int>round(q_list_z*nqz)
+
+        q2qmap[i*2+1] = i
+        q2qmap[i*2] = (qxidx*nqy+qyidx)*nqz+qzidx
+
+    qsort(q2qmap,nq,sizeof(int)*2,&Cmp)
 
     k = 0
     for i in range(nk_p_set):
@@ -80,69 +109,74 @@ cdef void GetKqidx(
             if kkz<0:
                 kkz += 1
 
-            idx_s = 0
-            idx_e = nqx
-            while 1:
-                if ((idx_e-idx_s)<=1):
-                    if (fabs(kkx-qxlist[idx_s])<1e-6):
-                        qxidx = idx_s
-                    else:
-                        qxidx = idx_e
-                    break
-                qxidx = (idx_s+idx_e)/2
-                if (kkx<qxlist[qxidx]):
-                    idx_e = qxidx
-                else:
-                    idx_s = qxidx
-
-            idx_s = 0
-            idx_e = nqy
-            while 1:
-                if ((idx_e-idx_s)<=1):
-                    if (fabs(kky-qylist[idx_s])<1e-6):
-                        qyidx = idx_s
-                    else:
-                        qyidx = idx_e
-                    break
-                qyidx = (idx_s+idx_e)/2
-                if (kky<qylist[qyidx]):
-                    idx_e = qyidx
-                else:
-                    idx_s = qyidx
-
-            idx_s = 0
-            idx_e = nqz
-            while 1:
-                if ((idx_e-idx_s)<=1):
-                    if (fabs(kkz-qzlist[idx_s])<1e-6):
-                        qzidx = idx_s
-                    else:
-                        qzidx = idx_e
-                    break
-                qzidx = (idx_s+idx_e)/2
-                if (kkz<qzlist[qzidx]):
-                    idx_e = qzidx
-                else:
-                    idx_s = qzidx
+            qxidx = <int>round(kkx*nqx)
+            qyidx = <int>round(kky*nqy)
+            qzidx = <int>round(kkz*nqz)
 
             qidx0 = (qxidx*nqy+qyidx)*nqz+qzidx
+            if (qidx0<q2qmap[0] or qidx0>q2qmap[nq*2-2]):
+                printf("[k,k\']->q map incomplete!\n")
+                sys.exit()
+            else:
+                idx_s = 0
+                idx_e = nq
+                while 1:
+                    if ((idx_e-idx_s)<=1):
+                        if (qidx0==q2qmap[idx_s*2]):
+                            idx_t0 = idx_s
+                        elif (qidx0==q2qmap[idx_e*2]):
+                            idx_t0 = idx_e
+                        else:
+                            printf("[k,k\']->q map incomplete!\n")
+                            sys.exit()
+                        break
+                    idx_t0 = (idx_s+idx_e)/2
+                    if (qidx0<q2qmap[idx_t0*2]):
+                        idx_e = idx_t0
+                    else:
+                        idx_s = idx_t0
+
             qidx1 = (((nqx-qxidx)%nqx)*nqy+(nqy-qyidx)%nqy)*nqz+(nqz-qzidx)%nqz
+            if (qidx1<q2qmap[0] or qidx1>q2qmap[nq*2-2]):
+                printf("[k,k\']->q map incomplete!\n")
+                sys.exit()
+            else:
+                idx_s = 0
+                idx_e = nq
+                while 1:
+                    if ((idx_e-idx_s)<=1):
+                        if (qidx1==q2qmap[idx_s*2]):
+                            idx_t1 = idx_s
+                        elif (qidx1==q2qmap[idx_e*2]):
+                            idx_t1 = idx_e
+                        else:
+                            printf("[k,k\']->q map incomplete!\n")
+                            sys.exit()
+                        break
+                    idx_t1 = (idx_s+idx_e)/2
+                    if (qidx1<q2qmap[idx_t1*2]):
+                        idx_e = idx_t1
+                    else:
+                        idx_s = idx_t1
+
             for m in range(ekidx_count[i]):
                 for n in range(ekidx_count_a[j]):
-                    kqidx[k+m,l+n] = qidx0
-                    k1qidx[k+m,l+n] = qidx1
+                    kqidx[k+m,l+n] = q2qmap[idx_t0*2+1]
+                    k1qidx[k+m,l+n] = q2qmap[idx_t1*2+1]
 
             l += ekidx_count_a[j]
         k += ekidx_count[i]
+
+    free(q2qmap)
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef void KProcSplit(
-    int myid, int nprocs, int Num, int nk_s, 
+    int myid, int nprocs, int Num, int nk_s, int nq, 
     int nqx, int nqy, int nqz, int nbands, int[::1] ekidx,
     int[::1] ebidx, int * k_range, double[:,::1] k_list_a,
-    int[::1] k_proc, int[::1] k_proc_num, int nk_proc,
+    double[:,::1] q_list, int[::1] k_proc, int[::1] k_proc_num, int nk_proc,
     int[:,::1] kqidx_p, int[:,::1] k1qidx_p, int **** k_proc_range
 ):
     cdef int k_proc_min = k_proc[myid]
@@ -182,9 +216,9 @@ cdef void KProcSplit(
     n_ekset += 1
 
     GetKqidx(
-        myid,nk_s,k_list_a,nqx,nqy,nqz,n_ekset_a,n_ekset,
-        ekidx_set_a,ekidx_count_a,ekidx_set,ekidx_count,
-        kqidx_p,k1qidx_p
+        myid,nk_s,nq,k_list_a,q_list,nqx,nqy,nqz,
+        n_ekset_a,n_ekset,ekidx_set_a,ekidx_count_a,
+        ekidx_set,ekidx_count,kqidx_p,k1qidx_p
     )
 
     ekidx_sum = <int*>calloc(n_ekset+1,sizeof(int))
@@ -364,11 +398,12 @@ def ReadH5(
              m, n, p, q, kidx, fnum, kqidx, eb,\
              phzero_num, phzero0, phzero1,\
              nk_p, nk_a, nk_s, nk_proc, nq, nbands, nmodes
+    cdef int n_p = nqx*nqy*nqz
     cdef int info[4]
     cdef int info_buf[4]
     cdef double * phonon_buf
     cdef double * energy_buf
-    cdef double[:,::1] phonon, k_list_a
+    cdef double[:,::1] phonon, k_list_a, q_list
     cdef double[::1] energy
     cdef int * phzero
     cdef int * k_range = <int*>calloc(Num+1,sizeof(int))
@@ -407,8 +442,8 @@ def ReadH5(
     nq = info[1]
     nbands = info[2]
     nmodes = info[3]
-    if (nqx*nqy*nqz != nq):
-        printf('Unmatch of input nq and file nq!\n')
+    if (n_p < nq):
+        printf('q grid number doesn\'t match file nq!\n')
         sys.exit()
 
     phonon_buf = <double*>malloc(sizeof(double)*nq*nmodes)
@@ -417,6 +452,12 @@ def ReadH5(
     data_id = H5Dopen(file_id,"el_ph_band_info/ph_disp_meV",H5P_DEFAULT)
     status = H5Dread(
         data_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,phonon_buf
+    )
+    H5Dclose(data_id)
+    q_list = np.zeros((nq,3),dtype=np.float64)
+    data_id = H5Dopen(file_id,"el_ph_band_info/q_list",H5P_DEFAULT)
+    status = H5Dread(
+        data_id,H5T_NATIVE_DOUBLE,H5S_ALL,H5S_ALL,H5P_DEFAULT,&q_list[0,0]
     )
     H5Dclose(data_id)
 
@@ -497,9 +538,9 @@ def ReadH5(
     kqidx_p = np.zeros((nk_proc,nk_s),dtype=np.int32)
     k1qidx_p = np.zeros((nk_proc,nk_s),dtype=np.int32)
     KProcSplit( 
-        myid,nprocs,Num,nk_s,nqx,nqy,nqz,nbands,
-        ekidx,ebidx,k_range,k_list_a,k_proc,k_proc_num,
-        nk_proc,kqidx_p,k1qidx_p,&k_p_r
+        myid,nprocs,Num,nk_s,nq,nqx,nqy,nqz,nbands,
+        ekidx,ebidx,k_range,k_list_a,q_list,k_proc,
+        k_proc_num,nk_proc,kqidx_p,k1qidx_p,&k_p_r
     )
 
     # unit conversion factor # meV to eV
@@ -576,5 +617,5 @@ def ReadH5(
     if myid == 0:
         printf("Read epc time: %.6fs.\n",endtime-starttime)
 
-    return nk_a,nk_s,nq,nmodes,nbands,ekidx,ebidx,\
+    return nk_a,nk_s,nq,n_p,nmodes,nbands,ekidx,ebidx,\
            k1qidx_p,k_proc,k_proc_num,energy,phonon,epc_a

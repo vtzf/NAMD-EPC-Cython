@@ -97,7 +97,7 @@ def GetPhQ(
 cdef inline void GetH0(
     int nmodes, int nk_p, int nk_a, int nq,
     int nk_min, int[:,::1] kqidx_p,
-    double complex[::1] E_p, double complex factor, double nq2,
+    double complex[::1] E_p, double complex factor, double np2,
     double complex[:,:,::1] epc_a, double complex[:,::1] phq_t, 
     double complex[:,::1] phq, double complex[:,::1] H
 ):
@@ -106,7 +106,7 @@ cdef inline void GetH0(
 
     for i in range(nmodes):
         for j in range(nq):
-            phq_t[i,j] = 2*phq[i,j]*factor*nq2
+            phq_t[i,j] = 2*phq[i,j]*factor*np2
         for j in range(nk_p):
             for k in range(nk_a):
                 phq_tmp = cimag(phq_t[i,kqidx_p[j,k]])
@@ -250,7 +250,7 @@ cdef inline void TimeProp(
 cdef void fssh_psi(
     mpi.MPI_Comm c_comm, int nprocs,
     int myid, int NSW, int NELM, double edt, double hbar,
-    int state_s, int nk_proc, int nk_a, int nq, int nmodes, 
+    int state_s, int nk_proc, int nk_a, int nq, int n_p, int nmodes, 
     int[::1] k_proc, int[::1] k_proc_num, int[:,::1] kqidx_p,
     double complex[:,:,::1] epc_a, double[::1] energy, 
     double complex[:,::1] phq, double complex[:,::1] phq0,
@@ -271,7 +271,7 @@ cdef void fssh_psi(
     cdef double complex factor = 2*edt/(1j*hbar)
     cdef int nk_min = k_proc[myid]
     cdef double complex[::1] E_p = np.zeros((nk_proc),dtype=np.complex128)
-    cdef double nq2 = 1.0/sqrt(nq)
+    cdef double np2 = 1.0/sqrt(n_p)
 
     cdef double complex[:,::1] phq_t = np.zeros((nmodes,nq),dtype=np.complex128)
     cdef double complex[:,::1] H0_p = np.zeros((nk_proc,nk_a),dtype=np.complex128)
@@ -340,7 +340,7 @@ cdef void fssh_psi(
 
     GetH0(
         nmodes,nk_proc,nk_a,nq,nk_min,kqidx_p,
-        E_p,factor,nq2,epc_a,phq_t,phq,H0_p
+        E_p,factor,np2,epc_a,phq_t,phq,H0_p
     )
     if shm_nprocs == nprocs:
         for j in range(NSW):
@@ -528,7 +528,7 @@ cdef void fssh_sh(
     mpi.MPI_Comm c_comm, int nprocs,
     int myid, int NTRAJ, int NSW, double KbT, double hbar,
     double sigma, double dt, int state_s, int nk_proc, 
-    int nk_a, int nq, int nmodes, int[::1] k_proc,
+    int nk_a, int nq, int n_p, int nmodes, int[::1] k_proc,
     int[:,::1] kqidx_p, double complex[:,:,::1] epc_a, 
     double[::1] energy, double[:,::1] phonon, double[:,::1] BEfactor, 
     double complex[:,::1] psi_t, float[:,::1] pop_sh, double[:,:,::1] ph_pop,
@@ -536,7 +536,7 @@ cdef void fssh_sh(
 ):
     cdef double KbT1 = 1.0/KbT
     cdef double f0 = -0.5/(sigma*sigma)
-    cdef double f1 = sqrt(2*M_PI)/sigma/nq
+    cdef double f1 = sqrt(2*M_PI)/sigma/n_p
     cdef double f2 = <double>(2.0*dt)/hbar
     cdef double E0
 
@@ -911,7 +911,7 @@ cdef void fssh_sh(
 cdef void WriteEPC(
     mpi.MPI_Comm c_comm, int myid, int nprocs, str namddir,
     int NSW, double KbT, double sigma, int[::1] k_proc, int[::1] k_proc_num,
-    int nk_proc, int nk_a, int nq, int nmodes, int[:,::1] kqidx_p, 
+    int nk_proc, int nk_a, int nq, int n_p, int nmodes, int[:,::1] kqidx_p, 
     double complex[:,:,::1] epc_a, double[::1] energy, double[:,::1] phonon,
     double complex[:,::1] phq, double complex[:,::1] phq0, 
     double[:,::1] epc, double[:,::1] epcec, double[:,::1] epcph
@@ -919,7 +919,7 @@ cdef void WriteEPC(
     cdef int h, i, j, k, qidx, jj
     cdef int nk_min = k_proc[myid]
     cdef double ph, E0, dE, dE0, dE1, expdE
-    cdef double nq2 = 1.0/sqrt(nq)
+    cdef double np2 = 1.0/sqrt(n_p)
     cdef double KbT1 = 1.0/KbT
     cdef double f0 = -0.5/(sigma*sigma)
     cdef double f1 = sqrt(2*M_PI)/sigma
@@ -940,7 +940,7 @@ cdef void WriteEPC(
 
     for k in range(nmodes):
         for l in range(nq):
-            phq_t[k,l] = phq[k,l]*nq2
+            phq_t[k,l] = phq[k,l]*np2
 
     for h in range(NSW):
         for j in range(nk_proc):
@@ -1025,7 +1025,7 @@ def fssh(
     MPI.Comm comm, str namddir, int sample, int step_s, int state_s,
     int NTRAJ, int NSW, int NELM, double KbT, double edt, double hbar,
     double sigma, double dt, int[::1] k_proc, int[::1] k_proc_num, 
-    int nk_a, int nq, int nmodes, int[:,::1] kqidx_p,
+    int nk_a, int nq, int n_p, int nmodes, int[:,::1] kqidx_p,
     double complex[:,:,::1] epc_a, double[::1] energy, double[:,::1] phonon,
     bint LHOLE
 ):
@@ -1087,7 +1087,7 @@ def fssh(
     )
     WriteEPC(
         c_comm,myid,nprocs,namddir,NSW,KbT,sigma,
-        k_proc,k_proc_num,nk_proc,nk_a,nq,nmodes,kqidx_p,
+        k_proc,k_proc_num,nk_proc,nk_a,nq,n_p,nmodes,kqidx_p,
         epc_a,energy,phonon,phq,phq0,epc,epcec,epcph
     )
     endtime = mpi.MPI_Wtime()
@@ -1100,7 +1100,7 @@ def fssh(
     starttime0 = mpi.MPI_Wtime()
     fssh_psi(
         c_comm,nprocs,myid,NSW,NELM,edt,hbar,state_s,
-        nk_proc,nk_a,nq,nmodes,k_proc,k_proc_num,
+        nk_proc,nk_a,nq,n_p,nmodes,k_proc,k_proc_num,
         kqidx_p,epc_a,energy,phq,phq0,psi_t
     )
     endtime0 = mpi.MPI_Wtime()
@@ -1122,7 +1122,7 @@ def fssh(
     starttime1 = mpi.MPI_Wtime()
     fssh_sh(
         c_comm,nprocs,myid,NTRAJ,NSW,KbT,
-        hbar,sigma,dt,state_s,nk_proc,nk_a,nq,
+        hbar,sigma,dt,state_s,nk_proc,nk_a,nq,n_p,
         nmodes,k_proc,kqidx_p,epc_a,energy,
         phonon,BEfactor,psi_t,pop_sh,ph_pop,LHOLE
     )
