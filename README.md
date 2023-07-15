@@ -16,11 +16,12 @@ To use this implementation, prepare Intel MKL library and C compiler with MPI. P
 1. Set parameters in `inp` and `INICON` in rundir(./).
 2. Use `make c` to generate C code files.
    Use `make so` to generate dynamic-link libraries from C code files.
-   Use `make exe` to gnerate namd-epc target file.
+   Use `make exe` to generate namd-epc target file `namd-epc`.
    Or instead, use `make` or `make all` to finish the above three processes.
+   `makefile` checks the path of `Python.h`, `numpy/*.h` and `hdf5.h` header files from Python installation directory.
 3. Run `mpirun -np ncore namd-epc` or `sbatch sub_namd`.
 
-Before perform preprocessing and NAMD simulations, some parameters need to be specify in `inp`. We list all the parameters needing to be customized.
+Before performing preprocessing and NAMD simulations, some parameters need to be specified in `inp`. We list all the parameters needing to be customized.
 
 ```python
 # NAMD parameter in Args.py
@@ -87,6 +88,8 @@ After job finishes, `cp namdplt.py postnamd.py NAMDDIR`. Use `python namdplt.py`
 The output files are numpy array binary files. We list all the output files and their corresponding output files in original NAMD_k implementation.
 
 ```
+inp
+bassel.npy(nk,2): BASSEL
 epc-*.npy(nb,nb): EPTXT
 epcec-*.npy(nb,nb): EPECTXT
 epcph-*.npy(nm,nb): EPPHTXT
