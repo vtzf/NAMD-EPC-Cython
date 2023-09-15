@@ -21,39 +21,7 @@ To use this implementation, prepare Intel MKL library and C compiler with MPI. P
    `makefile` checks the path of `Python.h`, `numpy/*.h` and `hdf5.h` header files from Python installation directory.
 3. Run `mpirun -np ncore namd-epc` or `sbatch sub_namd`.
 
-Before performing preprocessing and NAMD simulations, some parameters need to be specified in `inp`. We list all the parameters needing to be customized.
-
-```python
-# NAMD parameter in Args.py
-EPMDIR   = '../namdepc/h5files'
-EPMPREF  = 'graphene'
-NPARTS   = 9
-nqx      = 90
-nqy      = 90
-nqz      = 1
-
-namddir  = 'output'  # output NAMD output file in namddir
-POTIM    = 1.0       # MD time step (fs)
-SIGMA    = 0.025
-
-LHOLE    = False     # Hole/electron transfer
-
-TEMP     = 300.0     # temperature in Kelvin
-NSAMPLE  = 1         # INICON sample number
-NSW      = 50        # time step for NAMD run
-NELM     = 100       # electron time step (per fs)
-NTRAJ    = 2000      # SH trajectories number
-
-EMIN     = -5.0   # band minimum energy (eV)
-EMAX     = 2.0    # band maximum energy (eV)
-PHCUT    = 1.0    # phonon minimum energy (meV)
-LTRANS   = 'L'    # epc symmetrization:
-                  # 'U': use upper triangle
-                  # 'L': use lower triangle
-                  # 'S': use both by (epc+epc.T.conj())/2
-```
-
-For comparation, the NAMD `inp` file is also listed here.
+Before performing preprocessing and NAMD simulations, some parameters need to be specified in `inp`. We list all the parameters needing to be customized. An example of NAMD `inp` file is listed here.
 
 ```fortran
 &NAMDPARA
