@@ -513,7 +513,7 @@ cdef inline int fsshhop(
             epc_p1 = creal(conj(epc_p0)*epc_p0)*BE2[i,qidx]
             ph_pop0 = epc_p1*expdE0
             ph_pop1 = epc_p1*expdE1
-            ph_pop_t[i] = ph_pop1 - ph_pop0
+            ph_pop_t[i] = ph_pop0 - ph_pop1
             ph_pop_sum += ph_pop0 + ph_pop1
         if ph_pop_sum>0:
             for i in range(nmodes):

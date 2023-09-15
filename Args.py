@@ -51,7 +51,8 @@ def ReadInp():
         inp[key] = value
 
     EMIN = float(inp['EMIN']); EMAX = float(inp['EMAX'])
-    NBANDS = int(inp['NBANDS'])
+    NBANDS = int(inp['NBANDS']); nqx = int(inp['NQX'])
+    nqy = int(inp['NQY']); nqz = int(inp['NQZ'])
     NSW = int(inp['NSW']); POTIM = float(inp['POTIM'])
     TEMP = float(inp['TEMP']); NSAMPLE = int(inp['NSAMPLE'])
     NELM = int(inp['NELM']); NTRAJ = int(inp['NTRAJ'])
