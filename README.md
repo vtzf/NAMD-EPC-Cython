@@ -2,13 +2,15 @@
 
 This is an Cython implementation of  [NAMD in Momentum Space (NAMD_k)](https://github.com/ZhenfaZheng/NAMDinMomentumSpace). Using Cython with MPI4py, H5py and Intel MKL libraries, most of the basic functions can be effectively achieved just like the original code. Some algorithm optimizations and error corrections are made to generate more reliable simulation results.
 
+New version from DeepEPC branch interfaced with upcoming DeepEPC code is aimed to compute electron-phonon coupling (EPC) matrix elements using the numeric atom-centered orbital (NAO) basis. Simple multiple-electron method has also been added. Some integer overflow bugs are fixed to perform large-scale simulation. Some new options are also provided for small-scale and memory-friendly simulation.
+
 ## Before Running NAMD_k
 
 To use this implementation, prepare Intel MKL library and C compiler with MPI. Please prepare the Python >= 3.9 interpreter. Install the following Python packages required:
 
 * Cython
 * NumPy
-* H5py
+* HDF5 library (can be h5py or independent library, Now need to specify the path)
 * MPI4py >= 3.1.3
 
 ## Run NAMD_k
@@ -27,7 +29,7 @@ Before performing preprocessing and NAMD simulations, some parameters need to be
 &NAMDPARA
   EMIN       = -5
   EMAX       = 2
-  NBANDS     = 2
+  <del>NBANDS     = 2</del>
   NQX        = 90
   NQY        = 90
   NQZ        = 1
@@ -35,7 +37,7 @@ Before performing preprocessing and NAMD simulations, some parameters need to be
   NSW        = 100
   POTIM      = 1.0
   TEMP       = 300.0
-
+**LHDF5      = .T.**
   NSAMPLE    = 1
   NELM       = 100
   NTRAJ      = 2000
@@ -43,10 +45,17 @@ Before performing preprocessing and NAMD simulations, some parameters need to be
 
   NPARTS     = 9
   SIGMA      = 0.025
+  
   EPMDIR     = '../namdepc/h5files'
   EPMPREF    = 'graphene'
   NAMDDIR    = 'output'
   LTRANS     = 'L'
+
+**BANDDEG    = 1**
+**LEPCSHM    = .F.**
+**LPHSHM     = .T.**
+**LSPLIT     = .F.**
+**NM_BLOCK   = 6**
 /
 ```
 
