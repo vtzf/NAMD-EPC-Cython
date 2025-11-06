@@ -1,0 +1,30 @@
+&NAMDPARA
+  EMIN       = -5
+  EMAX       = 2
+  NQX        = 90
+  NQY        = 90
+  NQZ        = 1
+
+  NSW        = 100
+  POTIM      = 1.0
+  TEMP       = 300.0
+
+  NSAMPLE    = 1
+  NELM       = 100
+  NTRAJ      = 2000
+  LHOLE      = .F.
+
+  NPARTS     = 9
+  SIGMA      = 0.025
+  LHDF5      = .T.
+  EPMDIR     = '../namdepc/h5files'
+  EPMPREF    = 'graphene'
+  NAMDDIR    = 'output'
+  LTRANS     = 'L'
+
+  BANDDEG    = 1
+  LEPCSHM    = .F.
+  LPHSHM     = .T.
+  LSPLIT     = .F.
+  NM_BLOCK   = 6
+/
