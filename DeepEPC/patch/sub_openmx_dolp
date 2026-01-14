@@ -1,0 +1,26 @@
+#!/bin/bash
+#SBATCH --partition       intel
+#SBATCH --time            10:00:00
+#SBATCH --nodes           4
+#SBATCH --ntasks-per-node 64
+##SBATCH --cpus-per-task   1
+#SBATCH --error           out_%j.err
+#SBATCH --output          out_%j.log
+
+ulimit -s unlimited
+
+echo "============================================================"
+module list
+env | grep "MKLROOT="
+echo "============================================================"
+echo "Job ID: $SLURM_JOB_NAME"
+echo "Job name: $SLURM_JOB_NAME"
+echo "Number of nodes: $SLURM_JOB_NUM_NODES"
+echo "Number of processors: $SLURM_NTASKS"
+echo "Task is running on the following nodes:"
+echo $SLURM_JOB_NODELIST
+echo "OMP_NUM_THREADS = $SLURM_CPUS_PER_TASK"
+echo "============================================================"
+echo
+
+mpirun /home/huangdq_group/tuyouyou/data/opt/openmx-dolp/work/openmx-dolp input.dat -calcOLPmo
