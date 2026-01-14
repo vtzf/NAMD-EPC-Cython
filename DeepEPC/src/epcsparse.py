@@ -1,0 +1,542 @@
+import numpy as np
+import json
+import os
+from ase.data import atomic_numbers, atomic_masses
+import configparser
+import readhamilsparse
+import epcfuncsparse
+import time
+import warnings
+from mpi4py import MPI
+
+warnings.filterwarnings("ignore", category=DeprecationWarning)
+# load config
+conf = configparser.ConfigParser()
+conf.read('config.ini',encoding='utf-8')
+
+dhamil_method = conf['epc']['dhamil_method']
+inDir = conf['epc']['inDir']+'/'
+bandDir = conf['epc']['bandDir']+'/'
+phononDir = conf['epc']['phononDir']+'/'
+dhamilDir = conf['epc']['dhamilDir']+'/'
+epcDir = conf['epc']['epcDir']+'/'
+ucellidx_str = conf['epc']['ucellidx']
+ucellidx_list = ucellidx_str[1:-1].split(',')
+ucellidx = [int(i) for i in ucellidx_list]
+infile = conf['epc']['infile_out']
+IsH5 = True if conf['epc']['IsH5']=='True' else False
+H5HamName = conf['epc']['H5HamName']
+EpcType = conf['epc']['EpcType']
+
+atom_str = conf['epc']['atom']
+atom_list = atom_str[1:-1].split(',')
+atom = [int(i) for i in atom_list]
+orbital_str = conf['epc']['orbital']
+orbital_list = orbital_str[1:-1].split(',')
+orbital = [int(i) for i in orbital_list]
+
+dQ = float(conf['epc']['dQ'])
+IsAllVec = True if conf['epc']['IsAllVec']=='True' else False
+IsAllKlist = True if conf['epc']['IsAllKlist']=='True' else False
+
+dH_block = int(conf['mpi']['DHAMIL_BLOCK'])
+nm_block = int(conf['mpi']['NMODES_BLOCK'])
+
+hbar = 6.62607015e-34/(2*np.pi)
+Hartree2eV = 27.211396641308
+Bohr2Ang = 0.529177249
+Ang2m = 1e-10
+eV2J = 1.602176634e-19
+V_c = 299792458#[m/s]
+M_C = 1.9927e-26/12#[kg]
+m2cm = 100
+factor = eV2J/hbar
+
+center = np.array([i//2 for i in ucellidx],dtype='int32')
+factor1= np.sqrt(hbar/2/M_C/factor)/Ang2m#[to eV]
+
+atomnum = sum(atom)
+nmodes = atomnum*3
+
+atom_type = [x*y for x,y in zip(atom,orbital)]
+atom_idx0 = [y for x,y in zip(atom,orbital) for i in range(x)]
+atom_idx = [sum(atom_idx0[0:i]) for i in range(len(atom_idx0)+1)]
+norbital = atom_idx[-1]
+atom_idx = np.array(atom_idx,dtype=np.int32)
+atom_idx0 = np.array(atom_idx0,dtype=np.int32)
+
+if IsAllVec:
+    bmin = 0
+    bmax = norbital-1
+    nbands = norbital
+else:
+    bmin = int(conf['epc']['bmin'])
+    bmax = int(conf['epc']['bmax'])
+    nbands = bmax-bmin+1
+
+ncell = ucellidx[0]*ucellidx[1]*ucellidx[2]
+icell = (center[0]*ucellidx[1]+center[1])*ucellidx[2]+center[2]
+catom = icell*atomnum+np.arange(atomnum,dtype=np.int32)
+
+ucellnum = np.array([ucellidx]*3).T
+atom_idx_all0 = [y for j in range(ncell) for x,y in zip(atom,orbital) for i in range(x)]
+atom_idx_all = [sum(atom_idx_all0[0:i]) for i in range(len(atom_idx_all0)+1)]
+atom_idx_all = np.array(atom_idx_all,dtype=np.int32)
+atom_idx_all0 = np.array(atom_idx_all0,dtype=np.int32)
+
+R_list = np.array(
+    [
+        [i,j,k] \
+        for i in range(ucellidx[0]) \
+        for j in range(ucellidx[1]) \
+        for k in range(ucellidx[2]) \
+    ],
+    dtype=np.int32
+)-center
+R_num = ucellidx[0]*ucellidx[1]*ucellidx[2]
+
+
+def get_mass(Dir):
+    idx = [0]*4
+    with open(Dir,'r') as f:
+        info = f.readlines()
+    for i in range(len(info)):
+        if info[i] == "<Atoms.SpeciesAndCoordinates\n":
+            idx[0] = i
+        if info[i] == "Atoms.SpeciesAndCoordinates>\n":
+            idx[1] = i
+        if info[i] == "<Atoms.UnitVectors\n":
+            idx[2] = i
+        if info[i] == "Atoms.UnitVectors>\n":
+            idx[3] = i
+
+    xyzinfo = np.array(
+        [info[i].split() for i in range(idx[0]+1,idx[1])],dtype='U'
+    )
+    atomlist = xyzinfo[catom,1]
+
+    return np.array([atomic_masses[atomic_numbers[atomlist[i]]] \
+           for i in range(atomnum)])
+
+
+def GenKlist(Kpoint_str,nq):
+    from math import gcd
+    import sys
+    k_list = Kpoint_str.replace('[','').replace(']','').split(',')
+    k_arr = np.array([eval(i) for i in k_list],dtype=float).reshape(-1,3)
+    k_int = np.around(k_arr*nq).astype(int)
+    nkpoint = k_arr.shape[0]
+    nklist = np.zeros((nkpoint-1),dtype=int)
+    for i in range(nkpoint-1):
+        dk_int = np.abs(k_int[i+1]-k_int[i])
+        if dk_int.max() == 0:
+            print('Kpoint error! exit.')
+            sys.exit()
+        else:
+            dk_int_p = dk_int[np.where(dk_int>0)[0]]
+            if dk_int_p.shape[0] == 3:
+                tmp = gcd(dk_int_p[0],dk_int_p[1])
+                tmp1 = gcd(dk_int_p[1],dk_int_p[2])
+                nklist[i] = gcd(tmp,tmp1)
+            elif dk_int_p.shape[0] == 2:
+                nklist[i] = gcd(dk_int_p[0],dk_int_p[1])
+            else:
+                nklist[i] = dk_int_p[0]
+
+    nkpath = np.sum(nklist)
+    nkrange = np.zeros((nkpoint),dtype=int)
+    nkrange[1:] = np.cumsum(nklist)
+    k_list = np.zeros((nkpath,3),dtype=float)
+    for i in range(nkpoint-1):
+        k_list[nkrange[i]:nkrange[i+1]] \
+        = np.linspace(k_arr[i],k_arr[i+1],nklist[i],endpoint=False)
+
+    return nkpath, k_list
+
+
+# get comm and shm_comm
+comm = MPI.COMM_WORLD
+myid = comm.Get_rank()
+nprocs = comm.Get_size()
+
+shm_comm = comm.Split_type(MPI.COMM_TYPE_SHARED)
+nprocs_shm = shm_comm.Get_size()
+shm_id = shm_comm.Get_rank()
+nnodes = nprocs//nprocs_shm
+
+# split nmodes
+nm_loop = nmodes//nm_block
+nm_buffer = nm_block
+if nmodes%nm_block != 0:
+    nm_loop += 1
+    nm_buffer += 1
+nmodes_split = np.zeros((nm_loop+1),dtype=np.int32)
+for i in range(nm_loop):
+    nmodes_min = (nmodes*i)//nm_loop
+    nmodes_max = (nmodes*(i+1))//nm_loop
+    nmodes_split[i+1] = nmodes_max
+
+# get sparse matrix info
+s_int = 4
+ncell2 = ncell*ncell
+if (shm_id==0):
+    len_keynum = (ncell2+1)*4*s_int
+else:
+    len_keynum = 0
+win00 = MPI.Win.Allocate_shared(len_keynum,s_int,comm=shm_comm)
+buf00,s_int = win00.Shared_query(0)
+key_num = np.ndarray(
+    buffer=buf00,dtype=np.int32,shape=(ncell2+1,4)
+)
+shm_comm.Barrier()
+if (shm_id==0):
+    readhamilsparse.GetSparseNum(
+        inDir.encode('utf-8'),
+        (H5HamName if IsH5 else 'None').encode('utf-8'),
+        key_num,atom_idx_all0,atom_idx_all,atomnum*ncell,
+        norbital,ncell,ncell2,IsH5
+    )
+shm_comm.Barrier()
+if (shm_id==0):
+    len_pubkey = key_num[ncell2,2]*4*s_int
+    len_key = key_num[ncell2,3]*2*s_int
+    len_key1 = key_num[ncell2,3]*2*s_int
+else:
+    len_pubkey = 0
+    len_key = 0
+    len_key1 = 0
+win01 = MPI.Win.Allocate_shared(len_pubkey,s_int,comm=shm_comm)
+buf01,s_int = win01.Shared_query(0)
+pub_key = np.ndarray(
+    buffer=buf01,dtype=np.int32,shape=(key_num[ncell2,2],4)
+)
+win02 = MPI.Win.Allocate_shared(len_key,s_int,comm=shm_comm)
+buf02,s_int = win02.Shared_query(0)
+key_info = np.ndarray(
+    buffer=buf02,dtype=np.int32,shape=(key_num[ncell2,3],2)
+)
+win03 = MPI.Win.Allocate_shared(len_key1,s_int,comm=shm_comm)
+buf03,s_int = win03.Shared_query(0)
+key_info1 = np.ndarray(
+    buffer=buf03,dtype=np.int32,shape=(key_num[ncell2,3],2)
+)
+shm_comm.Barrier()
+if (shm_id==0):
+    readhamilsparse.GetSparseIdx(
+        inDir.encode('utf-8'),
+        (H5HamName if IsH5 else 'None').encode('utf-8'),norbital,
+        ncell,ncell2,key_num,pub_key,key_info,key_info1,
+        atom_idx_all0,atom_idx_all,atomnum*ncell,IsH5
+    )
+
+# get sum sparse matrix info
+if (shm_id==0):
+    len_keynum_s = (ncell+1)*2*s_int
+else:
+    len_keynum_s = 0
+win04 = MPI.Win.Allocate_shared(len_keynum_s,s_int,comm=shm_comm)
+buf04,s_int = win04.Shared_query(0)
+key_num_s = np.ndarray(
+    buffer=buf04,dtype=np.int32,shape=(ncell+1,2)
+)
+shm_comm.Barrier()
+if (shm_id==0):
+    readhamilsparse.GetSparseNumSum(
+        ncell,key_num,key_num_s,key_info
+    )
+shm_comm.Barrier()
+if (shm_id==0):
+    len_key = key_num_s[ncell,1]*s_int
+else:
+    len_key = 0
+win05 = MPI.Win.Allocate_shared(len_key,s_int,comm=shm_comm)
+buf05,s_int = win05.Shared_query(0)
+key_info_s = np.ndarray(
+    buffer=buf05,dtype=np.int32,shape=(key_num_s[ncell,1])
+)
+shm_comm.Barrier()
+if (shm_id==0):
+    readhamilsparse.GetSparseIdxSum(
+        ncell,key_num,key_num_s,key_info,key_info_s
+    )
+shm_comm.Barrier()
+#if (myid == 0):
+#    np.save('key_num.npy',key_num)
+#    np.save('key_num_s.npy',key_num_s)
+#    np.save('key_info.npy',key_info)
+#    np.save('key_info_s.npy',key_info_s)
+
+# create epcDir
+if myid == 0:
+    if not os.path.exists(inDir+epcDir):
+        os.mkdir(inDir+epcDir)
+
+if IsAllKlist:
+    # read kgrid, split knum
+    kproc_num = np.zeros((nprocs),dtype=np.int32)
+    kproc = np.zeros((nprocs+1),dtype=np.int32)
+    if EpcType != 'Q':
+        nq_str = conf['epc']['nq']
+        nq_list = nq_str[1:-1].split(',')
+        nq = np.array([int(i) for i in nq_list],dtype=np.int32)
+        knum = nq[0]*nq[1]*nq[2]
+        if EpcType == 'K':
+            Kpoint_str = conf['epc']['Kpoint']
+            nkpath, kpath = GenKlist(Kpoint_str,nq)
+            if myid == 0:
+                np.save(inDir+epcDir+'kpath.npy',kpath)
+        else:
+            nkpath = knum; kpath = np.empty((0,0))
+        knum2 = nkpath*knum
+        for i in range(nprocs):
+            knum_min = (knum2*i)//nprocs
+            knum_max = (knum2*(i+1))//nprocs
+            kproc_num[i] = knum_max - knum_min
+            kproc[i+1] = knum_max
+    else:
+        nq_str = conf['epc']['nq']
+        nq_list = nq_str[1:-1].split(',')
+        nq = np.array([int(i) for i in nq_list],dtype=np.int32)
+        knum = nq[0]*nq[1]*nq[2]
+        Kpoint_str = conf['epc']['Kpoint']
+        nkpath, kpath = GenKlist(Kpoint_str,nq)
+        if myid == 0:
+            np.save(inDir+epcDir+'qpath.npy',kpath)
+        for i in range(nprocs):
+            knum_min = (knum*i)//nprocs
+            knum_max = (knum*(i+1))//nprocs
+            kproc_num[i] = knum_max - knum_min
+            kproc[i+1] = knum_max
+    
+    # create shm buffer
+    s_d = 8
+    s_dcplx = 16
+    if (shm_id==0):
+        #print(nm_buffer,key_num[ncell2,3])
+        len_epcr = nm_buffer*int(key_num[ncell2,3])*s_d
+        len_phvecval = int(knum)*nm_buffer*nmodes*s_dcplx
+        len_bandvec = int(knum)*norbital*nbands*s_dcplx
+    else:
+        len_epcr = 0
+        len_phvecval = 0
+        len_bandvec = 0
+    
+    win = MPI.Win.Allocate_shared(len_epcr,s_d,comm=shm_comm)
+    buf,s_d = win.Shared_query(0)
+    dhamil = np.ndarray(
+        buffer=buf,dtype=float,
+        shape=(nm_buffer,key_num[ncell2,3])
+    )
+    win1 = MPI.Win.Allocate_shared(len_phvecval,s_dcplx,comm=shm_comm)
+    buf1,s_dcplx = win1.Shared_query(0)
+    phvecval = np.ndarray(
+        buffer=buf1,dtype=complex,
+        shape=(knum,nm_buffer,nmodes)
+    )
+    win2 = MPI.Win.Allocate_shared(len_bandvec,s_dcplx,comm=shm_comm)
+    buf2,s_dcplx = win2.Shared_query(0)
+    bandveck = np.ndarray(
+        buffer=buf2,dtype=complex,
+        shape=(knum,norbital,nbands)
+    )
+    nmnb2 = nmodes*nbands*nbands
+    if EpcType != 'Q':
+        epc_t = np.zeros((kproc_num[myid],nmnb2),dtype=complex)
+    else:
+        epc_t = np.zeros((kproc_num[myid]*nkpath,nmnb2),dtype=complex)
+   
+    mass = get_mass(inDir+infile)
+    # read bandvec & phval
+    phvalname = conf['epc']['phvalname']
+    phval = np.load(inDir+phononDir+phvalname)
+    phvecname = conf['epc']['phvecname']
+    if (shm_id==0):
+        dhamil[:] = 0.0
+        vecname = conf['epc']['vecname']
+        if IsAllVec:
+            bandveck[:] = np.load(inDir+bandDir+vecname)[:,:,bmin:bmax+1]
+        else:
+            bandveck[:] = np.load(inDir+bandDir+vecname)
+    phval = np.where(phval>0,phval,1e-10)
+    phval = 1.0/np.sqrt(phval)
+
+    dhamiltime = 0.0
+    epctime = 0.0
+    for i in range(nm_loop):
+        nm_min = nmodes_split[i]
+        nm_max = nmodes_split[i+1]
+        nm_num = nm_max - nm_min
+        # preprocess phvecval
+        start = time.time()
+        epcfuncsparse.epc_preprocess(
+            shm_comm,myid,shm_id,nprocs_shm,knum,nmodes,nm_num,
+            nm_min,atomnum,factor1,mass,phval,phvecval,
+            (inDir+phononDir+phvecname).encode('utf-8')
+        )
+        # deltahamil
+        readhamilsparse.deltahamil_b(
+            comm,shm_comm,nm_num,nm_min,dH_block,norbital,
+            ncell,max(orbital),atomnum*ncell,atom_idx_all0,
+            atom_idx_all,catom,key_num,pub_key,key_info1,1.0/dQ,
+            dhamil,inDir.encode('utf-8'),dhamilDir.encode('utf-8'),
+            H5HamName.encode('utf-8'),dhamil_method.encode('utf-8'),IsH5
+        )
+        end = time.time()
+        dhamiltime += end - start
+        # epc calculation
+        start = time.time()
+        if EpcType != 'Q':
+            epcfuncsparse.MPIepc(
+                comm,nmodes,nm_num,nm_min,norbital,nbands,ncell,knum,nq,
+                R_list,nkpath,kpath,key_num,key_num_s,key_info,
+                key_info_s,dhamil,bandveck,phvecval,kproc,kproc_num,epc_t
+            )
+        else:
+            epcfuncsparse.MPIepc_q(
+                comm,nmodes,nm_num,nm_min,norbital,nbands,ncell,knum,nq,
+                R_list,nkpath,kpath,key_num,key_num_s,key_info,
+                key_info_s,dhamil,bandveck,phvecval,kproc,kproc_num,epc_t
+            )
+        end = time.time()
+        epctime += end - start
+    
+    if (myid==0):
+        print("dhamil time:%.6fs"%(dhamiltime),flush=True)
+        print("epc time:%.6fs"%(epctime),flush=True)
+    
+    if EpcType == 'A':
+        filename = inDir+epcDir+'epc_all-%d.dat'%nq[0]
+    if EpcType == 'K':
+        filename = inDir+epcDir+'epc_k-%d.dat'%nq[0]
+    if EpcType == 'Q':
+        filename = inDir+epcDir+'epc_q-%d.dat'%nq[0]
+        kfactor = nkpath*nmnb2
+    else:
+        kfactor = nmnb2
+    epcfuncsparse.MPIepc_write(
+        comm,kfactor,kproc,kproc_num,epc_t,
+        filename.encode('utf-8')
+    )
+    
+    MPI.Win.Free(win)
+    MPI.Win.Free(win1)
+    MPI.Win.Free(win2)
+else:
+    # read kgrid, split knum
+    kproc_num = np.zeros((nprocs),dtype=np.int32)
+    kproc = np.zeros((nprocs+1),dtype=np.int32)
+    nq_str = conf['epc']['nq']
+    nq_list = nq_str[1:-1].split(',')
+    nq = np.array([int(i) for i in nq_list],dtype=np.int32)
+    knum = nq[0]*nq[1]*nq[2]
+    bassel = np.load(inDir+bandDir+'/bassel-%d.npy'%nq[0])
+    knum_p = bassel.shape[0]
+    knum_p2 = knum_p*knum_p
+    for i in range(nprocs):
+        knum_min = (knum_p2*i)//nprocs
+        knum_max = (knum_p2*(i+1))//nprocs
+        kproc_num[i] = knum_max - knum_min
+        kproc[i+1] = knum_max
+
+    # create shm buffer
+    s_d = 8
+    s_dcplx = 16
+    if (shm_id==0):
+        #print(nm_buffer,key_num[ncell2,3])
+        len_epcr = nm_buffer*int(key_num[ncell2,3])*s_d
+        len_phvecval = int(knum)*nm_buffer*nmodes*s_dcplx
+        len_bandvec = int(knum_p)*norbital*s_dcplx
+    else:
+        len_epcr = 0
+        len_phvecval = 0
+        len_bandvec = 0
+
+    win = MPI.Win.Allocate_shared(len_epcr,s_d,comm=shm_comm)
+    buf,s_d = win.Shared_query(0)
+    dhamil = np.ndarray(
+        buffer=buf,dtype=float,
+        shape=(nm_buffer,key_num[ncell2,3])
+    )
+    win1 = MPI.Win.Allocate_shared(len_phvecval,s_dcplx,comm=shm_comm)
+    buf1,s_dcplx = win1.Shared_query(0)
+    phvecval = np.ndarray(
+        buffer=buf1,dtype=complex,
+        shape=(knum,nm_buffer,nmodes)
+    )
+    win2 = MPI.Win.Allocate_shared(len_bandvec,s_dcplx,comm=shm_comm)
+    buf2,s_dcplx = win2.Shared_query(0)
+    bandveck = np.ndarray(
+        buffer=buf2,dtype=complex,
+        shape=(knum_p,norbital)
+    )
+    epc_t = np.zeros((kproc_num[myid],nmodes),dtype=complex)
+
+    mass = get_mass(inDir+infile)
+    # read bandvec & phval
+    phvalname = conf['epc']['phvalname']
+    phval = np.load(inDir+phononDir+phvalname)
+    phvecname = conf['epc']['phvecname']
+    if (shm_id==0):
+        dhamil[:] = 0.0
+        vecname = conf['epc']['vecname']
+        vecpname = vecname.split('.')[0]+'_p.npy'
+        bandveck[:] = np.load(inDir+bandDir+vecpname)
+    phval = np.where(phval>0,phval,1e-10)
+    phval = 1.0/np.sqrt(phval)
+
+    dhamiltime = 0.0
+    epctime = 0.0
+    for i in range(nm_loop):
+        nm_min = nmodes_split[i]
+        nm_max = nmodes_split[i+1]
+        nm_num = nm_max - nm_min
+        # preprocess phvecval
+        start = time.time()
+        epcfuncsparse.epc_preprocess(
+            shm_comm,myid,shm_id,nprocs_shm,knum,nmodes,nm_num,
+            nm_min,atomnum,factor1,mass,phval,phvecval,
+            (inDir+phononDir+phvecname).encode('utf-8')
+        )
+        # deltahamil
+        readhamilsparse.deltahamil_b(
+            comm,shm_comm,nm_num,nm_min,dH_block,norbital,
+            ncell,max(orbital),atomnum*ncell,atom_idx_all0,
+            atom_idx_all,catom,key_num,pub_key,key_info1,1.0/dQ,
+            dhamil,inDir.encode('utf-8'),dhamilDir.encode('utf-8'),
+            H5HamName.encode('utf-8'),dhamil_method.encode('utf-8'),IsH5
+        )
+        end = time.time()
+        dhamiltime += end - start
+
+        # epc calculation
+        start = time.time()
+        epcfuncsparse.MPIepc_p(
+            comm,nmodes,nm_num,nm_min,norbital,ncell,knum_p,nq,
+            R_list,key_num,key_num_s,key_info,key_info_s,
+            dhamil,bandveck,phvecval,kproc,kproc_num,bassel,epc_t
+        )
+        end = time.time()
+        epctime += end - start
+
+    if (myid==0):
+        print("dhamil time:%.6fs"%(dhamiltime))
+        print("epc time:%.6fs"%(epctime))
+
+    # output epc
+    filename = inDir+epcDir+'epc_all_p-%d.dat'%nq[0]
+    epcfuncsparse.MPIepc_write(
+        comm,nmodes,kproc,kproc_num,
+        epc_t,filename.encode('utf-8')
+    )
+
+    MPI.Win.Free(win)
+    MPI.Win.Free(win1)
+    MPI.Win.Free(win2)
+
+
+MPI.Win.Free(win00)
+MPI.Win.Free(win01)
+MPI.Win.Free(win02)
+MPI.Win.Free(win03)
+MPI.Win.Free(win04)
+MPI.Win.Free(win05)
