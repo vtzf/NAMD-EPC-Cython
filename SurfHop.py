@@ -122,8 +122,8 @@ def SurfHop():
                     shape=(nmodes,nk_s,nk_s)
                 )
             else:
-                nk_min = (myid_split*nk_s)//nprocs
-                nk_max = ((myid_split+1)*nk_s)//nprocs
+                nk_min = (myid_split*nk_s)//iprocs
+                nk_max = ((myid_split+1)*nk_s)//iprocs
                 nk_proc = nk_max-nk_min
                 kqidx = np.zeros((nk_proc,nk_s),dtype=np.int32)
                 epc_a = np.zeros((nmodes,nk_proc,nk_s),dtype=np.complex128)
