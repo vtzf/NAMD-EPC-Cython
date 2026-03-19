@@ -8,15 +8,15 @@
   NSW        = 100
   POTIM      = 1.0
   TEMP       = 300.0
+  SIGMA      = 0.025
 
   NSAMPLE    = 1
   NELM       = 100
   NTRAJ      = 2000
   LHOLE      = .F.
 
-  NPARTS     = 9
-  SIGMA      = 0.025
   LHDF5      = .T.
+  NPARTS     = 9
   EPMDIR     = '../namdepc/h5files'
   EPMPREF    = 'graphene'
   NAMDDIR    = 'output'
