@@ -80,8 +80,7 @@ def ReadInp():
     TEMP = float(inp['TEMP']); NSAMPLE = int(inp['NSAMPLE'])
     NELM = int(inp['NELM']); NTRAJ = int(inp['NTRAJ'])
     LHOLE = True if inp['LHOLE'] == '.T.' else False
-    NPARTS = int(inp['NPARTS']); SIGMA = float(inp['SIGMA'])
-    EPMDIR = inp['EPMDIR']
+    SIGMA = float(inp['SIGMA'])
     namddir = inp['NAMDDIR']; LTRANS = inp['LTRANS']
     #LEF = True if inp['LEF'] == '.T.' else False
     #EFTYPE = inp['EFTYPE']
@@ -94,7 +93,10 @@ def ReadInp():
     LPHSHM = True if inp['LPHSHM'] == '.T.' else False
     LSPLIT = True if inp['LSPLIT'] == '.T.' else False
     LHDF5 = True if inp['LHDF5'] == '.T.' else False
-    EPMPREF = inp['EPMPREF']+('_ephmat_p' if LHDF5 else '')
+    if LHDF5:
+        NPARTS = int(inp['NPARTS'])
+        EPMPREF = inp['EPMPREF']+('_ephmat_p' if LHDF5 else '')
+        EPMDIR = inp['EPMDIR']
 
     
 def WriteInp(nbands,nk,n_p):
@@ -118,15 +120,16 @@ def WriteInp(nbands,nk,n_p):
         f.write("  {:<11}= ".format('LEPC')+".T.\n")
         f.write("  {:<11}= ".format('LSORT')+".F.\n")
         f.write("  {:<11}= ".format('EPCTYPE')+"1\n")
-        f.write("  {:<11}= ".format('NPARTS')+"%d\n"%(NPARTS))
         f.write("  {:<11}= ".format('SIGMA')+"%s\n"%(str(SIGMA)))
         f.write("  {:<11}= ".format('LHDF5')+".%s.\n"%(str(LHDF5)[0]))
-        if len(EPMDIR)>0:
-            if EPMDIR[0]=='/':
-                f.write("  {:<11}= ".format('EPMDIR')+"\'%s\'\n"%(EPMDIR))
-            else:
-                f.write("  {:<11}= ".format('EPMDIR')+"\'../%s\'\n"%(EPMDIR))
-        f.write("  {:<11}= ".format('EPMPREF')+"\'%s\'\n"%(EPMPREF[0:-9] if LHDF5 else EPMPREF))
+        if LHDF5:
+            f.write("  {:<11}= ".format('NPARTS')+"%d\n"%(NPARTS))
+            if len(EPMDIR)>0:
+                if EPMDIR[0]=='/':
+                    f.write("  {:<11}= ".format('EPMDIR')+"\'%s\'\n"%(EPMDIR))
+                else:
+                    f.write("  {:<11}= ".format('EPMDIR')+"\'../%s\'\n"%(EPMDIR))
+            f.write("  {:<11}= ".format('EPMPREF')+"\'%s\'\n"%(EPMPREF[0:-9] if LHDF5 else EPMPREF))
         #f.write("  {:<11}= ".format('LEF')+".%s.\n\n"%(str(LEF)[0]))
         #f.write("  {:<11}= ".format('EFTYPE')+"\'%s\'\n"%(EFTYPE))
         #f.write("  {:<11}= ".format('EFX')+"%f\n"%(EFX))

@@ -11,6 +11,9 @@ def ReadEpcInfo(comm,myid,nqx,nqy,nqz,EMIN,EMAX):
 
     inDir = conf['epc']['inDir']+'/'
     bandDir = conf['epc']['bandDir']+'/'
+    bassel_name = conf['epc']['basselname']
+    basselname = inDir+bandDir+bassel_name
+
     atom_str = conf['epc']['atom']
     atom_list = atom_str[1:-1].split(',')
     atom = [int(i) for i in atom_list]
@@ -53,7 +56,7 @@ def ReadEpcInfo(comm,myid,nqx,nqy,nqz,EMIN,EMAX):
                 bmin_s = bassel[1].min()
                 bmax_s = bassel[1].max()
             else:
-                bassel = np.load(inDir+bandDir+'/bassel-%d.npy'%nq[0])
+                bassel = np.load(basselname)
                 nk = bassel.shape[0]
                 kmin_s = bassel[:,0].min()
                 kmax_s = bassel[:,0].max()
@@ -82,7 +85,7 @@ def ReadEpcInfo(comm,myid,nqx,nqy,nqz,EMIN,EMAX):
 
 def ReadEpc(
     comm,PHCUT,EMIN,EMAX,NM_BLOCK,nk,kqidx,
-    energy_a,phonon,epc_a,LTRANS,LEPCSHM,LPHSHM,epc_name
+    energy_a,phonon,epc_a,LTRANS,LEPCSHM,LPHSHM
 ):
     myid = comm.Get_rank()
     nprocs = comm.Get_size()
@@ -98,6 +101,11 @@ def ReadEpc(
     bandDir = conf['epc']['bandDir']+'/'
     phononDir = conf['epc']['phononDir']+'/'
     epcDir = conf['epc']['epcDir']+'/'
+    bassel_name = conf['epc']['basselname']
+    epc_name = conf['epc']['epcname']
+
+    basselname = inDir+bandDir+bassel_name
+    epcname = inDir+epcDir+epc_name
 
     atom_str = conf['epc']['atom']
     atom_list = atom_str[1:-1].split(',')
@@ -108,12 +116,6 @@ def ReadEpc(
     nq_str = conf['epc']['nq']
     nq_list = nq_str[1:-1].split(',')
     nq = np.array([int(i) for i in nq_list],dtype=np.int32)
-
-    IsAllKlist = True if conf['epc']['IsAllKlist']=='True' else False
-    if not IsAllKlist:
-        Emin = float(conf['epc']['emin'])
-        Emax = float(conf['epc']['emax'])
-        bassel = np.load(inDir+bandDir+'/bassel-%d.npy'%nq[0])
 
     phvalname = conf['epc']['phvalname']
     phname = inDir+phononDir+phvalname
@@ -138,7 +140,7 @@ def ReadEpc(
         else:
             if (myid==0):
                 energy_a[:] = np.load(inDir+bandDir+valname)
-                bassel = np.load(inDir+bandDir+'/bassel-%d.npy'%nq[0])
+                bassel = np.load(basselname)
                 ekidx = np.ascontiguousarray(bassel[:,0])
                 ebidx = np.ascontiguousarray(bassel[:,1])
                 valpname = valname.split('.')[0]+'_p.npy'
@@ -150,8 +152,6 @@ def ReadEpc(
             comm.Bcast(ekidx,root=0)
             comm.Bcast(ebidx,root=0)
     comm.Bcast(energy,root=0)
-
-    epcname = inDir+epcDir+epc_name
 
     if IsAllVec or IsAllKlist:
         return readh5.ReadNpy(

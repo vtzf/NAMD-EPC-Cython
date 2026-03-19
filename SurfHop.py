@@ -148,7 +148,7 @@ def SurfHop():
                 = readepc.ReadEpc(
                     comm_split,Args.PHCUT/1000.0,Args.EMIN,Args.EMAX,
                     Args.NM_BLOCK,nk_s,kqidx,energy_a,phonon,epc_a,
-                    Args.LTRANS,Args.LEPCSHM,Args.LPHSHM,Args.EPMPREF
+                    Args.LTRANS,Args.LEPCSHM,Args.LPHSHM
                 )
             else:
                 nk,n_p,nbands,ekidx,ebidx,\
