@@ -39,16 +39,17 @@ Some new tags are added in new version under DeepEPC branch.
   NSW        = 100
   POTIM      = 1.0
   TEMP       = 300.0
-  LHDF5      = .T.
-** Use .T. to interface with Perturbo **
+  SIGMA      = 0.025
+
   NSAMPLE    = 1
   NELM       = 100
   NTRAJ      = 2000
   LHOLE      = .F.
 
+  LHDF5      = .T.
+** Use .T. to interface with Perturbo **
+** If .F., NPARTS, EPMDIR and EPMPREF are ignored **
   NPARTS     = 9
-  SIGMA      = 0.025
-  
   EPMDIR     = '../namdepc/h5files'
   EPMPREF    = 'graphene'
   NAMDDIR    = 'output'
@@ -73,7 +74,7 @@ Some new tags are added in new version under DeepEPC branch.
 
 ## After Running NAMD_k
 
-After job finishes, `cp namdplt.py postnamd.py NAMDDIR`. Use `python namdplt.py` to plot.
+After job finishes, `cp namdplt.py postnamd.py NAMDDIR` if `LHDF5 = .T.`. Also `cp config.ini NAMDDIR` if `LHDF5 = .F.`. Use `python namdplt.py` to plot.
 The output files are numpy array binary files. We list all the output files and their corresponding output files in original NAMD_k implementation.
 
 ```
