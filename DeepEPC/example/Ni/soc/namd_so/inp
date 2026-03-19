@@ -1,0 +1,30 @@
+&NAMDPARA
+  EMIN       = -6.21231611
+  EMAX       = -5.21231611
+  NQX        = 10
+  NQY        = 10
+  NQZ        = 10
+
+  NSW        = 1000
+  POTIM      = 1.0
+  TEMP       = 300.0
+
+  NSAMPLE    = 1
+  NELM       = 200
+  NTRAJ      = 10000
+  LHOLE      = .F.
+
+  SIGMA      = 0.02
+  LHDF5      = .F.
+  NPARTS     = 
+  EPMDIR     = 
+  EPMPREF    = 
+  NAMDDIR    = 'output-1.0'
+  LTRANS     = 'S'
+
+  BANDDEG    = 1
+  LEPCSHM    = .T.
+  LPHSHM     = .T.
+  LSPLIT     = .F.
+  NM_BLOCK   = 1
+/

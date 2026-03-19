@@ -2244,7 +2244,7 @@ static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_int
 #endif
 
 /* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(PyObject *, int writable_flag);
+static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(PyObject *, int writable_flag);
 
 /* MemviewSliceCopyTemplate.proto */
 static __Pyx_memviewslice
@@ -2349,14 +2349,14 @@ static PyThread_type_lock __pyx_memoryview_thread_locks[8];
 static int __pyx_f_15readhamilsparse_Cmp(void *, void *); /*proto*/
 static void __pyx_f_15readhamilsparse_readscfout_key0(char *, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_15readhamilsparse_readscfout_key1(char *, int, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
-static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(hid_t, char *, H5O_info_t *, void *); /*proto*/
-static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(hid_t, char *, H5O_info_t *, void *); /*proto*/
+static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(hid_t, char *, H5O_info1_t *, void *); /*proto*/
+static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(hid_t, char *, H5O_info1_t *, void *); /*proto*/
 static void __pyx_f_15readhamilsparse_readh5_key0(char *, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_15readhamilsparse_readh5_key1(char *, int, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
-static void __pyx_f_15readhamilsparse_readscfout(char *, int, __Pyx_memviewslice, double *); /*proto*/
+static void __pyx_f_15readhamilsparse_readscfout(char *, int, __Pyx_memviewslice, double *, double *, int); /*proto*/
 static void __pyx_f_15readhamilsparse_readscfout_keymap(char *, int, __Pyx_memviewslice, __Pyx_memviewslice, int *); /*proto*/
-static void __pyx_f_15readhamilsparse_readscfout1(char *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double *, __Pyx_memviewslice, double, int); /*proto*/
-static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm, char *, int, int, int, __Pyx_memviewslice, __Pyx_memviewslice, double *); /*proto*/
+static void __pyx_f_15readhamilsparse_readscfout1(char *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double *, double *, __Pyx_memviewslice, double, int, int); /*proto*/
+static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm, char *, int, int, int, __Pyx_memviewslice, __Pyx_memviewslice, double *, double *); /*proto*/
 static void __pyx_f_15readhamilsparse_readh5_p1(MPI_Comm, char *, int, int, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double, double *, double *, __Pyx_memviewslice, int); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static void *__pyx_align_pointer(void *, size_t); /*proto*/
@@ -2444,6 +2444,7 @@ static const char __pyx_k_step[] = "step";
 static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_ASCII[] = "ASCII";
+static const char __pyx_k_Ispin[] = "Ispin";
 static const char __pyx_k_catom[] = "catom";
 static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_color[] = "color";
@@ -2606,6 +2607,7 @@ static PyObject *__pyx_kp_s_Indirect_dimensions_not_supporte;
 static PyObject *__pyx_kp_s_Invalid_mode_expected_c_or_fortr;
 static PyObject *__pyx_kp_s_Invalid_shape_in_axis_d_d;
 static PyObject *__pyx_n_s_IsH5;
+static PyObject *__pyx_n_s_Ispin;
 static PyObject *__pyx_n_s_MemoryError;
 static PyObject *__pyx_kp_s_MemoryView_of_r_at_0x_x;
 static PyObject *__pyx_kp_s_MemoryView_of_r_object;
@@ -2772,7 +2774,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
 static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_self, char *__pyx_v_inDir, char *__pyx_v_H5HamName, int __pyx_v_norbital_u, int __pyx_v_ncell, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info, __Pyx_memviewslice __pyx_v_key_info1, __Pyx_memviewslice __pyx_v_atom_idx_py, __Pyx_memviewslice __pyx_v_atom_idx_all_py, int __pyx_v_atomnum, int __pyx_v_IsH5); /* proto */
 static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_ncell, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_key_num_s, __Pyx_memviewslice __pyx_v_key_info); /* proto */
 static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_ncell, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_key_num_s, __Pyx_memviewslice __pyx_v_key_info, __Pyx_memviewslice __pyx_v_key_info_s); /* proto */
-static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_comm, struct PyMPICommObject *__pyx_v_shm_comm, int __pyx_v_nmodes, int __pyx_v_nm_min, int __pyx_v_dH_block, int __pyx_v_norbital_u, int __pyx_v_ncell, int __pyx_v_norbital_m, int __pyx_v_atomnum_py, __Pyx_memviewslice __pyx_v_atom_idx_py, __Pyx_memviewslice __pyx_v_atom_idx_all_py, __Pyx_memviewslice __pyx_v_catom, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info1, double __pyx_v_dQ1, __Pyx_memviewslice __pyx_v_dhamil, char *__pyx_v_inDir, char *__pyx_v_dhamilDir, char *__pyx_v_H5HamName, char *__pyx_v_dhamil_method, int __pyx_v_IsH5); /* proto */
+static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_comm, struct PyMPICommObject *__pyx_v_shm_comm, int __pyx_v_nmodes, int __pyx_v_nm_min, int __pyx_v_dH_block, int __pyx_v_norbital_u, int __pyx_v_ncell, int __pyx_v_norbital_m, int __pyx_v_atomnum_py, __Pyx_memviewslice __pyx_v_atom_idx_py, __Pyx_memviewslice __pyx_v_atom_idx_all_py, __Pyx_memviewslice __pyx_v_catom, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info1, double __pyx_v_dQ1, __Pyx_memviewslice __pyx_v_dhamil, char *__pyx_v_inDir, char *__pyx_v_dhamilDir, char *__pyx_v_H5HamName, char *__pyx_v_dhamil_method, int __pyx_v_Ispin, int __pyx_v_IsH5); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array___cinit__(struct __pyx_array_obj *__pyx_v_self, PyObject *__pyx_v_shape, Py_ssize_t __pyx_v_itemsize, PyObject *__pyx_v_format, PyObject *__pyx_v_mode, int __pyx_v_allocate_buffer); /* proto */
 static int __pyx_array___pyx_pf_15View_dot_MemoryView_5array_2__getbuffer__(struct __pyx_array_obj *__pyx_v_self, Py_buffer *__pyx_v_info, int __pyx_v_flags); /* proto */
 static void __pyx_array___pyx_pf_15View_dot_MemoryView_5array_4__dealloc__(struct __pyx_array_obj *__pyx_v_self); /* proto */
@@ -2864,7 +2866,7 @@ static PyObject *__pyx_codeobj__29;
 static PyObject *__pyx_codeobj__36;
 /* Late includes */
 
-/* "readhamilsparse.pyx":123
+/* "readhamilsparse.pyx":124
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef int Cmp(void * pa, void * pb) nogil:             # <<<<<<<<<<<<<<
@@ -2878,7 +2880,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "readhamilsparse.pyx":124
+  /* "readhamilsparse.pyx":125
  * @cython.wraparound(False)
  * cdef int Cmp(void * pa, void * pb) nogil:
  *     cdef int *pa1 = <int*>pa             # <<<<<<<<<<<<<<
@@ -2887,7 +2889,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   __pyx_v_pa1 = ((int *)__pyx_v_pa);
 
-  /* "readhamilsparse.pyx":125
+  /* "readhamilsparse.pyx":126
  * cdef int Cmp(void * pa, void * pb) nogil:
  *     cdef int *pa1 = <int*>pa
  *     cdef int *pb1 = <int*>pb             # <<<<<<<<<<<<<<
@@ -2896,7 +2898,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   __pyx_v_pb1 = ((int *)__pyx_v_pb);
 
-  /* "readhamilsparse.pyx":127
+  /* "readhamilsparse.pyx":128
  *     cdef int *pb1 = <int*>pb
  * 
  *     if pa1[0]>pb1[0]:             # <<<<<<<<<<<<<<
@@ -2906,7 +2908,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   __pyx_t_1 = (((__pyx_v_pa1[0]) > (__pyx_v_pb1[0])) != 0);
   if (__pyx_t_1) {
 
-    /* "readhamilsparse.pyx":128
+    /* "readhamilsparse.pyx":129
  * 
  *     if pa1[0]>pb1[0]:
  *         return 1             # <<<<<<<<<<<<<<
@@ -2916,7 +2918,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "readhamilsparse.pyx":127
+    /* "readhamilsparse.pyx":128
  *     cdef int *pb1 = <int*>pb
  * 
  *     if pa1[0]>pb1[0]:             # <<<<<<<<<<<<<<
@@ -2925,7 +2927,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   }
 
-  /* "readhamilsparse.pyx":129
+  /* "readhamilsparse.pyx":130
  *     if pa1[0]>pb1[0]:
  *         return 1
  *     elif pa1[0]<pb1[0]:             # <<<<<<<<<<<<<<
@@ -2935,7 +2937,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   __pyx_t_1 = (((__pyx_v_pa1[0]) < (__pyx_v_pb1[0])) != 0);
   if (__pyx_t_1) {
 
-    /* "readhamilsparse.pyx":130
+    /* "readhamilsparse.pyx":131
  *         return 1
  *     elif pa1[0]<pb1[0]:
  *         return -1             # <<<<<<<<<<<<<<
@@ -2945,7 +2947,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "readhamilsparse.pyx":129
+    /* "readhamilsparse.pyx":130
  *     if pa1[0]>pb1[0]:
  *         return 1
  *     elif pa1[0]<pb1[0]:             # <<<<<<<<<<<<<<
@@ -2954,7 +2956,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   }
 
-  /* "readhamilsparse.pyx":132
+  /* "readhamilsparse.pyx":133
  *         return -1
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -2966,7 +2968,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
     goto __pyx_L0;
   }
 
-  /* "readhamilsparse.pyx":123
+  /* "readhamilsparse.pyx":124
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef int Cmp(void * pa, void * pb) nogil:             # <<<<<<<<<<<<<<
@@ -2979,7 +2981,7 @@ static int __pyx_f_15readhamilsparse_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   return __pyx_r;
 }
 
-/* "readhamilsparse.pyx":137
+/* "readhamilsparse.pyx":138
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key0(             # <<<<<<<<<<<<<<
@@ -3022,7 +3024,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("readscfout_key0", 0);
 
-  /* "readhamilsparse.pyx":149
+  /* "readhamilsparse.pyx":150
  *     cdef int** ncn
  * 
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
@@ -3031,7 +3033,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readhamilsparse.pyx":150
+  /* "readhamilsparse.pyx":151
  * 
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
@@ -3040,7 +3042,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readhamilsparse.pyx":151
+  /* "readhamilsparse.pyx":152
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -3049,7 +3051,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":152
+  /* "readhamilsparse.pyx":153
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -3058,7 +3060,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readhamilsparse.pyx":153
+  /* "readhamilsparse.pyx":154
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -3067,7 +3069,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readhamilsparse.pyx":154
+  /* "readhamilsparse.pyx":155
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3076,7 +3078,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":155
+  /* "readhamilsparse.pyx":156
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  *     fseek(fp,atomnum*4,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3085,7 +3087,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (void)(fseek(__pyx_v_fp, (__pyx_v_atomnum * 4), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":157
+  /* "readhamilsparse.pyx":158
  *     fseek(fp,atomnum*4,SEEK_CUR)
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -3094,7 +3096,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":158
+  /* "readhamilsparse.pyx":159
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -3103,7 +3105,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readhamilsparse.pyx":159
+  /* "readhamilsparse.pyx":160
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -3112,7 +3114,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":161
+  /* "readhamilsparse.pyx":162
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -3121,7 +3123,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":162
+  /* "readhamilsparse.pyx":163
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3133,7 +3135,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":163
+    /* "readhamilsparse.pyx":164
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -3142,7 +3144,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":164
+    /* "readhamilsparse.pyx":165
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -3152,7 +3154,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":165
+  /* "readhamilsparse.pyx":166
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -3161,7 +3163,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":166
+  /* "readhamilsparse.pyx":167
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3173,7 +3175,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":167
+    /* "readhamilsparse.pyx":168
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -3182,7 +3184,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":168
+    /* "readhamilsparse.pyx":169
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -3192,7 +3194,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":169
+  /* "readhamilsparse.pyx":170
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3201,7 +3203,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":171
+  /* "readhamilsparse.pyx":172
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3213,7 +3215,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":172
+    /* "readhamilsparse.pyx":173
  * 
  *     for ct_AN in range(1,atomnum+1):
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -3222,19 +3224,19 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
     __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_ct_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-    /* "readhamilsparse.pyx":173
+    /* "readhamilsparse.pyx":174
  *     for ct_AN in range(1,atomnum+1):
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
  *         TNO1 = atom_idx[ct_AN-1]             # <<<<<<<<<<<<<<
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  */
-    __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_ct_AN - 1)])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 173, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_ct_AN - 1)])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 174, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_XDECREF_SET(__pyx_v_TNO1, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "readhamilsparse.pyx":174
+    /* "readhamilsparse.pyx":175
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
  *         TNO1 = atom_idx[ct_AN-1]
  *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
@@ -3246,7 +3248,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_h_AN = __pyx_t_7;
 
-      /* "readhamilsparse.pyx":175
+      /* "readhamilsparse.pyx":176
  *         TNO1 = atom_idx[ct_AN-1]
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -3255,19 +3257,19 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
       __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-      /* "readhamilsparse.pyx":176
+      /* "readhamilsparse.pyx":177
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = atom_idx[Gh_AN-1]             # <<<<<<<<<<<<<<
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  */
-      __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_Gh_AN - 1)])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 176, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_Gh_AN - 1)])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 177, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_XDECREF_SET(__pyx_v_TNO2, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "readhamilsparse.pyx":177
+      /* "readhamilsparse.pyx":178
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = atom_idx[Gh_AN-1]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -3277,7 +3279,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
       __pyx_t_8 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
       if (__pyx_t_8) {
 
-        /* "readhamilsparse.pyx":178
+        /* "readhamilsparse.pyx":179
  *             TNO2 = atom_idx[Gh_AN-1]
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -3286,7 +3288,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
         __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_Gh_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-        /* "readhamilsparse.pyx":179
+        /* "readhamilsparse.pyx":180
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  *                 Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
@@ -3295,7 +3297,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
         __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
 
-        /* "readhamilsparse.pyx":180
+        /* "readhamilsparse.pyx":181
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  *                 Rij = iR*R_num+jR
  *                 key_num[Rij,0] += 1             # <<<<<<<<<<<<<<
@@ -3306,22 +3308,22 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
         __pyx_t_10 = 0;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_9 * __pyx_v_key_num.strides[0]) )) + __pyx_t_10)) )) += 1;
 
-        /* "readhamilsparse.pyx":181
+        /* "readhamilsparse.pyx":182
  *                 Rij = iR*R_num+jR
  *                 key_num[Rij,0] += 1
  *                 key_num[Rij,1] += TNO1*TNO2             # <<<<<<<<<<<<<<
  * 
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  */
-        __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 181, __pyx_L1_error)
+        __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 182, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 181, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __pyx_t_10 = __pyx_v_Rij;
         __pyx_t_9 = 1;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_10 * __pyx_v_key_num.strides[0]) )) + __pyx_t_9)) )) += __pyx_t_11;
 
-        /* "readhamilsparse.pyx":177
+        /* "readhamilsparse.pyx":178
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = atom_idx[Gh_AN-1]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -3330,25 +3332,25 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
       }
 
-      /* "readhamilsparse.pyx":183
+      /* "readhamilsparse.pyx":184
  *                 key_num[Rij,1] += TNO1*TNO2
  * 
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
  *     fclose(fp)
  */
-      __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 183, __pyx_L1_error)
+      __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 184, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_12 = PyNumber_Multiply(__pyx_t_4, __pyx_int_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 183, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Multiply(__pyx_t_4, __pyx_int_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 184, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_13 = __Pyx_PyInt_As_long(__pyx_t_12); if (unlikely((__pyx_t_13 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 183, __pyx_L1_error)
+      __pyx_t_13 = __Pyx_PyInt_As_long(__pyx_t_12); if (unlikely((__pyx_t_13 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       (void)(fseek(__pyx_v_fp, __pyx_t_13, SEEK_CUR));
     }
   }
 
-  /* "readhamilsparse.pyx":185
+  /* "readhamilsparse.pyx":186
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
@@ -3357,7 +3359,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readhamilsparse.pyx":186
+  /* "readhamilsparse.pyx":187
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3369,7 +3371,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":187
+    /* "readhamilsparse.pyx":188
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -3378,7 +3380,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readhamilsparse.pyx":188
+    /* "readhamilsparse.pyx":189
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -3388,7 +3390,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readhamilsparse.pyx":189
+  /* "readhamilsparse.pyx":190
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -3397,7 +3399,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   free(__pyx_v_natn);
 
-  /* "readhamilsparse.pyx":190
+  /* "readhamilsparse.pyx":191
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
@@ -3406,7 +3408,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   free(__pyx_v_ncn);
 
-  /* "readhamilsparse.pyx":191
+  /* "readhamilsparse.pyx":192
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
@@ -3415,7 +3417,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
  */
   free(__pyx_v_FNAN);
 
-  /* "readhamilsparse.pyx":137
+  /* "readhamilsparse.pyx":138
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key0(             # <<<<<<<<<<<<<<
@@ -3435,7 +3437,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key0(char *__pyx_v_name, __Pyx_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":196
+/* "readhamilsparse.pyx":197
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key1(             # <<<<<<<<<<<<<<
@@ -3482,7 +3484,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("readscfout_key1", 0);
 
-  /* "readhamilsparse.pyx":208
+  /* "readhamilsparse.pyx":209
  *     cdef int** natn
  *     cdef int** ncn
  *     cdef int* key_idx = <int*>malloc(sizeof(int)*ncell2)             # <<<<<<<<<<<<<<
@@ -3491,7 +3493,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   __pyx_v_key_idx = ((int *)malloc(((sizeof(int)) * __pyx_v_ncell2)));
 
-  /* "readhamilsparse.pyx":210
+  /* "readhamilsparse.pyx":211
  *     cdef int* key_idx = <int*>malloc(sizeof(int)*ncell2)
  * 
  *     for i in range(ncell2):             # <<<<<<<<<<<<<<
@@ -3503,7 +3505,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":211
+    /* "readhamilsparse.pyx":212
  * 
  *     for i in range(ncell2):
  *         key_idx[i] = key_num[i,2]             # <<<<<<<<<<<<<<
@@ -3515,7 +3517,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
     (__pyx_v_key_idx[__pyx_v_i]) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) )));
   }
 
-  /* "readhamilsparse.pyx":212
+  /* "readhamilsparse.pyx":213
  *     for i in range(ncell2):
  *         key_idx[i] = key_num[i,2]
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
@@ -3524,7 +3526,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readhamilsparse.pyx":213
+  /* "readhamilsparse.pyx":214
  *         key_idx[i] = key_num[i,2]
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
@@ -3533,7 +3535,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readhamilsparse.pyx":214
+  /* "readhamilsparse.pyx":215
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -3542,7 +3544,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":215
+  /* "readhamilsparse.pyx":216
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -3551,7 +3553,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readhamilsparse.pyx":216
+  /* "readhamilsparse.pyx":217
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -3560,7 +3562,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readhamilsparse.pyx":217
+  /* "readhamilsparse.pyx":218
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3569,7 +3571,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":218
+  /* "readhamilsparse.pyx":219
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  *     fseek(fp,atomnum*4,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3578,7 +3580,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (void)(fseek(__pyx_v_fp, (__pyx_v_atomnum * 4), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":220
+  /* "readhamilsparse.pyx":221
  *     fseek(fp,atomnum*4,SEEK_CUR)
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -3587,7 +3589,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":221
+  /* "readhamilsparse.pyx":222
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -3596,7 +3598,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readhamilsparse.pyx":222
+  /* "readhamilsparse.pyx":223
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -3605,7 +3607,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":224
+  /* "readhamilsparse.pyx":225
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -3614,7 +3616,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":225
+  /* "readhamilsparse.pyx":226
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3626,7 +3628,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
   for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
     __pyx_v_ct_AN = __pyx_t_1;
 
-    /* "readhamilsparse.pyx":226
+    /* "readhamilsparse.pyx":227
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -3635,7 +3637,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":227
+    /* "readhamilsparse.pyx":228
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -3645,7 +3647,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":228
+  /* "readhamilsparse.pyx":229
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -3654,7 +3656,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":229
+  /* "readhamilsparse.pyx":230
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3666,7 +3668,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
   for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
     __pyx_v_ct_AN = __pyx_t_1;
 
-    /* "readhamilsparse.pyx":230
+    /* "readhamilsparse.pyx":231
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -3675,7 +3677,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":231
+    /* "readhamilsparse.pyx":232
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -3685,7 +3687,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":232
+  /* "readhamilsparse.pyx":233
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3694,7 +3696,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":234
+  /* "readhamilsparse.pyx":235
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3706,7 +3708,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
   for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
     __pyx_v_ct_AN = __pyx_t_1;
 
-    /* "readhamilsparse.pyx":235
+    /* "readhamilsparse.pyx":236
  * 
  *     for ct_AN in range(1,atomnum+1):
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -3715,7 +3717,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
     __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_ct_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-    /* "readhamilsparse.pyx":236
+    /* "readhamilsparse.pyx":237
  *     for ct_AN in range(1,atomnum+1):
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
  *         atomi = ct_AN-1             # <<<<<<<<<<<<<<
@@ -3724,19 +3726,19 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
     __pyx_v_atomi = (__pyx_v_ct_AN - 1);
 
-    /* "readhamilsparse.pyx":237
+    /* "readhamilsparse.pyx":238
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
  *         atomi = ct_AN-1
  *         TNO1 = atom_idx[atomi]             # <<<<<<<<<<<<<<
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  */
-    __pyx_t_8 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomi])); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 237, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomi])); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 238, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_XDECREF_SET(__pyx_v_TNO1, __pyx_t_8);
     __pyx_t_8 = 0;
 
-    /* "readhamilsparse.pyx":238
+    /* "readhamilsparse.pyx":239
  *         atomi = ct_AN-1
  *         TNO1 = atom_idx[atomi]
  *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
@@ -3748,7 +3750,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
     for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_10; __pyx_t_2+=1) {
       __pyx_v_h_AN = __pyx_t_2;
 
-      /* "readhamilsparse.pyx":239
+      /* "readhamilsparse.pyx":240
  *         TNO1 = atom_idx[atomi]
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -3757,7 +3759,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
       __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-      /* "readhamilsparse.pyx":240
+      /* "readhamilsparse.pyx":241
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  *             atomj = Gh_AN-1             # <<<<<<<<<<<<<<
@@ -3766,19 +3768,19 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
       __pyx_v_atomj = (__pyx_v_Gh_AN - 1);
 
-      /* "readhamilsparse.pyx":241
+      /* "readhamilsparse.pyx":242
  *             Gh_AN = natn[ct_AN][h_AN]
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]             # <<<<<<<<<<<<<<
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  */
-      __pyx_t_8 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomj])); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 241, __pyx_L1_error)
+      __pyx_t_8 = __Pyx_PyInt_From_int((__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomj])); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_XDECREF_SET(__pyx_v_TNO2, __pyx_t_8);
       __pyx_t_8 = 0;
 
-      /* "readhamilsparse.pyx":242
+      /* "readhamilsparse.pyx":243
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -3788,7 +3790,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
       __pyx_t_11 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
       if (__pyx_t_11) {
 
-        /* "readhamilsparse.pyx":243
+        /* "readhamilsparse.pyx":244
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -3797,7 +3799,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
         __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_Gh_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-        /* "readhamilsparse.pyx":244
+        /* "readhamilsparse.pyx":245
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  *                 Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
@@ -3806,7 +3808,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
         __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
 
-        /* "readhamilsparse.pyx":245
+        /* "readhamilsparse.pyx":246
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  *                 Rij = iR*R_num+jR
  *                 pub_key[key_idx[Rij],0] = atomi             # <<<<<<<<<<<<<<
@@ -3817,7 +3819,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
         __pyx_t_4 = 0;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )) = __pyx_v_atomi;
 
-        /* "readhamilsparse.pyx":246
+        /* "readhamilsparse.pyx":247
  *                 Rij = iR*R_num+jR
  *                 pub_key[key_idx[Rij],0] = atomi
  *                 pub_key[key_idx[Rij],1] = atomj             # <<<<<<<<<<<<<<
@@ -3828,33 +3830,48 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
         __pyx_t_5 = 1;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_4 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) )) = __pyx_v_atomj;
 
-        /* "readhamilsparse.pyx":247
+        /* "readhamilsparse.pyx":248
  *                 pub_key[key_idx[Rij],0] = atomi
  *                 pub_key[key_idx[Rij],1] = atomj
  *                 pub_key[key_idx[Rij],2] = TNO1             # <<<<<<<<<<<<<<
  *                 pub_key[key_idx[Rij],3] = TNO2
- *                 key_idx[Rij] += 1
+ *                 pub_key[key_idx[Rij],4] = TNO1*TNO2
  */
-        __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_TNO1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 247, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_TNO1); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 248, __pyx_L1_error)
         __pyx_t_5 = (__pyx_v_key_idx[__pyx_v_Rij]);
         __pyx_t_4 = 2;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )) = __pyx_t_3;
 
-        /* "readhamilsparse.pyx":248
+        /* "readhamilsparse.pyx":249
  *                 pub_key[key_idx[Rij],1] = atomj
  *                 pub_key[key_idx[Rij],2] = TNO1
  *                 pub_key[key_idx[Rij],3] = TNO2             # <<<<<<<<<<<<<<
+ *                 pub_key[key_idx[Rij],4] = TNO1*TNO2
  *                 key_idx[Rij] += 1
- * 
  */
-        __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_TNO2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 248, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_v_TNO2); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 249, __pyx_L1_error)
         __pyx_t_4 = (__pyx_v_key_idx[__pyx_v_Rij]);
         __pyx_t_5 = 3;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_4 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) )) = __pyx_t_3;
 
-        /* "readhamilsparse.pyx":249
+        /* "readhamilsparse.pyx":250
  *                 pub_key[key_idx[Rij],2] = TNO1
  *                 pub_key[key_idx[Rij],3] = TNO2
+ *                 pub_key[key_idx[Rij],4] = TNO1*TNO2             # <<<<<<<<<<<<<<
+ *                 key_idx[Rij] += 1
+ * 
+ */
+        __pyx_t_8 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 250, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_8);
+        __pyx_t_3 = __Pyx_PyInt_As_int(__pyx_t_8); if (unlikely((__pyx_t_3 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 250, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+        __pyx_t_5 = (__pyx_v_key_idx[__pyx_v_Rij]);
+        __pyx_t_4 = 4;
+        *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )) = __pyx_t_3;
+
+        /* "readhamilsparse.pyx":251
+ *                 pub_key[key_idx[Rij],3] = TNO2
+ *                 pub_key[key_idx[Rij],4] = TNO1*TNO2
  *                 key_idx[Rij] += 1             # <<<<<<<<<<<<<<
  * 
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)
@@ -3862,7 +3879,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
         __pyx_t_3 = __pyx_v_Rij;
         (__pyx_v_key_idx[__pyx_t_3]) = ((__pyx_v_key_idx[__pyx_t_3]) + 1);
 
-        /* "readhamilsparse.pyx":242
+        /* "readhamilsparse.pyx":243
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -3871,25 +3888,25 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
       }
 
-      /* "readhamilsparse.pyx":251
+      /* "readhamilsparse.pyx":253
  *                 key_idx[Rij] += 1
  * 
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
  *     fclose(fp)
  */
-      __pyx_t_8 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 251, __pyx_L1_error)
+      __pyx_t_8 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 253, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_12 = PyNumber_Multiply(__pyx_t_8, __pyx_int_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 251, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Multiply(__pyx_t_8, __pyx_int_8); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 253, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_13 = __Pyx_PyInt_As_long(__pyx_t_12); if (unlikely((__pyx_t_13 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 251, __pyx_L1_error)
+      __pyx_t_13 = __Pyx_PyInt_As_long(__pyx_t_12); if (unlikely((__pyx_t_13 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       (void)(fseek(__pyx_v_fp, __pyx_t_13, SEEK_CUR));
     }
   }
 
-  /* "readhamilsparse.pyx":253
+  /* "readhamilsparse.pyx":255
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
@@ -3898,7 +3915,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readhamilsparse.pyx":254
+  /* "readhamilsparse.pyx":256
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3910,7 +3927,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
   for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
     __pyx_v_ct_AN = __pyx_t_1;
 
-    /* "readhamilsparse.pyx":255
+    /* "readhamilsparse.pyx":257
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -3919,7 +3936,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readhamilsparse.pyx":256
+    /* "readhamilsparse.pyx":258
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -3929,7 +3946,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readhamilsparse.pyx":257
+  /* "readhamilsparse.pyx":259
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -3938,7 +3955,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   free(__pyx_v_natn);
 
-  /* "readhamilsparse.pyx":258
+  /* "readhamilsparse.pyx":260
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
@@ -3947,7 +3964,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   free(__pyx_v_ncn);
 
-  /* "readhamilsparse.pyx":259
+  /* "readhamilsparse.pyx":261
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
@@ -3956,7 +3973,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   free(__pyx_v_FNAN);
 
-  /* "readhamilsparse.pyx":260
+  /* "readhamilsparse.pyx":262
  *     free(ncn)
  *     free(FNAN)
  *     free(key_idx)             # <<<<<<<<<<<<<<
@@ -3965,7 +3982,7 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
  */
   free(__pyx_v_key_idx);
 
-  /* "readhamilsparse.pyx":196
+  /* "readhamilsparse.pyx":197
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key1(             # <<<<<<<<<<<<<<
@@ -3985,15 +4002,15 @@ static void __pyx_f_15readhamilsparse_readscfout_key1(char *__pyx_v_name, int __
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":265
+/* "readhamilsparse.pyx":267
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key0(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* key_num
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* key_num
  * ):
  */
 
-static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info_t *__pyx_v_info, void *__pyx_v_key_num) {
+static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info1_t *__pyx_v_info, void *__pyx_v_key_num) {
   int __pyx_v_idx[5];
   int __pyx_v_iR;
   int __pyx_v_jR;
@@ -4006,7 +4023,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
   long __pyx_t_4;
   __Pyx_RefNannySetupContext("readh5engine_key0", 0);
 
-  /* "readhamilsparse.pyx":273
+  /* "readhamilsparse.pyx":275
  *     cdef int i, j, iR, jR, Rij
  * 
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\             # <<<<<<<<<<<<<<
@@ -4015,7 +4032,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
  */
   (void)(sscanf(__pyx_v_name, ((char const *)"[%d, %d, %d, %d, %d]"), (&(__pyx_v_idx[0])), (&(__pyx_v_idx[1])), (&(__pyx_v_idx[2])), (&(__pyx_v_idx[3])), (&(__pyx_v_idx[4]))));
 
-  /* "readhamilsparse.pyx":275
+  /* "readhamilsparse.pyx":277
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -4039,7 +4056,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "readhamilsparse.pyx":276
+    /* "readhamilsparse.pyx":278
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         iR = <int>(atom_idx_all[idx[3]-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -4048,7 +4065,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
  */
     __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[((__pyx_v_idx[3]) - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-    /* "readhamilsparse.pyx":277
+    /* "readhamilsparse.pyx":279
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         iR = <int>(atom_idx_all[idx[3]-1]/norb_u)
  *         jR = <int>(atom_idx_all[idx[4]-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -4057,7 +4074,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
  */
     __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[((__pyx_v_idx[4]) - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-    /* "readhamilsparse.pyx":278
+    /* "readhamilsparse.pyx":280
  *         iR = <int>(atom_idx_all[idx[3]-1]/norb_u)
  *         jR = <int>(atom_idx_all[idx[4]-1]/norb_u)
  *         Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
@@ -4066,7 +4083,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
  */
     __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
 
-    /* "readhamilsparse.pyx":279
+    /* "readhamilsparse.pyx":281
  *         jR = <int>(atom_idx_all[idx[4]-1]/norb_u)
  *         Rij = iR*R_num+jR
  *         (<int*>(key_num))[Rij*4] += 1             # <<<<<<<<<<<<<<
@@ -4077,7 +4094,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
     __pyx_t_4 = (__pyx_v_Rij * 4);
     (__pyx_t_3[__pyx_t_4]) = ((__pyx_t_3[__pyx_t_4]) + 1);
 
-    /* "readhamilsparse.pyx":280
+    /* "readhamilsparse.pyx":282
  *         Rij = iR*R_num+jR
  *         (<int*>(key_num))[Rij*4] += 1
  *         (<int*>(key_num))[Rij*4+1] += atom_idx[idx[3]-1]\             # <<<<<<<<<<<<<<
@@ -4087,7 +4104,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
     __pyx_t_3 = ((int *)__pyx_v_key_num);
     __pyx_t_4 = ((__pyx_v_Rij * 4) + 1);
 
-    /* "readhamilsparse.pyx":281
+    /* "readhamilsparse.pyx":283
  *         (<int*>(key_num))[Rij*4] += 1
  *         (<int*>(key_num))[Rij*4+1] += atom_idx[idx[3]-1]\
  *                                     * atom_idx[idx[4]-1]             # <<<<<<<<<<<<<<
@@ -4096,7 +4113,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
  */
     (__pyx_t_3[__pyx_t_4]) = ((__pyx_t_3[__pyx_t_4]) + ((__pyx_v_15readhamilsparse_atom_idx[((__pyx_v_idx[3]) - 1)]) * (__pyx_v_15readhamilsparse_atom_idx[((__pyx_v_idx[4]) - 1)])));
 
-    /* "readhamilsparse.pyx":282
+    /* "readhamilsparse.pyx":284
  *         (<int*>(key_num))[Rij*4+1] += atom_idx[idx[3]-1]\
  *                                     * atom_idx[idx[4]-1]
  *         return 0             # <<<<<<<<<<<<<<
@@ -4106,7 +4123,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "readhamilsparse.pyx":275
+    /* "readhamilsparse.pyx":277
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -4115,7 +4132,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
  */
   }
 
-  /* "readhamilsparse.pyx":284
+  /* "readhamilsparse.pyx":286
  *         return 0
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -4127,11 +4144,11 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
     goto __pyx_L0;
   }
 
-  /* "readhamilsparse.pyx":265
+  /* "readhamilsparse.pyx":267
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key0(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* key_num
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* key_num
  * ):
  */
 
@@ -4141,21 +4158,23 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key0(CYTHON_UNUSED hid_t __
   return __pyx_r;
 }
 
-/* "readhamilsparse.pyx":289
+/* "readhamilsparse.pyx":291
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key1(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* pub_key
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* pub_key
  * ):
  */
 
-static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info_t *__pyx_v_info, void *__pyx_v_pub_key) {
+static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info1_t *__pyx_v_info, void *__pyx_v_pub_key) {
   int __pyx_v_idx[5];
   int __pyx_v_iR;
   int __pyx_v_jR;
   int __pyx_v_Rij;
   int __pyx_v_atomi;
   int __pyx_v_atomj;
+  int __pyx_v_TNOi;
+  int __pyx_v_TNOj;
   herr_t __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -4163,7 +4182,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("readh5engine_key1", 0);
 
-  /* "readhamilsparse.pyx":298
+  /* "readhamilsparse.pyx":300
  *     global key_buf
  * 
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\             # <<<<<<<<<<<<<<
@@ -4172,7 +4191,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
  */
   (void)(sscanf(__pyx_v_name, ((char const *)"[%d, %d, %d, %d, %d]"), (&(__pyx_v_idx[0])), (&(__pyx_v_idx[1])), (&(__pyx_v_idx[2])), (&(__pyx_v_idx[3])), (&(__pyx_v_idx[4]))));
 
-  /* "readhamilsparse.pyx":300
+  /* "readhamilsparse.pyx":302
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -4196,7 +4215,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "readhamilsparse.pyx":301
+    /* "readhamilsparse.pyx":303
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         iR = <int>(atom_idx_all[idx[3]-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -4205,7 +4224,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
  */
     __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[((__pyx_v_idx[3]) - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-    /* "readhamilsparse.pyx":302
+    /* "readhamilsparse.pyx":304
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         iR = <int>(atom_idx_all[idx[3]-1]/norb_u)
  *         jR = <int>(atom_idx_all[idx[4]-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -4214,7 +4233,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
  */
     __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[((__pyx_v_idx[4]) - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-    /* "readhamilsparse.pyx":303
+    /* "readhamilsparse.pyx":305
  *         iR = <int>(atom_idx_all[idx[3]-1]/norb_u)
  *         jR = <int>(atom_idx_all[idx[4]-1]/norb_u)
  *         Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
@@ -4223,63 +4242,90 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
  */
     __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
 
-    /* "readhamilsparse.pyx":304
+    /* "readhamilsparse.pyx":306
  *         jR = <int>(atom_idx_all[idx[4]-1]/norb_u)
  *         Rij = iR*R_num+jR
  *         atomi = idx[3]-1             # <<<<<<<<<<<<<<
  *         atomj = idx[4]-1
- *         (<int*>(pub_key))[key_buf[Rij]*4] = atomi
+ *         TNOi = atom_idx[atomi]
  */
     __pyx_v_atomi = ((__pyx_v_idx[3]) - 1);
 
-    /* "readhamilsparse.pyx":305
+    /* "readhamilsparse.pyx":307
  *         Rij = iR*R_num+jR
  *         atomi = idx[3]-1
  *         atomj = idx[4]-1             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_buf[Rij]*4] = atomi
- *         (<int*>(pub_key))[key_buf[Rij]*4+1] = atomj
+ *         TNOi = atom_idx[atomi]
+ *         TNOj = atom_idx[atomj]
  */
     __pyx_v_atomj = ((__pyx_v_idx[4]) - 1);
 
-    /* "readhamilsparse.pyx":306
+    /* "readhamilsparse.pyx":308
  *         atomi = idx[3]-1
  *         atomj = idx[4]-1
- *         (<int*>(pub_key))[key_buf[Rij]*4] = atomi             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_buf[Rij]*4+1] = atomj
- *         (<int*>(pub_key))[key_buf[Rij]*4+2] = atom_idx[atomi]
+ *         TNOi = atom_idx[atomi]             # <<<<<<<<<<<<<<
+ *         TNOj = atom_idx[atomj]
+ *         (<int*>(pub_key))[key_buf[Rij]*6] = atomi
  */
-    (((int *)__pyx_v_pub_key)[((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 4)]) = __pyx_v_atomi;
-
-    /* "readhamilsparse.pyx":307
- *         atomj = idx[4]-1
- *         (<int*>(pub_key))[key_buf[Rij]*4] = atomi
- *         (<int*>(pub_key))[key_buf[Rij]*4+1] = atomj             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_buf[Rij]*4+2] = atom_idx[atomi]
- *         (<int*>(pub_key))[key_buf[Rij]*4+3] = atom_idx[atomj]
- */
-    (((int *)__pyx_v_pub_key)[(((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 4) + 1)]) = __pyx_v_atomj;
-
-    /* "readhamilsparse.pyx":308
- *         (<int*>(pub_key))[key_buf[Rij]*4] = atomi
- *         (<int*>(pub_key))[key_buf[Rij]*4+1] = atomj
- *         (<int*>(pub_key))[key_buf[Rij]*4+2] = atom_idx[atomi]             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_buf[Rij]*4+3] = atom_idx[atomj]
- *         key_buf[Rij] += 1
- */
-    (((int *)__pyx_v_pub_key)[(((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 4) + 2)]) = (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomi]);
+    __pyx_v_TNOi = (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomi]);
 
     /* "readhamilsparse.pyx":309
- *         (<int*>(pub_key))[key_buf[Rij]*4+1] = atomj
- *         (<int*>(pub_key))[key_buf[Rij]*4+2] = atom_idx[atomi]
- *         (<int*>(pub_key))[key_buf[Rij]*4+3] = atom_idx[atomj]             # <<<<<<<<<<<<<<
+ *         atomj = idx[4]-1
+ *         TNOi = atom_idx[atomi]
+ *         TNOj = atom_idx[atomj]             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_buf[Rij]*6] = atomi
+ *         (<int*>(pub_key))[key_buf[Rij]*6+1] = atomj
+ */
+    __pyx_v_TNOj = (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomj]);
+
+    /* "readhamilsparse.pyx":310
+ *         TNOi = atom_idx[atomi]
+ *         TNOj = atom_idx[atomj]
+ *         (<int*>(pub_key))[key_buf[Rij]*6] = atomi             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_buf[Rij]*6+1] = atomj
+ *         (<int*>(pub_key))[key_buf[Rij]*6+2] = TNOi
+ */
+    (((int *)__pyx_v_pub_key)[((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 6)]) = __pyx_v_atomi;
+
+    /* "readhamilsparse.pyx":311
+ *         TNOj = atom_idx[atomj]
+ *         (<int*>(pub_key))[key_buf[Rij]*6] = atomi
+ *         (<int*>(pub_key))[key_buf[Rij]*6+1] = atomj             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_buf[Rij]*6+2] = TNOi
+ *         (<int*>(pub_key))[key_buf[Rij]*6+3] = TNOj
+ */
+    (((int *)__pyx_v_pub_key)[(((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 6) + 1)]) = __pyx_v_atomj;
+
+    /* "readhamilsparse.pyx":312
+ *         (<int*>(pub_key))[key_buf[Rij]*6] = atomi
+ *         (<int*>(pub_key))[key_buf[Rij]*6+1] = atomj
+ *         (<int*>(pub_key))[key_buf[Rij]*6+2] = TNOi             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_buf[Rij]*6+3] = TNOj
+ *         (<int*>(pub_key))[key_buf[Rij]*6+4] = TNOi*TNOj
+ */
+    (((int *)__pyx_v_pub_key)[(((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 6) + 2)]) = __pyx_v_TNOi;
+
+    /* "readhamilsparse.pyx":313
+ *         (<int*>(pub_key))[key_buf[Rij]*6+1] = atomj
+ *         (<int*>(pub_key))[key_buf[Rij]*6+2] = TNOi
+ *         (<int*>(pub_key))[key_buf[Rij]*6+3] = TNOj             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_buf[Rij]*6+4] = TNOi*TNOj
+ *         key_buf[Rij] += 1
+ */
+    (((int *)__pyx_v_pub_key)[(((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 6) + 3)]) = __pyx_v_TNOj;
+
+    /* "readhamilsparse.pyx":314
+ *         (<int*>(pub_key))[key_buf[Rij]*6+2] = TNOi
+ *         (<int*>(pub_key))[key_buf[Rij]*6+3] = TNOj
+ *         (<int*>(pub_key))[key_buf[Rij]*6+4] = TNOi*TNOj             # <<<<<<<<<<<<<<
  *         key_buf[Rij] += 1
  *         return 0
  */
-    (((int *)__pyx_v_pub_key)[(((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 4) + 3)]) = (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomj]);
+    (((int *)__pyx_v_pub_key)[(((__pyx_v_15readhamilsparse_key_buf[__pyx_v_Rij]) * 6) + 4)]) = (__pyx_v_TNOi * __pyx_v_TNOj);
 
-    /* "readhamilsparse.pyx":310
- *         (<int*>(pub_key))[key_buf[Rij]*4+2] = atom_idx[atomi]
- *         (<int*>(pub_key))[key_buf[Rij]*4+3] = atom_idx[atomj]
+    /* "readhamilsparse.pyx":315
+ *         (<int*>(pub_key))[key_buf[Rij]*6+3] = TNOj
+ *         (<int*>(pub_key))[key_buf[Rij]*6+4] = TNOi*TNOj
  *         key_buf[Rij] += 1             # <<<<<<<<<<<<<<
  *         return 0
  *     else:
@@ -4287,8 +4333,8 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
     __pyx_t_3 = __pyx_v_Rij;
     (__pyx_v_15readhamilsparse_key_buf[__pyx_t_3]) = ((__pyx_v_15readhamilsparse_key_buf[__pyx_t_3]) + 1);
 
-    /* "readhamilsparse.pyx":311
- *         (<int*>(pub_key))[key_buf[Rij]*4+3] = atom_idx[atomj]
+    /* "readhamilsparse.pyx":316
+ *         (<int*>(pub_key))[key_buf[Rij]*6+4] = TNOi*TNOj
  *         key_buf[Rij] += 1
  *         return 0             # <<<<<<<<<<<<<<
  *     else:
@@ -4297,7 +4343,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "readhamilsparse.pyx":300
+    /* "readhamilsparse.pyx":302
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -4306,7 +4352,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
  */
   }
 
-  /* "readhamilsparse.pyx":313
+  /* "readhamilsparse.pyx":318
  *         return 0
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -4318,11 +4364,11 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
     goto __pyx_L0;
   }
 
-  /* "readhamilsparse.pyx":289
+  /* "readhamilsparse.pyx":291
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key1(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* pub_key
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* pub_key
  * ):
  */
 
@@ -4332,7 +4378,7 @@ static herr_t __pyx_f_15readhamilsparse_readh5engine_key1(CYTHON_UNUSED hid_t __
   return __pyx_r;
 }
 
-/* "readhamilsparse.pyx":318
+/* "readhamilsparse.pyx":323
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key0(char* h5_name, int[:,::1] key_num):             # <<<<<<<<<<<<<<
@@ -4348,18 +4394,18 @@ static void __pyx_f_15readhamilsparse_readh5_key0(char *__pyx_v_h5_name, __Pyx_m
   Py_ssize_t __pyx_t_2;
   __Pyx_RefNannySetupContext("readh5_key0", 0);
 
-  /* "readhamilsparse.pyx":323
+  /* "readhamilsparse.pyx":328
  *     cdef herr_t status
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *     status = H5Ovisit(
+ *     status = H5Ovisit1(
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key0,&key_num[0,0]
  */
   __pyx_v_f = H5Fopen(__pyx_v_h5_name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-  /* "readhamilsparse.pyx":325
+  /* "readhamilsparse.pyx":330
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *     status = H5Ovisit(
+ *     status = H5Ovisit1(
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key0,&key_num[0,0]             # <<<<<<<<<<<<<<
  *     )
  *     status = H5Fclose(f)
@@ -4367,16 +4413,16 @@ static void __pyx_f_15readhamilsparse_readh5_key0(char *__pyx_v_h5_name, __Pyx_m
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
 
-  /* "readhamilsparse.pyx":324
+  /* "readhamilsparse.pyx":329
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *     status = H5Ovisit(             # <<<<<<<<<<<<<<
+ *     status = H5Ovisit1(             # <<<<<<<<<<<<<<
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key0,&key_num[0,0]
  *     )
  */
-  __pyx_v_status = H5Ovisit(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_15readhamilsparse_readh5engine_key0, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )))));
+  __pyx_v_status = H5Ovisit1(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_15readhamilsparse_readh5engine_key0, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )))));
 
-  /* "readhamilsparse.pyx":327
+  /* "readhamilsparse.pyx":332
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key0,&key_num[0,0]
  *     )
  *     status = H5Fclose(f)             # <<<<<<<<<<<<<<
@@ -4385,7 +4431,7 @@ static void __pyx_f_15readhamilsparse_readh5_key0(char *__pyx_v_h5_name, __Pyx_m
  */
   __pyx_v_status = H5Fclose(__pyx_v_f);
 
-  /* "readhamilsparse.pyx":318
+  /* "readhamilsparse.pyx":323
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key0(char* h5_name, int[:,::1] key_num):             # <<<<<<<<<<<<<<
@@ -4397,7 +4443,7 @@ static void __pyx_f_15readhamilsparse_readh5_key0(char *__pyx_v_h5_name, __Pyx_m
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":332
+/* "readhamilsparse.pyx":337
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key1(             # <<<<<<<<<<<<<<
@@ -4417,7 +4463,7 @@ static void __pyx_f_15readhamilsparse_readh5_key1(char *__pyx_v_h5_name, int __p
   Py_ssize_t __pyx_t_5;
   __Pyx_RefNannySetupContext("readh5_key1", 0);
 
-  /* "readhamilsparse.pyx":340
+  /* "readhamilsparse.pyx":345
  *     global key_buf
  * 
  *     for i in range(ncell2):             # <<<<<<<<<<<<<<
@@ -4429,30 +4475,30 @@ static void __pyx_f_15readhamilsparse_readh5_key1(char *__pyx_v_h5_name, int __p
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":341
+    /* "readhamilsparse.pyx":346
  * 
  *     for i in range(ncell2):
  *         key_buf[i] = key_num[i,2]             # <<<<<<<<<<<<<<
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *     status = H5Ovisit(
+ *     status = H5Ovisit1(
  */
     __pyx_t_4 = __pyx_v_i;
     __pyx_t_5 = 2;
     (__pyx_v_15readhamilsparse_key_buf[__pyx_v_i]) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) )));
   }
 
-  /* "readhamilsparse.pyx":342
+  /* "readhamilsparse.pyx":347
  *     for i in range(ncell2):
  *         key_buf[i] = key_num[i,2]
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *     status = H5Ovisit(
+ *     status = H5Ovisit1(
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key1,&pub_key[0,0]
  */
   __pyx_v_f = H5Fopen(__pyx_v_h5_name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-  /* "readhamilsparse.pyx":344
+  /* "readhamilsparse.pyx":349
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *     status = H5Ovisit(
+ *     status = H5Ovisit1(
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key1,&pub_key[0,0]             # <<<<<<<<<<<<<<
  *     )
  *     status = H5Fclose(f)
@@ -4460,16 +4506,16 @@ static void __pyx_f_15readhamilsparse_readh5_key1(char *__pyx_v_h5_name, int __p
   __pyx_t_5 = 0;
   __pyx_t_4 = 0;
 
-  /* "readhamilsparse.pyx":343
+  /* "readhamilsparse.pyx":348
  *         key_buf[i] = key_num[i,2]
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *     status = H5Ovisit(             # <<<<<<<<<<<<<<
+ *     status = H5Ovisit1(             # <<<<<<<<<<<<<<
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key1,&pub_key[0,0]
  *     )
  */
-  __pyx_v_status = H5Ovisit(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_15readhamilsparse_readh5engine_key1, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )))));
+  __pyx_v_status = H5Ovisit1(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_15readhamilsparse_readh5engine_key1, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )))));
 
-  /* "readhamilsparse.pyx":346
+  /* "readhamilsparse.pyx":351
  *         f,H5_INDEX_NAME,H5_ITER_NATIVE,readh5engine_key1,&pub_key[0,0]
  *     )
  *     status = H5Fclose(f)             # <<<<<<<<<<<<<<
@@ -4478,7 +4524,7 @@ static void __pyx_f_15readhamilsparse_readh5_key1(char *__pyx_v_h5_name, int __p
  */
   __pyx_v_status = H5Fclose(__pyx_v_f);
 
-  /* "readhamilsparse.pyx":332
+  /* "readhamilsparse.pyx":337
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key1(             # <<<<<<<<<<<<<<
@@ -4490,7 +4536,7 @@ static void __pyx_f_15readhamilsparse_readh5_key1(char *__pyx_v_h5_name, int __p
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":351
+/* "readhamilsparse.pyx":356
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
@@ -4557,59 +4603,59 @@ static PyObject *__pyx_pw_15readhamilsparse_1GetSparseNum(PyObject *__pyx_self, 
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5HamName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 1); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 1); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 2); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 2); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 3); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 3); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_all_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 4); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 4); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atomnum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 5); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 5); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 6); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 6); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 7); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 7); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 8); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 8); __PYX_ERR(0, 356, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 9); __PYX_ERR(0, 351, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, 9); __PYX_ERR(0, 356, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseNum") < 0)) __PYX_ERR(0, 351, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseNum") < 0)) __PYX_ERR(0, 356, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 10) {
       goto __pyx_L5_argtuple_error;
@@ -4625,20 +4671,20 @@ static PyObject *__pyx_pw_15readhamilsparse_1GetSparseNum(PyObject *__pyx_self, 
       values[8] = PyTuple_GET_ITEM(__pyx_args, 8);
       values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
     }
-    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 352, __pyx_L3_error)
-    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 352, __pyx_L3_error)
-    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 352, __pyx_L3_error)
-    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 353, __pyx_L3_error)
-    __pyx_v_atom_idx_all_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_all_py.memview)) __PYX_ERR(0, 353, __pyx_L3_error)
-    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
-    __pyx_v_norbital_u = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_norbital_u == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
-    __pyx_v_ncell2 = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_ncell2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
-    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[9]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
+    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 357, __pyx_L3_error)
+    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 357, __pyx_L3_error)
+    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 357, __pyx_L3_error)
+    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 358, __pyx_L3_error)
+    __pyx_v_atom_idx_all_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_all_py.memview)) __PYX_ERR(0, 358, __pyx_L3_error)
+    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 359, __pyx_L3_error)
+    __pyx_v_norbital_u = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_norbital_u == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 359, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 359, __pyx_L3_error)
+    __pyx_v_ncell2 = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_ncell2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 359, __pyx_L3_error)
+    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[9]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 359, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 351, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 356, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readhamilsparse.GetSparseNum", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4670,7 +4716,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   Py_ssize_t __pyx_t_11;
   __Pyx_RefNannySetupContext("GetSparseNum", 0);
 
-  /* "readhamilsparse.pyx":363
+  /* "readhamilsparse.pyx":368
  *     global norb_u
  * 
  *     R_num = ncell             # <<<<<<<<<<<<<<
@@ -4679,7 +4725,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
   __pyx_v_15readhamilsparse_R_num = __pyx_v_ncell;
 
-  /* "readhamilsparse.pyx":364
+  /* "readhamilsparse.pyx":369
  * 
  *     R_num = ncell
  *     norb_u = norbital_u             # <<<<<<<<<<<<<<
@@ -4688,7 +4734,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
   __pyx_v_15readhamilsparse_norb_u = __pyx_v_norbital_u;
 
-  /* "readhamilsparse.pyx":365
+  /* "readhamilsparse.pyx":370
  *     R_num = ncell
  *     norb_u = norbital_u
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))             # <<<<<<<<<<<<<<
@@ -4697,7 +4743,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
   __pyx_v_15readhamilsparse_atom_idx = ((int *)malloc((__pyx_v_atomnum * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":366
+  /* "readhamilsparse.pyx":371
  *     norb_u = norbital_u
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):             # <<<<<<<<<<<<<<
@@ -4709,7 +4755,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":367
+    /* "readhamilsparse.pyx":372
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]             # <<<<<<<<<<<<<<
@@ -4720,7 +4766,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
     (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_py.data) + __pyx_t_4)) )));
   }
 
-  /* "readhamilsparse.pyx":368
+  /* "readhamilsparse.pyx":373
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_all = <int*>malloc((atomnum+1)*sizeof(int))             # <<<<<<<<<<<<<<
@@ -4729,7 +4775,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
   __pyx_v_15readhamilsparse_atom_idx_all = ((int *)malloc(((__pyx_v_atomnum + 1) * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":369
+  /* "readhamilsparse.pyx":374
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_all = <int*>malloc((atomnum+1)*sizeof(int))
  *     for i in range(atomnum+1):             # <<<<<<<<<<<<<<
@@ -4741,7 +4787,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   for (__pyx_t_1 = 0; __pyx_t_1 < __pyx_t_6; __pyx_t_1+=1) {
     __pyx_v_i = __pyx_t_1;
 
-    /* "readhamilsparse.pyx":370
+    /* "readhamilsparse.pyx":375
  *     atom_idx_all = <int*>malloc((atomnum+1)*sizeof(int))
  *     for i in range(atomnum+1):
  *         atom_idx_all[i] = atom_idx_all_py[i]             # <<<<<<<<<<<<<<
@@ -4752,7 +4798,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
     (__pyx_v_15readhamilsparse_atom_idx_all[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_all_py.data) + __pyx_t_4)) )));
   }
 
-  /* "readhamilsparse.pyx":371
+  /* "readhamilsparse.pyx":376
  *     for i in range(atomnum+1):
  *         atom_idx_all[i] = atom_idx_all_py[i]
  *     memset(&key_num[0,0],0,(ncell2+1)*4*sizeof(int))             # <<<<<<<<<<<<<<
@@ -4763,7 +4809,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   __pyx_t_7 = 0;
   (void)(memset((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_7)) )))), 0, (((__pyx_v_ncell2 + 1) * 4) * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":372
+  /* "readhamilsparse.pyx":377
  *         atom_idx_all[i] = atom_idx_all_py[i]
  *     memset(&key_num[0,0],0,(ncell2+1)*4*sizeof(int))
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -4773,7 +4819,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   __pyx_t_8 = (__pyx_v_IsH5 != 0);
   if (__pyx_t_8) {
 
-    /* "readhamilsparse.pyx":373
+    /* "readhamilsparse.pyx":378
  *     memset(&key_num[0,0],0,(ncell2+1)*4*sizeof(int))
  *     if IsH5:
  *         sprintf(data_name,"%s/%s.h5",inDir,H5HamName)             # <<<<<<<<<<<<<<
@@ -4782,7 +4828,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s.h5"), __pyx_v_inDir, __pyx_v_H5HamName));
 
-    /* "readhamilsparse.pyx":374
+    /* "readhamilsparse.pyx":379
  *     if IsH5:
  *         sprintf(data_name,"%s/%s.h5",inDir,H5HamName)
  *         readh5_key0(data_name,key_num)             # <<<<<<<<<<<<<<
@@ -4791,7 +4837,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
     __pyx_f_15readhamilsparse_readh5_key0(__pyx_v_data_name, __pyx_v_key_num);
 
-    /* "readhamilsparse.pyx":372
+    /* "readhamilsparse.pyx":377
  *         atom_idx_all[i] = atom_idx_all_py[i]
  *     memset(&key_num[0,0],0,(ncell2+1)*4*sizeof(int))
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -4801,7 +4847,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
     goto __pyx_L7;
   }
 
-  /* "readhamilsparse.pyx":376
+  /* "readhamilsparse.pyx":381
  *         readh5_key0(data_name,key_num)
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)             # <<<<<<<<<<<<<<
@@ -4811,7 +4857,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   /*else*/ {
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/openmx.scfout"), __pyx_v_inDir));
 
-    /* "readhamilsparse.pyx":377
+    /* "readhamilsparse.pyx":382
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         readscfout_key0(data_name,key_num)             # <<<<<<<<<<<<<<
@@ -4822,7 +4868,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   }
   __pyx_L7:;
 
-  /* "readhamilsparse.pyx":378
+  /* "readhamilsparse.pyx":383
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         readscfout_key0(data_name,key_num)
  *     for i in range(ncell2):             # <<<<<<<<<<<<<<
@@ -4834,7 +4880,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":379
+    /* "readhamilsparse.pyx":384
  *         readscfout_key0(data_name,key_num)
  *     for i in range(ncell2):
  *         for j in range(i+1,ncell2+1):             # <<<<<<<<<<<<<<
@@ -4846,7 +4892,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
     for (__pyx_t_9 = (__pyx_v_i + 1); __pyx_t_9 < __pyx_t_6; __pyx_t_9+=1) {
       __pyx_v_j = __pyx_t_9;
 
-      /* "readhamilsparse.pyx":380
+      /* "readhamilsparse.pyx":385
  *     for i in range(ncell2):
  *         for j in range(i+1,ncell2+1):
  *             key_num[j,2] += key_num[i,0]             # <<<<<<<<<<<<<<
@@ -4859,7 +4905,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
       __pyx_t_11 = 2;
       *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_10 * __pyx_v_key_num.strides[0]) )) + __pyx_t_11)) )) += (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_7 * __pyx_v_key_num.strides[0]) )) + __pyx_t_4)) )));
 
-      /* "readhamilsparse.pyx":381
+      /* "readhamilsparse.pyx":386
  *         for j in range(i+1,ncell2+1):
  *             key_num[j,2] += key_num[i,0]
  *             key_num[j,3] += key_num[i,1]             # <<<<<<<<<<<<<<
@@ -4874,7 +4920,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
     }
   }
 
-  /* "readhamilsparse.pyx":383
+  /* "readhamilsparse.pyx":388
  *             key_num[j,3] += key_num[i,1]
  * 
  *     free(atom_idx)             # <<<<<<<<<<<<<<
@@ -4883,7 +4929,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
   free(__pyx_v_15readhamilsparse_atom_idx);
 
-  /* "readhamilsparse.pyx":384
+  /* "readhamilsparse.pyx":389
  * 
  *     free(atom_idx)
  *     free(atom_idx_all)             # <<<<<<<<<<<<<<
@@ -4892,7 +4938,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
  */
   free(__pyx_v_15readhamilsparse_atom_idx_all);
 
-  /* "readhamilsparse.pyx":351
+  /* "readhamilsparse.pyx":356
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
@@ -4910,7 +4956,7 @@ static PyObject *__pyx_pf_15readhamilsparse_GetSparseNum(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "readhamilsparse.pyx":389
+/* "readhamilsparse.pyx":394
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
@@ -4986,77 +5032,77 @@ static PyObject *__pyx_pw_15readhamilsparse_3GetSparseIdx(PyObject *__pyx_self, 
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5HamName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 1); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 1); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 2); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 2); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 3); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 3); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 4); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 4); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 5); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 5); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 6); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 6); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_info)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 7); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 7); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_info1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 8); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 8); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 9); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 9); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_all_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 10); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 10); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atomnum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 11); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 11); __PYX_ERR(0, 394, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 12); __PYX_ERR(0, 389, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, 12); __PYX_ERR(0, 394, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseIdx") < 0)) __PYX_ERR(0, 389, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseIdx") < 0)) __PYX_ERR(0, 394, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 13) {
       goto __pyx_L5_argtuple_error;
@@ -5075,23 +5121,23 @@ static PyObject *__pyx_pw_15readhamilsparse_3GetSparseIdx(PyObject *__pyx_self, 
       values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
       values[12] = PyTuple_GET_ITEM(__pyx_args, 12);
     }
-    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 390, __pyx_L3_error)
-    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 390, __pyx_L3_error)
-    __pyx_v_norbital_u = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_norbital_u == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 390, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 390, __pyx_L3_error)
-    __pyx_v_ncell2 = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_ncell2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 390, __pyx_L3_error)
-    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 391, __pyx_L3_error)
-    __pyx_v_pub_key = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key.memview)) __PYX_ERR(0, 391, __pyx_L3_error)
-    __pyx_v_key_info = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info.memview)) __PYX_ERR(0, 391, __pyx_L3_error)
-    __pyx_v_key_info1 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info1.memview)) __PYX_ERR(0, 392, __pyx_L3_error)
-    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 392, __pyx_L3_error)
-    __pyx_v_atom_idx_all_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_all_py.memview)) __PYX_ERR(0, 392, __pyx_L3_error)
-    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
-    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[12]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
+    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 395, __pyx_L3_error)
+    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 395, __pyx_L3_error)
+    __pyx_v_norbital_u = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_norbital_u == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 395, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 395, __pyx_L3_error)
+    __pyx_v_ncell2 = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_ncell2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 395, __pyx_L3_error)
+    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 396, __pyx_L3_error)
+    __pyx_v_pub_key = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key.memview)) __PYX_ERR(0, 396, __pyx_L3_error)
+    __pyx_v_key_info = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info.memview)) __PYX_ERR(0, 396, __pyx_L3_error)
+    __pyx_v_key_info1 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info1.memview)) __PYX_ERR(0, 397, __pyx_L3_error)
+    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 397, __pyx_L3_error)
+    __pyx_v_atom_idx_all_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_all_py.memview)) __PYX_ERR(0, 397, __pyx_L3_error)
+    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 398, __pyx_L3_error)
+    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[12]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 398, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 389, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 394, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readhamilsparse.GetSparseIdx", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5109,7 +5155,6 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_k;
-  int __pyx_v_offset;
   char __pyx_v_data_name[0x1F4];
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -5124,18 +5169,18 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   int __pyx_t_9;
   int __pyx_t_10;
   int __pyx_t_11;
-  int __pyx_t_12;
-  int __pyx_t_13;
+  Py_ssize_t __pyx_t_12;
+  Py_ssize_t __pyx_t_13;
   int __pyx_t_14;
-  Py_ssize_t __pyx_t_15;
-  Py_ssize_t __pyx_t_16;
+  int __pyx_t_15;
+  int __pyx_t_16;
   Py_ssize_t __pyx_t_17;
   Py_ssize_t __pyx_t_18;
   Py_ssize_t __pyx_t_19;
   Py_ssize_t __pyx_t_20;
   __Pyx_RefNannySetupContext("GetSparseIdx", 0);
 
-  /* "readhamilsparse.pyx":403
+  /* "readhamilsparse.pyx":408
  *     global norb_u
  * 
  *     R_num = ncell             # <<<<<<<<<<<<<<
@@ -5144,7 +5189,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_R_num = __pyx_v_ncell;
 
-  /* "readhamilsparse.pyx":404
+  /* "readhamilsparse.pyx":409
  * 
  *     R_num = ncell
  *     norb_u = norbital_u             # <<<<<<<<<<<<<<
@@ -5153,7 +5198,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_norb_u = __pyx_v_norbital_u;
 
-  /* "readhamilsparse.pyx":405
+  /* "readhamilsparse.pyx":410
  *     R_num = ncell
  *     norb_u = norbital_u
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))             # <<<<<<<<<<<<<<
@@ -5162,7 +5207,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_atom_idx = ((int *)malloc((__pyx_v_atomnum * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":406
+  /* "readhamilsparse.pyx":411
  *     norb_u = norbital_u
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):             # <<<<<<<<<<<<<<
@@ -5174,7 +5219,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":407
+    /* "readhamilsparse.pyx":412
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]             # <<<<<<<<<<<<<<
@@ -5185,7 +5230,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
     (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_py.data) + __pyx_t_4)) )));
   }
 
-  /* "readhamilsparse.pyx":408
+  /* "readhamilsparse.pyx":413
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_all = <int*>malloc((atomnum+1)*sizeof(int))             # <<<<<<<<<<<<<<
@@ -5194,7 +5239,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_atom_idx_all = ((int *)malloc(((__pyx_v_atomnum + 1) * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":409
+  /* "readhamilsparse.pyx":414
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_all = <int*>malloc((atomnum+1)*sizeof(int))
  *     for i in range(atomnum+1):             # <<<<<<<<<<<<<<
@@ -5206,7 +5251,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   for (__pyx_t_1 = 0; __pyx_t_1 < __pyx_t_6; __pyx_t_1+=1) {
     __pyx_v_i = __pyx_t_1;
 
-    /* "readhamilsparse.pyx":410
+    /* "readhamilsparse.pyx":415
  *     atom_idx_all = <int*>malloc((atomnum+1)*sizeof(int))
  *     for i in range(atomnum+1):
  *         atom_idx_all[i] = atom_idx_all_py[i]             # <<<<<<<<<<<<<<
@@ -5217,7 +5262,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
     (__pyx_v_15readhamilsparse_atom_idx_all[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_all_py.data) + __pyx_t_4)) )));
   }
 
-  /* "readhamilsparse.pyx":411
+  /* "readhamilsparse.pyx":416
  *     for i in range(atomnum+1):
  *         atom_idx_all[i] = atom_idx_all_py[i]
  *     key_buf = <int*>malloc(ncell2*sizeof(int))             # <<<<<<<<<<<<<<
@@ -5226,7 +5271,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_key_buf = ((int *)malloc((__pyx_v_ncell2 * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":412
+  /* "readhamilsparse.pyx":417
  *         atom_idx_all[i] = atom_idx_all_py[i]
  *     key_buf = <int*>malloc(ncell2*sizeof(int))
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -5236,7 +5281,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   __pyx_t_7 = (__pyx_v_IsH5 != 0);
   if (__pyx_t_7) {
 
-    /* "readhamilsparse.pyx":413
+    /* "readhamilsparse.pyx":418
  *     key_buf = <int*>malloc(ncell2*sizeof(int))
  *     if IsH5:
  *         sprintf(data_name,"%s/%s.h5",inDir,H5HamName)             # <<<<<<<<<<<<<<
@@ -5245,7 +5290,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s.h5"), __pyx_v_inDir, __pyx_v_H5HamName));
 
-    /* "readhamilsparse.pyx":414
+    /* "readhamilsparse.pyx":419
  *     if IsH5:
  *         sprintf(data_name,"%s/%s.h5",inDir,H5HamName)
  *         readh5_key1(data_name,ncell2,key_num,pub_key)             # <<<<<<<<<<<<<<
@@ -5254,7 +5299,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
     __pyx_f_15readhamilsparse_readh5_key1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key);
 
-    /* "readhamilsparse.pyx":412
+    /* "readhamilsparse.pyx":417
  *         atom_idx_all[i] = atom_idx_all_py[i]
  *     key_buf = <int*>malloc(ncell2*sizeof(int))
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -5264,42 +5309,33 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
     goto __pyx_L7;
   }
 
-  /* "readhamilsparse.pyx":416
+  /* "readhamilsparse.pyx":421
  *         readh5_key1(data_name,ncell2,key_num,pub_key)
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)             # <<<<<<<<<<<<<<
  *         readscfout_key1(data_name,ncell2,key_num,pub_key)
- *     offset = 0
+ * 
  */
   /*else*/ {
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/openmx.scfout"), __pyx_v_inDir));
 
-    /* "readhamilsparse.pyx":417
+    /* "readhamilsparse.pyx":422
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         readscfout_key1(data_name,ncell2,key_num,pub_key)             # <<<<<<<<<<<<<<
- *     offset = 0
+ * 
  *     for h in range(key_num[ncell2,2]):
  */
     __pyx_f_15readhamilsparse_readscfout_key1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key);
   }
   __pyx_L7:;
 
-  /* "readhamilsparse.pyx":418
- *         sprintf(data_name,"%s/openmx.scfout",inDir)
+  /* "readhamilsparse.pyx":424
  *         readscfout_key1(data_name,ncell2,key_num,pub_key)
- *     offset = 0             # <<<<<<<<<<<<<<
- *     for h in range(key_num[ncell2,2]):
- *         for i in range(pub_key[h,2]):
- */
-  __pyx_v_offset = 0;
-
-  /* "readhamilsparse.pyx":419
- *         readscfout_key1(data_name,ncell2,key_num,pub_key)
- *     offset = 0
+ * 
  *     for h in range(key_num[ncell2,2]):             # <<<<<<<<<<<<<<
- *         for i in range(pub_key[h,2]):
- *             for j in range(pub_key[h,3]):
+ *         pub_key[h,5] = 0
+ *     for h in range(key_num[ncell2,2]):
  */
   __pyx_t_4 = __pyx_v_ncell2;
   __pyx_t_8 = 2;
@@ -5308,119 +5344,177 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_h = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":420
- *     offset = 0
+    /* "readhamilsparse.pyx":425
+ * 
  *     for h in range(key_num[ncell2,2]):
- *         for i in range(pub_key[h,2]):             # <<<<<<<<<<<<<<
- *             for j in range(pub_key[h,3]):
- *                 k = i*pub_key[h,3]+j
+ *         pub_key[h,5] = 0             # <<<<<<<<<<<<<<
+ *     for h in range(key_num[ncell2,2]):
+ *         for i in range(h+1,key_num[ncell2,2]):
  */
     __pyx_t_8 = __pyx_v_h;
-    __pyx_t_4 = 2;
-    __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )));
-    __pyx_t_10 = __pyx_t_9;
-    for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-      __pyx_v_i = __pyx_t_11;
-
-      /* "readhamilsparse.pyx":421
- *     for h in range(key_num[ncell2,2]):
- *         for i in range(pub_key[h,2]):
- *             for j in range(pub_key[h,3]):             # <<<<<<<<<<<<<<
- *                 k = i*pub_key[h,3]+j
- *                 key_info[k+offset,0] \
- */
-      __pyx_t_4 = __pyx_v_h;
-      __pyx_t_8 = 3;
-      __pyx_t_12 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_4 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )));
-      __pyx_t_13 = __pyx_t_12;
-      for (__pyx_t_14 = 0; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
-        __pyx_v_j = __pyx_t_14;
-
-        /* "readhamilsparse.pyx":422
- *         for i in range(pub_key[h,2]):
- *             for j in range(pub_key[h,3]):
- *                 k = i*pub_key[h,3]+j             # <<<<<<<<<<<<<<
- *                 key_info[k+offset,0] \
- *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \
- */
-        __pyx_t_8 = __pyx_v_h;
-        __pyx_t_4 = 3;
-        __pyx_v_k = ((__pyx_v_i * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )))) + __pyx_v_j);
-
-        /* "readhamilsparse.pyx":424
- *                 k = i*pub_key[h,3]+j
- *                 key_info[k+offset,0] \
- *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \             # <<<<<<<<<<<<<<
- *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)
- *         offset += pub_key[h,2]*pub_key[h,3]
- */
-        __pyx_t_4 = __pyx_v_h;
-        __pyx_t_8 = 0;
-
-        /* "readhamilsparse.pyx":425
- *                 key_info[k+offset,0] \
- *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \
- *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)             # <<<<<<<<<<<<<<
- *         offset += pub_key[h,2]*pub_key[h,3]
- * 
- */
-        __pyx_t_15 = __pyx_v_h;
-        __pyx_t_16 = 1;
-
-        /* "readhamilsparse.pyx":423
- *             for j in range(pub_key[h,3]):
- *                 k = i*pub_key[h,3]+j
- *                 key_info[k+offset,0] \             # <<<<<<<<<<<<<<
- *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \
- *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)
- */
-        __pyx_t_17 = (__pyx_v_k + __pyx_v_offset);
-        __pyx_t_18 = 0;
-        *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_17 * __pyx_v_key_info.strides[0]) )) + __pyx_t_18)) )) = (((__pyx_v_i + ((__pyx_v_15readhamilsparse_atom_idx_all[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_4 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )))]) % __pyx_v_15readhamilsparse_norb_u)) * __pyx_v_norbital_u) + (__pyx_v_j + ((__pyx_v_15readhamilsparse_atom_idx_all[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_15 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_16)) )))]) % __pyx_v_15readhamilsparse_norb_u)));
-      }
-    }
-
-    /* "readhamilsparse.pyx":426
- *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \
- *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)
- *         offset += pub_key[h,2]*pub_key[h,3]             # <<<<<<<<<<<<<<
- * 
- *     for h in range(key_num[ncell2,3]):
- */
-    __pyx_t_16 = __pyx_v_h;
-    __pyx_t_15 = 2;
-    __pyx_t_8 = __pyx_v_h;
-    __pyx_t_4 = 3;
-    __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_16 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_15)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )))));
+    __pyx_t_4 = 5;
+    *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )) = 0;
   }
 
-  /* "readhamilsparse.pyx":428
- *         offset += pub_key[h,2]*pub_key[h,3]
- * 
- *     for h in range(key_num[ncell2,3]):             # <<<<<<<<<<<<<<
- *         key_info1[h,1] = h
- *     for h in range(ncell2):
+  /* "readhamilsparse.pyx":426
+ *     for h in range(key_num[ncell2,2]):
+ *         pub_key[h,5] = 0
+ *     for h in range(key_num[ncell2,2]):             # <<<<<<<<<<<<<<
+ *         for i in range(h+1,key_num[ncell2,2]):
+ *             pub_key[i,5] += pub_key[h,4]
  */
   __pyx_t_4 = __pyx_v_ncell2;
-  __pyx_t_8 = 3;
+  __pyx_t_8 = 2;
   __pyx_t_1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_8)) )));
   __pyx_t_2 = __pyx_t_1;
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_h = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":429
+    /* "readhamilsparse.pyx":427
+ *         pub_key[h,5] = 0
+ *     for h in range(key_num[ncell2,2]):
+ *         for i in range(h+1,key_num[ncell2,2]):             # <<<<<<<<<<<<<<
+ *             pub_key[i,5] += pub_key[h,4]
+ * 
+ */
+    __pyx_t_8 = __pyx_v_ncell2;
+    __pyx_t_4 = 2;
+    __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_8 * __pyx_v_key_num.strides[0]) )) + __pyx_t_4)) )));
+    __pyx_t_10 = __pyx_t_9;
+    for (__pyx_t_11 = (__pyx_v_h + 1); __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
+      __pyx_v_i = __pyx_t_11;
+
+      /* "readhamilsparse.pyx":428
+ *     for h in range(key_num[ncell2,2]):
+ *         for i in range(h+1,key_num[ncell2,2]):
+ *             pub_key[i,5] += pub_key[h,4]             # <<<<<<<<<<<<<<
+ * 
+ *     for h in range(key_num[ncell2,2]):
+ */
+      __pyx_t_4 = __pyx_v_h;
+      __pyx_t_8 = 4;
+      __pyx_t_12 = __pyx_v_i;
+      __pyx_t_13 = 5;
+      *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_12 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_13)) )) += (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_4 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )));
+    }
+  }
+
+  /* "readhamilsparse.pyx":430
+ *             pub_key[i,5] += pub_key[h,4]
+ * 
+ *     for h in range(key_num[ncell2,2]):             # <<<<<<<<<<<<<<
+ *         for i in range(pub_key[h,2]):
+ *             for j in range(pub_key[h,3]):
+ */
+  __pyx_t_8 = __pyx_v_ncell2;
+  __pyx_t_4 = 2;
+  __pyx_t_1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_8 * __pyx_v_key_num.strides[0]) )) + __pyx_t_4)) )));
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_h = __pyx_t_3;
+
+    /* "readhamilsparse.pyx":431
+ * 
+ *     for h in range(key_num[ncell2,2]):
+ *         for i in range(pub_key[h,2]):             # <<<<<<<<<<<<<<
+ *             for j in range(pub_key[h,3]):
+ *                 k = i*pub_key[h,3]+j
+ */
+    __pyx_t_4 = __pyx_v_h;
+    __pyx_t_8 = 2;
+    __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_4 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )));
+    __pyx_t_10 = __pyx_t_9;
+    for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
+      __pyx_v_i = __pyx_t_11;
+
+      /* "readhamilsparse.pyx":432
+ *     for h in range(key_num[ncell2,2]):
+ *         for i in range(pub_key[h,2]):
+ *             for j in range(pub_key[h,3]):             # <<<<<<<<<<<<<<
+ *                 k = i*pub_key[h,3]+j
+ *                 key_info[k+pub_key[h,5],0] \
+ */
+      __pyx_t_8 = __pyx_v_h;
+      __pyx_t_4 = 3;
+      __pyx_t_14 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )));
+      __pyx_t_15 = __pyx_t_14;
+      for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+        __pyx_v_j = __pyx_t_16;
+
+        /* "readhamilsparse.pyx":433
+ *         for i in range(pub_key[h,2]):
+ *             for j in range(pub_key[h,3]):
+ *                 k = i*pub_key[h,3]+j             # <<<<<<<<<<<<<<
+ *                 key_info[k+pub_key[h,5],0] \
+ *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \
+ */
+        __pyx_t_4 = __pyx_v_h;
+        __pyx_t_8 = 3;
+        __pyx_v_k = ((__pyx_v_i * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_4 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )))) + __pyx_v_j);
+
+        /* "readhamilsparse.pyx":435
+ *                 k = i*pub_key[h,3]+j
+ *                 key_info[k+pub_key[h,5],0] \
+ *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \             # <<<<<<<<<<<<<<
+ *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)
+ * 
+ */
+        __pyx_t_8 = __pyx_v_h;
+        __pyx_t_4 = 0;
+
+        /* "readhamilsparse.pyx":436
+ *                 key_info[k+pub_key[h,5],0] \
+ *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \
+ *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)             # <<<<<<<<<<<<<<
+ * 
+ *     for h in range(key_num[ncell2,3]):
+ */
+        __pyx_t_13 = __pyx_v_h;
+        __pyx_t_12 = 1;
+
+        /* "readhamilsparse.pyx":434
+ *             for j in range(pub_key[h,3]):
+ *                 k = i*pub_key[h,3]+j
+ *                 key_info[k+pub_key[h,5],0] \             # <<<<<<<<<<<<<<
+ *                 = (i+atom_idx_all[pub_key[h,0]]%norb_u)*norbital_u \
+ *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)
+ */
+        __pyx_t_17 = __pyx_v_h;
+        __pyx_t_18 = 5;
+        __pyx_t_19 = (__pyx_v_k + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_17 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_18)) ))));
+        __pyx_t_20 = 0;
+        *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_19 * __pyx_v_key_info.strides[0]) )) + __pyx_t_20)) )) = (((__pyx_v_i + ((__pyx_v_15readhamilsparse_atom_idx_all[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_4)) )))]) % __pyx_v_15readhamilsparse_norb_u)) * __pyx_v_norbital_u) + (__pyx_v_j + ((__pyx_v_15readhamilsparse_atom_idx_all[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_13 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_12)) )))]) % __pyx_v_15readhamilsparse_norb_u)));
+      }
+    }
+  }
+
+  /* "readhamilsparse.pyx":438
+ *                 + (j+atom_idx_all[pub_key[h,1]]%norb_u)
+ * 
+ *     for h in range(key_num[ncell2,3]):             # <<<<<<<<<<<<<<
+ *         key_info1[h,1] = h
+ *     for h in range(ncell2):
+ */
+  __pyx_t_12 = __pyx_v_ncell2;
+  __pyx_t_13 = 3;
+  __pyx_t_1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_12 * __pyx_v_key_num.strides[0]) )) + __pyx_t_13)) )));
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_h = __pyx_t_3;
+
+    /* "readhamilsparse.pyx":439
  * 
  *     for h in range(key_num[ncell2,3]):
  *         key_info1[h,1] = h             # <<<<<<<<<<<<<<
  *     for h in range(ncell2):
  *         for i in range(key_num[h,1]):
  */
-    __pyx_t_8 = __pyx_v_h;
-    __pyx_t_4 = 1;
-    *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_8 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_4)) )) = __pyx_v_h;
+    __pyx_t_13 = __pyx_v_h;
+    __pyx_t_12 = 1;
+    *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_13 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_12)) )) = __pyx_v_h;
   }
 
-  /* "readhamilsparse.pyx":430
+  /* "readhamilsparse.pyx":440
  *     for h in range(key_num[ncell2,3]):
  *         key_info1[h,1] = h
  *     for h in range(ncell2):             # <<<<<<<<<<<<<<
@@ -5432,50 +5526,50 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_h = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":431
+    /* "readhamilsparse.pyx":441
  *         key_info1[h,1] = h
  *     for h in range(ncell2):
  *         for i in range(key_num[h,1]):             # <<<<<<<<<<<<<<
  *             key_info[i+key_num[h,3],1] = i
  *         qsort(&key_info[key_num[h,3],0],key_num[h,1],sizeof(int)*2,&Cmp)
  */
-    __pyx_t_4 = __pyx_v_h;
-    __pyx_t_8 = 1;
-    __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_8)) )));
+    __pyx_t_12 = __pyx_v_h;
+    __pyx_t_13 = 1;
+    __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_12 * __pyx_v_key_num.strides[0]) )) + __pyx_t_13)) )));
     __pyx_t_10 = __pyx_t_9;
     for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
       __pyx_v_i = __pyx_t_11;
 
-      /* "readhamilsparse.pyx":432
+      /* "readhamilsparse.pyx":442
  *     for h in range(ncell2):
  *         for i in range(key_num[h,1]):
  *             key_info[i+key_num[h,3],1] = i             # <<<<<<<<<<<<<<
  *         qsort(&key_info[key_num[h,3],0],key_num[h,1],sizeof(int)*2,&Cmp)
  *         for i in range(key_num[h,1]):
  */
-      __pyx_t_8 = __pyx_v_h;
-      __pyx_t_4 = 3;
-      __pyx_t_15 = (__pyx_v_i + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_8 * __pyx_v_key_num.strides[0]) )) + __pyx_t_4)) ))));
-      __pyx_t_16 = 1;
-      *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_15 * __pyx_v_key_info.strides[0]) )) + __pyx_t_16)) )) = __pyx_v_i;
+      __pyx_t_13 = __pyx_v_h;
+      __pyx_t_12 = 3;
+      __pyx_t_4 = (__pyx_v_i + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_13 * __pyx_v_key_num.strides[0]) )) + __pyx_t_12)) ))));
+      __pyx_t_8 = 1;
+      *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_4 * __pyx_v_key_info.strides[0]) )) + __pyx_t_8)) )) = __pyx_v_i;
     }
 
-    /* "readhamilsparse.pyx":433
+    /* "readhamilsparse.pyx":443
  *         for i in range(key_num[h,1]):
  *             key_info[i+key_num[h,3],1] = i
  *         qsort(&key_info[key_num[h,3],0],key_num[h,1],sizeof(int)*2,&Cmp)             # <<<<<<<<<<<<<<
  *         for i in range(key_num[h,1]):
  *             key_info1[i+key_num[h,3],0] = key_info[i+key_num[h,3],1]
  */
-    __pyx_t_4 = __pyx_v_h;
-    __pyx_t_8 = 3;
-    __pyx_t_16 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_8)) )));
-    __pyx_t_15 = 0;
+    __pyx_t_12 = __pyx_v_h;
+    __pyx_t_13 = 3;
+    __pyx_t_8 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_12 * __pyx_v_key_num.strides[0]) )) + __pyx_t_13)) )));
+    __pyx_t_4 = 0;
     __pyx_t_18 = __pyx_v_h;
     __pyx_t_17 = 1;
-    qsort((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_16 * __pyx_v_key_info.strides[0]) )) + __pyx_t_15)) )))), (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_18 * __pyx_v_key_num.strides[0]) )) + __pyx_t_17)) ))), ((sizeof(int)) * 2), (&__pyx_f_15readhamilsparse_Cmp));
+    qsort((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_8 * __pyx_v_key_info.strides[0]) )) + __pyx_t_4)) )))), (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_18 * __pyx_v_key_num.strides[0]) )) + __pyx_t_17)) ))), ((sizeof(int)) * 2), (&__pyx_f_15readhamilsparse_Cmp));
 
-    /* "readhamilsparse.pyx":434
+    /* "readhamilsparse.pyx":444
  *             key_info[i+key_num[h,3],1] = i
  *         qsort(&key_info[key_num[h,3],0],key_num[h,1],sizeof(int)*2,&Cmp)
  *         for i in range(key_num[h,1]):             # <<<<<<<<<<<<<<
@@ -5489,7 +5583,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
     for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
       __pyx_v_i = __pyx_t_11;
 
-      /* "readhamilsparse.pyx":435
+      /* "readhamilsparse.pyx":445
  *         qsort(&key_info[key_num[h,3],0],key_num[h,1],sizeof(int)*2,&Cmp)
  *         for i in range(key_num[h,1]):
  *             key_info1[i+key_num[h,3],0] = key_info[i+key_num[h,3],1]             # <<<<<<<<<<<<<<
@@ -5498,16 +5592,16 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
       __pyx_t_18 = __pyx_v_h;
       __pyx_t_17 = 3;
-      __pyx_t_8 = (__pyx_v_i + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_18 * __pyx_v_key_num.strides[0]) )) + __pyx_t_17)) ))));
-      __pyx_t_4 = 1;
-      __pyx_t_15 = __pyx_v_h;
-      __pyx_t_16 = 3;
-      __pyx_t_19 = (__pyx_v_i + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_15 * __pyx_v_key_num.strides[0]) )) + __pyx_t_16)) ))));
-      __pyx_t_20 = 0;
-      *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_19 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_20)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_8 * __pyx_v_key_info.strides[0]) )) + __pyx_t_4)) )));
+      __pyx_t_13 = (__pyx_v_i + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_18 * __pyx_v_key_num.strides[0]) )) + __pyx_t_17)) ))));
+      __pyx_t_12 = 1;
+      __pyx_t_4 = __pyx_v_h;
+      __pyx_t_8 = 3;
+      __pyx_t_20 = (__pyx_v_i + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_8)) ))));
+      __pyx_t_19 = 0;
+      *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_20 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_19)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_13 * __pyx_v_key_info.strides[0]) )) + __pyx_t_12)) )));
     }
 
-    /* "readhamilsparse.pyx":436
+    /* "readhamilsparse.pyx":446
  *         for i in range(key_num[h,1]):
  *             key_info1[i+key_num[h,3],0] = key_info[i+key_num[h,3],1]
  *         qsort(&key_info1[key_num[h,3],0],key_num[h,1],sizeof(int)*2,&Cmp)             # <<<<<<<<<<<<<<
@@ -5516,14 +5610,14 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
     __pyx_t_17 = __pyx_v_h;
     __pyx_t_18 = 3;
-    __pyx_t_4 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_17 * __pyx_v_key_num.strides[0]) )) + __pyx_t_18)) )));
-    __pyx_t_8 = 0;
-    __pyx_t_16 = __pyx_v_h;
-    __pyx_t_15 = 1;
-    qsort((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_4 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_8)) )))), (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_16 * __pyx_v_key_num.strides[0]) )) + __pyx_t_15)) ))), ((sizeof(int)) * 2), (&__pyx_f_15readhamilsparse_Cmp));
+    __pyx_t_12 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_17 * __pyx_v_key_num.strides[0]) )) + __pyx_t_18)) )));
+    __pyx_t_13 = 0;
+    __pyx_t_8 = __pyx_v_h;
+    __pyx_t_4 = 1;
+    qsort((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_12 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_13)) )))), (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_8 * __pyx_v_key_num.strides[0]) )) + __pyx_t_4)) ))), ((sizeof(int)) * 2), (&__pyx_f_15readhamilsparse_Cmp));
   }
 
-  /* "readhamilsparse.pyx":438
+  /* "readhamilsparse.pyx":448
  *         qsort(&key_info1[key_num[h,3],0],key_num[h,1],sizeof(int)*2,&Cmp)
  * 
  *     free(atom_idx)             # <<<<<<<<<<<<<<
@@ -5532,7 +5626,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   free(__pyx_v_15readhamilsparse_atom_idx);
 
-  /* "readhamilsparse.pyx":439
+  /* "readhamilsparse.pyx":449
  * 
  *     free(atom_idx)
  *     free(atom_idx_all)             # <<<<<<<<<<<<<<
@@ -5541,7 +5635,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   free(__pyx_v_15readhamilsparse_atom_idx_all);
 
-  /* "readhamilsparse.pyx":440
+  /* "readhamilsparse.pyx":450
  *     free(atom_idx)
  *     free(atom_idx_all)
  *     free(key_buf)             # <<<<<<<<<<<<<<
@@ -5550,7 +5644,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
  */
   free(__pyx_v_15readhamilsparse_key_buf);
 
-  /* "readhamilsparse.pyx":389
+  /* "readhamilsparse.pyx":394
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
@@ -5571,7 +5665,7 @@ static PyObject *__pyx_pf_15readhamilsparse_2GetSparseIdx(CYTHON_UNUSED PyObject
   return __pyx_r;
 }
 
-/* "readhamilsparse.pyx":445
+/* "readhamilsparse.pyx":455
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNumSum(             # <<<<<<<<<<<<<<
@@ -5620,23 +5714,23 @@ static PyObject *__pyx_pw_15readhamilsparse_5GetSparseNumSum(PyObject *__pyx_sel
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, 1); __PYX_ERR(0, 445, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, 1); __PYX_ERR(0, 455, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, 2); __PYX_ERR(0, 445, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, 2); __PYX_ERR(0, 455, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_info)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, 3); __PYX_ERR(0, 445, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, 3); __PYX_ERR(0, 455, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseNumSum") < 0)) __PYX_ERR(0, 445, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseNumSum") < 0)) __PYX_ERR(0, 455, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -5646,14 +5740,14 @@ static PyObject *__pyx_pw_15readhamilsparse_5GetSparseNumSum(PyObject *__pyx_sel
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 446, __pyx_L3_error)
-    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 446, __pyx_L3_error)
-    __pyx_v_key_num_s = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_s.memview)) __PYX_ERR(0, 447, __pyx_L3_error)
-    __pyx_v_key_info = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info.memview)) __PYX_ERR(0, 447, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 456, __pyx_L3_error)
+    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 456, __pyx_L3_error)
+    __pyx_v_key_num_s = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_s.memview)) __PYX_ERR(0, 457, __pyx_L3_error)
+    __pyx_v_key_info = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info.memview)) __PYX_ERR(0, 457, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 445, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetSparseNumSum", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 455, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readhamilsparse.GetSparseNumSum", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5692,7 +5786,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
   Py_ssize_t __pyx_t_13;
   __Pyx_RefNannySetupContext("GetSparseNumSum", 0);
 
-  /* "readhamilsparse.pyx":452
+  /* "readhamilsparse.pyx":462
  *     cdef int * key_buf
  * 
  *     memset(&key_num_s[0,0],0,(ncell+1)*2*sizeof(int))             # <<<<<<<<<<<<<<
@@ -5703,7 +5797,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
   __pyx_t_2 = 0;
   (void)(memset((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_s.data + __pyx_t_1 * __pyx_v_key_num_s.strides[0]) )) + __pyx_t_2)) )))), 0, (((__pyx_v_ncell + 1) * 2) * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":453
+  /* "readhamilsparse.pyx":463
  * 
  *     memset(&key_num_s[0,0],0,(ncell+1)*2*sizeof(int))
  *     for i in range(ncell):             # <<<<<<<<<<<<<<
@@ -5715,7 +5809,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":454
+    /* "readhamilsparse.pyx":464
  *     memset(&key_num_s[0,0],0,(ncell+1)*2*sizeof(int))
  *     for i in range(ncell):
  *         key_min = key_num[ncell*i,3]             # <<<<<<<<<<<<<<
@@ -5726,7 +5820,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
     __pyx_t_1 = 3;
     __pyx_v_key_min = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )));
 
-    /* "readhamilsparse.pyx":455
+    /* "readhamilsparse.pyx":465
  *     for i in range(ncell):
  *         key_min = key_num[ncell*i,3]
  *         key_max = key_num[ncell*(i+1),3]             # <<<<<<<<<<<<<<
@@ -5737,7 +5831,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
     __pyx_t_2 = 3;
     __pyx_v_key_max = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
 
-    /* "readhamilsparse.pyx":456
+    /* "readhamilsparse.pyx":466
  *         key_min = key_num[ncell*i,3]
  *         key_max = key_num[ncell*(i+1),3]
  *         nkey = key_max - key_min             # <<<<<<<<<<<<<<
@@ -5746,7 +5840,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
     __pyx_v_nkey = (__pyx_v_key_max - __pyx_v_key_min);
 
-    /* "readhamilsparse.pyx":457
+    /* "readhamilsparse.pyx":467
  *         key_max = key_num[ncell*(i+1),3]
  *         nkey = key_max - key_min
  *         if nkey > 0:             # <<<<<<<<<<<<<<
@@ -5756,7 +5850,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
     __pyx_t_6 = ((__pyx_v_nkey > 0) != 0);
     if (__pyx_t_6) {
 
-      /* "readhamilsparse.pyx":458
+      /* "readhamilsparse.pyx":468
  *         nkey = key_max - key_min
  *         if nkey > 0:
  *             key_buf = <int*>malloc(nkey*sizeof(int))             # <<<<<<<<<<<<<<
@@ -5765,7 +5859,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
       __pyx_v_key_buf = ((int *)malloc((__pyx_v_nkey * (sizeof(int)))));
 
-      /* "readhamilsparse.pyx":459
+      /* "readhamilsparse.pyx":469
  *         if nkey > 0:
  *             key_buf = <int*>malloc(nkey*sizeof(int))
  *             for j in range(key_min,key_max):             # <<<<<<<<<<<<<<
@@ -5777,7 +5871,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
       for (__pyx_t_9 = __pyx_v_key_min; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_j = __pyx_t_9;
 
-        /* "readhamilsparse.pyx":460
+        /* "readhamilsparse.pyx":470
  *             key_buf = <int*>malloc(nkey*sizeof(int))
  *             for j in range(key_min,key_max):
  *                 key_buf[j-key_min] = key_info[j,0]             # <<<<<<<<<<<<<<
@@ -5789,7 +5883,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
         (__pyx_v_key_buf[(__pyx_v_j - __pyx_v_key_min)]) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_2 * __pyx_v_key_info.strides[0]) )) + __pyx_t_1)) )));
       }
 
-      /* "readhamilsparse.pyx":461
+      /* "readhamilsparse.pyx":471
  *             for j in range(key_min,key_max):
  *                 key_buf[j-key_min] = key_info[j,0]
  *             qsort(key_buf,nkey,sizeof(int),&Cmp)             # <<<<<<<<<<<<<<
@@ -5798,7 +5892,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
       qsort(__pyx_v_key_buf, __pyx_v_nkey, (sizeof(int)), (&__pyx_f_15readhamilsparse_Cmp));
 
-      /* "readhamilsparse.pyx":462
+      /* "readhamilsparse.pyx":472
  *                 key_buf[j-key_min] = key_info[j,0]
  *             qsort(key_buf,nkey,sizeof(int),&Cmp)
  *             tmp = key_buf[0]             # <<<<<<<<<<<<<<
@@ -5807,7 +5901,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
       __pyx_v_tmp = (__pyx_v_key_buf[0]);
 
-      /* "readhamilsparse.pyx":463
+      /* "readhamilsparse.pyx":473
  *             qsort(key_buf,nkey,sizeof(int),&Cmp)
  *             tmp = key_buf[0]
  *             key_num_u = 1             # <<<<<<<<<<<<<<
@@ -5816,7 +5910,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
       __pyx_v_key_num_u = 1;
 
-      /* "readhamilsparse.pyx":464
+      /* "readhamilsparse.pyx":474
  *             tmp = key_buf[0]
  *             key_num_u = 1
  *             for j in range(1,nkey):             # <<<<<<<<<<<<<<
@@ -5828,7 +5922,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
       for (__pyx_t_9 = 1; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_j = __pyx_t_9;
 
-        /* "readhamilsparse.pyx":465
+        /* "readhamilsparse.pyx":475
  *             key_num_u = 1
  *             for j in range(1,nkey):
  *                 if (key_buf[j]!=tmp):             # <<<<<<<<<<<<<<
@@ -5838,7 +5932,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
         __pyx_t_6 = (((__pyx_v_key_buf[__pyx_v_j]) != __pyx_v_tmp) != 0);
         if (__pyx_t_6) {
 
-          /* "readhamilsparse.pyx":466
+          /* "readhamilsparse.pyx":476
  *             for j in range(1,nkey):
  *                 if (key_buf[j]!=tmp):
  *                     tmp = key_buf[j]             # <<<<<<<<<<<<<<
@@ -5847,7 +5941,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
           __pyx_v_tmp = (__pyx_v_key_buf[__pyx_v_j]);
 
-          /* "readhamilsparse.pyx":467
+          /* "readhamilsparse.pyx":477
  *                 if (key_buf[j]!=tmp):
  *                     tmp = key_buf[j]
  *                     key_num_u += 1             # <<<<<<<<<<<<<<
@@ -5856,7 +5950,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
           __pyx_v_key_num_u = (__pyx_v_key_num_u + 1);
 
-          /* "readhamilsparse.pyx":465
+          /* "readhamilsparse.pyx":475
  *             key_num_u = 1
  *             for j in range(1,nkey):
  *                 if (key_buf[j]!=tmp):             # <<<<<<<<<<<<<<
@@ -5866,7 +5960,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
         }
       }
 
-      /* "readhamilsparse.pyx":468
+      /* "readhamilsparse.pyx":478
  *                     tmp = key_buf[j]
  *                     key_num_u += 1
  *             free(key_buf)             # <<<<<<<<<<<<<<
@@ -5875,7 +5969,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
       free(__pyx_v_key_buf);
 
-      /* "readhamilsparse.pyx":469
+      /* "readhamilsparse.pyx":479
  *                     key_num_u += 1
  *             free(key_buf)
  *             key_num_s[i,0] = key_num_u             # <<<<<<<<<<<<<<
@@ -5886,7 +5980,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
       __pyx_t_2 = 0;
       *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_s.data + __pyx_t_1 * __pyx_v_key_num_s.strides[0]) )) + __pyx_t_2)) )) = __pyx_v_key_num_u;
 
-      /* "readhamilsparse.pyx":457
+      /* "readhamilsparse.pyx":467
  *         key_max = key_num[ncell*(i+1),3]
  *         nkey = key_max - key_min
  *         if nkey > 0:             # <<<<<<<<<<<<<<
@@ -5895,7 +5989,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
  */
     }
 
-    /* "readhamilsparse.pyx":471
+    /* "readhamilsparse.pyx":481
  *             key_num_s[i,0] = key_num_u
  * 
  *         for j in range(i+1,ncell+1):             # <<<<<<<<<<<<<<
@@ -5907,7 +6001,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
     for (__pyx_t_7 = (__pyx_v_i + 1); __pyx_t_7 < __pyx_t_11; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "readhamilsparse.pyx":472
+      /* "readhamilsparse.pyx":482
  * 
  *         for j in range(i+1,ncell+1):
  *             key_num_s[j,1] += key_num_s[i,0]             # <<<<<<<<<<<<<<
@@ -5922,7 +6016,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
     }
   }
 
-  /* "readhamilsparse.pyx":445
+  /* "readhamilsparse.pyx":455
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNumSum(             # <<<<<<<<<<<<<<
@@ -5940,7 +6034,7 @@ static PyObject *__pyx_pf_15readhamilsparse_4GetSparseNumSum(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "readhamilsparse.pyx":477
+/* "readhamilsparse.pyx":487
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdxSum(             # <<<<<<<<<<<<<<
@@ -5992,29 +6086,29 @@ static PyObject *__pyx_pw_15readhamilsparse_7GetSparseIdxSum(PyObject *__pyx_sel
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 1); __PYX_ERR(0, 477, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 1); __PYX_ERR(0, 487, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 2); __PYX_ERR(0, 477, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 2); __PYX_ERR(0, 487, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_info)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 3); __PYX_ERR(0, 477, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 3); __PYX_ERR(0, 487, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_info_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 4); __PYX_ERR(0, 477, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, 4); __PYX_ERR(0, 487, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseIdxSum") < 0)) __PYX_ERR(0, 477, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseIdxSum") < 0)) __PYX_ERR(0, 487, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -6025,15 +6119,15 @@ static PyObject *__pyx_pw_15readhamilsparse_7GetSparseIdxSum(PyObject *__pyx_sel
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
     }
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 478, __pyx_L3_error)
-    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 478, __pyx_L3_error)
-    __pyx_v_key_num_s = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_s.memview)) __PYX_ERR(0, 478, __pyx_L3_error)
-    __pyx_v_key_info = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info.memview)) __PYX_ERR(0, 479, __pyx_L3_error)
-    __pyx_v_key_info_s = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info_s.memview)) __PYX_ERR(0, 479, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 488, __pyx_L3_error)
+    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[1], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 488, __pyx_L3_error)
+    __pyx_v_key_num_s = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_s.memview)) __PYX_ERR(0, 488, __pyx_L3_error)
+    __pyx_v_key_info = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info.memview)) __PYX_ERR(0, 489, __pyx_L3_error)
+    __pyx_v_key_info_s = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info_s.memview)) __PYX_ERR(0, 489, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 477, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetSparseIdxSum", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 487, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readhamilsparse.GetSparseIdxSum", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6072,7 +6166,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
   Py_ssize_t __pyx_t_11;
   __Pyx_RefNannySetupContext("GetSparseIdxSum", 0);
 
-  /* "readhamilsparse.pyx":485
+  /* "readhamilsparse.pyx":495
  *     cdef int * mapidx
  * 
  *     for i in range(ncell):             # <<<<<<<<<<<<<<
@@ -6084,7 +6178,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readhamilsparse.pyx":486
+    /* "readhamilsparse.pyx":496
  * 
  *     for i in range(ncell):
  *         key_num_i = key_num_s[i,1]             # <<<<<<<<<<<<<<
@@ -6095,7 +6189,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
     __pyx_t_5 = 1;
     __pyx_v_key_num_i = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_s.data + __pyx_t_4 * __pyx_v_key_num_s.strides[0]) )) + __pyx_t_5)) )));
 
-    /* "readhamilsparse.pyx":487
+    /* "readhamilsparse.pyx":497
  *     for i in range(ncell):
  *         key_num_i = key_num_s[i,1]
  *         key_min = key_num[ncell*i,3]             # <<<<<<<<<<<<<<
@@ -6106,7 +6200,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
     __pyx_t_4 = 3;
     __pyx_v_key_min = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_4)) )));
 
-    /* "readhamilsparse.pyx":488
+    /* "readhamilsparse.pyx":498
  *         key_num_i = key_num_s[i,1]
  *         key_min = key_num[ncell*i,3]
  *         key_max = key_num[ncell*(i+1),3]             # <<<<<<<<<<<<<<
@@ -6117,7 +6211,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
     __pyx_t_5 = 3;
     __pyx_v_key_max = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) )));
 
-    /* "readhamilsparse.pyx":489
+    /* "readhamilsparse.pyx":499
  *         key_min = key_num[ncell*i,3]
  *         key_max = key_num[ncell*(i+1),3]
  *         nkey = key_max - key_min             # <<<<<<<<<<<<<<
@@ -6126,7 +6220,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
     __pyx_v_nkey = (__pyx_v_key_max - __pyx_v_key_min);
 
-    /* "readhamilsparse.pyx":490
+    /* "readhamilsparse.pyx":500
  *         key_max = key_num[ncell*(i+1),3]
  *         nkey = key_max - key_min
  *         if nkey > 0:             # <<<<<<<<<<<<<<
@@ -6136,7 +6230,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
     __pyx_t_6 = ((__pyx_v_nkey > 0) != 0);
     if (__pyx_t_6) {
 
-      /* "readhamilsparse.pyx":491
+      /* "readhamilsparse.pyx":501
  *         nkey = key_max - key_min
  *         if nkey > 0:
  *             key_buf = <int*>malloc(nkey*sizeof(int))             # <<<<<<<<<<<<<<
@@ -6145,7 +6239,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
       __pyx_v_key_buf = ((int *)malloc((__pyx_v_nkey * (sizeof(int)))));
 
-      /* "readhamilsparse.pyx":492
+      /* "readhamilsparse.pyx":502
  *         if nkey > 0:
  *             key_buf = <int*>malloc(nkey*sizeof(int))
  *             for j in range(key_min,key_max):             # <<<<<<<<<<<<<<
@@ -6157,7 +6251,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
       for (__pyx_t_9 = __pyx_v_key_min; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_j = __pyx_t_9;
 
-        /* "readhamilsparse.pyx":493
+        /* "readhamilsparse.pyx":503
  *             key_buf = <int*>malloc(nkey*sizeof(int))
  *             for j in range(key_min,key_max):
  *                 key_buf[j-key_min] = key_info[j,0]             # <<<<<<<<<<<<<<
@@ -6169,7 +6263,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
         (__pyx_v_key_buf[(__pyx_v_j - __pyx_v_key_min)]) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_5 * __pyx_v_key_info.strides[0]) )) + __pyx_t_4)) )));
       }
 
-      /* "readhamilsparse.pyx":494
+      /* "readhamilsparse.pyx":504
  *             for j in range(key_min,key_max):
  *                 key_buf[j-key_min] = key_info[j,0]
  *             qsort(key_buf,nkey,sizeof(int),&Cmp)             # <<<<<<<<<<<<<<
@@ -6178,7 +6272,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
       qsort(__pyx_v_key_buf, __pyx_v_nkey, (sizeof(int)), (&__pyx_f_15readhamilsparse_Cmp));
 
-      /* "readhamilsparse.pyx":495
+      /* "readhamilsparse.pyx":505
  *                 key_buf[j-key_min] = key_info[j,0]
  *             qsort(key_buf,nkey,sizeof(int),&Cmp)
  *             tmp = key_buf[0]             # <<<<<<<<<<<<<<
@@ -6187,7 +6281,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
       __pyx_v_tmp = (__pyx_v_key_buf[0]);
 
-      /* "readhamilsparse.pyx":496
+      /* "readhamilsparse.pyx":506
  *             qsort(key_buf,nkey,sizeof(int),&Cmp)
  *             tmp = key_buf[0]
  *             key_info_s[key_num_i] = tmp             # <<<<<<<<<<<<<<
@@ -6197,7 +6291,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
       __pyx_t_4 = __pyx_v_key_num_i;
       *((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_key_info_s.data) + __pyx_t_4)) )) = __pyx_v_tmp;
 
-      /* "readhamilsparse.pyx":497
+      /* "readhamilsparse.pyx":507
  *             tmp = key_buf[0]
  *             key_info_s[key_num_i] = tmp
  *             key_num_u = 1             # <<<<<<<<<<<<<<
@@ -6206,7 +6300,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
       __pyx_v_key_num_u = 1;
 
-      /* "readhamilsparse.pyx":498
+      /* "readhamilsparse.pyx":508
  *             key_info_s[key_num_i] = tmp
  *             key_num_u = 1
  *             for j in range(1,nkey):             # <<<<<<<<<<<<<<
@@ -6218,7 +6312,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
       for (__pyx_t_9 = 1; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_j = __pyx_t_9;
 
-        /* "readhamilsparse.pyx":499
+        /* "readhamilsparse.pyx":509
  *             key_num_u = 1
  *             for j in range(1,nkey):
  *                 if (key_buf[j]!=tmp):             # <<<<<<<<<<<<<<
@@ -6228,7 +6322,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
         __pyx_t_6 = (((__pyx_v_key_buf[__pyx_v_j]) != __pyx_v_tmp) != 0);
         if (__pyx_t_6) {
 
-          /* "readhamilsparse.pyx":500
+          /* "readhamilsparse.pyx":510
  *             for j in range(1,nkey):
  *                 if (key_buf[j]!=tmp):
  *                     tmp = key_buf[j]             # <<<<<<<<<<<<<<
@@ -6237,7 +6331,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
           __pyx_v_tmp = (__pyx_v_key_buf[__pyx_v_j]);
 
-          /* "readhamilsparse.pyx":501
+          /* "readhamilsparse.pyx":511
  *                 if (key_buf[j]!=tmp):
  *                     tmp = key_buf[j]
  *                     key_info_s[key_num_i+key_num_u] = tmp             # <<<<<<<<<<<<<<
@@ -6247,7 +6341,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
           __pyx_t_4 = (__pyx_v_key_num_i + __pyx_v_key_num_u);
           *((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_key_info_s.data) + __pyx_t_4)) )) = __pyx_v_tmp;
 
-          /* "readhamilsparse.pyx":502
+          /* "readhamilsparse.pyx":512
  *                     tmp = key_buf[j]
  *                     key_info_s[key_num_i+key_num_u] = tmp
  *                     key_num_u += 1             # <<<<<<<<<<<<<<
@@ -6256,7 +6350,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
           __pyx_v_key_num_u = (__pyx_v_key_num_u + 1);
 
-          /* "readhamilsparse.pyx":499
+          /* "readhamilsparse.pyx":509
  *             key_num_u = 1
  *             for j in range(1,nkey):
  *                 if (key_buf[j]!=tmp):             # <<<<<<<<<<<<<<
@@ -6266,7 +6360,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
         }
       }
 
-      /* "readhamilsparse.pyx":504
+      /* "readhamilsparse.pyx":514
  *                     key_num_u += 1
  * 
  *             mapidx = <int*>malloc(key_buf[nkey-1]*sizeof(int))             # <<<<<<<<<<<<<<
@@ -6275,7 +6369,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
       __pyx_v_mapidx = ((int *)malloc(((__pyx_v_key_buf[(__pyx_v_nkey - 1)]) * (sizeof(int)))));
 
-      /* "readhamilsparse.pyx":505
+      /* "readhamilsparse.pyx":515
  * 
  *             mapidx = <int*>malloc(key_buf[nkey-1]*sizeof(int))
  *             for j in range(key_num_u):             # <<<<<<<<<<<<<<
@@ -6287,7 +6381,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
       for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_j = __pyx_t_9;
 
-        /* "readhamilsparse.pyx":506
+        /* "readhamilsparse.pyx":516
  *             mapidx = <int*>malloc(key_buf[nkey-1]*sizeof(int))
  *             for j in range(key_num_u):
  *                 mapidx[key_info_s[key_num_i+j]] = j             # <<<<<<<<<<<<<<
@@ -6298,7 +6392,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
         (__pyx_v_mapidx[(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_key_info_s.data) + __pyx_t_4)) )))]) = __pyx_v_j;
       }
 
-      /* "readhamilsparse.pyx":507
+      /* "readhamilsparse.pyx":517
  *             for j in range(key_num_u):
  *                 mapidx[key_info_s[key_num_i+j]] = j
  *             for j in range(key_min,key_max):             # <<<<<<<<<<<<<<
@@ -6310,7 +6404,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
       for (__pyx_t_9 = __pyx_v_key_min; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_j = __pyx_t_9;
 
-        /* "readhamilsparse.pyx":508
+        /* "readhamilsparse.pyx":518
  *                 mapidx[key_info_s[key_num_i+j]] = j
  *             for j in range(key_min,key_max):
  *                 key_info[j,1] = mapidx[key_info[j,0]]             # <<<<<<<<<<<<<<
@@ -6324,7 +6418,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_10 * __pyx_v_key_info.strides[0]) )) + __pyx_t_11)) )) = (__pyx_v_mapidx[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_4 * __pyx_v_key_info.strides[0]) )) + __pyx_t_5)) )))]);
       }
 
-      /* "readhamilsparse.pyx":510
+      /* "readhamilsparse.pyx":520
  *                 key_info[j,1] = mapidx[key_info[j,0]]
  * 
  *             free(mapidx)             # <<<<<<<<<<<<<<
@@ -6333,7 +6427,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
       free(__pyx_v_mapidx);
 
-      /* "readhamilsparse.pyx":511
+      /* "readhamilsparse.pyx":521
  * 
  *             free(mapidx)
  *             free(key_buf)             # <<<<<<<<<<<<<<
@@ -6342,7 +6436,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
  */
       free(__pyx_v_key_buf);
 
-      /* "readhamilsparse.pyx":490
+      /* "readhamilsparse.pyx":500
  *         key_max = key_num[ncell*(i+1),3]
  *         nkey = key_max - key_min
  *         if nkey > 0:             # <<<<<<<<<<<<<<
@@ -6352,7 +6446,7 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
     }
   }
 
-  /* "readhamilsparse.pyx":477
+  /* "readhamilsparse.pyx":487
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdxSum(             # <<<<<<<<<<<<<<
@@ -6371,15 +6465,15 @@ static PyObject *__pyx_pf_15readhamilsparse_6GetSparseIdxSum(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "readhamilsparse.pyx":516
+/* "readhamilsparse.pyx":526
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout(             # <<<<<<<<<<<<<<
- *     char* name, int ncell2, int[:,::1] key_num, double* hamil_buf
- * ):
+ *     char* name, int ncell2, int[:,::1] key_num,
+ *     double* data_buf, double* hamil_buf, int Ispin
  */
 
-static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, double *__pyx_v_hamil_buf) {
+static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, double *__pyx_v_data_buf, double *__pyx_v_hamil_buf, int __pyx_v_Ispin) {
   FILE *__pyx_v_fp;
   int __pyx_v_i_vec[6];
   int __pyx_v_TCpyCell;
@@ -6393,76 +6487,77 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
   int __pyx_v_Rij;
   int __pyx_v_TNO1;
   int __pyx_v_TNO2;
+  int __pyx_v_spin;
+  int __pyx_v_ns;
   int *__pyx_v_FNAN;
   int **__pyx_v_natn;
   int **__pyx_v_ncn;
   int *__pyx_v_key_idx;
   PyObject *__pyx_v_offset = NULL;
   __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  int __pyx_t_2;
-  int __pyx_t_3;
-  Py_ssize_t __pyx_t_4;
-  Py_ssize_t __pyx_t_5;
-  long __pyx_t_6;
-  long __pyx_t_7;
-  long __pyx_t_8;
+  Py_ssize_t __pyx_t_1;
+  Py_ssize_t __pyx_t_2;
+  long __pyx_t_3;
+  long __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  int __pyx_t_8;
   long __pyx_t_9;
-  int __pyx_t_10;
-  PyObject *__pyx_t_11 = NULL;
-  int __pyx_t_12;
+  long __pyx_t_10;
+  long __pyx_t_11;
+  long __pyx_t_12;
   int __pyx_t_13;
   PyObject *__pyx_t_14 = NULL;
-  Py_ssize_t __pyx_t_15;
+  int __pyx_t_15;
+  int __pyx_t_16;
+  PyObject *__pyx_t_17 = NULL;
+  Py_ssize_t __pyx_t_18;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("readscfout", 0);
 
-  /* "readhamilsparse.pyx":528
+  /* "readhamilsparse.pyx":535
+ *     cdef int i, j ,k, ct_AN, h_AN, Gh_AN, atomnum
+ *     cdef int iR, jR, Rij, TNO1, TNO2, spin
+ *     cdef int ns = key_num[ncell2,3]             # <<<<<<<<<<<<<<
+ *     cdef int* atv_ijk
+ *     cdef int* FNAN
+ */
+  __pyx_t_1 = __pyx_v_ncell2;
+  __pyx_t_2 = 3;
+  __pyx_v_ns = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
+
+  /* "readhamilsparse.pyx":540
  *     cdef int** natn
  *     cdef int** ncn
  *     cdef int* key_idx = <int*>malloc(sizeof(int)*ncell2)             # <<<<<<<<<<<<<<
  * 
- *     for i in range(ncell2):
+ *     memset(hamil_buf,0,sizeof(double)*(Ispin+1)*ns)
  */
   __pyx_v_key_idx = ((int *)malloc(((sizeof(int)) * __pyx_v_ncell2)));
 
-  /* "readhamilsparse.pyx":530
+  /* "readhamilsparse.pyx":542
  *     cdef int* key_idx = <int*>malloc(sizeof(int)*ncell2)
  * 
- *     for i in range(ncell2):             # <<<<<<<<<<<<<<
- *         key_idx[i] = key_num[i,3]
- *     fp = fopen(name,'rb')
- */
-  __pyx_t_1 = __pyx_v_ncell2;
-  __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_i = __pyx_t_3;
-
-    /* "readhamilsparse.pyx":531
+ *     memset(hamil_buf,0,sizeof(double)*(Ispin+1)*ns)             # <<<<<<<<<<<<<<
  * 
- *     for i in range(ncell2):
- *         key_idx[i] = key_num[i,3]             # <<<<<<<<<<<<<<
  *     fp = fopen(name,'rb')
- *     fseek(fp,0,SEEK_SET)
  */
-    __pyx_t_4 = __pyx_v_i;
-    __pyx_t_5 = 3;
-    (__pyx_v_key_idx[__pyx_v_i]) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_4 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) )));
-  }
+  (void)(memset(__pyx_v_hamil_buf, 0, (((sizeof(double)) * (__pyx_v_Ispin + 1)) * __pyx_v_ns)));
 
-  /* "readhamilsparse.pyx":532
- *     for i in range(ncell2):
- *         key_idx[i] = key_num[i,3]
+  /* "readhamilsparse.pyx":544
+ *     memset(hamil_buf,0,sizeof(double)*(Ispin+1)*ns)
+ * 
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readhamilsparse.pyx":533
- *         key_idx[i] = key_num[i,3]
+  /* "readhamilsparse.pyx":545
+ * 
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
  *     fread(i_vec,sizeof(int),6,fp)
@@ -6470,7 +6565,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readhamilsparse.pyx":534
+  /* "readhamilsparse.pyx":546
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -6479,7 +6574,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":535
+  /* "readhamilsparse.pyx":547
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -6488,7 +6583,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readhamilsparse.pyx":536
+  /* "readhamilsparse.pyx":548
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -6497,7 +6592,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readhamilsparse.pyx":537
+  /* "readhamilsparse.pyx":549
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -6506,7 +6601,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":538
+  /* "readhamilsparse.pyx":550
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  *     fseek(fp,atomnum*4,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -6515,7 +6610,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   (void)(fseek(__pyx_v_fp, (__pyx_v_atomnum * 4), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":540
+  /* "readhamilsparse.pyx":552
  *     fseek(fp,atomnum*4,SEEK_CUR)
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -6524,7 +6619,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":541
+  /* "readhamilsparse.pyx":553
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -6533,7 +6628,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readhamilsparse.pyx":542
+  /* "readhamilsparse.pyx":554
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -6542,7 +6637,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":544
+  /* "readhamilsparse.pyx":556
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -6551,19 +6646,19 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":545
+  /* "readhamilsparse.pyx":557
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
-    __pyx_v_ct_AN = __pyx_t_1;
+  __pyx_t_3 = (__pyx_v_atomnum + 1);
+  __pyx_t_4 = __pyx_t_3;
+  for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+    __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":546
+    /* "readhamilsparse.pyx":558
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -6572,7 +6667,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":547
+    /* "readhamilsparse.pyx":559
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -6582,7 +6677,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":548
+  /* "readhamilsparse.pyx":560
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -6591,19 +6686,19 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":549
+  /* "readhamilsparse.pyx":561
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
-    __pyx_v_ct_AN = __pyx_t_1;
+  __pyx_t_3 = (__pyx_v_atomnum + 1);
+  __pyx_t_4 = __pyx_t_3;
+  for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+    __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":550
+    /* "readhamilsparse.pyx":562
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -6612,7 +6707,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":551
+    /* "readhamilsparse.pyx":563
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -6622,189 +6717,226 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":552
+  /* "readhamilsparse.pyx":564
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
- *     for ct_AN in range(1,atomnum+1):
+ *     for spin in range(Ispin+1):
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":554
+  /* "readhamilsparse.pyx":566
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
- *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
- *         TNO1 = atom_idx[ct_AN-1]
+ *     for spin in range(Ispin+1):             # <<<<<<<<<<<<<<
+ *         for i in range(ncell2):
+ *             key_idx[i] = key_num[i,3]
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
-    __pyx_v_ct_AN = __pyx_t_1;
+  __pyx_t_3 = (__pyx_v_Ispin + 1);
+  __pyx_t_4 = __pyx_t_3;
+  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+    __pyx_v_spin = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":555
+    /* "readhamilsparse.pyx":567
  * 
- *     for ct_AN in range(1,atomnum+1):
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)             # <<<<<<<<<<<<<<
- *         TNO1 = atom_idx[ct_AN-1]
- *         for h_AN in range(FNAN[ct_AN]+1):
+ *     for spin in range(Ispin+1):
+ *         for i in range(ncell2):             # <<<<<<<<<<<<<<
+ *             key_idx[i] = key_num[i,3]
+ *         for ct_AN in range(1,atomnum+1):
  */
-    __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_ct_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
+    __pyx_t_6 = __pyx_v_ncell2;
+    __pyx_t_7 = __pyx_t_6;
+    for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+      __pyx_v_i = __pyx_t_8;
 
-    /* "readhamilsparse.pyx":556
- *     for ct_AN in range(1,atomnum+1):
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
- *         TNO1 = atom_idx[ct_AN-1]             # <<<<<<<<<<<<<<
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]
+      /* "readhamilsparse.pyx":568
+ *     for spin in range(Ispin+1):
+ *         for i in range(ncell2):
+ *             key_idx[i] = key_num[i,3]             # <<<<<<<<<<<<<<
+ *         for ct_AN in range(1,atomnum+1):
+ *             iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
  */
-    __pyx_v_TNO1 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_ct_AN - 1)]);
+      __pyx_t_2 = __pyx_v_i;
+      __pyx_t_1 = 3;
+      (__pyx_v_key_idx[__pyx_v_i]) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )));
+    }
 
-    /* "readhamilsparse.pyx":557
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
- *         TNO1 = atom_idx[ct_AN-1]
- *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]
+    /* "readhamilsparse.pyx":569
+ *         for i in range(ncell2):
+ *             key_idx[i] = key_num[i,3]
+ *         for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
+ *             iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
+ *             TNO1 = atom_idx[ct_AN-1]
  */
-    __pyx_t_8 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
-    __pyx_t_9 = __pyx_t_8;
-    for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_9; __pyx_t_2+=1) {
-      __pyx_v_h_AN = __pyx_t_2;
+    __pyx_t_9 = (__pyx_v_atomnum + 1);
+    __pyx_t_10 = __pyx_t_9;
+    for (__pyx_t_6 = 1; __pyx_t_6 < __pyx_t_10; __pyx_t_6+=1) {
+      __pyx_v_ct_AN = __pyx_t_6;
 
-      /* "readhamilsparse.pyx":558
- *         TNO1 = atom_idx[ct_AN-1]
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):
+      /* "readhamilsparse.pyx":570
+ *             key_idx[i] = key_num[i,3]
+ *         for ct_AN in range(1,atomnum+1):
+ *             iR = <int>(atom_idx_all[ct_AN-1]/norb_u)             # <<<<<<<<<<<<<<
+ *             TNO1 = atom_idx[ct_AN-1]
+ *             for h_AN in range(FNAN[ct_AN]+1):
  */
-      __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
+      __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_ct_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-      /* "readhamilsparse.pyx":559
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]             # <<<<<<<<<<<<<<
- *             if (ncn[ct_AN][h_AN]==0):
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
+      /* "readhamilsparse.pyx":571
+ *         for ct_AN in range(1,atomnum+1):
+ *             iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
+ *             TNO1 = atom_idx[ct_AN-1]             # <<<<<<<<<<<<<<
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]
  */
-      __pyx_v_TNO2 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_Gh_AN - 1)]);
+      __pyx_v_TNO1 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_ct_AN - 1)]);
 
-      /* "readhamilsparse.pyx":560
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR
+      /* "readhamilsparse.pyx":572
+ *             iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
+ *             TNO1 = atom_idx[ct_AN-1]
+ *             for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = atom_idx[Gh_AN-1]
  */
-      __pyx_t_10 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
-      if (__pyx_t_10) {
+      __pyx_t_11 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
+      __pyx_t_12 = __pyx_t_11;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_12; __pyx_t_7+=1) {
+        __pyx_v_h_AN = __pyx_t_7;
 
-        /* "readhamilsparse.pyx":561
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)             # <<<<<<<<<<<<<<
- *                 Rij = iR*R_num+jR
- *                 offset = key_idx[Rij]
+        /* "readhamilsparse.pyx":573
+ *             TNO1 = atom_idx[ct_AN-1]
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):
  */
-        __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_Gh_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
+        __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-        /* "readhamilsparse.pyx":562
- *             if (ncn[ct_AN][h_AN]==0):
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
- *                 offset = key_idx[Rij]
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+        /* "readhamilsparse.pyx":574
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = atom_idx[Gh_AN-1]             # <<<<<<<<<<<<<<
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  */
-        __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
+        __pyx_v_TNO2 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_Gh_AN - 1)]);
 
-        /* "readhamilsparse.pyx":563
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR
- *                 offset = key_idx[Rij]             # <<<<<<<<<<<<<<
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                 for i in range(TNO1*TNO2):
+        /* "readhamilsparse.pyx":575
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
+ *                     jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
+ *                     Rij = iR*R_num+jR
  */
-        __pyx_t_11 = __Pyx_PyInt_From_int((__pyx_v_key_idx[__pyx_v_Rij])); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 563, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_11);
-        __Pyx_XDECREF_SET(__pyx_v_offset, __pyx_t_11);
-        __pyx_t_11 = 0;
+        __pyx_t_13 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
+        if (__pyx_t_13) {
 
-        /* "readhamilsparse.pyx":564
- *                 Rij = iR*R_num+jR
- *                 offset = key_idx[Rij]
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
- *                 for i in range(TNO1*TNO2):
- *                     hamil_buf[i+offset] = data_buf[i]*Hartree2eV
+          /* "readhamilsparse.pyx":576
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)             # <<<<<<<<<<<<<<
+ *                     Rij = iR*R_num+jR
+ *                     offset = key_idx[Rij]
  */
-        (void)(fread(__pyx_v_15readhamilsparse_data_buf, (sizeof(double)), (__pyx_v_TNO1 * __pyx_v_TNO2), __pyx_v_fp));
+          __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_Gh_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-        /* "readhamilsparse.pyx":565
- *                 offset = key_idx[Rij]
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                 for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
- *                     hamil_buf[i+offset] = data_buf[i]*Hartree2eV
- *                 key_idx[Rij] += TNO1*TNO2
+          /* "readhamilsparse.pyx":577
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
+ *                     Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
+ *                     offset = key_idx[Rij]
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  */
-        __pyx_t_3 = (__pyx_v_TNO1 * __pyx_v_TNO2);
-        __pyx_t_12 = __pyx_t_3;
-        for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
-          __pyx_v_i = __pyx_t_13;
+          __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
 
-          /* "readhamilsparse.pyx":566
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                 for i in range(TNO1*TNO2):
- *                     hamil_buf[i+offset] = data_buf[i]*Hartree2eV             # <<<<<<<<<<<<<<
- *                 key_idx[Rij] += TNO1*TNO2
- *             else:
+          /* "readhamilsparse.pyx":578
+ *                     jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
+ *                     Rij = iR*R_num+jR
+ *                     offset = key_idx[Rij]             # <<<<<<<<<<<<<<
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                     for i in range(TNO1*TNO2):
  */
-          __pyx_t_11 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 566, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_11);
-          __pyx_t_14 = PyNumber_Add(__pyx_t_11, __pyx_v_offset); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 566, __pyx_L1_error)
+          __pyx_t_14 = __Pyx_PyInt_From_int((__pyx_v_key_idx[__pyx_v_Rij])); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 578, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_14);
-          __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-          __pyx_t_15 = __Pyx_PyIndex_AsSsize_t(__pyx_t_14); if (unlikely((__pyx_t_15 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 566, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
-          (__pyx_v_hamil_buf[__pyx_t_15]) = ((__pyx_v_15readhamilsparse_data_buf[__pyx_v_i]) * __pyx_v_15readhamilsparse_Hartree2eV);
+          __Pyx_XDECREF_SET(__pyx_v_offset, __pyx_t_14);
+          __pyx_t_14 = 0;
+
+          /* "readhamilsparse.pyx":579
+ *                     Rij = iR*R_num+jR
+ *                     offset = key_idx[Rij]
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
+ *                     for i in range(TNO1*TNO2):
+ *                         hamil_buf[spin*ns+i+offset] = data_buf[i]*Hartree2eV
+ */
+          (void)(fread(__pyx_v_data_buf, (sizeof(double)), (__pyx_v_TNO1 * __pyx_v_TNO2), __pyx_v_fp));
+
+          /* "readhamilsparse.pyx":580
+ *                     offset = key_idx[Rij]
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                     for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
+ *                         hamil_buf[spin*ns+i+offset] = data_buf[i]*Hartree2eV
+ *                     key_idx[Rij] += TNO1*TNO2
+ */
+          __pyx_t_8 = (__pyx_v_TNO1 * __pyx_v_TNO2);
+          __pyx_t_15 = __pyx_t_8;
+          for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+            __pyx_v_i = __pyx_t_16;
+
+            /* "readhamilsparse.pyx":581
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                     for i in range(TNO1*TNO2):
+ *                         hamil_buf[spin*ns+i+offset] = data_buf[i]*Hartree2eV             # <<<<<<<<<<<<<<
+ *                     key_idx[Rij] += TNO1*TNO2
+ *                 else:
+ */
+            __pyx_t_14 = __Pyx_PyInt_From_int(((__pyx_v_spin * __pyx_v_ns) + __pyx_v_i)); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 581, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_14);
+            __pyx_t_17 = PyNumber_Add(__pyx_t_14, __pyx_v_offset); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 581, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_17);
+            __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
+            __pyx_t_18 = __Pyx_PyIndex_AsSsize_t(__pyx_t_17); if (unlikely((__pyx_t_18 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 581, __pyx_L1_error)
+            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+            (__pyx_v_hamil_buf[__pyx_t_18]) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_15readhamilsparse_Hartree2eV);
+          }
+
+          /* "readhamilsparse.pyx":582
+ *                     for i in range(TNO1*TNO2):
+ *                         hamil_buf[spin*ns+i+offset] = data_buf[i]*Hartree2eV
+ *                     key_idx[Rij] += TNO1*TNO2             # <<<<<<<<<<<<<<
+ *                 else:
+ *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+ */
+          __pyx_t_8 = __pyx_v_Rij;
+          (__pyx_v_key_idx[__pyx_t_8]) = ((__pyx_v_key_idx[__pyx_t_8]) + (__pyx_v_TNO1 * __pyx_v_TNO2));
+
+          /* "readhamilsparse.pyx":575
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
+ *                     jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
+ *                     Rij = iR*R_num+jR
+ */
+          goto __pyx_L15;
         }
 
-        /* "readhamilsparse.pyx":567
- *                 for i in range(TNO1*TNO2):
- *                     hamil_buf[i+offset] = data_buf[i]*Hartree2eV
- *                 key_idx[Rij] += TNO1*TNO2             # <<<<<<<<<<<<<<
- *             else:
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
- */
-        __pyx_t_3 = __pyx_v_Rij;
-        (__pyx_v_key_idx[__pyx_t_3]) = ((__pyx_v_key_idx[__pyx_t_3]) + (__pyx_v_TNO1 * __pyx_v_TNO2));
-
-        /* "readhamilsparse.pyx":560
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR
- */
-        goto __pyx_L13;
-      }
-
-      /* "readhamilsparse.pyx":569
- *                 key_idx[Rij] += TNO1*TNO2
- *             else:
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
+        /* "readhamilsparse.pyx":584
+ *                     key_idx[Rij] += TNO1*TNO2
+ *                 else:
+ *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
  *     fclose(fp)
  */
-      /*else*/ {
-        (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
+        /*else*/ {
+          (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
+        }
+        __pyx_L15:;
       }
-      __pyx_L13:;
     }
   }
 
-  /* "readhamilsparse.pyx":571
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+  /* "readhamilsparse.pyx":586
+ *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
  *     for ct_AN in range(1,atomnum+1):
@@ -6812,19 +6944,19 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readhamilsparse.pyx":572
+  /* "readhamilsparse.pyx":587
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_1 = 1; __pyx_t_1 < __pyx_t_7; __pyx_t_1+=1) {
-    __pyx_v_ct_AN = __pyx_t_1;
+  __pyx_t_3 = (__pyx_v_atomnum + 1);
+  __pyx_t_4 = __pyx_t_3;
+  for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+    __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":573
+    /* "readhamilsparse.pyx":588
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -6833,7 +6965,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readhamilsparse.pyx":574
+    /* "readhamilsparse.pyx":589
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -6843,7 +6975,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readhamilsparse.pyx":575
+  /* "readhamilsparse.pyx":590
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -6852,7 +6984,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   free(__pyx_v_natn);
 
-  /* "readhamilsparse.pyx":576
+  /* "readhamilsparse.pyx":591
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
@@ -6861,7 +6993,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   free(__pyx_v_ncn);
 
-  /* "readhamilsparse.pyx":577
+  /* "readhamilsparse.pyx":592
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
@@ -6870,7 +7002,7 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   free(__pyx_v_FNAN);
 
-  /* "readhamilsparse.pyx":578
+  /* "readhamilsparse.pyx":593
  *     free(ncn)
  *     free(FNAN)
  *     free(key_idx)             # <<<<<<<<<<<<<<
@@ -6879,26 +7011,26 @@ static void __pyx_f_15readhamilsparse_readscfout(char *__pyx_v_name, int __pyx_v
  */
   free(__pyx_v_key_idx);
 
-  /* "readhamilsparse.pyx":516
+  /* "readhamilsparse.pyx":526
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout(             # <<<<<<<<<<<<<<
- *     char* name, int ncell2, int[:,::1] key_num, double* hamil_buf
- * ):
+ *     char* name, int ncell2, int[:,::1] key_num,
+ *     double* data_buf, double* hamil_buf, int Ispin
  */
 
   /* function exit code */
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_11);
   __Pyx_XDECREF(__pyx_t_14);
+  __Pyx_XDECREF(__pyx_t_17);
   __Pyx_WriteUnraisable("readhamilsparse.readscfout", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_offset);
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":583
+/* "readhamilsparse.pyx":598
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_keymap(             # <<<<<<<<<<<<<<
@@ -6944,23 +7076,23 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
   int __pyx_t_15;
   __Pyx_RefNannySetupContext("readscfout_keymap", 0);
 
-  /* "readhamilsparse.pyx":596
+  /* "readhamilsparse.pyx":611
  *     cdef int** ncn
  * 
- *     for i in range(key_num[ncell2,2]+40):             # <<<<<<<<<<<<<<
+ *     for i in range((key_num[ncell2,2]+40)*3):             # <<<<<<<<<<<<<<
  *         key_map[i] = -1
  *     fp = fopen(name,'rb')
  */
   __pyx_t_1 = __pyx_v_ncell2;
   __pyx_t_2 = 2;
-  __pyx_t_3 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) + 40);
+  __pyx_t_3 = (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) + 40) * 3);
   __pyx_t_4 = __pyx_t_3;
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":597
+    /* "readhamilsparse.pyx":612
  * 
- *     for i in range(key_num[ncell2,2]+40):
+ *     for i in range((key_num[ncell2,2]+40)*3):
  *         key_map[i] = -1             # <<<<<<<<<<<<<<
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
@@ -6968,8 +7100,8 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
     (__pyx_v_key_map[__pyx_v_i]) = -1;
   }
 
-  /* "readhamilsparse.pyx":598
- *     for i in range(key_num[ncell2,2]+40):
+  /* "readhamilsparse.pyx":613
+ *     for i in range((key_num[ncell2,2]+40)*3):
  *         key_map[i] = -1
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
  *     fseek(fp,0,SEEK_SET)
@@ -6977,7 +7109,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readhamilsparse.pyx":599
+  /* "readhamilsparse.pyx":614
  *         key_map[i] = -1
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
@@ -6986,7 +7118,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readhamilsparse.pyx":600
+  /* "readhamilsparse.pyx":615
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -6995,7 +7127,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":601
+  /* "readhamilsparse.pyx":616
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -7004,7 +7136,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readhamilsparse.pyx":602
+  /* "readhamilsparse.pyx":617
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -7013,7 +7145,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readhamilsparse.pyx":603
+  /* "readhamilsparse.pyx":618
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7022,7 +7154,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":604
+  /* "readhamilsparse.pyx":619
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  *     fseek(fp,atomnum*4,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7031,7 +7163,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (void)(fseek(__pyx_v_fp, (__pyx_v_atomnum * 4), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":606
+  /* "readhamilsparse.pyx":621
  *     fseek(fp,atomnum*4,SEEK_CUR)
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -7040,7 +7172,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":607
+  /* "readhamilsparse.pyx":622
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -7049,7 +7181,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readhamilsparse.pyx":608
+  /* "readhamilsparse.pyx":623
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -7058,7 +7190,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":610
+  /* "readhamilsparse.pyx":625
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -7067,7 +7199,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":611
+  /* "readhamilsparse.pyx":626
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7079,7 +7211,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":612
+    /* "readhamilsparse.pyx":627
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -7088,7 +7220,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":613
+    /* "readhamilsparse.pyx":628
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -7098,7 +7230,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":614
+  /* "readhamilsparse.pyx":629
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -7107,7 +7239,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":615
+  /* "readhamilsparse.pyx":630
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7119,7 +7251,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":616
+    /* "readhamilsparse.pyx":631
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -7128,7 +7260,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":617
+    /* "readhamilsparse.pyx":632
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -7138,7 +7270,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":618
+  /* "readhamilsparse.pyx":633
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7147,7 +7279,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":620
+  /* "readhamilsparse.pyx":635
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
  *     j = 0             # <<<<<<<<<<<<<<
@@ -7156,7 +7288,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   __pyx_v_j = 0;
 
-  /* "readhamilsparse.pyx":621
+  /* "readhamilsparse.pyx":636
  * 
  *     j = 0
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7168,7 +7300,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":622
+    /* "readhamilsparse.pyx":637
  *     j = 0
  *     for ct_AN in range(1,atomnum+1):
  *         atomi = ct_AN-1             # <<<<<<<<<<<<<<
@@ -7177,7 +7309,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
     __pyx_v_atomi = (__pyx_v_ct_AN - 1);
 
-    /* "readhamilsparse.pyx":623
+    /* "readhamilsparse.pyx":638
  *     for ct_AN in range(1,atomnum+1):
  *         atomi = ct_AN-1
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -7186,7 +7318,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
     __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_ct_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-    /* "readhamilsparse.pyx":624
+    /* "readhamilsparse.pyx":639
  *         atomi = ct_AN-1
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
  *         TNO1 = atom_idx[atomi]             # <<<<<<<<<<<<<<
@@ -7195,7 +7327,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
     __pyx_v_TNO1 = (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomi]);
 
-    /* "readhamilsparse.pyx":625
+    /* "readhamilsparse.pyx":640
  *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
  *         TNO1 = atom_idx[atomi]
  *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
@@ -7207,7 +7339,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_h_AN = __pyx_t_8;
 
-      /* "readhamilsparse.pyx":626
+      /* "readhamilsparse.pyx":641
  *         TNO1 = atom_idx[atomi]
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -7216,7 +7348,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
       __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-      /* "readhamilsparse.pyx":627
+      /* "readhamilsparse.pyx":642
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  *             atomj = Gh_AN-1             # <<<<<<<<<<<<<<
@@ -7225,7 +7357,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
       __pyx_v_atomj = (__pyx_v_Gh_AN - 1);
 
-      /* "readhamilsparse.pyx":628
+      /* "readhamilsparse.pyx":643
  *             Gh_AN = natn[ct_AN][h_AN]
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]             # <<<<<<<<<<<<<<
@@ -7234,7 +7366,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
       __pyx_v_TNO2 = (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_atomj]);
 
-      /* "readhamilsparse.pyx":629
+      /* "readhamilsparse.pyx":644
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -7244,7 +7376,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
       __pyx_t_9 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
       if (__pyx_t_9) {
 
-        /* "readhamilsparse.pyx":630
+        /* "readhamilsparse.pyx":645
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)             # <<<<<<<<<<<<<<
@@ -7253,7 +7385,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
         __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_Gh_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
 
-        /* "readhamilsparse.pyx":631
+        /* "readhamilsparse.pyx":646
  *             if (ncn[ct_AN][h_AN]==0):
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  *                 Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
@@ -7262,12 +7394,12 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
         __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
 
-        /* "readhamilsparse.pyx":632
+        /* "readhamilsparse.pyx":647
  *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
  *                 Rij = iR*R_num+jR
  *                 for i in range(key_num[Rij,2],key_num[Rij+1,2]):             # <<<<<<<<<<<<<<
  *                     if (pub_key[i,0]==atomi and pub_key[i,1]==atomj):
- *                         key_map[j] = i
+ *                         key_map[j*3] = i
  */
         __pyx_t_2 = (__pyx_v_Rij + 1);
         __pyx_t_1 = 2;
@@ -7278,12 +7410,12 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
         for (__pyx_t_12 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))); __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
           __pyx_v_i = __pyx_t_12;
 
-          /* "readhamilsparse.pyx":633
+          /* "readhamilsparse.pyx":648
  *                 Rij = iR*R_num+jR
  *                 for i in range(key_num[Rij,2],key_num[Rij+1,2]):
  *                     if (pub_key[i,0]==atomi and pub_key[i,1]==atomj):             # <<<<<<<<<<<<<<
- *                         key_map[j] = i
- *                         break
+ *                         key_map[j*3] = i
+ *                         key_map[j*3+1] = atomi
  */
           __pyx_t_13 = __pyx_v_i;
           __pyx_t_14 = 0;
@@ -7300,37 +7432,55 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
           __pyx_L17_bool_binop_done:;
           if (__pyx_t_9) {
 
-            /* "readhamilsparse.pyx":634
+            /* "readhamilsparse.pyx":649
  *                 for i in range(key_num[Rij,2],key_num[Rij+1,2]):
  *                     if (pub_key[i,0]==atomi and pub_key[i,1]==atomj):
- *                         key_map[j] = i             # <<<<<<<<<<<<<<
+ *                         key_map[j*3] = i             # <<<<<<<<<<<<<<
+ *                         key_map[j*3+1] = atomi
+ *                         key_map[j*3+2] = atomj
+ */
+            (__pyx_v_key_map[(__pyx_v_j * 3)]) = __pyx_v_i;
+
+            /* "readhamilsparse.pyx":650
+ *                     if (pub_key[i,0]==atomi and pub_key[i,1]==atomj):
+ *                         key_map[j*3] = i
+ *                         key_map[j*3+1] = atomi             # <<<<<<<<<<<<<<
+ *                         key_map[j*3+2] = atomj
+ *                         break
+ */
+            (__pyx_v_key_map[((__pyx_v_j * 3) + 1)]) = __pyx_v_atomi;
+
+            /* "readhamilsparse.pyx":651
+ *                         key_map[j*3] = i
+ *                         key_map[j*3+1] = atomi
+ *                         key_map[j*3+2] = atomj             # <<<<<<<<<<<<<<
  *                         break
  *                 j += 1
  */
-            (__pyx_v_key_map[__pyx_v_j]) = __pyx_v_i;
+            (__pyx_v_key_map[((__pyx_v_j * 3) + 2)]) = __pyx_v_atomj;
 
-            /* "readhamilsparse.pyx":635
- *                     if (pub_key[i,0]==atomi and pub_key[i,1]==atomj):
- *                         key_map[j] = i
+            /* "readhamilsparse.pyx":652
+ *                         key_map[j*3+1] = atomi
+ *                         key_map[j*3+2] = atomj
  *                         break             # <<<<<<<<<<<<<<
  *                 j += 1
  * 
  */
             goto __pyx_L15_break;
 
-            /* "readhamilsparse.pyx":633
+            /* "readhamilsparse.pyx":648
  *                 Rij = iR*R_num+jR
  *                 for i in range(key_num[Rij,2],key_num[Rij+1,2]):
  *                     if (pub_key[i,0]==atomi and pub_key[i,1]==atomj):             # <<<<<<<<<<<<<<
- *                         key_map[j] = i
- *                         break
+ *                         key_map[j*3] = i
+ *                         key_map[j*3+1] = atomi
  */
           }
         }
         __pyx_L15_break:;
 
-        /* "readhamilsparse.pyx":636
- *                         key_map[j] = i
+        /* "readhamilsparse.pyx":653
+ *                         key_map[j*3+2] = atomj
  *                         break
  *                 j += 1             # <<<<<<<<<<<<<<
  * 
@@ -7338,7 +7488,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
         __pyx_v_j = (__pyx_v_j + 1);
 
-        /* "readhamilsparse.pyx":629
+        /* "readhamilsparse.pyx":644
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -7347,7 +7497,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
       }
 
-      /* "readhamilsparse.pyx":638
+      /* "readhamilsparse.pyx":655
  *                 j += 1
  * 
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7358,7 +7508,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
     }
   }
 
-  /* "readhamilsparse.pyx":640
+  /* "readhamilsparse.pyx":657
  *             fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
@@ -7367,7 +7517,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readhamilsparse.pyx":641
+  /* "readhamilsparse.pyx":658
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7379,7 +7529,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readhamilsparse.pyx":642
+    /* "readhamilsparse.pyx":659
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -7388,7 +7538,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readhamilsparse.pyx":643
+    /* "readhamilsparse.pyx":660
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -7398,7 +7548,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readhamilsparse.pyx":644
+  /* "readhamilsparse.pyx":661
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -7407,7 +7557,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   free(__pyx_v_natn);
 
-  /* "readhamilsparse.pyx":645
+  /* "readhamilsparse.pyx":662
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
@@ -7416,7 +7566,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   free(__pyx_v_ncn);
 
-  /* "readhamilsparse.pyx":646
+  /* "readhamilsparse.pyx":663
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
@@ -7425,7 +7575,7 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
  */
   free(__pyx_v_FNAN);
 
-  /* "readhamilsparse.pyx":583
+  /* "readhamilsparse.pyx":598
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_keymap(             # <<<<<<<<<<<<<<
@@ -7437,15 +7587,15 @@ static void __pyx_f_15readhamilsparse_readscfout_keymap(char *__pyx_v_name, int 
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":651
+/* "readhamilsparse.pyx":668
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout1(             # <<<<<<<<<<<<<<
  *     char* name, int ncell2, int[:,::1] key_num, int[:,::1] pub_key,
- *     int[:,::1] key_info1, double* hamil_buf, double[::1] epc, double f, bint LADD
+ *     int[:,::1] key_info1, double* data_buf, double* hamil_buf,
  */
 
-static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info1, double *__pyx_v_hamil_buf, __Pyx_memviewslice __pyx_v_epc, double __pyx_v_f, int __pyx_v_LADD) {
+static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info1, double *__pyx_v_data_buf, double *__pyx_v_hamil_buf, __Pyx_memviewslice __pyx_v_epc, double __pyx_v_f, int __pyx_v_Ispin, int __pyx_v_LADD) {
   FILE *__pyx_v_fp;
   int __pyx_v_i_vec[6];
   int __pyx_v_TCpyCell;
@@ -7455,120 +7605,111 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
   int __pyx_v_h_AN;
   int __pyx_v_Gh_AN;
   int __pyx_v_atomnum;
-  int __pyx_v_iR;
-  int __pyx_v_jR;
-  CYTHON_UNUSED int __pyx_v_Rij;
   int __pyx_v_TNO1;
   int __pyx_v_TNO2;
+  int __pyx_v_atomi;
+  int __pyx_v_atomj;
   int __pyx_v_offset;
+  int __pyx_v_offset_i;
+  int __pyx_v_spin;
+  int __pyx_v_ns;
   int *__pyx_v_FNAN;
   int **__pyx_v_natn;
   int **__pyx_v_ncn;
   int *__pyx_v_key_map;
-  int *__pyx_v_key_idx;
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
   Py_ssize_t __pyx_t_2;
   int __pyx_t_3;
-  int __pyx_t_4;
-  int __pyx_t_5;
-  long __pyx_t_6;
+  long __pyx_t_4;
+  long __pyx_t_5;
+  int __pyx_t_6;
   long __pyx_t_7;
-  int __pyx_t_8;
+  long __pyx_t_8;
   int __pyx_t_9;
-  Py_ssize_t __pyx_t_10;
-  Py_ssize_t __pyx_t_11;
-  long __pyx_t_12;
+  long __pyx_t_10;
+  long __pyx_t_11;
+  int __pyx_t_12;
   long __pyx_t_13;
-  int __pyx_t_14;
+  long __pyx_t_14;
+  int __pyx_t_15;
+  int __pyx_t_16;
+  int __pyx_t_17;
+  int __pyx_t_18;
+  Py_ssize_t __pyx_t_19;
+  Py_ssize_t __pyx_t_20;
   __Pyx_RefNannySetupContext("readscfout1", 0);
 
-  /* "readhamilsparse.pyx":664
- *     cdef int** natn
- *     cdef int** ncn
- *     cdef int* key_map = <int*>malloc(sizeof(int)*(key_num[ncell2,2]+40))             # <<<<<<<<<<<<<<
- *     cdef int* key_idx = <int*>calloc(sizeof(int),(key_num[ncell2,2]+1))
- *     cdef char kname[500]
+  /* "readhamilsparse.pyx":678
+ *     cdef int i, j ,k, ct_AN, h_AN, Gh_AN, atomnum
+ *     cdef int iR, jR, Rij, TNO1, TNO2, atomi, atomj, offset, offset_i, spin
+ *     cdef int ns = key_num[ncell2,3]             # <<<<<<<<<<<<<<
+ *     cdef int* atv_ijk
+ *     cdef int* FNAN
  */
   __pyx_t_1 = __pyx_v_ncell2;
-  __pyx_t_2 = 2;
-  __pyx_v_key_map = ((int *)malloc(((sizeof(int)) * ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) + 40))));
+  __pyx_t_2 = 3;
+  __pyx_v_ns = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
 
-  /* "readhamilsparse.pyx":665
+  /* "readhamilsparse.pyx":683
+ *     cdef int** natn
  *     cdef int** ncn
- *     cdef int* key_map = <int*>malloc(sizeof(int)*(key_num[ncell2,2]+40))
- *     cdef int* key_idx = <int*>calloc(sizeof(int),(key_num[ncell2,2]+1))             # <<<<<<<<<<<<<<
+ *     cdef int* key_map = <int*>malloc(sizeof(int)*3*(key_num[ncell2,2]+40))             # <<<<<<<<<<<<<<
  *     cdef char kname[500]
  * 
  */
   __pyx_t_2 = __pyx_v_ncell2;
   __pyx_t_1 = 2;
-  __pyx_v_key_idx = ((int *)calloc((sizeof(int)), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) + 1)));
+  __pyx_v_key_map = ((int *)malloc((((sizeof(int)) * 3) * ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) + 40))));
 
-  /* "readhamilsparse.pyx":668
+  /* "readhamilsparse.pyx":686
  *     cdef char kname[500]
  * 
+ *     if not LADD:             # <<<<<<<<<<<<<<
+ *         memset(hamil_buf,0,sizeof(double)*(Ispin+1)*ns)
+ * 
+ */
+  __pyx_t_3 = ((!(__pyx_v_LADD != 0)) != 0);
+  if (__pyx_t_3) {
+
+    /* "readhamilsparse.pyx":687
+ * 
+ *     if not LADD:
+ *         memset(hamil_buf,0,sizeof(double)*(Ispin+1)*ns)             # <<<<<<<<<<<<<<
+ * 
+ *     readscfout_keymap(name,ncell2,key_num,pub_key,key_map)
+ */
+    (void)(memset(__pyx_v_hamil_buf, 0, (((sizeof(double)) * (__pyx_v_Ispin + 1)) * __pyx_v_ns)));
+
+    /* "readhamilsparse.pyx":686
+ *     cdef char kname[500]
+ * 
+ *     if not LADD:             # <<<<<<<<<<<<<<
+ *         memset(hamil_buf,0,sizeof(double)*(Ispin+1)*ns)
+ * 
+ */
+  }
+
+  /* "readhamilsparse.pyx":689
+ *         memset(hamil_buf,0,sizeof(double)*(Ispin+1)*ns)
+ * 
  *     readscfout_keymap(name,ncell2,key_num,pub_key,key_map)             # <<<<<<<<<<<<<<
- *     for i in range(key_num[ncell2,2]):
- *         for j in range(i+1,key_num[ncell2,2]+1):
+ * 
+ *     fp = fopen(name,'rb')
  */
   __pyx_f_15readhamilsparse_readscfout_keymap(__pyx_v_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_map);
 
-  /* "readhamilsparse.pyx":669
+  /* "readhamilsparse.pyx":691
+ *     readscfout_keymap(name,ncell2,key_num,pub_key,key_map)
  * 
- *     readscfout_keymap(name,ncell2,key_num,pub_key,key_map)
- *     for i in range(key_num[ncell2,2]):             # <<<<<<<<<<<<<<
- *         for j in range(i+1,key_num[ncell2,2]+1):
- *             key_idx[j] += pub_key[i,2]*pub_key[i,3]
- */
-  __pyx_t_1 = __pyx_v_ncell2;
-  __pyx_t_2 = 2;
-  __pyx_t_3 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
-  __pyx_t_4 = __pyx_t_3;
-  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
-    __pyx_v_i = __pyx_t_5;
-
-    /* "readhamilsparse.pyx":670
- *     readscfout_keymap(name,ncell2,key_num,pub_key,key_map)
- *     for i in range(key_num[ncell2,2]):
- *         for j in range(i+1,key_num[ncell2,2]+1):             # <<<<<<<<<<<<<<
- *             key_idx[j] += pub_key[i,2]*pub_key[i,3]
- *     fp = fopen(name,'rb')
- */
-    __pyx_t_2 = __pyx_v_ncell2;
-    __pyx_t_1 = 2;
-    __pyx_t_6 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) + 1);
-    __pyx_t_7 = __pyx_t_6;
-    for (__pyx_t_8 = (__pyx_v_i + 1); __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-      __pyx_v_j = __pyx_t_8;
-
-      /* "readhamilsparse.pyx":671
- *     for i in range(key_num[ncell2,2]):
- *         for j in range(i+1,key_num[ncell2,2]+1):
- *             key_idx[j] += pub_key[i,2]*pub_key[i,3]             # <<<<<<<<<<<<<<
- *     fp = fopen(name,'rb')
- *     fseek(fp,0,SEEK_SET)
- */
-      __pyx_t_9 = __pyx_v_j;
-      __pyx_t_1 = __pyx_v_i;
-      __pyx_t_2 = 2;
-      __pyx_t_10 = __pyx_v_i;
-      __pyx_t_11 = 3;
-      (__pyx_v_key_idx[__pyx_t_9]) = ((__pyx_v_key_idx[__pyx_t_9]) + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_10 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_11)) )))));
-    }
-  }
-
-  /* "readhamilsparse.pyx":672
- *         for j in range(i+1,key_num[ncell2,2]+1):
- *             key_idx[j] += pub_key[i,2]*pub_key[i,3]
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readhamilsparse.pyx":673
- *             key_idx[j] += pub_key[i,2]*pub_key[i,3]
+  /* "readhamilsparse.pyx":692
+ * 
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
  *     fread(i_vec,sizeof(int),6,fp)
@@ -7576,7 +7717,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readhamilsparse.pyx":674
+  /* "readhamilsparse.pyx":693
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -7585,7 +7726,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":675
+  /* "readhamilsparse.pyx":694
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -7594,7 +7735,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readhamilsparse.pyx":676
+  /* "readhamilsparse.pyx":695
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -7603,7 +7744,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readhamilsparse.pyx":677
+  /* "readhamilsparse.pyx":696
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7612,7 +7753,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":678
+  /* "readhamilsparse.pyx":697
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  *     fseek(fp,atomnum*4,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7621,7 +7762,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   (void)(fseek(__pyx_v_fp, (__pyx_v_atomnum * 4), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":680
+  /* "readhamilsparse.pyx":699
  *     fseek(fp,atomnum*4,SEEK_CUR)
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -7630,7 +7771,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":681
+  /* "readhamilsparse.pyx":700
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -7639,7 +7780,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readhamilsparse.pyx":682
+  /* "readhamilsparse.pyx":701
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -7648,7 +7789,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readhamilsparse.pyx":684
+  /* "readhamilsparse.pyx":703
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -7657,19 +7798,19 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":685
+  /* "readhamilsparse.pyx":704
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_7; __pyx_t_3+=1) {
-    __pyx_v_ct_AN = __pyx_t_3;
+  __pyx_t_4 = (__pyx_v_atomnum + 1);
+  __pyx_t_5 = __pyx_t_4;
+  for (__pyx_t_6 = 1; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_ct_AN = __pyx_t_6;
 
-    /* "readhamilsparse.pyx":686
+    /* "readhamilsparse.pyx":705
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -7678,7 +7819,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":687
+    /* "readhamilsparse.pyx":706
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -7688,7 +7829,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":688
+  /* "readhamilsparse.pyx":707
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -7697,19 +7838,19 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readhamilsparse.pyx":689
+  /* "readhamilsparse.pyx":708
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_7; __pyx_t_3+=1) {
-    __pyx_v_ct_AN = __pyx_t_3;
+  __pyx_t_4 = (__pyx_v_atomnum + 1);
+  __pyx_t_5 = __pyx_t_4;
+  for (__pyx_t_6 = 1; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_ct_AN = __pyx_t_6;
 
-    /* "readhamilsparse.pyx":690
+    /* "readhamilsparse.pyx":709
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -7718,7 +7859,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readhamilsparse.pyx":691
+    /* "readhamilsparse.pyx":710
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -7728,267 +7869,378 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readhamilsparse.pyx":692
+  /* "readhamilsparse.pyx":711
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
- *     j = 0
+ *     for spin in range(Ispin+1):
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readhamilsparse.pyx":694
+  /* "readhamilsparse.pyx":713
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
- *     j = 0             # <<<<<<<<<<<<<<
- *     for ct_AN in range(1,atomnum+1):
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
+ *     for spin in range(Ispin+1):             # <<<<<<<<<<<<<<
+ *         j = 0
+ *         for ct_AN in range(1,atomnum+1):
  */
-  __pyx_v_j = 0;
+  __pyx_t_4 = (__pyx_v_Ispin + 1);
+  __pyx_t_5 = __pyx_t_4;
+  for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_spin = __pyx_t_6;
 
-  /* "readhamilsparse.pyx":695
+    /* "readhamilsparse.pyx":714
  * 
- *     j = 0
- *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
- *         TNO1 = atom_idx[ct_AN-1]
+ *     for spin in range(Ispin+1):
+ *         j = 0             # <<<<<<<<<<<<<<
+ *         for ct_AN in range(1,atomnum+1):
+ *             atomi = ct_AN-1
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_7; __pyx_t_3+=1) {
-    __pyx_v_ct_AN = __pyx_t_3;
+    __pyx_v_j = 0;
 
-    /* "readhamilsparse.pyx":696
- *     j = 0
- *     for ct_AN in range(1,atomnum+1):
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)             # <<<<<<<<<<<<<<
- *         TNO1 = atom_idx[ct_AN-1]
- *         for h_AN in range(FNAN[ct_AN]+1):
+    /* "readhamilsparse.pyx":715
+ *     for spin in range(Ispin+1):
+ *         j = 0
+ *         for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
+ *             atomi = ct_AN-1
+ *             TNO1 = atom_idx[ct_AN-1]
  */
-    __pyx_v_iR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_ct_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
+    __pyx_t_7 = (__pyx_v_atomnum + 1);
+    __pyx_t_8 = __pyx_t_7;
+    for (__pyx_t_9 = 1; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
+      __pyx_v_ct_AN = __pyx_t_9;
 
-    /* "readhamilsparse.pyx":697
- *     for ct_AN in range(1,atomnum+1):
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
- *         TNO1 = atom_idx[ct_AN-1]             # <<<<<<<<<<<<<<
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]
+      /* "readhamilsparse.pyx":716
+ *         j = 0
+ *         for ct_AN in range(1,atomnum+1):
+ *             atomi = ct_AN-1             # <<<<<<<<<<<<<<
+ *             TNO1 = atom_idx[ct_AN-1]
+ *             for h_AN in range(FNAN[ct_AN]+1):
  */
-    __pyx_v_TNO1 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_ct_AN - 1)]);
+      __pyx_v_atomi = (__pyx_v_ct_AN - 1);
 
-    /* "readhamilsparse.pyx":698
- *         iR = <int>(atom_idx_all[ct_AN-1]/norb_u)
- *         TNO1 = atom_idx[ct_AN-1]
- *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]
+      /* "readhamilsparse.pyx":717
+ *         for ct_AN in range(1,atomnum+1):
+ *             atomi = ct_AN-1
+ *             TNO1 = atom_idx[ct_AN-1]             # <<<<<<<<<<<<<<
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]
  */
-    __pyx_t_12 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
-    __pyx_t_13 = __pyx_t_12;
-    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_13; __pyx_t_4+=1) {
-      __pyx_v_h_AN = __pyx_t_4;
+      __pyx_v_TNO1 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_ct_AN - 1)]);
 
-      /* "readhamilsparse.pyx":699
- *         TNO1 = atom_idx[ct_AN-1]
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):
+      /* "readhamilsparse.pyx":718
+ *             atomi = ct_AN-1
+ *             TNO1 = atom_idx[ct_AN-1]
+ *             for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 atomj = Gh_AN-1
  */
-      __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
+      __pyx_t_10 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
+      __pyx_t_11 = __pyx_t_10;
+      for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
+        __pyx_v_h_AN = __pyx_t_12;
 
-      /* "readhamilsparse.pyx":700
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]             # <<<<<<<<<<<<<<
- *             if (ncn[ct_AN][h_AN]==0):
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
+        /* "readhamilsparse.pyx":719
+ *             TNO1 = atom_idx[ct_AN-1]
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
+ *                 atomj = Gh_AN-1
+ *                 TNO2 = atom_idx[Gh_AN-1]
  */
-      __pyx_v_TNO2 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_Gh_AN - 1)]);
+        __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-      /* "readhamilsparse.pyx":701
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR
+        /* "readhamilsparse.pyx":720
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 atomj = Gh_AN-1             # <<<<<<<<<<<<<<
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):
  */
-      __pyx_t_14 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
-      if (__pyx_t_14) {
+        __pyx_v_atomj = (__pyx_v_Gh_AN - 1);
 
-        /* "readhamilsparse.pyx":702
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)             # <<<<<<<<<<<<<<
- *                 Rij = iR*R_num+jR
- *                 if key_map[j] >= 0:
+        /* "readhamilsparse.pyx":721
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 atomj = Gh_AN-1
+ *                 TNO2 = atom_idx[Gh_AN-1]             # <<<<<<<<<<<<<<
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     if key_map[j*3] >= 0:
  */
-        __pyx_v_jR = ((int)((__pyx_v_15readhamilsparse_atom_idx_all[(__pyx_v_Gh_AN - 1)]) / __pyx_v_15readhamilsparse_norb_u));
+        __pyx_v_TNO2 = (__pyx_v_15readhamilsparse_atom_idx[(__pyx_v_Gh_AN - 1)]);
 
-        /* "readhamilsparse.pyx":703
- *             if (ncn[ct_AN][h_AN]==0):
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR             # <<<<<<<<<<<<<<
- *                 if key_map[j] >= 0:
- *                     offset = key_idx[key_map[j]]
+        /* "readhamilsparse.pyx":722
+ *                 atomj = Gh_AN-1
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
+ *                     if key_map[j*3] >= 0:
+ *                         # find H[i(dn),j(up)] offset_i
  */
-        __pyx_v_Rij = ((__pyx_v_iR * __pyx_v_15readhamilsparse_R_num) + __pyx_v_jR);
+        __pyx_t_3 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
+        if (__pyx_t_3) {
 
-        /* "readhamilsparse.pyx":704
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR
- *                 if key_map[j] >= 0:             # <<<<<<<<<<<<<<
- *                     offset = key_idx[key_map[j]]
- *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+          /* "readhamilsparse.pyx":723
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     if key_map[j*3] >= 0:             # <<<<<<<<<<<<<<
+ *                         # find H[i(dn),j(up)] offset_i
+ *                         offset_i = -1
  */
-        __pyx_t_14 = (((__pyx_v_key_map[__pyx_v_j]) >= 0) != 0);
-        if (__pyx_t_14) {
+          __pyx_t_3 = (((__pyx_v_key_map[(__pyx_v_j * 3)]) >= 0) != 0);
+          if (__pyx_t_3) {
 
-          /* "readhamilsparse.pyx":705
- *                 Rij = iR*R_num+jR
- *                 if key_map[j] >= 0:
- *                     offset = key_idx[key_map[j]]             # <<<<<<<<<<<<<<
- *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                     if LADD:
+            /* "readhamilsparse.pyx":725
+ *                     if key_map[j*3] >= 0:
+ *                         # find H[i(dn),j(up)] offset_i
+ *                         offset_i = -1             # <<<<<<<<<<<<<<
+ *                         for i in range(key_num[ncell2,2]+40):
+ *                             if (key_map[i*3+1]==atomj and key_map[i*3+2]==atomi):
  */
-          __pyx_v_offset = (__pyx_v_key_idx[(__pyx_v_key_map[__pyx_v_j])]);
+            __pyx_v_offset_i = -1;
 
-          /* "readhamilsparse.pyx":706
- *                 if key_map[j] >= 0:
- *                     offset = key_idx[key_map[j]]
- *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
- *                     if LADD:
- *                         for i in range(TNO1*TNO2):
+            /* "readhamilsparse.pyx":726
+ *                         # find H[i(dn),j(up)] offset_i
+ *                         offset_i = -1
+ *                         for i in range(key_num[ncell2,2]+40):             # <<<<<<<<<<<<<<
+ *                             if (key_map[i*3+1]==atomj and key_map[i*3+2]==atomi):
+ *                                 offset_i = pub_key[key_map[i*3],5]
  */
-          (void)(fread(__pyx_v_15readhamilsparse_data_buf, (sizeof(double)), (__pyx_v_TNO1 * __pyx_v_TNO2), __pyx_v_fp));
+            __pyx_t_1 = __pyx_v_ncell2;
+            __pyx_t_2 = 2;
+            __pyx_t_13 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) + 40);
+            __pyx_t_14 = __pyx_t_13;
+            for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
+              __pyx_v_i = __pyx_t_15;
 
-          /* "readhamilsparse.pyx":707
- *                     offset = key_idx[key_map[j]]
- *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                     if LADD:             # <<<<<<<<<<<<<<
- *                         for i in range(TNO1*TNO2):
- *                             epc[key_info1[i+offset,1]] \
+              /* "readhamilsparse.pyx":727
+ *                         offset_i = -1
+ *                         for i in range(key_num[ncell2,2]+40):
+ *                             if (key_map[i*3+1]==atomj and key_map[i*3+2]==atomi):             # <<<<<<<<<<<<<<
+ *                                 offset_i = pub_key[key_map[i*3],5]
+ *                                 break
  */
-          __pyx_t_14 = (__pyx_v_LADD != 0);
-          if (__pyx_t_14) {
+              __pyx_t_16 = (((__pyx_v_key_map[((__pyx_v_i * 3) + 1)]) == __pyx_v_atomj) != 0);
+              if (__pyx_t_16) {
+              } else {
+                __pyx_t_3 = __pyx_t_16;
+                goto __pyx_L19_bool_binop_done;
+              }
+              __pyx_t_16 = (((__pyx_v_key_map[((__pyx_v_i * 3) + 2)]) == __pyx_v_atomi) != 0);
+              __pyx_t_3 = __pyx_t_16;
+              __pyx_L19_bool_binop_done:;
+              if (__pyx_t_3) {
 
-            /* "readhamilsparse.pyx":708
- *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                     if LADD:
- *                         for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
- *                             epc[key_info1[i+offset,1]] \
- *                             = (data_buf[i]*Hartree2eV-hamil_buf[i+offset])*f
+                /* "readhamilsparse.pyx":728
+ *                         for i in range(key_num[ncell2,2]+40):
+ *                             if (key_map[i*3+1]==atomj and key_map[i*3+2]==atomi):
+ *                                 offset_i = pub_key[key_map[i*3],5]             # <<<<<<<<<<<<<<
+ *                                 break
+ *                         if offset_i >= 0:
  */
-            __pyx_t_5 = (__pyx_v_TNO1 * __pyx_v_TNO2);
-            __pyx_t_8 = __pyx_t_5;
-            for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
-              __pyx_v_i = __pyx_t_9;
+                __pyx_t_2 = (__pyx_v_key_map[(__pyx_v_i * 3)]);
+                __pyx_t_1 = 5;
+                __pyx_v_offset_i = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )));
 
-              /* "readhamilsparse.pyx":709
- *                     if LADD:
- *                         for i in range(TNO1*TNO2):
- *                             epc[key_info1[i+offset,1]] \             # <<<<<<<<<<<<<<
- *                             = (data_buf[i]*Hartree2eV-hamil_buf[i+offset])*f
- *                     else:
+                /* "readhamilsparse.pyx":729
+ *                             if (key_map[i*3+1]==atomj and key_map[i*3+2]==atomi):
+ *                                 offset_i = pub_key[key_map[i*3],5]
+ *                                 break             # <<<<<<<<<<<<<<
+ *                         if offset_i >= 0:
+ *                             offset = pub_key[key_map[j*3],5]
  */
-              __pyx_t_11 = (__pyx_v_i + __pyx_v_offset);
-              __pyx_t_10 = 1;
-              __pyx_t_2 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_11 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_10)) )));
-              *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_epc.data) + __pyx_t_2)) )) = ((((__pyx_v_15readhamilsparse_data_buf[__pyx_v_i]) * __pyx_v_15readhamilsparse_Hartree2eV) - (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)])) * __pyx_v_f);
+                goto __pyx_L17_break;
+
+                /* "readhamilsparse.pyx":727
+ *                         offset_i = -1
+ *                         for i in range(key_num[ncell2,2]+40):
+ *                             if (key_map[i*3+1]==atomj and key_map[i*3+2]==atomi):             # <<<<<<<<<<<<<<
+ *                                 offset_i = pub_key[key_map[i*3],5]
+ *                                 break
+ */
+              }
+            }
+            __pyx_L17_break:;
+
+            /* "readhamilsparse.pyx":730
+ *                                 offset_i = pub_key[key_map[i*3],5]
+ *                                 break
+ *                         if offset_i >= 0:             # <<<<<<<<<<<<<<
+ *                             offset = pub_key[key_map[j*3],5]
+ *                             fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ */
+            __pyx_t_3 = ((__pyx_v_offset_i >= 0) != 0);
+            if (__pyx_t_3) {
+
+              /* "readhamilsparse.pyx":731
+ *                                 break
+ *                         if offset_i >= 0:
+ *                             offset = pub_key[key_map[j*3],5]             # <<<<<<<<<<<<<<
+ *                             fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                             if LADD:
+ */
+              __pyx_t_1 = (__pyx_v_key_map[(__pyx_v_j * 3)]);
+              __pyx_t_2 = 5;
+              __pyx_v_offset = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )));
+
+              /* "readhamilsparse.pyx":732
+ *                         if offset_i >= 0:
+ *                             offset = pub_key[key_map[j*3],5]
+ *                             fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
+ *                             if LADD:
+ *                                 for i in range(TNO1*TNO2):
+ */
+              (void)(fread(__pyx_v_data_buf, (sizeof(double)), (__pyx_v_TNO1 * __pyx_v_TNO2), __pyx_v_fp));
+
+              /* "readhamilsparse.pyx":733
+ *                             offset = pub_key[key_map[j*3],5]
+ *                             fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                             if LADD:             # <<<<<<<<<<<<<<
+ *                                 for i in range(TNO1*TNO2):
+ *                                     epc[spin,key_info1[i+offset,1]] \
+ */
+              __pyx_t_3 = (__pyx_v_LADD != 0);
+              if (__pyx_t_3) {
+
+                /* "readhamilsparse.pyx":734
+ *                             fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                             if LADD:
+ *                                 for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
+ *                                     epc[spin,key_info1[i+offset,1]] \
+ *                                     = (data_buf[i]*Hartree2eV \
+ */
+                __pyx_t_15 = (__pyx_v_TNO1 * __pyx_v_TNO2);
+                __pyx_t_17 = __pyx_t_15;
+                for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
+                  __pyx_v_i = __pyx_t_18;
+
+                  /* "readhamilsparse.pyx":735
+ *                             if LADD:
+ *                                 for i in range(TNO1*TNO2):
+ *                                     epc[spin,key_info1[i+offset,1]] \             # <<<<<<<<<<<<<<
+ *                                     = (data_buf[i]*Hartree2eV \
+ *                                      - hamil_buf[spin*ns+i+offset])*f
+ */
+                  __pyx_t_2 = (__pyx_v_i + __pyx_v_offset);
+                  __pyx_t_1 = 1;
+                  __pyx_t_19 = __pyx_v_spin;
+                  __pyx_t_20 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_2 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_1)) )));
+                  *((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_epc.data + __pyx_t_19 * __pyx_v_epc.strides[0]) )) + __pyx_t_20)) )) = ((((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_15readhamilsparse_Hartree2eV) - (__pyx_v_hamil_buf[(((__pyx_v_spin * __pyx_v_ns) + __pyx_v_i) + __pyx_v_offset)])) * __pyx_v_f);
+                }
+
+                /* "readhamilsparse.pyx":733
+ *                             offset = pub_key[key_map[j*3],5]
+ *                             fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                             if LADD:             # <<<<<<<<<<<<<<
+ *                                 for i in range(TNO1*TNO2):
+ *                                     epc[spin,key_info1[i+offset,1]] \
+ */
+                goto __pyx_L22;
+              }
+
+              /* "readhamilsparse.pyx":739
+ *                                      - hamil_buf[spin*ns+i+offset])*f
+ *                             else:
+ *                                 for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
+ *                                     hamil_buf[spin*ns+i+offset] \
+ *                                     = data_buf[i]*Hartree2eV
+ */
+              /*else*/ {
+                __pyx_t_15 = (__pyx_v_TNO1 * __pyx_v_TNO2);
+                __pyx_t_17 = __pyx_t_15;
+                for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
+                  __pyx_v_i = __pyx_t_18;
+
+                  /* "readhamilsparse.pyx":740
+ *                             else:
+ *                                 for i in range(TNO1*TNO2):
+ *                                     hamil_buf[spin*ns+i+offset] \             # <<<<<<<<<<<<<<
+ *                                     = data_buf[i]*Hartree2eV
+ *                         else:
+ */
+                  (__pyx_v_hamil_buf[(((__pyx_v_spin * __pyx_v_ns) + __pyx_v_i) + __pyx_v_offset)]) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_15readhamilsparse_Hartree2eV);
+                }
+              }
+              __pyx_L22:;
+
+              /* "readhamilsparse.pyx":730
+ *                                 offset_i = pub_key[key_map[i*3],5]
+ *                                 break
+ *                         if offset_i >= 0:             # <<<<<<<<<<<<<<
+ *                             offset = pub_key[key_map[j*3],5]
+ *                             fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ */
+              goto __pyx_L21;
             }
 
-            /* "readhamilsparse.pyx":707
- *                     offset = key_idx[key_map[j]]
- *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                     if LADD:             # <<<<<<<<<<<<<<
- *                         for i in range(TNO1*TNO2):
- *                             epc[key_info1[i+offset,1]] \
+            /* "readhamilsparse.pyx":743
+ *                                     = data_buf[i]*Hartree2eV
+ *                         else:
+ *                             fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
+ *                     else:
+ *                         fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  */
-            goto __pyx_L17;
+            /*else*/ {
+              (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
+            }
+            __pyx_L21:;
+
+            /* "readhamilsparse.pyx":723
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     if key_map[j*3] >= 0:             # <<<<<<<<<<<<<<
+ *                         # find H[i(dn),j(up)] offset_i
+ *                         offset_i = -1
+ */
+            goto __pyx_L15;
           }
 
-          /* "readhamilsparse.pyx":712
- *                             = (data_buf[i]*Hartree2eV-hamil_buf[i+offset])*f
+          /* "readhamilsparse.pyx":745
+ *                             fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  *                     else:
- *                         for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
- *                             hamil_buf[i+offset] = data_buf[i]*Hartree2eV
+ *                         fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
+ *                     j += 1
  *                 else:
  */
           /*else*/ {
-            __pyx_t_5 = (__pyx_v_TNO1 * __pyx_v_TNO2);
-            __pyx_t_8 = __pyx_t_5;
-            for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
-              __pyx_v_i = __pyx_t_9;
+            (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
+          }
+          __pyx_L15:;
 
-              /* "readhamilsparse.pyx":713
+          /* "readhamilsparse.pyx":746
  *                     else:
- *                         for i in range(TNO1*TNO2):
- *                             hamil_buf[i+offset] = data_buf[i]*Hartree2eV             # <<<<<<<<<<<<<<
+ *                         fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+ *                     j += 1             # <<<<<<<<<<<<<<
  *                 else:
  *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  */
-              (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)]) = ((__pyx_v_15readhamilsparse_data_buf[__pyx_v_i]) * __pyx_v_15readhamilsparse_Hartree2eV);
-            }
-          }
-          __pyx_L17:;
+          __pyx_v_j = (__pyx_v_j + 1);
 
-          /* "readhamilsparse.pyx":704
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR
- *                 if key_map[j] >= 0:             # <<<<<<<<<<<<<<
- *                     offset = key_idx[key_map[j]]
- *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+          /* "readhamilsparse.pyx":722
+ *                 atomj = Gh_AN-1
+ *                 TNO2 = atom_idx[Gh_AN-1]
+ *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
+ *                     if key_map[j*3] >= 0:
+ *                         # find H[i(dn),j(up)] offset_i
  */
-          goto __pyx_L16;
+          goto __pyx_L14;
         }
 
-        /* "readhamilsparse.pyx":715
- *                             hamil_buf[i+offset] = data_buf[i]*Hartree2eV
+        /* "readhamilsparse.pyx":748
+ *                     j += 1
  *                 else:
  *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
- *                 j += 1
- *             else:
+ * 
+ *     fclose(fp)
  */
         /*else*/ {
           (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
         }
-        __pyx_L16:;
-
-        /* "readhamilsparse.pyx":716
- *                 else:
- *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
- *                 j += 1             # <<<<<<<<<<<<<<
- *             else:
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
- */
-        __pyx_v_j = (__pyx_v_j + 1);
-
-        /* "readhamilsparse.pyx":701
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = atom_idx[Gh_AN-1]
- *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
- *                 jR = <int>(atom_idx_all[Gh_AN-1]/norb_u)
- *                 Rij = iR*R_num+jR
- */
-        goto __pyx_L15;
+        __pyx_L14:;
       }
-
-      /* "readhamilsparse.pyx":718
- *                 j += 1
- *             else:
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
- * 
- *     fclose(fp)
- */
-      /*else*/ {
-        (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
-      }
-      __pyx_L15:;
     }
   }
 
-  /* "readhamilsparse.pyx":720
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+  /* "readhamilsparse.pyx":750
+ *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
  *     for ct_AN in range(1,atomnum+1):
@@ -7996,19 +8248,19 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readhamilsparse.pyx":721
+  /* "readhamilsparse.pyx":751
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  */
-  __pyx_t_6 = (__pyx_v_atomnum + 1);
-  __pyx_t_7 = __pyx_t_6;
-  for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_7; __pyx_t_3+=1) {
-    __pyx_v_ct_AN = __pyx_t_3;
+  __pyx_t_4 = (__pyx_v_atomnum + 1);
+  __pyx_t_5 = __pyx_t_4;
+  for (__pyx_t_6 = 1; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_ct_AN = __pyx_t_6;
 
-    /* "readhamilsparse.pyx":722
+    /* "readhamilsparse.pyx":752
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -8017,7 +8269,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readhamilsparse.pyx":723
+    /* "readhamilsparse.pyx":753
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -8027,7 +8279,7 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readhamilsparse.pyx":724
+  /* "readhamilsparse.pyx":754
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -8036,63 +8288,54 @@ static void __pyx_f_15readhamilsparse_readscfout1(char *__pyx_v_name, int __pyx_
  */
   free(__pyx_v_natn);
 
-  /* "readhamilsparse.pyx":725
+  /* "readhamilsparse.pyx":755
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
  *     free(FNAN)
- *     free(key_idx)
+ *     free(key_map)
  */
   free(__pyx_v_ncn);
 
-  /* "readhamilsparse.pyx":726
+  /* "readhamilsparse.pyx":756
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
- *     free(key_idx)
- *     free(key_map)
- */
-  free(__pyx_v_FNAN);
-
-  /* "readhamilsparse.pyx":727
- *     free(ncn)
- *     free(FNAN)
- *     free(key_idx)             # <<<<<<<<<<<<<<
  *     free(key_map)
  * 
  */
-  free(__pyx_v_key_idx);
+  free(__pyx_v_FNAN);
 
-  /* "readhamilsparse.pyx":728
+  /* "readhamilsparse.pyx":757
+ *     free(ncn)
  *     free(FNAN)
- *     free(key_idx)
  *     free(key_map)             # <<<<<<<<<<<<<<
  * 
  * 
  */
   free(__pyx_v_key_map);
 
-  /* "readhamilsparse.pyx":651
+  /* "readhamilsparse.pyx":668
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout1(             # <<<<<<<<<<<<<<
  *     char* name, int ncell2, int[:,::1] key_num, int[:,::1] pub_key,
- *     int[:,::1] key_info1, double* hamil_buf, double[::1] epc, double f, bint LADD
+ *     int[:,::1] key_info1, double* data_buf, double* hamil_buf,
  */
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":731
+/* "readhamilsparse.pyx":760
  * 
  * 
  * cdef void readh5_p0(             # <<<<<<<<<<<<<<
- *     mpi.MPI_Comm comm_b, char* h5_name, int nprocs_b, int myid_b,
- *     int ncell2, int[:,::1] key_num, int[:,::1] pub_key, double* hamil_buf
+ *     mpi.MPI_Comm comm_b, char* h5_name, int nprocs_b,
+ *     int myid_b, int ncell2, int[:,::1] key_num,
  */
 
-static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *__pyx_v_h5_name, int __pyx_v_nprocs_b, int __pyx_v_myid_b, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, double *__pyx_v_hamil_buf) {
+static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *__pyx_v_h5_name, int __pyx_v_nprocs_b, int __pyx_v_myid_b, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, double *__pyx_v_data_buf, double *__pyx_v_hamil_buf) {
   hid_t __pyx_v_f;
   hid_t __pyx_v_data_id;
   CYTHON_UNUSED herr_t __pyx_v_status;
@@ -8101,6 +8344,7 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
   int __pyx_v_key_min;
   int __pyx_v_key_max;
   int __pyx_v_offset;
+  int __pyx_v_ns;
   char __pyx_v_key_t[0x64];
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
@@ -8109,33 +8353,25 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
   int __pyx_t_4;
   int __pyx_t_5;
   int __pyx_t_6;
-  Py_ssize_t __pyx_t_7;
+  int __pyx_t_7;
   Py_ssize_t __pyx_t_8;
-  int __pyx_t_9;
+  Py_ssize_t __pyx_t_9;
   int __pyx_t_10;
+  int __pyx_t_11;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("readh5_p0", 0);
 
-  /* "readhamilsparse.pyx":740
+  /* "readhamilsparse.pyx":768
+ *     cdef herr_t status
+ *     cdef int h, i, j, key_min, key_max, offset, spin
+ *     cdef int ns = key_num[ncell2,3]             # <<<<<<<<<<<<<<
  *     cdef char key_t[100]
  * 
- *     mpi.MPI_Barrier(comm_b)             # <<<<<<<<<<<<<<
- *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
- *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
- */
-  (void)(MPI_Barrier(__pyx_v_comm_b));
-
-  /* "readhamilsparse.pyx":741
- * 
- *     mpi.MPI_Barrier(comm_b)
- *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)             # <<<<<<<<<<<<<<
- *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
- *     offset = 0
  */
   __pyx_t_1 = __pyx_v_ncell2;
-  __pyx_t_2 = 2;
+  __pyx_t_2 = 3;
   __pyx_t_3 = -1;
   if (__pyx_t_1 < 0) {
     __pyx_t_1 += __pyx_v_key_num.shape[0];
@@ -8147,16 +8383,53 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
   } else if (unlikely(__pyx_t_2 >= __pyx_v_key_num.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 741, __pyx_L1_error)
+    __PYX_ERR(0, 768, __pyx_L1_error)
   }
-  __pyx_v_key_min = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) * __pyx_v_myid_b) / __pyx_v_nprocs_b));
+  __pyx_v_ns = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
 
-  /* "readhamilsparse.pyx":742
+  /* "readhamilsparse.pyx":771
+ *     cdef char key_t[100]
+ * 
+ *     if (myid_b==0):             # <<<<<<<<<<<<<<
+ *         memset(hamil_buf,0,sizeof(double)*ns)
+ * 
+ */
+  __pyx_t_4 = ((__pyx_v_myid_b == 0) != 0);
+  if (__pyx_t_4) {
+
+    /* "readhamilsparse.pyx":772
+ * 
+ *     if (myid_b==0):
+ *         memset(hamil_buf,0,sizeof(double)*ns)             # <<<<<<<<<<<<<<
+ * 
  *     mpi.MPI_Barrier(comm_b)
+ */
+    (void)(memset(__pyx_v_hamil_buf, 0, ((sizeof(double)) * __pyx_v_ns)));
+
+    /* "readhamilsparse.pyx":771
+ *     cdef char key_t[100]
+ * 
+ *     if (myid_b==0):             # <<<<<<<<<<<<<<
+ *         memset(hamil_buf,0,sizeof(double)*ns)
+ * 
+ */
+  }
+
+  /* "readhamilsparse.pyx":774
+ *         memset(hamil_buf,0,sizeof(double)*ns)
+ * 
+ *     mpi.MPI_Barrier(comm_b)             # <<<<<<<<<<<<<<
  *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
- *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)             # <<<<<<<<<<<<<<
+ *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
+ */
+  (void)(MPI_Barrier(__pyx_v_comm_b));
+
+  /* "readhamilsparse.pyx":775
+ * 
+ *     mpi.MPI_Barrier(comm_b)
+ *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)             # <<<<<<<<<<<<<<
+ *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
  *     offset = 0
- *     for i in range(key_min):
  */
   __pyx_t_2 = __pyx_v_ncell2;
   __pyx_t_1 = 2;
@@ -8171,73 +8444,82 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
   } else if (unlikely(__pyx_t_1 >= __pyx_v_key_num.shape[1])) __pyx_t_3 = 1;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 742, __pyx_L1_error)
+    __PYX_ERR(0, 775, __pyx_L1_error)
   }
-  __pyx_v_key_max = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) * (__pyx_v_myid_b + 1)) / ((long)__pyx_v_nprocs_b)));
+  __pyx_v_key_min = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) * __pyx_v_myid_b) / __pyx_v_nprocs_b));
 
-  /* "readhamilsparse.pyx":743
+  /* "readhamilsparse.pyx":776
+ *     mpi.MPI_Barrier(comm_b)
+ *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
+ *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)             # <<<<<<<<<<<<<<
+ *     offset = 0
+ *     for i in range(key_min):
+ */
+  __pyx_t_1 = __pyx_v_ncell2;
+  __pyx_t_2 = 2;
+  __pyx_t_3 = -1;
+  if (__pyx_t_1 < 0) {
+    __pyx_t_1 += __pyx_v_key_num.shape[0];
+    if (unlikely(__pyx_t_1 < 0)) __pyx_t_3 = 0;
+  } else if (unlikely(__pyx_t_1 >= __pyx_v_key_num.shape[0])) __pyx_t_3 = 0;
+  if (__pyx_t_2 < 0) {
+    __pyx_t_2 += __pyx_v_key_num.shape[1];
+    if (unlikely(__pyx_t_2 < 0)) __pyx_t_3 = 1;
+  } else if (unlikely(__pyx_t_2 >= __pyx_v_key_num.shape[1])) __pyx_t_3 = 1;
+  if (unlikely(__pyx_t_3 != -1)) {
+    __Pyx_RaiseBufferIndexError(__pyx_t_3);
+    __PYX_ERR(0, 776, __pyx_L1_error)
+  }
+  __pyx_v_key_max = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) * (__pyx_v_myid_b + 1)) / ((long)__pyx_v_nprocs_b)));
+
+  /* "readhamilsparse.pyx":777
  *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
  *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
  *     offset = 0             # <<<<<<<<<<<<<<
  *     for i in range(key_min):
- *         offset += pub_key[i,2]*pub_key[i,3]
+ *         offset += pub_key[i,4]
  */
   __pyx_v_offset = 0;
 
-  /* "readhamilsparse.pyx":744
+  /* "readhamilsparse.pyx":778
  *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
  *     offset = 0
  *     for i in range(key_min):             # <<<<<<<<<<<<<<
- *         offset += pub_key[i,2]*pub_key[i,3]
+ *         offset += pub_key[i,4]
  * 
  */
   __pyx_t_3 = __pyx_v_key_min;
-  __pyx_t_4 = __pyx_t_3;
-  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
-    __pyx_v_i = __pyx_t_5;
+  __pyx_t_5 = __pyx_t_3;
+  for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_i = __pyx_t_6;
 
-    /* "readhamilsparse.pyx":745
+    /* "readhamilsparse.pyx":779
  *     offset = 0
  *     for i in range(key_min):
- *         offset += pub_key[i,2]*pub_key[i,3]             # <<<<<<<<<<<<<<
+ *         offset += pub_key[i,4]             # <<<<<<<<<<<<<<
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
  */
-    __pyx_t_1 = __pyx_v_i;
-    __pyx_t_2 = 2;
-    __pyx_t_6 = -1;
-    if (__pyx_t_1 < 0) {
-      __pyx_t_1 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_1 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_1 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
+    __pyx_t_2 = __pyx_v_i;
+    __pyx_t_1 = 4;
+    __pyx_t_7 = -1;
     if (__pyx_t_2 < 0) {
-      __pyx_t_2 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_2 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_2 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 745, __pyx_L1_error)
+      __pyx_t_2 += __pyx_v_pub_key.shape[0];
+      if (unlikely(__pyx_t_2 < 0)) __pyx_t_7 = 0;
+    } else if (unlikely(__pyx_t_2 >= __pyx_v_pub_key.shape[0])) __pyx_t_7 = 0;
+    if (__pyx_t_1 < 0) {
+      __pyx_t_1 += __pyx_v_pub_key.shape[1];
+      if (unlikely(__pyx_t_1 < 0)) __pyx_t_7 = 1;
+    } else if (unlikely(__pyx_t_1 >= __pyx_v_pub_key.shape[1])) __pyx_t_7 = 1;
+    if (unlikely(__pyx_t_7 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_7);
+      __PYX_ERR(0, 779, __pyx_L1_error)
     }
-    __pyx_t_7 = __pyx_v_i;
-    __pyx_t_8 = 3;
-    __pyx_t_6 = -1;
-    if (__pyx_t_7 < 0) {
-      __pyx_t_7 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_7 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_7 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
-    if (__pyx_t_8 < 0) {
-      __pyx_t_8 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_8 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_8 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 745, __pyx_L1_error)
-    }
-    __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )))));
+    __pyx_v_offset = (__pyx_v_offset + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) ))));
   }
 
-  /* "readhamilsparse.pyx":747
- *         offset += pub_key[i,2]*pub_key[i,3]
+  /* "readhamilsparse.pyx":781
+ *         offset += pub_key[i,4]
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
  *     for h in range(key_min,key_max):
@@ -8245,7 +8527,7 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
  */
   __pyx_v_f = H5Fopen(__pyx_v_h5_name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-  /* "readhamilsparse.pyx":748
+  /* "readhamilsparse.pyx":782
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *     for h in range(key_min,key_max):             # <<<<<<<<<<<<<<
@@ -8253,50 +8535,50 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
  *         data_id = H5Dopen(f,key_t,H5P_DEFAULT)
  */
   __pyx_t_3 = __pyx_v_key_max;
-  __pyx_t_4 = __pyx_t_3;
-  for (__pyx_t_5 = __pyx_v_key_min; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
-    __pyx_v_h = __pyx_t_5;
+  __pyx_t_5 = __pyx_t_3;
+  for (__pyx_t_6 = __pyx_v_key_min; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_h = __pyx_t_6;
 
-    /* "readhamilsparse.pyx":749
+    /* "readhamilsparse.pyx":783
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *     for h in range(key_min,key_max):
  *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)             # <<<<<<<<<<<<<<
  *         data_id = H5Dopen(f,key_t,H5P_DEFAULT)
  *         status = H5Dread(
  */
+    __pyx_t_1 = __pyx_v_h;
+    __pyx_t_2 = 0;
+    __pyx_t_7 = -1;
+    if (__pyx_t_1 < 0) {
+      __pyx_t_1 += __pyx_v_pub_key.shape[0];
+      if (unlikely(__pyx_t_1 < 0)) __pyx_t_7 = 0;
+    } else if (unlikely(__pyx_t_1 >= __pyx_v_pub_key.shape[0])) __pyx_t_7 = 0;
+    if (__pyx_t_2 < 0) {
+      __pyx_t_2 += __pyx_v_pub_key.shape[1];
+      if (unlikely(__pyx_t_2 < 0)) __pyx_t_7 = 1;
+    } else if (unlikely(__pyx_t_2 >= __pyx_v_pub_key.shape[1])) __pyx_t_7 = 1;
+    if (unlikely(__pyx_t_7 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_7);
+      __PYX_ERR(0, 783, __pyx_L1_error)
+    }
     __pyx_t_8 = __pyx_v_h;
-    __pyx_t_7 = 0;
-    __pyx_t_6 = -1;
+    __pyx_t_9 = 1;
+    __pyx_t_7 = -1;
     if (__pyx_t_8 < 0) {
       __pyx_t_8 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_8 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_8 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
-    if (__pyx_t_7 < 0) {
-      __pyx_t_7 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_7 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_7 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 749, __pyx_L1_error)
+      if (unlikely(__pyx_t_8 < 0)) __pyx_t_7 = 0;
+    } else if (unlikely(__pyx_t_8 >= __pyx_v_pub_key.shape[0])) __pyx_t_7 = 0;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_pub_key.shape[1];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_7 = 1;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_pub_key.shape[1])) __pyx_t_7 = 1;
+    if (unlikely(__pyx_t_7 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_7);
+      __PYX_ERR(0, 783, __pyx_L1_error)
     }
-    __pyx_t_2 = __pyx_v_h;
-    __pyx_t_1 = 1;
-    __pyx_t_6 = -1;
-    if (__pyx_t_2 < 0) {
-      __pyx_t_2 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_2 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_2 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
-    if (__pyx_t_1 < 0) {
-      __pyx_t_1 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_1 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_1 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 749, __pyx_L1_error)
-    }
-    (void)(sprintf(__pyx_v_key_t, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) ))) + 1)));
+    (void)(sprintf(__pyx_v_key_t, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_9)) ))) + 1)));
 
-    /* "readhamilsparse.pyx":750
+    /* "readhamilsparse.pyx":784
  *     for h in range(key_min,key_max):
  *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
  *         data_id = H5Dopen(f,key_t,H5P_DEFAULT)             # <<<<<<<<<<<<<<
@@ -8305,118 +8587,88 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
  */
     __pyx_v_data_id = H5Dopen(__pyx_v_f, __pyx_v_key_t, H5P_DEFAULT);
 
-    /* "readhamilsparse.pyx":751
+    /* "readhamilsparse.pyx":785
  *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
  *         data_id = H5Dopen(f,key_t,H5P_DEFAULT)
  *         status = H5Dread(             # <<<<<<<<<<<<<<
  *             data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
  *             H5S_ALL,H5P_DEFAULT,data_buf
  */
-    __pyx_v_status = H5Dread(__pyx_v_data_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, __pyx_v_15readhamilsparse_data_buf);
+    __pyx_v_status = H5Dread(__pyx_v_data_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, __pyx_v_data_buf);
 
-    /* "readhamilsparse.pyx":755
+    /* "readhamilsparse.pyx":789
  *             H5S_ALL,H5P_DEFAULT,data_buf
  *         )
- *         for i in range(pub_key[h,2]*pub_key[h,3]):             # <<<<<<<<<<<<<<
+ *         offset = pub_key[h,5]             # <<<<<<<<<<<<<<
+ *         for i in range(pub_key[h,4]):
+ *             hamil_buf[i+offset] = data_buf[i]
+ */
+    __pyx_t_9 = __pyx_v_h;
+    __pyx_t_8 = 5;
+    __pyx_t_7 = -1;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_pub_key.shape[0];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_7 = 0;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_pub_key.shape[0])) __pyx_t_7 = 0;
+    if (__pyx_t_8 < 0) {
+      __pyx_t_8 += __pyx_v_pub_key.shape[1];
+      if (unlikely(__pyx_t_8 < 0)) __pyx_t_7 = 1;
+    } else if (unlikely(__pyx_t_8 >= __pyx_v_pub_key.shape[1])) __pyx_t_7 = 1;
+    if (unlikely(__pyx_t_7 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_7);
+      __PYX_ERR(0, 789, __pyx_L1_error)
+    }
+    __pyx_v_offset = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_9 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )));
+
+    /* "readhamilsparse.pyx":790
+ *         )
+ *         offset = pub_key[h,5]
+ *         for i in range(pub_key[h,4]):             # <<<<<<<<<<<<<<
  *             hamil_buf[i+offset] = data_buf[i]
  * 
  */
-    __pyx_t_1 = __pyx_v_h;
-    __pyx_t_2 = 2;
-    __pyx_t_6 = -1;
-    if (__pyx_t_1 < 0) {
-      __pyx_t_1 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_1 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_1 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
-    if (__pyx_t_2 < 0) {
-      __pyx_t_2 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_2 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_2 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 755, __pyx_L1_error)
-    }
-    __pyx_t_7 = __pyx_v_h;
-    __pyx_t_8 = 3;
-    __pyx_t_6 = -1;
-    if (__pyx_t_7 < 0) {
-      __pyx_t_7 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_7 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_7 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
+    __pyx_t_8 = __pyx_v_h;
+    __pyx_t_9 = 4;
+    __pyx_t_7 = -1;
     if (__pyx_t_8 < 0) {
-      __pyx_t_8 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_8 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_8 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 755, __pyx_L1_error)
+      __pyx_t_8 += __pyx_v_pub_key.shape[0];
+      if (unlikely(__pyx_t_8 < 0)) __pyx_t_7 = 0;
+    } else if (unlikely(__pyx_t_8 >= __pyx_v_pub_key.shape[0])) __pyx_t_7 = 0;
+    if (__pyx_t_9 < 0) {
+      __pyx_t_9 += __pyx_v_pub_key.shape[1];
+      if (unlikely(__pyx_t_9 < 0)) __pyx_t_7 = 1;
+    } else if (unlikely(__pyx_t_9 >= __pyx_v_pub_key.shape[1])) __pyx_t_7 = 1;
+    if (unlikely(__pyx_t_7 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_7);
+      __PYX_ERR(0, 790, __pyx_L1_error)
     }
-    __pyx_t_6 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) ))));
-    __pyx_t_9 = __pyx_t_6;
-    for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
-      __pyx_v_i = __pyx_t_10;
+    __pyx_t_7 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_9)) )));
+    __pyx_t_10 = __pyx_t_7;
+    for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
+      __pyx_v_i = __pyx_t_11;
 
-      /* "readhamilsparse.pyx":756
- *         )
- *         for i in range(pub_key[h,2]*pub_key[h,3]):
+      /* "readhamilsparse.pyx":791
+ *         offset = pub_key[h,5]
+ *         for i in range(pub_key[h,4]):
  *             hamil_buf[i+offset] = data_buf[i]             # <<<<<<<<<<<<<<
  * 
  *         status = H5Dclose(data_id)
  */
-      (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)]) = (__pyx_v_15readhamilsparse_data_buf[__pyx_v_i]);
+      (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)]) = (__pyx_v_data_buf[__pyx_v_i]);
     }
 
-    /* "readhamilsparse.pyx":758
+    /* "readhamilsparse.pyx":793
  *             hamil_buf[i+offset] = data_buf[i]
  * 
  *         status = H5Dclose(data_id)             # <<<<<<<<<<<<<<
- *         offset += pub_key[h,2]*pub_key[h,3]
- * 
- */
-    __pyx_v_status = H5Dclose(__pyx_v_data_id);
-
-    /* "readhamilsparse.pyx":759
- * 
- *         status = H5Dclose(data_id)
- *         offset += pub_key[h,2]*pub_key[h,3]             # <<<<<<<<<<<<<<
  * 
  *     status = H5Fclose(f)
  */
-    __pyx_t_8 = __pyx_v_h;
-    __pyx_t_7 = 2;
-    __pyx_t_6 = -1;
-    if (__pyx_t_8 < 0) {
-      __pyx_t_8 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_8 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_8 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
-    if (__pyx_t_7 < 0) {
-      __pyx_t_7 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_7 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_7 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 759, __pyx_L1_error)
-    }
-    __pyx_t_2 = __pyx_v_h;
-    __pyx_t_1 = 3;
-    __pyx_t_6 = -1;
-    if (__pyx_t_2 < 0) {
-      __pyx_t_2 += __pyx_v_pub_key.shape[0];
-      if (unlikely(__pyx_t_2 < 0)) __pyx_t_6 = 0;
-    } else if (unlikely(__pyx_t_2 >= __pyx_v_pub_key.shape[0])) __pyx_t_6 = 0;
-    if (__pyx_t_1 < 0) {
-      __pyx_t_1 += __pyx_v_pub_key.shape[1];
-      if (unlikely(__pyx_t_1 < 0)) __pyx_t_6 = 1;
-    } else if (unlikely(__pyx_t_1 >= __pyx_v_pub_key.shape[1])) __pyx_t_6 = 1;
-    if (unlikely(__pyx_t_6 != -1)) {
-      __Pyx_RaiseBufferIndexError(__pyx_t_6);
-      __PYX_ERR(0, 759, __pyx_L1_error)
-    }
-    __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )))));
+    __pyx_v_status = H5Dclose(__pyx_v_data_id);
   }
 
-  /* "readhamilsparse.pyx":761
- *         offset += pub_key[h,2]*pub_key[h,3]
+  /* "readhamilsparse.pyx":795
+ *         status = H5Dclose(data_id)
  * 
  *     status = H5Fclose(f)             # <<<<<<<<<<<<<<
  * 
@@ -8424,12 +8676,12 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
  */
   __pyx_v_status = H5Fclose(__pyx_v_f);
 
-  /* "readhamilsparse.pyx":731
+  /* "readhamilsparse.pyx":760
  * 
  * 
  * cdef void readh5_p0(             # <<<<<<<<<<<<<<
- *     mpi.MPI_Comm comm_b, char* h5_name, int nprocs_b, int myid_b,
- *     int ncell2, int[:,::1] key_num, int[:,::1] pub_key, double* hamil_buf
+ *     mpi.MPI_Comm comm_b, char* h5_name, int nprocs_b,
+ *     int myid_b, int ncell2, int[:,::1] key_num,
  */
 
   /* function exit code */
@@ -8440,12 +8692,12 @@ static void __pyx_f_15readhamilsparse_readh5_p0(MPI_Comm __pyx_v_comm_b, char *_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":766
+/* "readhamilsparse.pyx":800
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_p1(             # <<<<<<<<<<<<<<
  *     mpi.MPI_Comm comm_b, char* h5_name, int nprocs_b, int myid_b,
- *     int ncell2, int[:,::1] key_num, int[:,::1] pub_key, int[:,::1] key_info1,
+ *     int ncell2, int[:,::1] key_num, int[:,::1] pub_key,
  */
 
 static void __pyx_f_15readhamilsparse_readh5_p1(MPI_Comm __pyx_v_comm_b, char *__pyx_v_h5_name, int __pyx_v_nprocs_b, int __pyx_v_myid_b, int __pyx_v_ncell2, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info1, double __pyx_v_factor, double *__pyx_v_data_buf, double *__pyx_v_hamil_buf, __Pyx_memviewslice __pyx_v_dhamil, int __pyx_v_LADD) {
@@ -8457,23 +8709,83 @@ static void __pyx_f_15readhamilsparse_readh5_p1(MPI_Comm __pyx_v_comm_b, char *_
   int __pyx_v_key_min;
   int __pyx_v_key_max;
   int __pyx_v_offset;
+  int __pyx_v_ns;
   char __pyx_v_key_t[0x64];
+  char __pyx_v_key_t1[0x64];
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
   Py_ssize_t __pyx_t_2;
   int __pyx_t_3;
   int __pyx_t_4;
   int __pyx_t_5;
-  Py_ssize_t __pyx_t_6;
+  int __pyx_t_6;
   Py_ssize_t __pyx_t_7;
-  int __pyx_t_8;
+  Py_ssize_t __pyx_t_8;
   int __pyx_t_9;
   int __pyx_t_10;
   int __pyx_t_11;
   __Pyx_RefNannySetupContext("readh5_p1", 0);
 
-  /* "readhamilsparse.pyx":776
+  /* "readhamilsparse.pyx":809
+ *     cdef herr_t status
+ *     cdef int h, i, j, key_min, key_max, offset
+ *     cdef int ns = key_num[ncell2,3]             # <<<<<<<<<<<<<<
  *     cdef char key_t[100]
+ *     cdef char key_t1[100]
+ */
+  __pyx_t_1 = __pyx_v_ncell2;
+  __pyx_t_2 = 3;
+  __pyx_v_ns = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
+
+  /* "readhamilsparse.pyx":813
+ *     cdef char key_t1[100]
+ * 
+ *     if (myid_b==0):             # <<<<<<<<<<<<<<
+ *         if not LADD:
+ *             memset(hamil_buf,0,sizeof(double)*ns)
+ */
+  __pyx_t_3 = ((__pyx_v_myid_b == 0) != 0);
+  if (__pyx_t_3) {
+
+    /* "readhamilsparse.pyx":814
+ * 
+ *     if (myid_b==0):
+ *         if not LADD:             # <<<<<<<<<<<<<<
+ *             memset(hamil_buf,0,sizeof(double)*ns)
+ * 
+ */
+    __pyx_t_3 = ((!(__pyx_v_LADD != 0)) != 0);
+    if (__pyx_t_3) {
+
+      /* "readhamilsparse.pyx":815
+ *     if (myid_b==0):
+ *         if not LADD:
+ *             memset(hamil_buf,0,sizeof(double)*ns)             # <<<<<<<<<<<<<<
+ * 
+ *     mpi.MPI_Barrier(comm_b)
+ */
+      (void)(memset(__pyx_v_hamil_buf, 0, ((sizeof(double)) * __pyx_v_ns)));
+
+      /* "readhamilsparse.pyx":814
+ * 
+ *     if (myid_b==0):
+ *         if not LADD:             # <<<<<<<<<<<<<<
+ *             memset(hamil_buf,0,sizeof(double)*ns)
+ * 
+ */
+    }
+
+    /* "readhamilsparse.pyx":813
+ *     cdef char key_t1[100]
+ * 
+ *     if (myid_b==0):             # <<<<<<<<<<<<<<
+ *         if not LADD:
+ *             memset(hamil_buf,0,sizeof(double)*ns)
+ */
+  }
+
+  /* "readhamilsparse.pyx":817
+ *             memset(hamil_buf,0,sizeof(double)*ns)
  * 
  *     mpi.MPI_Barrier(comm_b)             # <<<<<<<<<<<<<<
  *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
@@ -8481,65 +8793,30 @@ static void __pyx_f_15readhamilsparse_readh5_p1(MPI_Comm __pyx_v_comm_b, char *_
  */
   (void)(MPI_Barrier(__pyx_v_comm_b));
 
-  /* "readhamilsparse.pyx":777
+  /* "readhamilsparse.pyx":818
  * 
  *     mpi.MPI_Barrier(comm_b)
  *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)             # <<<<<<<<<<<<<<
  *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
- *     offset = 0
- */
-  __pyx_t_1 = __pyx_v_ncell2;
-  __pyx_t_2 = 2;
-  __pyx_v_key_min = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) * __pyx_v_myid_b) / __pyx_v_nprocs_b));
-
-  /* "readhamilsparse.pyx":778
- *     mpi.MPI_Barrier(comm_b)
- *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
- *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)             # <<<<<<<<<<<<<<
- *     offset = 0
- *     for i in range(key_min):
+ * 
  */
   __pyx_t_2 = __pyx_v_ncell2;
   __pyx_t_1 = 2;
-  __pyx_v_key_max = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) * (__pyx_v_myid_b + 1)) / ((long)__pyx_v_nprocs_b)));
+  __pyx_v_key_min = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) * __pyx_v_myid_b) / __pyx_v_nprocs_b));
 
-  /* "readhamilsparse.pyx":779
+  /* "readhamilsparse.pyx":819
+ *     mpi.MPI_Barrier(comm_b)
  *     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
- *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
- *     offset = 0             # <<<<<<<<<<<<<<
- *     for i in range(key_min):
- *         offset += pub_key[i,2]*pub_key[i,3]
- */
-  __pyx_v_offset = 0;
-
-  /* "readhamilsparse.pyx":780
- *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
- *     offset = 0
- *     for i in range(key_min):             # <<<<<<<<<<<<<<
- *         offset += pub_key[i,2]*pub_key[i,3]
- * 
- */
-  __pyx_t_3 = __pyx_v_key_min;
-  __pyx_t_4 = __pyx_t_3;
-  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
-    __pyx_v_i = __pyx_t_5;
-
-    /* "readhamilsparse.pyx":781
- *     offset = 0
- *     for i in range(key_min):
- *         offset += pub_key[i,2]*pub_key[i,3]             # <<<<<<<<<<<<<<
+ *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)             # <<<<<<<<<<<<<<
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
  */
-    __pyx_t_1 = __pyx_v_i;
-    __pyx_t_2 = 2;
-    __pyx_t_6 = __pyx_v_i;
-    __pyx_t_7 = 3;
-    __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) )))));
-  }
+  __pyx_t_1 = __pyx_v_ncell2;
+  __pyx_t_2 = 2;
+  __pyx_v_key_max = ((int)(((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) * (__pyx_v_myid_b + 1)) / ((long)__pyx_v_nprocs_b)));
 
-  /* "readhamilsparse.pyx":783
- *         offset += pub_key[i,2]*pub_key[i,3]
+  /* "readhamilsparse.pyx":821
+ *     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
  *     for h in range(key_min,key_max):
@@ -8547,171 +8824,197 @@ static void __pyx_f_15readhamilsparse_readh5_p1(MPI_Comm __pyx_v_comm_b, char *_
  */
   __pyx_v_f = H5Fopen(__pyx_v_h5_name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-  /* "readhamilsparse.pyx":784
+  /* "readhamilsparse.pyx":822
  * 
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *     for h in range(key_min,key_max):             # <<<<<<<<<<<<<<
  *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
  *         if H5Lexists(f,key_t,H5P_DEFAULT):
  */
-  __pyx_t_3 = __pyx_v_key_max;
-  __pyx_t_4 = __pyx_t_3;
-  for (__pyx_t_5 = __pyx_v_key_min; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
-    __pyx_v_h = __pyx_t_5;
+  __pyx_t_4 = __pyx_v_key_max;
+  __pyx_t_5 = __pyx_t_4;
+  for (__pyx_t_6 = __pyx_v_key_min; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+    __pyx_v_h = __pyx_t_6;
 
-    /* "readhamilsparse.pyx":785
+    /* "readhamilsparse.pyx":823
  *     f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *     for h in range(key_min,key_max):
  *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)             # <<<<<<<<<<<<<<
  *         if H5Lexists(f,key_t,H5P_DEFAULT):
- *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
+ *             sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
  */
-    __pyx_t_7 = __pyx_v_h;
-    __pyx_t_6 = 0;
     __pyx_t_2 = __pyx_v_h;
-    __pyx_t_1 = 1;
-    (void)(sprintf(__pyx_v_key_t, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) ))) + 1)));
+    __pyx_t_1 = 0;
+    __pyx_t_7 = __pyx_v_h;
+    __pyx_t_8 = 1;
+    (void)(sprintf(__pyx_v_key_t, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) ))) + 1)));
 
-    /* "readhamilsparse.pyx":786
+    /* "readhamilsparse.pyx":824
  *     for h in range(key_min,key_max):
  *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
  *         if H5Lexists(f,key_t,H5P_DEFAULT):             # <<<<<<<<<<<<<<
- *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
- *             status = H5Dread(
+ *             sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
+ *             if H5Lexists(f,key_t1,H5P_DEFAULT):
  */
-    __pyx_t_8 = (H5Lexists(__pyx_v_f, __pyx_v_key_t, H5P_DEFAULT) != 0);
-    if (__pyx_t_8) {
+    __pyx_t_3 = (H5Lexists(__pyx_v_f, __pyx_v_key_t, H5P_DEFAULT) != 0);
+    if (__pyx_t_3) {
 
-      /* "readhamilsparse.pyx":787
+      /* "readhamilsparse.pyx":825
  *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
  *         if H5Lexists(f,key_t,H5P_DEFAULT):
- *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *             status = H5Dread(
- *                 data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
+ *             sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)             # <<<<<<<<<<<<<<
+ *             if H5Lexists(f,key_t1,H5P_DEFAULT):
+ *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)
  */
-      __pyx_v_data_id = H5Dopen(__pyx_v_f, __pyx_v_key_t, H5P_DEFAULT);
+      __pyx_t_8 = __pyx_v_h;
+      __pyx_t_7 = 1;
+      __pyx_t_1 = __pyx_v_h;
+      __pyx_t_2 = 0;
+      (void)(sprintf(__pyx_v_key_t1, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) + 1)));
 
-      /* "readhamilsparse.pyx":788
+      /* "readhamilsparse.pyx":826
  *         if H5Lexists(f,key_t,H5P_DEFAULT):
- *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
- *             status = H5Dread(             # <<<<<<<<<<<<<<
- *                 data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
- *                 H5S_ALL,H5P_DEFAULT,data_buf
+ *             sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
+ *             if H5Lexists(f,key_t1,H5P_DEFAULT):             # <<<<<<<<<<<<<<
+ *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)
+ *                 status = H5Dread(
  */
-      __pyx_v_status = H5Dread(__pyx_v_data_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, __pyx_v_data_buf);
+      __pyx_t_3 = (H5Lexists(__pyx_v_f, __pyx_v_key_t1, H5P_DEFAULT) != 0);
+      if (__pyx_t_3) {
 
-      /* "readhamilsparse.pyx":792
- *                 H5S_ALL,H5P_DEFAULT,data_buf
- *             )
- *             if LADD:             # <<<<<<<<<<<<<<
- *                 for i in range(pub_key[h,2]*pub_key[h,3]):
- *                     dhamil[key_info1[i+offset,1]] \
+        /* "readhamilsparse.pyx":827
+ *             sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
+ *             if H5Lexists(f,key_t1,H5P_DEFAULT):
+ *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)             # <<<<<<<<<<<<<<
+ *                 status = H5Dread(
+ *                     data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
  */
-      __pyx_t_8 = (__pyx_v_LADD != 0);
-      if (__pyx_t_8) {
+        __pyx_v_data_id = H5Dopen(__pyx_v_f, __pyx_v_key_t, H5P_DEFAULT);
 
-        /* "readhamilsparse.pyx":793
- *             )
- *             if LADD:
- *                 for i in range(pub_key[h,2]*pub_key[h,3]):             # <<<<<<<<<<<<<<
- *                     dhamil[key_info1[i+offset,1]] \
- *                     = (data_buf[i]-hamil_buf[i+offset])*factor
+        /* "readhamilsparse.pyx":828
+ *             if H5Lexists(f,key_t1,H5P_DEFAULT):
+ *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)
+ *                 status = H5Dread(             # <<<<<<<<<<<<<<
+ *                     data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
+ *                     H5S_ALL,H5P_DEFAULT,data_buf
  */
-        __pyx_t_1 = __pyx_v_h;
-        __pyx_t_2 = 2;
-        __pyx_t_6 = __pyx_v_h;
-        __pyx_t_7 = 3;
-        __pyx_t_9 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))));
-        __pyx_t_10 = __pyx_t_9;
-        for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-          __pyx_v_i = __pyx_t_11;
+        __pyx_v_status = H5Dread(__pyx_v_data_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, __pyx_v_data_buf);
 
-          /* "readhamilsparse.pyx":794
- *             if LADD:
- *                 for i in range(pub_key[h,2]*pub_key[h,3]):
- *                     dhamil[key_info1[i+offset,1]] \             # <<<<<<<<<<<<<<
- *                     = (data_buf[i]-hamil_buf[i+offset])*factor
- *             else:
+        /* "readhamilsparse.pyx":832
+ *                     H5S_ALL,H5P_DEFAULT,data_buf
+ *                 )
+ *                 offset = pub_key[h,5]             # <<<<<<<<<<<<<<
+ *                 if LADD:
+ *                     for i in range(pub_key[h,4]):
  */
-          __pyx_t_7 = (__pyx_v_i + __pyx_v_offset);
-          __pyx_t_6 = 1;
-          __pyx_t_2 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_7 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_6)) )));
-          *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dhamil.data) + __pyx_t_2)) )) = (((__pyx_v_data_buf[__pyx_v_i]) - (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)])) * __pyx_v_factor);
-        }
-
-        /* "readhamilsparse.pyx":792
- *                 H5S_ALL,H5P_DEFAULT,data_buf
- *             )
- *             if LADD:             # <<<<<<<<<<<<<<
- *                 for i in range(pub_key[h,2]*pub_key[h,3]):
- *                     dhamil[key_info1[i+offset,1]] \
- */
-        goto __pyx_L8;
-      }
-
-      /* "readhamilsparse.pyx":797
- *                     = (data_buf[i]-hamil_buf[i+offset])*factor
- *             else:
- *                 for i in range(pub_key[h,2]*pub_key[h,3]):             # <<<<<<<<<<<<<<
- *                     hamil_buf[i+offset] = data_buf[i]
- *             status = H5Dclose(data_id)
- */
-      /*else*/ {
-        __pyx_t_6 = __pyx_v_h;
-        __pyx_t_7 = 2;
         __pyx_t_2 = __pyx_v_h;
-        __pyx_t_1 = 3;
-        __pyx_t_9 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) ))));
-        __pyx_t_10 = __pyx_t_9;
-        for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-          __pyx_v_i = __pyx_t_11;
+        __pyx_t_1 = 5;
+        __pyx_v_offset = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )));
 
-          /* "readhamilsparse.pyx":798
- *             else:
- *                 for i in range(pub_key[h,2]*pub_key[h,3]):
- *                     hamil_buf[i+offset] = data_buf[i]             # <<<<<<<<<<<<<<
- *             status = H5Dclose(data_id)
- * 
+        /* "readhamilsparse.pyx":833
+ *                 )
+ *                 offset = pub_key[h,5]
+ *                 if LADD:             # <<<<<<<<<<<<<<
+ *                     for i in range(pub_key[h,4]):
+ *                         dhamil[key_info1[i+offset,1]] \
  */
-          (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)]) = (__pyx_v_data_buf[__pyx_v_i]);
+        __pyx_t_3 = (__pyx_v_LADD != 0);
+        if (__pyx_t_3) {
+
+          /* "readhamilsparse.pyx":834
+ *                 offset = pub_key[h,5]
+ *                 if LADD:
+ *                     for i in range(pub_key[h,4]):             # <<<<<<<<<<<<<<
+ *                         dhamil[key_info1[i+offset,1]] \
+ *                         = (data_buf[i]-hamil_buf[i+offset])*factor
+ */
+          __pyx_t_1 = __pyx_v_h;
+          __pyx_t_2 = 4;
+          __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )));
+          __pyx_t_10 = __pyx_t_9;
+          for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
+            __pyx_v_i = __pyx_t_11;
+
+            /* "readhamilsparse.pyx":835
+ *                 if LADD:
+ *                     for i in range(pub_key[h,4]):
+ *                         dhamil[key_info1[i+offset,1]] \             # <<<<<<<<<<<<<<
+ *                         = (data_buf[i]-hamil_buf[i+offset])*factor
+ *                 else:
+ */
+            __pyx_t_2 = (__pyx_v_i + __pyx_v_offset);
+            __pyx_t_1 = 1;
+            __pyx_t_7 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_info1.data + __pyx_t_2 * __pyx_v_key_info1.strides[0]) )) + __pyx_t_1)) )));
+            *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_dhamil.data) + __pyx_t_7)) )) = (((__pyx_v_data_buf[__pyx_v_i]) - (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)])) * __pyx_v_factor);
+          }
+
+          /* "readhamilsparse.pyx":833
+ *                 )
+ *                 offset = pub_key[h,5]
+ *                 if LADD:             # <<<<<<<<<<<<<<
+ *                     for i in range(pub_key[h,4]):
+ *                         dhamil[key_info1[i+offset,1]] \
+ */
+          goto __pyx_L9;
         }
-      }
-      __pyx_L8:;
 
-      /* "readhamilsparse.pyx":799
- *                 for i in range(pub_key[h,2]*pub_key[h,3]):
- *                     hamil_buf[i+offset] = data_buf[i]
- *             status = H5Dclose(data_id)             # <<<<<<<<<<<<<<
- * 
- *         offset += pub_key[h,2]*pub_key[h,3]
+        /* "readhamilsparse.pyx":838
+ *                         = (data_buf[i]-hamil_buf[i+offset])*factor
+ *                 else:
+ *                     for i in range(pub_key[h,4]):             # <<<<<<<<<<<<<<
+ *                         hamil_buf[i+offset] = data_buf[i]
+ *                 status = H5Dclose(data_id)
  */
-      __pyx_v_status = H5Dclose(__pyx_v_data_id);
+        /*else*/ {
+          __pyx_t_1 = __pyx_v_h;
+          __pyx_t_2 = 4;
+          __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )));
+          __pyx_t_10 = __pyx_t_9;
+          for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
+            __pyx_v_i = __pyx_t_11;
 
-      /* "readhamilsparse.pyx":786
- *     for h in range(key_min,key_max):
- *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
- *         if H5Lexists(f,key_t,H5P_DEFAULT):             # <<<<<<<<<<<<<<
- *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
- *             status = H5Dread(
- */
-    }
-
-    /* "readhamilsparse.pyx":801
- *             status = H5Dclose(data_id)
+            /* "readhamilsparse.pyx":839
+ *                 else:
+ *                     for i in range(pub_key[h,4]):
+ *                         hamil_buf[i+offset] = data_buf[i]             # <<<<<<<<<<<<<<
+ *                 status = H5Dclose(data_id)
  * 
- *         offset += pub_key[h,2]*pub_key[h,3]             # <<<<<<<<<<<<<<
+ */
+            (__pyx_v_hamil_buf[(__pyx_v_i + __pyx_v_offset)]) = (__pyx_v_data_buf[__pyx_v_i]);
+          }
+        }
+        __pyx_L9:;
+
+        /* "readhamilsparse.pyx":840
+ *                     for i in range(pub_key[h,4]):
+ *                         hamil_buf[i+offset] = data_buf[i]
+ *                 status = H5Dclose(data_id)             # <<<<<<<<<<<<<<
  * 
  *     status = H5Fclose(f)
  */
-    __pyx_t_1 = __pyx_v_h;
-    __pyx_t_2 = 2;
-    __pyx_t_7 = __pyx_v_h;
-    __pyx_t_6 = 3;
-    __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) )))));
+        __pyx_v_status = H5Dclose(__pyx_v_data_id);
+
+        /* "readhamilsparse.pyx":826
+ *         if H5Lexists(f,key_t,H5P_DEFAULT):
+ *             sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
+ *             if H5Lexists(f,key_t1,H5P_DEFAULT):             # <<<<<<<<<<<<<<
+ *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)
+ *                 status = H5Dread(
+ */
+      }
+
+      /* "readhamilsparse.pyx":824
+ *     for h in range(key_min,key_max):
+ *         sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
+ *         if H5Lexists(f,key_t,H5P_DEFAULT):             # <<<<<<<<<<<<<<
+ *             sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
+ *             if H5Lexists(f,key_t1,H5P_DEFAULT):
+ */
+    }
   }
 
-  /* "readhamilsparse.pyx":803
- *         offset += pub_key[h,2]*pub_key[h,3]
+  /* "readhamilsparse.pyx":842
+ *                 status = H5Dclose(data_id)
  * 
  *     status = H5Fclose(f)             # <<<<<<<<<<<<<<
  * 
@@ -8719,19 +9022,19 @@ static void __pyx_f_15readhamilsparse_readh5_p1(MPI_Comm __pyx_v_comm_b, char *_
  */
   __pyx_v_status = H5Fclose(__pyx_v_f);
 
-  /* "readhamilsparse.pyx":766
+  /* "readhamilsparse.pyx":800
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_p1(             # <<<<<<<<<<<<<<
  *     mpi.MPI_Comm comm_b, char* h5_name, int nprocs_b, int myid_b,
- *     int ncell2, int[:,::1] key_num, int[:,::1] pub_key, int[:,::1] key_info1,
+ *     int ncell2, int[:,::1] key_num, int[:,::1] pub_key,
  */
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readhamilsparse.pyx":808
+/* "readhamilsparse.pyx":847
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def deltahamil_b(             # <<<<<<<<<<<<<<
@@ -8764,6 +9067,7 @@ static PyObject *__pyx_pw_15readhamilsparse_9deltahamil_b(PyObject *__pyx_self, 
   char *__pyx_v_dhamilDir;
   char *__pyx_v_H5HamName;
   char *__pyx_v_dhamil_method;
+  int __pyx_v_Ispin;
   int __pyx_v_IsH5;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -8772,12 +9076,14 @@ static PyObject *__pyx_pw_15readhamilsparse_9deltahamil_b(PyObject *__pyx_self, 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("deltahamil_b (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_comm,&__pyx_n_s_shm_comm,&__pyx_n_s_nmodes,&__pyx_n_s_nm_min,&__pyx_n_s_dH_block,&__pyx_n_s_norbital_u,&__pyx_n_s_ncell,&__pyx_n_s_norbital_m,&__pyx_n_s_atomnum_py,&__pyx_n_s_atom_idx_py,&__pyx_n_s_atom_idx_all_py,&__pyx_n_s_catom,&__pyx_n_s_key_num,&__pyx_n_s_pub_key,&__pyx_n_s_key_info1,&__pyx_n_s_dQ1,&__pyx_n_s_dhamil,&__pyx_n_s_inDir,&__pyx_n_s_dhamilDir,&__pyx_n_s_H5HamName,&__pyx_n_s_dhamil_method,&__pyx_n_s_IsH5,0};
-    PyObject* values[22] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_comm,&__pyx_n_s_shm_comm,&__pyx_n_s_nmodes,&__pyx_n_s_nm_min,&__pyx_n_s_dH_block,&__pyx_n_s_norbital_u,&__pyx_n_s_ncell,&__pyx_n_s_norbital_m,&__pyx_n_s_atomnum_py,&__pyx_n_s_atom_idx_py,&__pyx_n_s_atom_idx_all_py,&__pyx_n_s_catom,&__pyx_n_s_key_num,&__pyx_n_s_pub_key,&__pyx_n_s_key_info1,&__pyx_n_s_dQ1,&__pyx_n_s_dhamil,&__pyx_n_s_inDir,&__pyx_n_s_dhamilDir,&__pyx_n_s_H5HamName,&__pyx_n_s_dhamil_method,&__pyx_n_s_Ispin,&__pyx_n_s_IsH5,0};
+    PyObject* values[23] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case 23: values[22] = PyTuple_GET_ITEM(__pyx_args, 22);
+        CYTHON_FALLTHROUGH;
         case 22: values[21] = PyTuple_GET_ITEM(__pyx_args, 21);
         CYTHON_FALLTHROUGH;
         case 21: values[20] = PyTuple_GET_ITEM(__pyx_args, 20);
@@ -8834,133 +9140,139 @@ static PyObject *__pyx_pw_15readhamilsparse_9deltahamil_b(PyObject *__pyx_self, 
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_shm_comm)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 1); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 1); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmodes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 2); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 2); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nm_min)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 3); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 3); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dH_block)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 4); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 4); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 5); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 5); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 6); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 6); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital_m)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 7); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 7); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atomnum_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 8); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 8); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 9); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 9); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_all_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 10); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 10); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_catom)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 11); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 11); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 12); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 12); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 13); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 13); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_info1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 14); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 14); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dQ1)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 15); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 15); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dhamil)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 16); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 16); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_inDir)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 17); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 17); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dhamilDir)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 18); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 18); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5HamName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 19); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 19); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dhamil_method)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 20); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 20); __PYX_ERR(0, 847, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 21:
-        if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
+        if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Ispin)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, 21); __PYX_ERR(0, 808, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 21); __PYX_ERR(0, 847, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case 22:
+        if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, 22); __PYX_ERR(0, 847, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "deltahamil_b") < 0)) __PYX_ERR(0, 808, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "deltahamil_b") < 0)) __PYX_ERR(0, 847, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 22) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 23) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -8985,41 +9297,43 @@ static PyObject *__pyx_pw_15readhamilsparse_9deltahamil_b(PyObject *__pyx_self, 
       values[19] = PyTuple_GET_ITEM(__pyx_args, 19);
       values[20] = PyTuple_GET_ITEM(__pyx_args, 20);
       values[21] = PyTuple_GET_ITEM(__pyx_args, 21);
+      values[22] = PyTuple_GET_ITEM(__pyx_args, 22);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
     __pyx_v_shm_comm = ((struct PyMPICommObject *)values[1]);
-    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 809, __pyx_L3_error)
-    __pyx_v_nm_min = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_nm_min == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 809, __pyx_L3_error)
-    __pyx_v_dH_block = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_dH_block == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 810, __pyx_L3_error)
-    __pyx_v_norbital_u = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_norbital_u == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 810, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 810, __pyx_L3_error)
-    __pyx_v_norbital_m = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_norbital_m == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 810, __pyx_L3_error)
-    __pyx_v_atomnum_py = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_atomnum_py == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 811, __pyx_L3_error)
-    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 811, __pyx_L3_error)
-    __pyx_v_atom_idx_all_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_all_py.memview)) __PYX_ERR(0, 812, __pyx_L3_error)
-    __pyx_v_catom = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_catom.memview)) __PYX_ERR(0, 812, __pyx_L3_error)
-    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 812, __pyx_L3_error)
-    __pyx_v_pub_key = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key.memview)) __PYX_ERR(0, 813, __pyx_L3_error)
-    __pyx_v_key_info1 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info1.memview)) __PYX_ERR(0, 813, __pyx_L3_error)
-    __pyx_v_dQ1 = __pyx_PyFloat_AsDouble(values[15]); if (unlikely((__pyx_v_dQ1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 813, __pyx_L3_error)
-    __pyx_v_dhamil = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dhamil.memview)) __PYX_ERR(0, 814, __pyx_L3_error)
-    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[17]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 814, __pyx_L3_error)
-    __pyx_v_dhamilDir = __Pyx_PyObject_AsWritableString(values[18]); if (unlikely((!__pyx_v_dhamilDir) && PyErr_Occurred())) __PYX_ERR(0, 814, __pyx_L3_error)
-    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[19]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 815, __pyx_L3_error)
-    __pyx_v_dhamil_method = __Pyx_PyObject_AsWritableString(values[20]); if (unlikely((!__pyx_v_dhamil_method) && PyErr_Occurred())) __PYX_ERR(0, 815, __pyx_L3_error)
-    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[21]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 815, __pyx_L3_error)
+    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 848, __pyx_L3_error)
+    __pyx_v_nm_min = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_nm_min == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 848, __pyx_L3_error)
+    __pyx_v_dH_block = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_dH_block == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 849, __pyx_L3_error)
+    __pyx_v_norbital_u = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_norbital_u == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 849, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 849, __pyx_L3_error)
+    __pyx_v_norbital_m = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_norbital_m == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 849, __pyx_L3_error)
+    __pyx_v_atomnum_py = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_atomnum_py == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 850, __pyx_L3_error)
+    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 850, __pyx_L3_error)
+    __pyx_v_atom_idx_all_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_all_py.memview)) __PYX_ERR(0, 851, __pyx_L3_error)
+    __pyx_v_catom = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_catom.memview)) __PYX_ERR(0, 851, __pyx_L3_error)
+    __pyx_v_key_num = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num.memview)) __PYX_ERR(0, 851, __pyx_L3_error)
+    __pyx_v_pub_key = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key.memview)) __PYX_ERR(0, 852, __pyx_L3_error)
+    __pyx_v_key_info1 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_info1.memview)) __PYX_ERR(0, 852, __pyx_L3_error)
+    __pyx_v_dQ1 = __pyx_PyFloat_AsDouble(values[15]); if (unlikely((__pyx_v_dQ1 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 852, __pyx_L3_error)
+    __pyx_v_dhamil = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dhamil.memview)) __PYX_ERR(0, 853, __pyx_L3_error)
+    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[17]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 853, __pyx_L3_error)
+    __pyx_v_dhamilDir = __Pyx_PyObject_AsWritableString(values[18]); if (unlikely((!__pyx_v_dhamilDir) && PyErr_Occurred())) __PYX_ERR(0, 853, __pyx_L3_error)
+    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[19]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 854, __pyx_L3_error)
+    __pyx_v_dhamil_method = __Pyx_PyObject_AsWritableString(values[20]); if (unlikely((!__pyx_v_dhamil_method) && PyErr_Occurred())) __PYX_ERR(0, 854, __pyx_L3_error)
+    __pyx_v_Ispin = __Pyx_PyInt_As_int(values[21]); if (unlikely((__pyx_v_Ispin == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 854, __pyx_L3_error)
+    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[22]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 854, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 22, 22, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 808, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("deltahamil_b", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 847, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readhamilsparse.deltahamil_b", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 809, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_shm_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "shm_comm", 0))) __PYX_ERR(0, 809, __pyx_L1_error)
-  __pyx_r = __pyx_pf_15readhamilsparse_8deltahamil_b(__pyx_self, __pyx_v_comm, __pyx_v_shm_comm, __pyx_v_nmodes, __pyx_v_nm_min, __pyx_v_dH_block, __pyx_v_norbital_u, __pyx_v_ncell, __pyx_v_norbital_m, __pyx_v_atomnum_py, __pyx_v_atom_idx_py, __pyx_v_atom_idx_all_py, __pyx_v_catom, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_dQ1, __pyx_v_dhamil, __pyx_v_inDir, __pyx_v_dhamilDir, __pyx_v_H5HamName, __pyx_v_dhamil_method, __pyx_v_IsH5);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 848, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_shm_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "shm_comm", 0))) __PYX_ERR(0, 848, __pyx_L1_error)
+  __pyx_r = __pyx_pf_15readhamilsparse_8deltahamil_b(__pyx_self, __pyx_v_comm, __pyx_v_shm_comm, __pyx_v_nmodes, __pyx_v_nm_min, __pyx_v_dH_block, __pyx_v_norbital_u, __pyx_v_ncell, __pyx_v_norbital_m, __pyx_v_atomnum_py, __pyx_v_atom_idx_py, __pyx_v_atom_idx_all_py, __pyx_v_catom, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_dQ1, __pyx_v_dhamil, __pyx_v_inDir, __pyx_v_dhamilDir, __pyx_v_H5HamName, __pyx_v_dhamil_method, __pyx_v_Ispin, __pyx_v_IsH5);
 
   /* function exit code */
   goto __pyx_L0;
@@ -9030,7 +9344,7 @@ static PyObject *__pyx_pw_15readhamilsparse_9deltahamil_b(PyObject *__pyx_self, 
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_comm, struct PyMPICommObject *__pyx_v_shm_comm, int __pyx_v_nmodes, int __pyx_v_nm_min, int __pyx_v_dH_block, int __pyx_v_norbital_u, int __pyx_v_ncell, int __pyx_v_norbital_m, int __pyx_v_atomnum_py, __Pyx_memviewslice __pyx_v_atom_idx_py, __Pyx_memviewslice __pyx_v_atom_idx_all_py, __Pyx_memviewslice __pyx_v_catom, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info1, double __pyx_v_dQ1, __Pyx_memviewslice __pyx_v_dhamil, char *__pyx_v_inDir, char *__pyx_v_dhamilDir, char *__pyx_v_H5HamName, char *__pyx_v_dhamil_method, int __pyx_v_IsH5) {
+static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_comm, struct PyMPICommObject *__pyx_v_shm_comm, int __pyx_v_nmodes, int __pyx_v_nm_min, int __pyx_v_dH_block, int __pyx_v_norbital_u, int __pyx_v_ncell, int __pyx_v_norbital_m, int __pyx_v_atomnum_py, __Pyx_memviewslice __pyx_v_atom_idx_py, __Pyx_memviewslice __pyx_v_atom_idx_all_py, __Pyx_memviewslice __pyx_v_catom, __Pyx_memviewslice __pyx_v_key_num, __Pyx_memviewslice __pyx_v_pub_key, __Pyx_memviewslice __pyx_v_key_info1, double __pyx_v_dQ1, __Pyx_memviewslice __pyx_v_dhamil, char *__pyx_v_inDir, char *__pyx_v_dhamilDir, char *__pyx_v_H5HamName, char *__pyx_v_dhamil_method, int __pyx_v_Ispin, int __pyx_v_IsH5) {
   MPI_Comm __pyx_v_c_comm;
   MPI_Comm __pyx_v_c_shm_comm;
   MPI_Comm __pyx_v_comm_b;
@@ -9097,10 +9411,13 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   int __pyx_t_12;
   Py_ssize_t __pyx_t_13;
   __Pyx_memviewslice __pyx_t_14 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_t_15 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_t_16;
+  Py_ssize_t __pyx_t_17;
   __Pyx_RefNannySetupContext("deltahamil_b", 0);
 
-  /* "readhamilsparse.pyx":817
- *     char* H5HamName, char* dhamil_method, bint IsH5
+  /* "readhamilsparse.pyx":856
+ *     char* H5HamName, char* dhamil_method, int Ispin, bint IsH5
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
  *     cdef mpi.MPI_Comm c_shm_comm = shm_comm.ob_mpi
@@ -9109,7 +9426,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "readhamilsparse.pyx":818
+  /* "readhamilsparse.pyx":857
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
  *     cdef mpi.MPI_Comm c_shm_comm = shm_comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -9119,7 +9436,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   __pyx_t_1 = __pyx_v_shm_comm->ob_mpi;
   __pyx_v_c_shm_comm = __pyx_t_1;
 
-  /* "readhamilsparse.pyx":826
+  /* "readhamilsparse.pyx":865
  *     cdef int h, i, j, k, l, m, n, myid, nprocs, ierr, shm_id, nprocs_p_shm, \
  *              nprocs_p, color, myid_b, nprocs_b, nprocs_shm, nnodes
  *     cdef int s_d = sizeof(double)             # <<<<<<<<<<<<<<
@@ -9128,7 +9445,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_s_d = (sizeof(double));
 
-  /* "readhamilsparse.pyx":827
+  /* "readhamilsparse.pyx":866
  *              nprocs_p, color, myid_b, nprocs_b, nprocs_shm, nnodes
  *     cdef int s_d = sizeof(double)
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -9137,7 +9454,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "readhamilsparse.pyx":828
+  /* "readhamilsparse.pyx":867
  *     cdef int s_d = sizeof(double)
  *     cdef int s_int = sizeof(int)
  *     cdef int ncell2 = ncell*ncell             # <<<<<<<<<<<<<<
@@ -9146,7 +9463,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ncell2 = (__pyx_v_ncell * __pyx_v_ncell);
 
-  /* "readhamilsparse.pyx":841
+  /* "readhamilsparse.pyx":880
  * 
  *     cdef double* hamil_buf
  *     cdef double ndQ1 = -1.0*dQ1             # <<<<<<<<<<<<<<
@@ -9155,7 +9472,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ndQ1 = (-1.0 * __pyx_v_dQ1);
 
-  /* "readhamilsparse.pyx":842
+  /* "readhamilsparse.pyx":881
  *     cdef double* hamil_buf
  *     cdef double ndQ1 = -1.0*dQ1
  *     cdef double dQ2 = dQ1/2.0             # <<<<<<<<<<<<<<
@@ -9164,7 +9481,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_dQ2 = (__pyx_v_dQ1 / 2.0);
 
-  /* "readhamilsparse.pyx":843
+  /* "readhamilsparse.pyx":882
  *     cdef double ndQ1 = -1.0*dQ1
  *     cdef double dQ2 = dQ1/2.0
  *     cdef double ndQ2 = -1.0*dQ2             # <<<<<<<<<<<<<<
@@ -9173,7 +9490,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ndQ2 = (-1.0 * __pyx_v_dQ2);
 
-  /* "readhamilsparse.pyx":847
+  /* "readhamilsparse.pyx":886
  *     cdef double starttime, endtime
  *     cdef char data_name[500]
  *     cdef char* delta = "xyz"             # <<<<<<<<<<<<<<
@@ -9182,7 +9499,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_delta = ((char *)"xyz");
 
-  /* "readhamilsparse.pyx":848
+  /* "readhamilsparse.pyx":887
  *     cdef char data_name[500]
  *     cdef char* delta = "xyz"
  *     cdef char* diff = "FBC"             # <<<<<<<<<<<<<<
@@ -9191,7 +9508,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_diff = ((char *)"FBC");
 
-  /* "readhamilsparse.pyx":849
+  /* "readhamilsparse.pyx":888
  *     cdef char* delta = "xyz"
  *     cdef char* diff = "FBC"
  *     cdef char* plus = "+-"             # <<<<<<<<<<<<<<
@@ -9200,7 +9517,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_plus = ((char *)"+-");
 
-  /* "readhamilsparse.pyx":859
+  /* "readhamilsparse.pyx":898
  *     global R_num
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -9209,7 +9526,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "readhamilsparse.pyx":861
+  /* "readhamilsparse.pyx":900
  *     starttime = mpi.MPI_Wtime()
  * 
  *     norb_u = norbital_u             # <<<<<<<<<<<<<<
@@ -9218,7 +9535,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_norb_u = __pyx_v_norbital_u;
 
-  /* "readhamilsparse.pyx":862
+  /* "readhamilsparse.pyx":901
  * 
  *     norb_u = norbital_u
  *     norbital_s = norbital_u             # <<<<<<<<<<<<<<
@@ -9227,7 +9544,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_norbital_s = __pyx_v_norbital_u;
 
-  /* "readhamilsparse.pyx":863
+  /* "readhamilsparse.pyx":902
  *     norb_u = norbital_u
  *     norbital_s = norbital_u
  *     norbital_s *= ncell             # <<<<<<<<<<<<<<
@@ -9236,7 +9553,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_norbital_s = (__pyx_v_15readhamilsparse_norbital_s * __pyx_v_ncell);
 
-  /* "readhamilsparse.pyx":864
+  /* "readhamilsparse.pyx":903
  *     norbital_s = norbital_u
  *     norbital_s *= ncell
  *     R_num = ncell             # <<<<<<<<<<<<<<
@@ -9245,7 +9562,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_R_num = __pyx_v_ncell;
 
-  /* "readhamilsparse.pyx":866
+  /* "readhamilsparse.pyx":905
  *     R_num = ncell
  * 
  *     atom_idx = <int*>malloc(atomnum_py*sizeof(int))             # <<<<<<<<<<<<<<
@@ -9254,7 +9571,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_atom_idx = ((int *)malloc((__pyx_v_atomnum_py * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":867
+  /* "readhamilsparse.pyx":906
  * 
  *     atom_idx = <int*>malloc(atomnum_py*sizeof(int))
  *     for i in range(atomnum_py):             # <<<<<<<<<<<<<<
@@ -9266,7 +9583,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "readhamilsparse.pyx":868
+    /* "readhamilsparse.pyx":907
  *     atom_idx = <int*>malloc(atomnum_py*sizeof(int))
  *     for i in range(atomnum_py):
  *         atom_idx[i] = atom_idx_py[i]             # <<<<<<<<<<<<<<
@@ -9277,7 +9594,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     (__pyx_v_15readhamilsparse_atom_idx[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_py.data) + __pyx_t_5)) )));
   }
 
-  /* "readhamilsparse.pyx":869
+  /* "readhamilsparse.pyx":908
  *     for i in range(atomnum_py):
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_all = <int*>malloc((atomnum_py+1)*sizeof(int))             # <<<<<<<<<<<<<<
@@ -9286,7 +9603,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_atom_idx_all = ((int *)malloc(((__pyx_v_atomnum_py + 1) * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":870
+  /* "readhamilsparse.pyx":909
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_all = <int*>malloc((atomnum_py+1)*sizeof(int))
  *     for i in range(atomnum_py+1):             # <<<<<<<<<<<<<<
@@ -9298,7 +9615,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   for (__pyx_t_2 = 0; __pyx_t_2 < __pyx_t_7; __pyx_t_2+=1) {
     __pyx_v_i = __pyx_t_2;
 
-    /* "readhamilsparse.pyx":871
+    /* "readhamilsparse.pyx":910
  *     atom_idx_all = <int*>malloc((atomnum_py+1)*sizeof(int))
  *     for i in range(atomnum_py+1):
  *         atom_idx_all[i] = atom_idx_all_py[i]             # <<<<<<<<<<<<<<
@@ -9309,7 +9626,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     (__pyx_v_15readhamilsparse_atom_idx_all[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_all_py.data) + __pyx_t_5)) )));
   }
 
-  /* "readhamilsparse.pyx":872
+  /* "readhamilsparse.pyx":911
  *     for i in range(atomnum_py+1):
  *         atom_idx_all[i] = atom_idx_all_py[i]
  *     key_buf = <int*>malloc(ncell2*sizeof(int))             # <<<<<<<<<<<<<<
@@ -9318,7 +9635,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_key_buf = ((int *)malloc((__pyx_v_ncell2 * (sizeof(int)))));
 
-  /* "readhamilsparse.pyx":874
+  /* "readhamilsparse.pyx":913
  *     key_buf = <int*>malloc(ncell2*sizeof(int))
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -9327,7 +9644,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "readhamilsparse.pyx":875
+  /* "readhamilsparse.pyx":914
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -9336,7 +9653,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "readhamilsparse.pyx":876
+  /* "readhamilsparse.pyx":915
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     ierr = mpi.MPI_Comm_size(c_shm_comm,&nprocs_shm)             # <<<<<<<<<<<<<<
@@ -9345,7 +9662,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_shm_comm, (&__pyx_v_nprocs_shm));
 
-  /* "readhamilsparse.pyx":877
+  /* "readhamilsparse.pyx":916
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     ierr = mpi.MPI_Comm_size(c_shm_comm,&nprocs_shm)
  *     ierr = mpi.MPI_Comm_rank(c_shm_comm,&shm_id)             # <<<<<<<<<<<<<<
@@ -9354,7 +9671,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_shm_comm, (&__pyx_v_shm_id));
 
-  /* "readhamilsparse.pyx":878
+  /* "readhamilsparse.pyx":917
  *     ierr = mpi.MPI_Comm_size(c_shm_comm,&nprocs_shm)
  *     ierr = mpi.MPI_Comm_rank(c_shm_comm,&shm_id)
  *     nnodes = <int>(nprocs/nprocs_shm)             # <<<<<<<<<<<<<<
@@ -9363,7 +9680,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_nnodes = ((int)(__pyx_v_nprocs / __pyx_v_nprocs_shm));
 
-  /* "readhamilsparse.pyx":880
+  /* "readhamilsparse.pyx":919
  *     nnodes = <int>(nprocs/nprocs_shm)
  * 
  *     nprocs_p_shm = <int>(nprocs_shm/dH_block)             # <<<<<<<<<<<<<<
@@ -9372,7 +9689,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_nprocs_p_shm = ((int)(__pyx_v_nprocs_shm / __pyx_v_dH_block));
 
-  /* "readhamilsparse.pyx":881
+  /* "readhamilsparse.pyx":920
  * 
  *     nprocs_p_shm = <int>(nprocs_shm/dH_block)
  *     nprocs_p = nprocs_p_shm*nnodes             # <<<<<<<<<<<<<<
@@ -9381,7 +9698,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_nprocs_p = (__pyx_v_nprocs_p_shm * __pyx_v_nnodes);
 
-  /* "readhamilsparse.pyx":882
+  /* "readhamilsparse.pyx":921
  *     nprocs_p_shm = <int>(nprocs_shm/dH_block)
  *     nprocs_p = nprocs_p_shm*nnodes
  *     imodes_num = <int*>malloc(sizeof(int)*nprocs_p)             # <<<<<<<<<<<<<<
@@ -9390,7 +9707,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_imodes_num = ((int *)malloc(((sizeof(int)) * __pyx_v_nprocs_p)));
 
-  /* "readhamilsparse.pyx":883
+  /* "readhamilsparse.pyx":922
  *     nprocs_p = nprocs_p_shm*nnodes
  *     imodes_num = <int*>malloc(sizeof(int)*nprocs_p)
  *     imodes = <int*>malloc(sizeof(int)*(nprocs_p+1))             # <<<<<<<<<<<<<<
@@ -9399,7 +9716,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_imodes = ((int *)malloc(((sizeof(int)) * (__pyx_v_nprocs_p + 1))));
 
-  /* "readhamilsparse.pyx":884
+  /* "readhamilsparse.pyx":923
  *     imodes_num = <int*>malloc(sizeof(int)*nprocs_p)
  *     imodes = <int*>malloc(sizeof(int)*(nprocs_p+1))
  *     iprocs_num = <int*>malloc(sizeof(int)*nprocs_p)             # <<<<<<<<<<<<<<
@@ -9408,7 +9725,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_iprocs_num = ((int *)malloc(((sizeof(int)) * __pyx_v_nprocs_p)));
 
-  /* "readhamilsparse.pyx":885
+  /* "readhamilsparse.pyx":924
  *     imodes = <int*>malloc(sizeof(int)*(nprocs_p+1))
  *     iprocs_num = <int*>malloc(sizeof(int)*nprocs_p)
  *     iprocs = <int*>malloc(sizeof(int)*(nprocs_p+1))             # <<<<<<<<<<<<<<
@@ -9417,7 +9734,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_iprocs = ((int *)malloc(((sizeof(int)) * (__pyx_v_nprocs_p + 1))));
 
-  /* "readhamilsparse.pyx":887
+  /* "readhamilsparse.pyx":926
  *     iprocs = <int*>malloc(sizeof(int)*(nprocs_p+1))
  * 
  *     imodes[0] = 0             # <<<<<<<<<<<<<<
@@ -9426,7 +9743,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (__pyx_v_imodes[0]) = 0;
 
-  /* "readhamilsparse.pyx":888
+  /* "readhamilsparse.pyx":927
  * 
  *     imodes[0] = 0
  *     iprocs[0] = 0             # <<<<<<<<<<<<<<
@@ -9435,7 +9752,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (__pyx_v_iprocs[0]) = 0;
 
-  /* "readhamilsparse.pyx":889
+  /* "readhamilsparse.pyx":928
  *     imodes[0] = 0
  *     iprocs[0] = 0
  *     for i in range(nprocs_p):             # <<<<<<<<<<<<<<
@@ -9447,7 +9764,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "readhamilsparse.pyx":890
+    /* "readhamilsparse.pyx":929
  *     iprocs[0] = 0
  *     for i in range(nprocs_p):
  *         iprocs_min = <int>((nprocs_shm*i)/nprocs_p_shm)             # <<<<<<<<<<<<<<
@@ -9456,7 +9773,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     __pyx_v_iprocs_min = ((int)((__pyx_v_nprocs_shm * __pyx_v_i) / __pyx_v_nprocs_p_shm));
 
-    /* "readhamilsparse.pyx":891
+    /* "readhamilsparse.pyx":930
  *     for i in range(nprocs_p):
  *         iprocs_min = <int>((nprocs_shm*i)/nprocs_p_shm)
  *         iprocs_max = <int>((nprocs_shm*(i+1))/nprocs_p_shm)             # <<<<<<<<<<<<<<
@@ -9465,7 +9782,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     __pyx_v_iprocs_max = ((int)((__pyx_v_nprocs_shm * (__pyx_v_i + 1)) / ((long)__pyx_v_nprocs_p_shm)));
 
-    /* "readhamilsparse.pyx":892
+    /* "readhamilsparse.pyx":931
  *         iprocs_min = <int>((nprocs_shm*i)/nprocs_p_shm)
  *         iprocs_max = <int>((nprocs_shm*(i+1))/nprocs_p_shm)
  *         imodes_min = <int>((nmodes*i)/nprocs_p)             # <<<<<<<<<<<<<<
@@ -9474,7 +9791,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     __pyx_v_imodes_min = ((int)((__pyx_v_nmodes * __pyx_v_i) / __pyx_v_nprocs_p));
 
-    /* "readhamilsparse.pyx":893
+    /* "readhamilsparse.pyx":932
  *         iprocs_max = <int>((nprocs_shm*(i+1))/nprocs_p_shm)
  *         imodes_min = <int>((nmodes*i)/nprocs_p)
  *         imodes_max = <int>((nmodes*(i+1))/nprocs_p)             # <<<<<<<<<<<<<<
@@ -9483,7 +9800,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     __pyx_v_imodes_max = ((int)((__pyx_v_nmodes * (__pyx_v_i + 1)) / ((long)__pyx_v_nprocs_p)));
 
-    /* "readhamilsparse.pyx":894
+    /* "readhamilsparse.pyx":933
  *         imodes_min = <int>((nmodes*i)/nprocs_p)
  *         imodes_max = <int>((nmodes*(i+1))/nprocs_p)
  *         iprocs_num[i] = iprocs_max - iprocs_min             # <<<<<<<<<<<<<<
@@ -9492,7 +9809,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (__pyx_v_iprocs_num[__pyx_v_i]) = (__pyx_v_iprocs_max - __pyx_v_iprocs_min);
 
-    /* "readhamilsparse.pyx":895
+    /* "readhamilsparse.pyx":934
  *         imodes_max = <int>((nmodes*(i+1))/nprocs_p)
  *         iprocs_num[i] = iprocs_max - iprocs_min
  *         imodes_num[i] = imodes_max - imodes_min             # <<<<<<<<<<<<<<
@@ -9501,7 +9818,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (__pyx_v_imodes_num[__pyx_v_i]) = (__pyx_v_imodes_max - __pyx_v_imodes_min);
 
-    /* "readhamilsparse.pyx":896
+    /* "readhamilsparse.pyx":935
  *         iprocs_num[i] = iprocs_max - iprocs_min
  *         imodes_num[i] = imodes_max - imodes_min
  *         iprocs[i+1] = iprocs_max             # <<<<<<<<<<<<<<
@@ -9510,7 +9827,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (__pyx_v_iprocs[(__pyx_v_i + 1)]) = __pyx_v_iprocs_max;
 
-    /* "readhamilsparse.pyx":897
+    /* "readhamilsparse.pyx":936
  *         imodes_num[i] = imodes_max - imodes_min
  *         iprocs[i+1] = iprocs_max
  *         imodes[i+1] = imodes_max             # <<<<<<<<<<<<<<
@@ -9519,7 +9836,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (__pyx_v_imodes[(__pyx_v_i + 1)]) = __pyx_v_imodes_max;
 
-    /* "readhamilsparse.pyx":898
+    /* "readhamilsparse.pyx":937
  *         iprocs[i+1] = iprocs_max
  *         imodes[i+1] = imodes_max
  *         if (iprocs_min<=myid and iprocs_max>myid):             # <<<<<<<<<<<<<<
@@ -9537,7 +9854,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     __pyx_L10_bool_binop_done:;
     if (__pyx_t_8) {
 
-      /* "readhamilsparse.pyx":899
+      /* "readhamilsparse.pyx":938
  *         imodes[i+1] = imodes_max
  *         if (iprocs_min<=myid and iprocs_max>myid):
  *             color = i             # <<<<<<<<<<<<<<
@@ -9546,7 +9863,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
       __pyx_v_color = __pyx_v_i;
 
-      /* "readhamilsparse.pyx":898
+      /* "readhamilsparse.pyx":937
  *         iprocs[i+1] = iprocs_max
  *         imodes[i+1] = imodes_max
  *         if (iprocs_min<=myid and iprocs_max>myid):             # <<<<<<<<<<<<<<
@@ -9556,7 +9873,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     }
   }
 
-  /* "readhamilsparse.pyx":900
+  /* "readhamilsparse.pyx":939
  *         if (iprocs_min<=myid and iprocs_max>myid):
  *             color = i
  *     imodes_min = imodes[color]             # <<<<<<<<<<<<<<
@@ -9565,7 +9882,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_imodes_min = (__pyx_v_imodes[__pyx_v_color]);
 
-  /* "readhamilsparse.pyx":901
+  /* "readhamilsparse.pyx":940
  *             color = i
  *     imodes_min = imodes[color]
  *     imodes_max = imodes[color+1]             # <<<<<<<<<<<<<<
@@ -9574,7 +9891,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_imodes_max = (__pyx_v_imodes[(__pyx_v_color + 1)]);
 
-  /* "readhamilsparse.pyx":903
+  /* "readhamilsparse.pyx":942
  *     imodes_max = imodes[color+1]
  * 
  *     nodelist = <int*>malloc(sizeof(int)*nnodes)             # <<<<<<<<<<<<<<
@@ -9583,7 +9900,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_nodelist = ((int *)malloc(((sizeof(int)) * __pyx_v_nnodes)));
 
-  /* "readhamilsparse.pyx":904
+  /* "readhamilsparse.pyx":943
  * 
  *     nodelist = <int*>malloc(sizeof(int)*nnodes)
  *     imodes_num_shm = <int*>malloc(sizeof(int)*nnodes)             # <<<<<<<<<<<<<<
@@ -9592,7 +9909,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_imodes_num_shm = ((int *)malloc(((sizeof(int)) * __pyx_v_nnodes)));
 
-  /* "readhamilsparse.pyx":905
+  /* "readhamilsparse.pyx":944
  *     nodelist = <int*>malloc(sizeof(int)*nnodes)
  *     imodes_num_shm = <int*>malloc(sizeof(int)*nnodes)
  *     imodes_shm = <int*>malloc(sizeof(int)*(nnodes+1))             # <<<<<<<<<<<<<<
@@ -9601,7 +9918,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_imodes_shm = ((int *)malloc(((sizeof(int)) * (__pyx_v_nnodes + 1))));
 
-  /* "readhamilsparse.pyx":906
+  /* "readhamilsparse.pyx":945
  *     imodes_num_shm = <int*>malloc(sizeof(int)*nnodes)
  *     imodes_shm = <int*>malloc(sizeof(int)*(nnodes+1))
  *     imodes_shm[0] = 0             # <<<<<<<<<<<<<<
@@ -9610,7 +9927,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (__pyx_v_imodes_shm[0]) = 0;
 
-  /* "readhamilsparse.pyx":907
+  /* "readhamilsparse.pyx":946
  *     imodes_shm = <int*>malloc(sizeof(int)*(nnodes+1))
  *     imodes_shm[0] = 0
  *     l = 0             # <<<<<<<<<<<<<<
@@ -9619,7 +9936,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_l = 0;
 
-  /* "readhamilsparse.pyx":908
+  /* "readhamilsparse.pyx":947
  *     imodes_shm[0] = 0
  *     l = 0
  *     for i in range(nnodes):             # <<<<<<<<<<<<<<
@@ -9631,7 +9948,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "readhamilsparse.pyx":909
+    /* "readhamilsparse.pyx":948
  *     l = 0
  *     for i in range(nnodes):
  *         nodelist[i] = i*nprocs_shm             # <<<<<<<<<<<<<<
@@ -9640,7 +9957,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (__pyx_v_nodelist[__pyx_v_i]) = (__pyx_v_i * __pyx_v_nprocs_shm);
 
-    /* "readhamilsparse.pyx":910
+    /* "readhamilsparse.pyx":949
  *     for i in range(nnodes):
  *         nodelist[i] = i*nprocs_shm
  *         k = nprocs_shm*(i+1)             # <<<<<<<<<<<<<<
@@ -9649,7 +9966,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     __pyx_v_k = (__pyx_v_nprocs_shm * (__pyx_v_i + 1));
 
-    /* "readhamilsparse.pyx":911
+    /* "readhamilsparse.pyx":950
  *         nodelist[i] = i*nprocs_shm
  *         k = nprocs_shm*(i+1)
  *         for j in range(l,nprocs_p):             # <<<<<<<<<<<<<<
@@ -9661,7 +9978,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     for (__pyx_t_12 = __pyx_v_l; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
       __pyx_v_j = __pyx_t_12;
 
-      /* "readhamilsparse.pyx":912
+      /* "readhamilsparse.pyx":951
  *         k = nprocs_shm*(i+1)
  *         for j in range(l,nprocs_p):
  *             if (iprocs[j]<k and iprocs[j+1]>=k):             # <<<<<<<<<<<<<<
@@ -9679,7 +9996,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
       __pyx_L17_bool_binop_done:;
       if (__pyx_t_8) {
 
-        /* "readhamilsparse.pyx":913
+        /* "readhamilsparse.pyx":952
  *         for j in range(l,nprocs_p):
  *             if (iprocs[j]<k and iprocs[j+1]>=k):
  *                 break             # <<<<<<<<<<<<<<
@@ -9688,7 +10005,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
         goto __pyx_L15_break;
 
-        /* "readhamilsparse.pyx":912
+        /* "readhamilsparse.pyx":951
  *         k = nprocs_shm*(i+1)
  *         for j in range(l,nprocs_p):
  *             if (iprocs[j]<k and iprocs[j+1]>=k):             # <<<<<<<<<<<<<<
@@ -9699,7 +10016,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     }
     __pyx_L15_break:;
 
-    /* "readhamilsparse.pyx":914
+    /* "readhamilsparse.pyx":953
  *             if (iprocs[j]<k and iprocs[j+1]>=k):
  *                 break
  *         imodes_num_shm[i] = (imodes[j+1]-imodes[l])             # <<<<<<<<<<<<<<
@@ -9708,7 +10025,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (__pyx_v_imodes_num_shm[__pyx_v_i]) = ((__pyx_v_imodes[(__pyx_v_j + 1)]) - (__pyx_v_imodes[__pyx_v_l]));
 
-    /* "readhamilsparse.pyx":915
+    /* "readhamilsparse.pyx":954
  *                 break
  *         imodes_num_shm[i] = (imodes[j+1]-imodes[l])
  *         imodes_shm[i+1] = imodes[j+1]             # <<<<<<<<<<<<<<
@@ -9717,7 +10034,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (__pyx_v_imodes_shm[(__pyx_v_i + 1)]) = (__pyx_v_imodes[(__pyx_v_j + 1)]);
 
-    /* "readhamilsparse.pyx":916
+    /* "readhamilsparse.pyx":955
  *         imodes_num_shm[i] = (imodes[j+1]-imodes[l])
  *         imodes_shm[i+1] = imodes[j+1]
  *         l = j+1             # <<<<<<<<<<<<<<
@@ -9727,7 +10044,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     __pyx_v_l = (__pyx_v_j + 1);
   }
 
-  /* "readhamilsparse.pyx":918
+  /* "readhamilsparse.pyx":957
  *         l = j+1
  * 
  *     mpi.MPI_Comm_group(c_comm,&group_all)             # <<<<<<<<<<<<<<
@@ -9736,7 +10053,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (void)(MPI_Comm_group(__pyx_v_c_comm, (&__pyx_v_group_all)));
 
-  /* "readhamilsparse.pyx":919
+  /* "readhamilsparse.pyx":958
  * 
  *     mpi.MPI_Comm_group(c_comm,&group_all)
  *     mpi.MPI_Group_incl(group_all,nnodes,nodelist,&group)             # <<<<<<<<<<<<<<
@@ -9745,7 +10062,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (void)(MPI_Group_incl(__pyx_v_group_all, __pyx_v_nnodes, __pyx_v_nodelist, (&__pyx_v_group)));
 
-  /* "readhamilsparse.pyx":920
+  /* "readhamilsparse.pyx":959
  *     mpi.MPI_Comm_group(c_comm,&group_all)
  *     mpi.MPI_Group_incl(group_all,nnodes,nodelist,&group)
  *     ierr = mpi.MPI_Comm_create(c_comm,group,&comm_gp)             # <<<<<<<<<<<<<<
@@ -9754,7 +10071,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ierr = MPI_Comm_create(__pyx_v_c_comm, __pyx_v_group, (&__pyx_v_comm_gp));
 
-  /* "readhamilsparse.pyx":921
+  /* "readhamilsparse.pyx":960
  *     mpi.MPI_Group_incl(group_all,nnodes,nodelist,&group)
  *     ierr = mpi.MPI_Comm_create(c_comm,group,&comm_gp)
  *     mpi.MPI_Comm_split(c_comm,color,myid,&comm_b)             # <<<<<<<<<<<<<<
@@ -9763,7 +10080,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (void)(MPI_Comm_split(__pyx_v_c_comm, __pyx_v_color, __pyx_v_myid, (&__pyx_v_comm_b)));
 
-  /* "readhamilsparse.pyx":922
+  /* "readhamilsparse.pyx":961
  *     ierr = mpi.MPI_Comm_create(c_comm,group,&comm_gp)
  *     mpi.MPI_Comm_split(c_comm,color,myid,&comm_b)
  *     ierr = mpi.MPI_Comm_size(comm_b,&nprocs_b)             # <<<<<<<<<<<<<<
@@ -9772,7 +10089,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_comm_b, (&__pyx_v_nprocs_b));
 
-  /* "readhamilsparse.pyx":923
+  /* "readhamilsparse.pyx":962
  *     mpi.MPI_Comm_split(c_comm,color,myid,&comm_b)
  *     ierr = mpi.MPI_Comm_size(comm_b,&nprocs_b)
  *     ierr = mpi.MPI_Comm_rank(comm_b,&myid_b)             # <<<<<<<<<<<<<<
@@ -9781,7 +10098,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_comm_b, (&__pyx_v_myid_b));
 
-  /* "readhamilsparse.pyx":925
+  /* "readhamilsparse.pyx":964
  *     ierr = mpi.MPI_Comm_rank(comm_b,&myid_b)
  * 
  *     data_buf = <double*>malloc(norbital_m*norbital_m*sizeof(double))             # <<<<<<<<<<<<<<
@@ -9790,39 +10107,39 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   __pyx_v_15readhamilsparse_data_buf = ((double *)malloc(((__pyx_v_norbital_m * __pyx_v_norbital_m) * (sizeof(double)))));
 
-  /* "readhamilsparse.pyx":927
+  /* "readhamilsparse.pyx":966
  *     data_buf = <double*>malloc(norbital_m*norbital_m*sizeof(double))
  * 
  *     if (myid_b==0):             # <<<<<<<<<<<<<<
- *         l_hamil_buf = key_num[ncell2,3]*sizeof(double)
+ *         l_hamil_buf = (Ispin+1)*key_num[ncell2,3]*sizeof(double)
  *     else:
  */
   __pyx_t_8 = ((__pyx_v_myid_b == 0) != 0);
   if (__pyx_t_8) {
 
-    /* "readhamilsparse.pyx":928
+    /* "readhamilsparse.pyx":967
  * 
  *     if (myid_b==0):
- *         l_hamil_buf = key_num[ncell2,3]*sizeof(double)             # <<<<<<<<<<<<<<
+ *         l_hamil_buf = (Ispin+1)*key_num[ncell2,3]*sizeof(double)             # <<<<<<<<<<<<<<
  *     else:
  *         l_hamil_buf = 0
  */
     __pyx_t_5 = __pyx_v_ncell2;
     __pyx_t_13 = 3;
-    __pyx_v_l_hamil_buf = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_13)) ))) * (sizeof(double)));
+    __pyx_v_l_hamil_buf = (((__pyx_v_Ispin + 1) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_13)) )))) * (sizeof(double)));
 
-    /* "readhamilsparse.pyx":927
+    /* "readhamilsparse.pyx":966
  *     data_buf = <double*>malloc(norbital_m*norbital_m*sizeof(double))
  * 
  *     if (myid_b==0):             # <<<<<<<<<<<<<<
- *         l_hamil_buf = key_num[ncell2,3]*sizeof(double)
+ *         l_hamil_buf = (Ispin+1)*key_num[ncell2,3]*sizeof(double)
  *     else:
  */
     goto __pyx_L19;
   }
 
-  /* "readhamilsparse.pyx":930
- *         l_hamil_buf = key_num[ncell2,3]*sizeof(double)
+  /* "readhamilsparse.pyx":969
+ *         l_hamil_buf = (Ispin+1)*key_num[ncell2,3]*sizeof(double)
  *     else:
  *         l_hamil_buf = 0             # <<<<<<<<<<<<<<
  *     mpi.MPI_Win_allocate_shared(
@@ -9833,7 +10150,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   }
   __pyx_L19:;
 
-  /* "readhamilsparse.pyx":931
+  /* "readhamilsparse.pyx":970
  *     else:
  *         l_hamil_buf = 0
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -9842,7 +10159,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_hamil_buf, __pyx_v_s_d, MPI_INFO_NULL, __pyx_v_comm_b, (&__pyx_v_hamil_buf), (&__pyx_v_win)));
 
-  /* "readhamilsparse.pyx":934
+  /* "readhamilsparse.pyx":973
  *         l_hamil_buf,s_d,mpi.MPI_INFO_NULL,comm_b,&hamil_buf,&win
  *     )
  *     if (myid_b!=0):             # <<<<<<<<<<<<<<
@@ -9852,7 +10169,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   __pyx_t_8 = ((__pyx_v_myid_b != 0) != 0);
   if (__pyx_t_8) {
 
-    /* "readhamilsparse.pyx":935
+    /* "readhamilsparse.pyx":974
  *     )
  *     if (myid_b!=0):
  *         mpi.MPI_Win_shared_query(win,0,&l_hamil_buf,&s_d,&hamil_buf)             # <<<<<<<<<<<<<<
@@ -9861,7 +10178,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
     (void)(MPI_Win_shared_query(__pyx_v_win, 0, (&__pyx_v_l_hamil_buf), (&__pyx_v_s_d), (&__pyx_v_hamil_buf)));
 
-    /* "readhamilsparse.pyx":934
+    /* "readhamilsparse.pyx":973
  *         l_hamil_buf,s_d,mpi.MPI_INFO_NULL,comm_b,&hamil_buf,&win
  *     )
  *     if (myid_b!=0):             # <<<<<<<<<<<<<<
@@ -9870,7 +10187,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   }
 
-  /* "readhamilsparse.pyx":936
+  /* "readhamilsparse.pyx":975
  *     if (myid_b!=0):
  *         mpi.MPI_Win_shared_query(win,0,&l_hamil_buf,&s_d,&hamil_buf)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -9879,7 +10196,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "readhamilsparse.pyx":938
+  /* "readhamilsparse.pyx":977
  *     mpi.MPI_Barrier(c_comm)
  * 
  *     if (dhamil_method[0]!=diff[2]):             # <<<<<<<<<<<<<<
@@ -9889,7 +10206,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
   __pyx_t_8 = (((__pyx_v_dhamil_method[0]) != (__pyx_v_diff[2])) != 0);
   if (__pyx_t_8) {
 
-    /* "readhamilsparse.pyx":939
+    /* "readhamilsparse.pyx":978
  * 
  *     if (dhamil_method[0]!=diff[2]):
  *         if (dhamil_method[0]==diff[0]):             # <<<<<<<<<<<<<<
@@ -9899,7 +10216,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     __pyx_t_8 = (((__pyx_v_dhamil_method[0]) == (__pyx_v_diff[0])) != 0);
     if (__pyx_t_8) {
 
-      /* "readhamilsparse.pyx":940
+      /* "readhamilsparse.pyx":979
  *     if (dhamil_method[0]!=diff[2]):
  *         if (dhamil_method[0]==diff[0]):
  *             factor[0] = dQ1             # <<<<<<<<<<<<<<
@@ -9908,7 +10225,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
       (__pyx_v_factor[0]) = __pyx_v_dQ1;
 
-      /* "readhamilsparse.pyx":941
+      /* "readhamilsparse.pyx":980
  *         if (dhamil_method[0]==diff[0]):
  *             factor[0] = dQ1
  *             h = 0             # <<<<<<<<<<<<<<
@@ -9917,7 +10234,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
       __pyx_v_h = 0;
 
-      /* "readhamilsparse.pyx":939
+      /* "readhamilsparse.pyx":978
  * 
  *     if (dhamil_method[0]!=diff[2]):
  *         if (dhamil_method[0]==diff[0]):             # <<<<<<<<<<<<<<
@@ -9927,7 +10244,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
       goto __pyx_L22;
     }
 
-    /* "readhamilsparse.pyx":943
+    /* "readhamilsparse.pyx":982
  *             h = 0
  *         else:
  *             factor[1] = ndQ1             # <<<<<<<<<<<<<<
@@ -9937,7 +10254,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     /*else*/ {
       (__pyx_v_factor[1]) = __pyx_v_ndQ1;
 
-      /* "readhamilsparse.pyx":944
+      /* "readhamilsparse.pyx":983
  *         else:
  *             factor[1] = ndQ1
  *             h = 1             # <<<<<<<<<<<<<<
@@ -9948,7 +10265,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     }
     __pyx_L22:;
 
-    /* "readhamilsparse.pyx":945
+    /* "readhamilsparse.pyx":984
  *             factor[1] = ndQ1
  *             h = 1
  *         if IsH5:             # <<<<<<<<<<<<<<
@@ -9958,7 +10275,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     __pyx_t_8 = (__pyx_v_IsH5 != 0);
     if (__pyx_t_8) {
 
-      /* "readhamilsparse.pyx":946
+      /* "readhamilsparse.pyx":985
  *             h = 1
  *         if IsH5:
  *             sprintf(data_name,"%s/%s.h5",inDir,H5HamName)             # <<<<<<<<<<<<<<
@@ -9967,16 +10284,16 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
       (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s.h5"), __pyx_v_inDir, __pyx_v_H5HamName));
 
-      /* "readhamilsparse.pyx":947
+      /* "readhamilsparse.pyx":986
  *         if IsH5:
  *             sprintf(data_name,"%s/%s.h5",inDir,H5HamName)
  *             readh5_p0(             # <<<<<<<<<<<<<<
  *                 comm_b,data_name,nprocs_b,myid_b,
- *                 ncell2,key_num,pub_key,hamil_buf
+ *                 ncell2,key_num,pub_key,data_buf,hamil_buf
  */
-      __pyx_f_15readhamilsparse_readh5_p0(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_nprocs_b, __pyx_v_myid_b, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_hamil_buf);
+      __pyx_f_15readhamilsparse_readh5_p0(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_nprocs_b, __pyx_v_myid_b, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf);
 
-      /* "readhamilsparse.pyx":945
+      /* "readhamilsparse.pyx":984
  *             factor[1] = ndQ1
  *             h = 1
  *         if IsH5:             # <<<<<<<<<<<<<<
@@ -9986,57 +10303,57 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
       goto __pyx_L23;
     }
 
-    /* "readhamilsparse.pyx":952
+    /* "readhamilsparse.pyx":991
  *             )
  *         else:
  *             if (myid_b==0):             # <<<<<<<<<<<<<<
  *                 sprintf(data_name,"%s/openmx.scfout",inDir)
- *                 readscfout(data_name,ncell2,key_num,hamil_buf)
+ *                 readscfout(data_name,ncell2,key_num,data_buf,hamil_buf,Ispin)
  */
     /*else*/ {
       __pyx_t_8 = ((__pyx_v_myid_b == 0) != 0);
       if (__pyx_t_8) {
 
-        /* "readhamilsparse.pyx":953
+        /* "readhamilsparse.pyx":992
  *         else:
  *             if (myid_b==0):
  *                 sprintf(data_name,"%s/openmx.scfout",inDir)             # <<<<<<<<<<<<<<
- *                 readscfout(data_name,ncell2,key_num,hamil_buf)
+ *                 readscfout(data_name,ncell2,key_num,data_buf,hamil_buf,Ispin)
  *         mpi.MPI_Barrier(comm_b)
  */
         (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/openmx.scfout"), __pyx_v_inDir));
 
-        /* "readhamilsparse.pyx":954
+        /* "readhamilsparse.pyx":993
  *             if (myid_b==0):
  *                 sprintf(data_name,"%s/openmx.scfout",inDir)
- *                 readscfout(data_name,ncell2,key_num,hamil_buf)             # <<<<<<<<<<<<<<
+ *                 readscfout(data_name,ncell2,key_num,data_buf,hamil_buf,Ispin)             # <<<<<<<<<<<<<<
  *         mpi.MPI_Barrier(comm_b)
  *         for i in range(imodes_min,imodes_max):
  */
-        __pyx_f_15readhamilsparse_readscfout(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_hamil_buf);
+        __pyx_f_15readhamilsparse_readscfout(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf, __pyx_v_Ispin);
 
-        /* "readhamilsparse.pyx":952
+        /* "readhamilsparse.pyx":991
  *             )
  *         else:
  *             if (myid_b==0):             # <<<<<<<<<<<<<<
  *                 sprintf(data_name,"%s/openmx.scfout",inDir)
- *                 readscfout(data_name,ncell2,key_num,hamil_buf)
+ *                 readscfout(data_name,ncell2,key_num,data_buf,hamil_buf,Ispin)
  */
       }
     }
     __pyx_L23:;
 
-    /* "readhamilsparse.pyx":955
+    /* "readhamilsparse.pyx":994
  *                 sprintf(data_name,"%s/openmx.scfout",inDir)
- *                 readscfout(data_name,ncell2,key_num,hamil_buf)
+ *                 readscfout(data_name,ncell2,key_num,data_buf,hamil_buf,Ispin)
  *         mpi.MPI_Barrier(comm_b)             # <<<<<<<<<<<<<<
  *         for i in range(imodes_min,imodes_max):
  *             j = <int>((i+nm_min)/3)
  */
     (void)(MPI_Barrier(__pyx_v_comm_b));
 
-    /* "readhamilsparse.pyx":956
- *                 readscfout(data_name,ncell2,key_num,hamil_buf)
+    /* "readhamilsparse.pyx":995
+ *                 readscfout(data_name,ncell2,key_num,data_buf,hamil_buf,Ispin)
  *         mpi.MPI_Barrier(comm_b)
  *         for i in range(imodes_min,imodes_max):             # <<<<<<<<<<<<<<
  *             j = <int>((i+nm_min)/3)
@@ -10047,7 +10364,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
     for (__pyx_t_4 = __pyx_v_imodes_min; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "readhamilsparse.pyx":957
+      /* "readhamilsparse.pyx":996
  *         mpi.MPI_Barrier(comm_b)
  *         for i in range(imodes_min,imodes_max):
  *             j = <int>((i+nm_min)/3)             # <<<<<<<<<<<<<<
@@ -10056,7 +10373,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
       __pyx_v_j = ((int)(((long)(__pyx_v_i + __pyx_v_nm_min)) / 3));
 
-      /* "readhamilsparse.pyx":958
+      /* "readhamilsparse.pyx":997
  *         for i in range(imodes_min,imodes_max):
  *             j = <int>((i+nm_min)/3)
  *             k = (i+nm_min)%3             # <<<<<<<<<<<<<<
@@ -10065,7 +10382,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
       __pyx_v_k = ((__pyx_v_i + __pyx_v_nm_min) % 3);
 
-      /* "readhamilsparse.pyx":959
+      /* "readhamilsparse.pyx":998
  *             j = <int>((i+nm_min)/3)
  *             k = (i+nm_min)%3
  *             if IsH5:             # <<<<<<<<<<<<<<
@@ -10075,7 +10392,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
       __pyx_t_8 = (__pyx_v_IsH5 != 0);
       if (__pyx_t_8) {
 
-        /* "readhamilsparse.pyx":963
+        /* "readhamilsparse.pyx":1002
  *                 sprintf(
  *                     data_name,"%s/%s/%d%c%c/%s.h5",inDir,dhamilDir,
  *                     catom[j],plus[h],delta[k],H5HamName             # <<<<<<<<<<<<<<
@@ -10084,7 +10401,7 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
         __pyx_t_13 = __pyx_v_j;
 
-        /* "readhamilsparse.pyx":961
+        /* "readhamilsparse.pyx":1000
  *             if IsH5:
  *                 #sprintf(data_name,"%s/%s.h5",inDir,H5HamName)
  *                 sprintf(             # <<<<<<<<<<<<<<
@@ -10093,10 +10410,10 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
  */
         (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s/%d%c%c/%s.h5"), __pyx_v_inDir, __pyx_v_dhamilDir, (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_catom.data) + __pyx_t_13)) ))), (__pyx_v_plus[__pyx_v_h]), (__pyx_v_delta[__pyx_v_k]), __pyx_v_H5HamName));
 
-        /* "readhamilsparse.pyx":968
+        /* "readhamilsparse.pyx":1007
  *                     comm_b,data_name,nprocs_b,myid_b,ncell2,
  *                     key_num,pub_key,key_info1,factor[h],
- *                     data_buf,hamil_buf,dhamil[i],1             # <<<<<<<<<<<<<<
+ *                     data_buf,hamil_buf,dhamil[i,0],1             # <<<<<<<<<<<<<<
  *                 )
  *             else:
  */
@@ -10109,13 +10426,19 @@ static PyObject *__pyx_pf_15readhamilsparse_8deltahamil_b(CYTHON_UNUSED PyObject
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[1];
-__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[1];
+{
+    Py_ssize_t __pyx_tmp_idx = 0;
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_dhamil.strides[1];
+        __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[2];
+__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[2];
     __pyx_t_14.suboffsets[0] = -1;
 
 __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_nprocs_b, __pyx_v_myid_b, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, (__pyx_v_factor[__pyx_v_h]), __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf, __pyx_t_14, 1);
 
-        /* "readhamilsparse.pyx":965
+        /* "readhamilsparse.pyx":1004
  *                     catom[j],plus[h],delta[k],H5HamName
  *                 )
  *                 readh5_p1(             # <<<<<<<<<<<<<<
@@ -10126,7 +10449,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         __pyx_t_14.memview = NULL;
         __pyx_t_14.data = NULL;
 
-        /* "readhamilsparse.pyx":959
+        /* "readhamilsparse.pyx":998
  *             j = <int>((i+nm_min)/3)
  *             k = (i+nm_min)%3
  *             if IsH5:             # <<<<<<<<<<<<<<
@@ -10136,7 +10459,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         goto __pyx_L27;
       }
 
-      /* "readhamilsparse.pyx":971
+      /* "readhamilsparse.pyx":1010
  *                 )
  *             else:
  *                 if (myid_b==0):             # <<<<<<<<<<<<<<
@@ -10147,7 +10470,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         __pyx_t_8 = ((__pyx_v_myid_b == 0) != 0);
         if (__pyx_t_8) {
 
-          /* "readhamilsparse.pyx":974
+          /* "readhamilsparse.pyx":1013
  *                     sprintf(
  *                         data_name,"%s/%s/%d%c%c/openmx.scfout",
  *                         inDir,dhamilDir,catom[j],plus[h],delta[k]             # <<<<<<<<<<<<<<
@@ -10156,7 +10479,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
  */
           __pyx_t_13 = __pyx_v_j;
 
-          /* "readhamilsparse.pyx":972
+          /* "readhamilsparse.pyx":1011
  *             else:
  *                 if (myid_b==0):
  *                     sprintf(             # <<<<<<<<<<<<<<
@@ -10165,40 +10488,44 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
  */
           (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s/%d%c%c/openmx.scfout"), __pyx_v_inDir, __pyx_v_dhamilDir, (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_catom.data) + __pyx_t_13)) ))), (__pyx_v_plus[__pyx_v_h]), (__pyx_v_delta[__pyx_v_k])));
 
-          /* "readhamilsparse.pyx":978
+          /* "readhamilsparse.pyx":1017
  *                     readscfout1(
- *                         data_name,ncell2,key_num,pub_key,
- *                         key_info1,hamil_buf,dhamil[i],factor[h],1             # <<<<<<<<<<<<<<
+ *                         data_name,ncell2,key_num,pub_key,key_info1,
+ *                         data_buf,hamil_buf,dhamil[i],factor[h],Ispin,1             # <<<<<<<<<<<<<<
  *                     )
  *             mpi.MPI_Barrier(comm_b)
  */
-          __pyx_t_14.data = __pyx_v_dhamil.data;
-          __pyx_t_14.memview = __pyx_v_dhamil.memview;
-          __PYX_INC_MEMVIEW(&__pyx_t_14, 0);
+          __pyx_t_15.data = __pyx_v_dhamil.data;
+          __pyx_t_15.memview = __pyx_v_dhamil.memview;
+          __PYX_INC_MEMVIEW(&__pyx_t_15, 0);
           {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_i;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_dhamil.strides[0];
-        __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_15.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[1];
-__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[1];
-    __pyx_t_14.suboffsets[0] = -1;
+__pyx_t_15.shape[0] = __pyx_v_dhamil.shape[1];
+__pyx_t_15.strides[0] = __pyx_v_dhamil.strides[1];
+    __pyx_t_15.suboffsets[0] = -1;
 
-__pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_hamil_buf, __pyx_t_14, (__pyx_v_factor[__pyx_v_h]), 1);
+__pyx_t_15.shape[1] = __pyx_v_dhamil.shape[2];
+__pyx_t_15.strides[1] = __pyx_v_dhamil.strides[2];
+    __pyx_t_15.suboffsets[1] = -1;
 
-          /* "readhamilsparse.pyx":976
+__pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf, __pyx_t_15, (__pyx_v_factor[__pyx_v_h]), __pyx_v_Ispin, 1);
+
+          /* "readhamilsparse.pyx":1015
  *                         inDir,dhamilDir,catom[j],plus[h],delta[k]
  *                     )
  *                     readscfout1(             # <<<<<<<<<<<<<<
- *                         data_name,ncell2,key_num,pub_key,
- *                         key_info1,hamil_buf,dhamil[i],factor[h],1
+ *                         data_name,ncell2,key_num,pub_key,key_info1,
+ *                         data_buf,hamil_buf,dhamil[i],factor[h],Ispin,1
  */
-          __PYX_XDEC_MEMVIEW(&__pyx_t_14, 1);
-          __pyx_t_14.memview = NULL;
-          __pyx_t_14.data = NULL;
+          __PYX_XDEC_MEMVIEW(&__pyx_t_15, 1);
+          __pyx_t_15.memview = NULL;
+          __pyx_t_15.data = NULL;
 
-          /* "readhamilsparse.pyx":971
+          /* "readhamilsparse.pyx":1010
  *                 )
  *             else:
  *                 if (myid_b==0):             # <<<<<<<<<<<<<<
@@ -10209,8 +10536,8 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
       }
       __pyx_L27:;
 
-      /* "readhamilsparse.pyx":980
- *                         key_info1,hamil_buf,dhamil[i],factor[h],1
+      /* "readhamilsparse.pyx":1019
+ *                         data_buf,hamil_buf,dhamil[i],factor[h],Ispin,1
  *                     )
  *             mpi.MPI_Barrier(comm_b)             # <<<<<<<<<<<<<<
  *     else:
@@ -10219,7 +10546,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
       (void)(MPI_Barrier(__pyx_v_comm_b));
     }
 
-    /* "readhamilsparse.pyx":938
+    /* "readhamilsparse.pyx":977
  *     mpi.MPI_Barrier(c_comm)
  * 
  *     if (dhamil_method[0]!=diff[2]):             # <<<<<<<<<<<<<<
@@ -10229,7 +10556,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
     goto __pyx_L21;
   }
 
-  /* "readhamilsparse.pyx":982
+  /* "readhamilsparse.pyx":1021
  *             mpi.MPI_Barrier(comm_b)
  *     else:
  *         for i in range(imodes_min,imodes_max):             # <<<<<<<<<<<<<<
@@ -10242,7 +10569,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
     for (__pyx_t_4 = __pyx_v_imodes_min; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "readhamilsparse.pyx":983
+      /* "readhamilsparse.pyx":1022
  *     else:
  *         for i in range(imodes_min,imodes_max):
  *             j = <int>((i+nm_min)/3)             # <<<<<<<<<<<<<<
@@ -10251,7 +10578,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
       __pyx_v_j = ((int)(((long)(__pyx_v_i + __pyx_v_nm_min)) / 3));
 
-      /* "readhamilsparse.pyx":984
+      /* "readhamilsparse.pyx":1023
  *         for i in range(imodes_min,imodes_max):
  *             j = <int>((i+nm_min)/3)
  *             k = (i+nm_min)%3             # <<<<<<<<<<<<<<
@@ -10260,7 +10587,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
       __pyx_v_k = ((__pyx_v_i + __pyx_v_nm_min) % 3);
 
-      /* "readhamilsparse.pyx":986
+      /* "readhamilsparse.pyx":1025
  *             k = (i+nm_min)%3
  *             # read catom-xyz
  *             if IsH5:             # <<<<<<<<<<<<<<
@@ -10270,7 +10597,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
       __pyx_t_8 = (__pyx_v_IsH5 != 0);
       if (__pyx_t_8) {
 
-        /* "readhamilsparse.pyx":989
+        /* "readhamilsparse.pyx":1028
  *                 sprintf(
  *                     data_name,"%s/%s/%d-%c/%s.h5",inDir,
  *                     dhamilDir,catom[j],delta[k],H5HamName             # <<<<<<<<<<<<<<
@@ -10279,7 +10606,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
         __pyx_t_13 = __pyx_v_j;
 
-        /* "readhamilsparse.pyx":987
+        /* "readhamilsparse.pyx":1026
  *             # read catom-xyz
  *             if IsH5:
  *                 sprintf(             # <<<<<<<<<<<<<<
@@ -10288,10 +10615,10 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
         (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s/%d-%c/%s.h5"), __pyx_v_inDir, __pyx_v_dhamilDir, (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_catom.data) + __pyx_t_13)) ))), (__pyx_v_delta[__pyx_v_k]), __pyx_v_H5HamName));
 
-        /* "readhamilsparse.pyx":994
+        /* "readhamilsparse.pyx":1033
  *                     comm_b,data_name,nprocs_b,myid_b,ncell2,
  *                     key_num,pub_key,key_info1,dQ2,
- *                     data_buf,hamil_buf,dhamil[i],0             # <<<<<<<<<<<<<<
+ *                     data_buf,hamil_buf,dhamil[i,0],0             # <<<<<<<<<<<<<<
  *                 )
  *             else:
  */
@@ -10304,13 +10631,19 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[1];
-__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[1];
+{
+    Py_ssize_t __pyx_tmp_idx = 0;
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_dhamil.strides[1];
+        __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[2];
+__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[2];
     __pyx_t_14.suboffsets[0] = -1;
 
 __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_nprocs_b, __pyx_v_myid_b, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_dQ2, __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf, __pyx_t_14, 0);
 
-        /* "readhamilsparse.pyx":991
+        /* "readhamilsparse.pyx":1030
  *                     dhamilDir,catom[j],delta[k],H5HamName
  *                 )
  *                 readh5_p1(             # <<<<<<<<<<<<<<
@@ -10321,7 +10654,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         __pyx_t_14.memview = NULL;
         __pyx_t_14.data = NULL;
 
-        /* "readhamilsparse.pyx":986
+        /* "readhamilsparse.pyx":1025
  *             k = (i+nm_min)%3
  *             # read catom-xyz
  *             if IsH5:             # <<<<<<<<<<<<<<
@@ -10331,7 +10664,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         goto __pyx_L31;
       }
 
-      /* "readhamilsparse.pyx":997
+      /* "readhamilsparse.pyx":1036
  *                 )
  *             else:
  *                 if (myid_b==0):             # <<<<<<<<<<<<<<
@@ -10342,7 +10675,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         __pyx_t_8 = ((__pyx_v_myid_b == 0) != 0);
         if (__pyx_t_8) {
 
-          /* "readhamilsparse.pyx":1000
+          /* "readhamilsparse.pyx":1039
  *                     sprintf(
  *                         data_name,"%s/%s/%d-%c/openmx.scfout",
  *                         inDir,dhamilDir,catom[j],delta[k]             # <<<<<<<<<<<<<<
@@ -10351,7 +10684,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
  */
           __pyx_t_13 = __pyx_v_j;
 
-          /* "readhamilsparse.pyx":998
+          /* "readhamilsparse.pyx":1037
  *             else:
  *                 if (myid_b==0):
  *                     sprintf(             # <<<<<<<<<<<<<<
@@ -10360,40 +10693,44 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
  */
           (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s/%d-%c/openmx.scfout"), __pyx_v_inDir, __pyx_v_dhamilDir, (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_catom.data) + __pyx_t_13)) ))), (__pyx_v_delta[__pyx_v_k])));
 
-          /* "readhamilsparse.pyx":1004
+          /* "readhamilsparse.pyx":1043
  *                     readscfout1(
- *                         data_name,ncell2,key_num,pub_key,
- *                         key_info1,hamil_buf,dhamil[i],dQ2,0             # <<<<<<<<<<<<<<
+ *                         data_name,ncell2,key_num,pub_key,key_info1,
+ *                         data_buf,hamil_buf,dhamil[i],dQ2,Ispin,0             # <<<<<<<<<<<<<<
  *                     )
  *             mpi.MPI_Barrier(comm_b)
  */
-          __pyx_t_14.data = __pyx_v_dhamil.data;
-          __pyx_t_14.memview = __pyx_v_dhamil.memview;
-          __PYX_INC_MEMVIEW(&__pyx_t_14, 0);
+          __pyx_t_15.data = __pyx_v_dhamil.data;
+          __pyx_t_15.memview = __pyx_v_dhamil.memview;
+          __PYX_INC_MEMVIEW(&__pyx_t_15, 0);
           {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_i;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_dhamil.strides[0];
-        __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_15.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[1];
-__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[1];
-    __pyx_t_14.suboffsets[0] = -1;
+__pyx_t_15.shape[0] = __pyx_v_dhamil.shape[1];
+__pyx_t_15.strides[0] = __pyx_v_dhamil.strides[1];
+    __pyx_t_15.suboffsets[0] = -1;
 
-__pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_hamil_buf, __pyx_t_14, __pyx_v_dQ2, 0);
+__pyx_t_15.shape[1] = __pyx_v_dhamil.shape[2];
+__pyx_t_15.strides[1] = __pyx_v_dhamil.strides[2];
+    __pyx_t_15.suboffsets[1] = -1;
 
-          /* "readhamilsparse.pyx":1002
+__pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf, __pyx_t_15, __pyx_v_dQ2, __pyx_v_Ispin, 0);
+
+          /* "readhamilsparse.pyx":1041
  *                         inDir,dhamilDir,catom[j],delta[k]
  *                     )
  *                     readscfout1(             # <<<<<<<<<<<<<<
- *                         data_name,ncell2,key_num,pub_key,
- *                         key_info1,hamil_buf,dhamil[i],dQ2,0
+ *                         data_name,ncell2,key_num,pub_key,key_info1,
+ *                         data_buf,hamil_buf,dhamil[i],dQ2,Ispin,0
  */
-          __PYX_XDEC_MEMVIEW(&__pyx_t_14, 1);
-          __pyx_t_14.memview = NULL;
-          __pyx_t_14.data = NULL;
+          __PYX_XDEC_MEMVIEW(&__pyx_t_15, 1);
+          __pyx_t_15.memview = NULL;
+          __pyx_t_15.data = NULL;
 
-          /* "readhamilsparse.pyx":997
+          /* "readhamilsparse.pyx":1036
  *                 )
  *             else:
  *                 if (myid_b==0):             # <<<<<<<<<<<<<<
@@ -10404,8 +10741,8 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
       }
       __pyx_L31:;
 
-      /* "readhamilsparse.pyx":1006
- *                         key_info1,hamil_buf,dhamil[i],dQ2,0
+      /* "readhamilsparse.pyx":1045
+ *                         data_buf,hamil_buf,dhamil[i],dQ2,Ispin,0
  *                     )
  *             mpi.MPI_Barrier(comm_b)             # <<<<<<<<<<<<<<
  *             # read catom+xyz
@@ -10413,7 +10750,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
       (void)(MPI_Barrier(__pyx_v_comm_b));
 
-      /* "readhamilsparse.pyx":1008
+      /* "readhamilsparse.pyx":1047
  *             mpi.MPI_Barrier(comm_b)
  *             # read catom+xyz
  *             if IsH5:             # <<<<<<<<<<<<<<
@@ -10423,7 +10760,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
       __pyx_t_8 = (__pyx_v_IsH5 != 0);
       if (__pyx_t_8) {
 
-        /* "readhamilsparse.pyx":1011
+        /* "readhamilsparse.pyx":1050
  *                 sprintf(
  *                     data_name,"%s/%s/%d+%c/%s.h5",inDir,
  *                     dhamilDir,catom[j],delta[k],H5HamName             # <<<<<<<<<<<<<<
@@ -10432,7 +10769,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
         __pyx_t_13 = __pyx_v_j;
 
-        /* "readhamilsparse.pyx":1009
+        /* "readhamilsparse.pyx":1048
  *             # read catom+xyz
  *             if IsH5:
  *                 sprintf(             # <<<<<<<<<<<<<<
@@ -10441,10 +10778,10 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
         (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s/%d+%c/%s.h5"), __pyx_v_inDir, __pyx_v_dhamilDir, (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_catom.data) + __pyx_t_13)) ))), (__pyx_v_delta[__pyx_v_k]), __pyx_v_H5HamName));
 
-        /* "readhamilsparse.pyx":1016
+        /* "readhamilsparse.pyx":1055
  *                     comm_b,data_name,nprocs_b,myid_b,ncell2,
  *                     key_num,pub_key,key_info1,dQ2,
- *                     data_buf,hamil_buf,dhamil[i],1             # <<<<<<<<<<<<<<
+ *                     data_buf,hamil_buf,dhamil[i,0],1             # <<<<<<<<<<<<<<
  *                 )
  *             else:
  */
@@ -10457,13 +10794,19 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
         __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[1];
-__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[1];
+{
+    Py_ssize_t __pyx_tmp_idx = 0;
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_dhamil.strides[1];
+        __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[2];
+__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[2];
     __pyx_t_14.suboffsets[0] = -1;
 
 __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_nprocs_b, __pyx_v_myid_b, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_dQ2, __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf, __pyx_t_14, 1);
 
-        /* "readhamilsparse.pyx":1013
+        /* "readhamilsparse.pyx":1052
  *                     dhamilDir,catom[j],delta[k],H5HamName
  *                 )
  *                 readh5_p1(             # <<<<<<<<<<<<<<
@@ -10474,7 +10817,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         __pyx_t_14.memview = NULL;
         __pyx_t_14.data = NULL;
 
-        /* "readhamilsparse.pyx":1008
+        /* "readhamilsparse.pyx":1047
  *             mpi.MPI_Barrier(comm_b)
  *             # read catom+xyz
  *             if IsH5:             # <<<<<<<<<<<<<<
@@ -10484,7 +10827,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         goto __pyx_L33;
       }
 
-      /* "readhamilsparse.pyx":1019
+      /* "readhamilsparse.pyx":1058
  *                 )
  *             else:
  *                 if (myid_b==0):             # <<<<<<<<<<<<<<
@@ -10495,7 +10838,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
         __pyx_t_8 = ((__pyx_v_myid_b == 0) != 0);
         if (__pyx_t_8) {
 
-          /* "readhamilsparse.pyx":1022
+          /* "readhamilsparse.pyx":1061
  *                     sprintf(
  *                         data_name,"%s/%s/%d+%c/openmx.scfout",
  *                         inDir,dhamilDir,catom[j],delta[k]             # <<<<<<<<<<<<<<
@@ -10504,7 +10847,7 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
  */
           __pyx_t_13 = __pyx_v_j;
 
-          /* "readhamilsparse.pyx":1020
+          /* "readhamilsparse.pyx":1059
  *             else:
  *                 if (myid_b==0):
  *                     sprintf(             # <<<<<<<<<<<<<<
@@ -10513,40 +10856,44 @@ __pyx_f_15readhamilsparse_readh5_p1(__pyx_v_comm_b, __pyx_v_data_name, __pyx_v_n
  */
           (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/%s/%d+%c/openmx.scfout"), __pyx_v_inDir, __pyx_v_dhamilDir, (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_catom.data) + __pyx_t_13)) ))), (__pyx_v_delta[__pyx_v_k])));
 
-          /* "readhamilsparse.pyx":1026
+          /* "readhamilsparse.pyx":1065
  *                     readscfout1(
- *                         data_name,ncell2,key_num,pub_key,
- *                         key_info1,hamil_buf,dhamil[i],dQ2,1             # <<<<<<<<<<<<<<
+ *                         data_name,ncell2,key_num,pub_key,key_info1,
+ *                         data_buf,hamil_buf,dhamil[i],dQ2,Ispin,1             # <<<<<<<<<<<<<<
  *                     )
  *             mpi.MPI_Barrier(comm_b)
  */
-          __pyx_t_14.data = __pyx_v_dhamil.data;
-          __pyx_t_14.memview = __pyx_v_dhamil.memview;
-          __PYX_INC_MEMVIEW(&__pyx_t_14, 0);
+          __pyx_t_15.data = __pyx_v_dhamil.data;
+          __pyx_t_15.memview = __pyx_v_dhamil.memview;
+          __PYX_INC_MEMVIEW(&__pyx_t_15, 0);
           {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_i;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_dhamil.strides[0];
-        __pyx_t_14.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_15.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_14.shape[0] = __pyx_v_dhamil.shape[1];
-__pyx_t_14.strides[0] = __pyx_v_dhamil.strides[1];
-    __pyx_t_14.suboffsets[0] = -1;
+__pyx_t_15.shape[0] = __pyx_v_dhamil.shape[1];
+__pyx_t_15.strides[0] = __pyx_v_dhamil.strides[1];
+    __pyx_t_15.suboffsets[0] = -1;
 
-__pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_hamil_buf, __pyx_t_14, __pyx_v_dQ2, 1);
+__pyx_t_15.shape[1] = __pyx_v_dhamil.shape[2];
+__pyx_t_15.strides[1] = __pyx_v_dhamil.strides[2];
+    __pyx_t_15.suboffsets[1] = -1;
 
-          /* "readhamilsparse.pyx":1024
+__pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info1, __pyx_v_15readhamilsparse_data_buf, __pyx_v_hamil_buf, __pyx_t_15, __pyx_v_dQ2, __pyx_v_Ispin, 1);
+
+          /* "readhamilsparse.pyx":1063
  *                         inDir,dhamilDir,catom[j],delta[k]
  *                     )
  *                     readscfout1(             # <<<<<<<<<<<<<<
- *                         data_name,ncell2,key_num,pub_key,
- *                         key_info1,hamil_buf,dhamil[i],dQ2,1
+ *                         data_name,ncell2,key_num,pub_key,key_info1,
+ *                         data_buf,hamil_buf,dhamil[i],dQ2,Ispin,1
  */
-          __PYX_XDEC_MEMVIEW(&__pyx_t_14, 1);
-          __pyx_t_14.memview = NULL;
-          __pyx_t_14.data = NULL;
+          __PYX_XDEC_MEMVIEW(&__pyx_t_15, 1);
+          __pyx_t_15.memview = NULL;
+          __pyx_t_15.data = NULL;
 
-          /* "readhamilsparse.pyx":1019
+          /* "readhamilsparse.pyx":1058
  *                 )
  *             else:
  *                 if (myid_b==0):             # <<<<<<<<<<<<<<
@@ -10557,8 +10904,8 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
       }
       __pyx_L33:;
 
-      /* "readhamilsparse.pyx":1028
- *                         key_info1,hamil_buf,dhamil[i],dQ2,1
+      /* "readhamilsparse.pyx":1067
+ *                         data_buf,hamil_buf,dhamil[i],dQ2,Ispin,1
  *                     )
  *             mpi.MPI_Barrier(comm_b)             # <<<<<<<<<<<<<<
  * 
@@ -10569,7 +10916,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
   }
   __pyx_L21:;
 
-  /* "readhamilsparse.pyx":1030
+  /* "readhamilsparse.pyx":1069
  *             mpi.MPI_Barrier(comm_b)
  * 
  *     mpi.MPI_Barrier(c_shm_comm)             # <<<<<<<<<<<<<<
@@ -10578,7 +10925,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   (void)(MPI_Barrier(__pyx_v_c_shm_comm));
 
-  /* "readhamilsparse.pyx":1031
+  /* "readhamilsparse.pyx":1070
  * 
  *     mpi.MPI_Barrier(c_shm_comm)
  *     if (nnodes>1):             # <<<<<<<<<<<<<<
@@ -10588,7 +10935,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
   __pyx_t_8 = ((__pyx_v_nnodes > 1) != 0);
   if (__pyx_t_8) {
 
-    /* "readhamilsparse.pyx":1032
+    /* "readhamilsparse.pyx":1071
  *     mpi.MPI_Barrier(c_shm_comm)
  *     if (nnodes>1):
  *         mpi.MPI_Type_contiguous(key_num[ncell2,3],mpi.MPI_DOUBLE,&DB_NOB)             # <<<<<<<<<<<<<<
@@ -10599,7 +10946,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
     __pyx_t_5 = 3;
     (void)(MPI_Type_contiguous((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_13 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) ))), MPI_DOUBLE, (&__pyx_v_DB_NOB)));
 
-    /* "readhamilsparse.pyx":1033
+    /* "readhamilsparse.pyx":1072
  *     if (nnodes>1):
  *         mpi.MPI_Type_contiguous(key_num[ncell2,3],mpi.MPI_DOUBLE,&DB_NOB)
  *         mpi.MPI_Type_commit(&DB_NOB)             # <<<<<<<<<<<<<<
@@ -10608,7 +10955,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
     (void)(MPI_Type_commit((&__pyx_v_DB_NOB)));
 
-    /* "readhamilsparse.pyx":1034
+    /* "readhamilsparse.pyx":1073
  *         mpi.MPI_Type_contiguous(key_num[ncell2,3],mpi.MPI_DOUBLE,&DB_NOB)
  *         mpi.MPI_Type_commit(&DB_NOB)
  *         if (comm_gp!=mpi.MPI_COMM_NULL):             # <<<<<<<<<<<<<<
@@ -10618,44 +10965,58 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
     __pyx_t_8 = ((__pyx_v_comm_gp != MPI_COMM_NULL) != 0);
     if (__pyx_t_8) {
 
-      /* "readhamilsparse.pyx":1048
+      /* "readhamilsparse.pyx":1087
  * #            free(imodes_gather)
  * 
  *             for i in range(nnodes):             # <<<<<<<<<<<<<<
  *                 for j in range(imodes_shm[i],imodes_shm[i+1]):
- *                     mpi.MPI_Bcast(&dhamil[j,0],1,DB_NOB,i,comm_gp)
+ *                     for k in range(Ispin+1):
  */
       __pyx_t_2 = __pyx_v_nnodes;
       __pyx_t_3 = __pyx_t_2;
       for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
         __pyx_v_i = __pyx_t_4;
 
-        /* "readhamilsparse.pyx":1049
+        /* "readhamilsparse.pyx":1088
  * 
  *             for i in range(nnodes):
  *                 for j in range(imodes_shm[i],imodes_shm[i+1]):             # <<<<<<<<<<<<<<
- *                     mpi.MPI_Bcast(&dhamil[j,0],1,DB_NOB,i,comm_gp)
- * 
+ *                     for k in range(Ispin+1):
+ *                         mpi.MPI_Bcast(&dhamil[j,k,0],1,DB_NOB,i,comm_gp)
  */
         __pyx_t_10 = (__pyx_v_imodes_shm[(__pyx_v_i + 1)]);
         __pyx_t_11 = __pyx_t_10;
         for (__pyx_t_12 = (__pyx_v_imodes_shm[__pyx_v_i]); __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
           __pyx_v_j = __pyx_t_12;
 
-          /* "readhamilsparse.pyx":1050
+          /* "readhamilsparse.pyx":1089
  *             for i in range(nnodes):
  *                 for j in range(imodes_shm[i],imodes_shm[i+1]):
- *                     mpi.MPI_Bcast(&dhamil[j,0],1,DB_NOB,i,comm_gp)             # <<<<<<<<<<<<<<
+ *                     for k in range(Ispin+1):             # <<<<<<<<<<<<<<
+ *                         mpi.MPI_Bcast(&dhamil[j,k,0],1,DB_NOB,i,comm_gp)
+ * 
+ */
+          __pyx_t_6 = (__pyx_v_Ispin + 1);
+          __pyx_t_7 = __pyx_t_6;
+          for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_7; __pyx_t_16+=1) {
+            __pyx_v_k = __pyx_t_16;
+
+            /* "readhamilsparse.pyx":1090
+ *                 for j in range(imodes_shm[i],imodes_shm[i+1]):
+ *                     for k in range(Ispin+1):
+ *                         mpi.MPI_Bcast(&dhamil[j,k,0],1,DB_NOB,i,comm_gp)             # <<<<<<<<<<<<<<
  * 
  *         mpi.MPI_Type_free(&DB_NOB)
  */
-          __pyx_t_5 = __pyx_v_j;
-          __pyx_t_13 = 0;
-          (void)(MPI_Bcast((&(*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_dhamil.data + __pyx_t_5 * __pyx_v_dhamil.strides[0]) )) + __pyx_t_13)) )))), 1, __pyx_v_DB_NOB, __pyx_v_i, __pyx_v_comm_gp));
+            __pyx_t_5 = __pyx_v_j;
+            __pyx_t_13 = __pyx_v_k;
+            __pyx_t_17 = 0;
+            (void)(MPI_Bcast((&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_dhamil.data + __pyx_t_5 * __pyx_v_dhamil.strides[0]) ) + __pyx_t_13 * __pyx_v_dhamil.strides[1]) )) + __pyx_t_17)) )))), 1, __pyx_v_DB_NOB, __pyx_v_i, __pyx_v_comm_gp));
+          }
         }
       }
 
-      /* "readhamilsparse.pyx":1034
+      /* "readhamilsparse.pyx":1073
  *         mpi.MPI_Type_contiguous(key_num[ncell2,3],mpi.MPI_DOUBLE,&DB_NOB)
  *         mpi.MPI_Type_commit(&DB_NOB)
  *         if (comm_gp!=mpi.MPI_COMM_NULL):             # <<<<<<<<<<<<<<
@@ -10664,8 +11025,8 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
     }
 
-    /* "readhamilsparse.pyx":1052
- *                     mpi.MPI_Bcast(&dhamil[j,0],1,DB_NOB,i,comm_gp)
+    /* "readhamilsparse.pyx":1092
+ *                         mpi.MPI_Bcast(&dhamil[j,k,0],1,DB_NOB,i,comm_gp)
  * 
  *         mpi.MPI_Type_free(&DB_NOB)             # <<<<<<<<<<<<<<
  * 
@@ -10673,7 +11034,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
     (void)(MPI_Type_free((&__pyx_v_DB_NOB)));
 
-    /* "readhamilsparse.pyx":1031
+    /* "readhamilsparse.pyx":1070
  * 
  *     mpi.MPI_Barrier(c_shm_comm)
  *     if (nnodes>1):             # <<<<<<<<<<<<<<
@@ -10682,7 +11043,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   }
 
-  /* "readhamilsparse.pyx":1054
+  /* "readhamilsparse.pyx":1094
  *         mpi.MPI_Type_free(&DB_NOB)
  * 
  *     mpi.MPI_Win_free(&win)             # <<<<<<<<<<<<<<
@@ -10691,7 +11052,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   (void)(MPI_Win_free((&__pyx_v_win)));
 
-  /* "readhamilsparse.pyx":1056
+  /* "readhamilsparse.pyx":1096
  *     mpi.MPI_Win_free(&win)
  * 
  *     free(nodelist)             # <<<<<<<<<<<<<<
@@ -10700,7 +11061,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_nodelist);
 
-  /* "readhamilsparse.pyx":1057
+  /* "readhamilsparse.pyx":1097
  * 
  *     free(nodelist)
  *     free(imodes_num)             # <<<<<<<<<<<<<<
@@ -10709,7 +11070,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_imodes_num);
 
-  /* "readhamilsparse.pyx":1058
+  /* "readhamilsparse.pyx":1098
  *     free(nodelist)
  *     free(imodes_num)
  *     free(imodes)             # <<<<<<<<<<<<<<
@@ -10718,7 +11079,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_imodes);
 
-  /* "readhamilsparse.pyx":1059
+  /* "readhamilsparse.pyx":1099
  *     free(imodes_num)
  *     free(imodes)
  *     free(iprocs_num)             # <<<<<<<<<<<<<<
@@ -10727,7 +11088,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_iprocs_num);
 
-  /* "readhamilsparse.pyx":1060
+  /* "readhamilsparse.pyx":1100
  *     free(imodes)
  *     free(iprocs_num)
  *     free(iprocs)             # <<<<<<<<<<<<<<
@@ -10736,7 +11097,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_iprocs);
 
-  /* "readhamilsparse.pyx":1061
+  /* "readhamilsparse.pyx":1101
  *     free(iprocs_num)
  *     free(iprocs)
  *     free(imodes_num_shm)             # <<<<<<<<<<<<<<
@@ -10745,7 +11106,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_imodes_num_shm);
 
-  /* "readhamilsparse.pyx":1062
+  /* "readhamilsparse.pyx":1102
  *     free(iprocs)
  *     free(imodes_num_shm)
  *     free(imodes_shm)             # <<<<<<<<<<<<<<
@@ -10754,7 +11115,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_imodes_shm);
 
-  /* "readhamilsparse.pyx":1063
+  /* "readhamilsparse.pyx":1103
  *     free(imodes_num_shm)
  *     free(imodes_shm)
  *     free(atom_idx)             # <<<<<<<<<<<<<<
@@ -10763,7 +11124,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_15readhamilsparse_atom_idx);
 
-  /* "readhamilsparse.pyx":1064
+  /* "readhamilsparse.pyx":1104
  *     free(imodes_shm)
  *     free(atom_idx)
  *     free(atom_idx_all)             # <<<<<<<<<<<<<<
@@ -10772,7 +11133,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_15readhamilsparse_atom_idx_all);
 
-  /* "readhamilsparse.pyx":1065
+  /* "readhamilsparse.pyx":1105
  *     free(atom_idx)
  *     free(atom_idx_all)
  *     free(key_buf)             # <<<<<<<<<<<<<<
@@ -10781,7 +11142,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_15readhamilsparse_key_buf);
 
-  /* "readhamilsparse.pyx":1066
+  /* "readhamilsparse.pyx":1106
  *     free(atom_idx_all)
  *     free(key_buf)
  *     free(data_buf)             # <<<<<<<<<<<<<<
@@ -10790,7 +11151,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   free(__pyx_v_15readhamilsparse_data_buf);
 
-  /* "readhamilsparse.pyx":1068
+  /* "readhamilsparse.pyx":1108
  *     free(data_buf)
  * 
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -10799,7 +11160,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "readhamilsparse.pyx":1069
+  /* "readhamilsparse.pyx":1109
  * 
  *     mpi.MPI_Barrier(c_comm)
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -10808,7 +11169,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "readhamilsparse.pyx":1070
+  /* "readhamilsparse.pyx":1110
  *     mpi.MPI_Barrier(c_comm)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -10817,14 +11178,14 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
   __pyx_t_8 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_8) {
 
-    /* "readhamilsparse.pyx":1071
+    /* "readhamilsparse.pyx":1111
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("dhamil time in mode[%4d:%4d]:%12.4fs.\n",nm_min,nm_min+nmodes,endtime-starttime)             # <<<<<<<<<<<<<<
  */
     (void)(printf(((char const *)"dhamil time in mode[%4d:%4d]:%12.4fs.\n"), __pyx_v_nm_min, (__pyx_v_nm_min + __pyx_v_nmodes), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "readhamilsparse.pyx":1070
+    /* "readhamilsparse.pyx":1110
  *     mpi.MPI_Barrier(c_comm)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -10832,7 +11193,7 @@ __pyx_f_15readhamilsparse_readscfout1(__pyx_v_data_name, __pyx_v_ncell2, __pyx_v
  */
   }
 
-  /* "readhamilsparse.pyx":808
+  /* "readhamilsparse.pyx":847
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def deltahamil_b(             # <<<<<<<<<<<<<<
@@ -24688,6 +25049,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Invalid_mode_expected_c_or_fortr, __pyx_k_Invalid_mode_expected_c_or_fortr, sizeof(__pyx_k_Invalid_mode_expected_c_or_fortr), 0, 0, 1, 0},
   {&__pyx_kp_s_Invalid_shape_in_axis_d_d, __pyx_k_Invalid_shape_in_axis_d_d, sizeof(__pyx_k_Invalid_shape_in_axis_d_d), 0, 0, 1, 0},
   {&__pyx_n_s_IsH5, __pyx_k_IsH5, sizeof(__pyx_k_IsH5), 0, 0, 1, 1},
+  {&__pyx_n_s_Ispin, __pyx_k_Ispin, sizeof(__pyx_k_Ispin), 0, 0, 1, 1},
   {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
   {&__pyx_kp_s_MemoryView_of_r_at_0x_x, __pyx_k_MemoryView_of_r_at_0x_x, sizeof(__pyx_k_MemoryView_of_r_at_0x_x), 0, 0, 1, 0},
   {&__pyx_kp_s_MemoryView_of_r_object, __pyx_k_MemoryView_of_r_object, sizeof(__pyx_k_MemoryView_of_r_object), 0, 0, 1, 0},
@@ -24853,7 +25215,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 162, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 163, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 134, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 149, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 152, __pyx_L1_error)
@@ -25065,65 +25427,65 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
 
-  /* "readhamilsparse.pyx":351
+  /* "readhamilsparse.pyx":356
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, int[:,::1] key_num,
  *     int[::1] atom_idx_py, int[::1] atom_idx_all_py,
  */
-  __pyx_tuple__20 = PyTuple_Pack(13, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_key_num, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_all_py, __pyx_n_s_atomnum, __pyx_n_s_norbital_u, __pyx_n_s_ncell, __pyx_n_s_ncell2, __pyx_n_s_IsH5, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 351, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(13, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_key_num, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_all_py, __pyx_n_s_atomnum, __pyx_n_s_norbital_u, __pyx_n_s_ncell, __pyx_n_s_ncell2, __pyx_n_s_IsH5, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 356, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(10, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseNum, 351, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 351, __pyx_L1_error)
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(10, 0, 13, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseNum, 356, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 356, __pyx_L1_error)
 
-  /* "readhamilsparse.pyx":389
+  /* "readhamilsparse.pyx":394
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, int norbital_u, int ncell, int ncell2,
  *     int[:,::1] key_num, int[:,::1] pub_key, int[:,::1] key_info,
  */
-  __pyx_tuple__22 = PyTuple_Pack(19, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_norbital_u, __pyx_n_s_ncell, __pyx_n_s_ncell2, __pyx_n_s_key_num, __pyx_n_s_pub_key, __pyx_n_s_key_info, __pyx_n_s_key_info1, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_all_py, __pyx_n_s_atomnum, __pyx_n_s_IsH5, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_offset, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 389, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(19, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_norbital_u, __pyx_n_s_ncell, __pyx_n_s_ncell2, __pyx_n_s_key_num, __pyx_n_s_pub_key, __pyx_n_s_key_info, __pyx_n_s_key_info1, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_all_py, __pyx_n_s_atomnum, __pyx_n_s_IsH5, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_offset, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 394, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(13, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseIdx, 389, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 389, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(13, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseIdx, 394, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 394, __pyx_L1_error)
 
-  /* "readhamilsparse.pyx":445
+  /* "readhamilsparse.pyx":455
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNumSum(             # <<<<<<<<<<<<<<
  *     int ncell, int[:,::1] key_num,
  *     int[:,::1] key_num_s, int[:,::1] key_info
  */
-  __pyx_tuple__24 = PyTuple_Pack(12, __pyx_n_s_ncell, __pyx_n_s_key_num, __pyx_n_s_key_num_s, __pyx_n_s_key_info, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_key_min, __pyx_n_s_key_max, __pyx_n_s_nkey, __pyx_n_s_key_num_u, __pyx_n_s_tmp, __pyx_n_s_key_buf); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 445, __pyx_L1_error)
+  __pyx_tuple__24 = PyTuple_Pack(12, __pyx_n_s_ncell, __pyx_n_s_key_num, __pyx_n_s_key_num_s, __pyx_n_s_key_info, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_key_min, __pyx_n_s_key_max, __pyx_n_s_nkey, __pyx_n_s_key_num_u, __pyx_n_s_tmp, __pyx_n_s_key_buf); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 455, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(4, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseNumSum, 445, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 445, __pyx_L1_error)
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(4, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseNumSum, 455, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 455, __pyx_L1_error)
 
-  /* "readhamilsparse.pyx":477
+  /* "readhamilsparse.pyx":487
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdxSum(             # <<<<<<<<<<<<<<
  *     int ncell, int[:,::1] key_num, int[:,::1] key_num_s,
  *     int[:,::1] key_info, int[::1] key_info_s
  */
-  __pyx_tuple__26 = PyTuple_Pack(15, __pyx_n_s_ncell, __pyx_n_s_key_num, __pyx_n_s_key_num_s, __pyx_n_s_key_info, __pyx_n_s_key_info_s, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_key_num_i, __pyx_n_s_key_min, __pyx_n_s_key_max, __pyx_n_s_nkey, __pyx_n_s_key_num_u, __pyx_n_s_tmp, __pyx_n_s_key_buf, __pyx_n_s_mapidx); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 477, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(15, __pyx_n_s_ncell, __pyx_n_s_key_num, __pyx_n_s_key_num_s, __pyx_n_s_key_info, __pyx_n_s_key_info_s, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_key_num_i, __pyx_n_s_key_min, __pyx_n_s_key_max, __pyx_n_s_nkey, __pyx_n_s_key_num_u, __pyx_n_s_tmp, __pyx_n_s_key_buf, __pyx_n_s_mapidx); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 487, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(5, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseIdxSum, 477, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 477, __pyx_L1_error)
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(5, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_GetSparseIdxSum, 487, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 487, __pyx_L1_error)
 
-  /* "readhamilsparse.pyx":808
+  /* "readhamilsparse.pyx":847
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def deltahamil_b(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, MPI.Comm shm_comm, int nmodes, int nm_min,
  *     int dH_block, int norbital_u, int ncell, int norbital_m,
  */
-  __pyx_tuple__28 = PyTuple_Pack(76, __pyx_n_s_comm, __pyx_n_s_shm_comm, __pyx_n_s_nmodes, __pyx_n_s_nm_min, __pyx_n_s_dH_block, __pyx_n_s_norbital_u, __pyx_n_s_ncell, __pyx_n_s_norbital_m, __pyx_n_s_atomnum_py, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_all_py, __pyx_n_s_catom, __pyx_n_s_key_num, __pyx_n_s_pub_key, __pyx_n_s_key_info1, __pyx_n_s_dQ1, __pyx_n_s_dhamil, __pyx_n_s_inDir, __pyx_n_s_dhamilDir, __pyx_n_s_H5HamName, __pyx_n_s_dhamil_method, __pyx_n_s_IsH5, __pyx_n_s_c_comm, __pyx_n_s_c_shm_comm, __pyx_n_s_comm_b, __pyx_n_s_comm_gp, __pyx_n_s_group_all, __pyx_n_s_group, __pyx_n_s_DB_NOB, __pyx_n_s_l_hamil_buf, __pyx_n_s_win, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_n, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_ierr, __pyx_n_s_shm_id, __pyx_n_s_nprocs_p_shm, __pyx_n_s_nprocs_p, __pyx_n_s_color, __pyx_n_s_myid_b, __pyx_n_s_nprocs_b, __pyx_n_s_nprocs_shm, __pyx_n_s_nnodes, __pyx_n_s_s_d, __pyx_n_s_s_int, __pyx_n_s_ncell2, __pyx_n_s_nodelist, __pyx_n_s_imodes_num, __pyx_n_s_imodes, __pyx_n_s_iprocs_num, __pyx_n_s_iprocs, __pyx_n_s_imodes_num_shm, __pyx_n_s_imodes_shm, __pyx_n_s_imodes_num_gather, __pyx_n_s_imodes_gather, __pyx_n_s_imodes_min, __pyx_n_s_imodes_max, __pyx_n_s_iprocs_min, __pyx_n_s_iprocs_max, __pyx_n_s_hamil_buf, __pyx_n_s_ndQ1, __pyx_n_s_dQ2, __pyx_n_s_ndQ2, __pyx_n_s_factor, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_data_name, __pyx_n_s_delta, __pyx_n_s_diff, __pyx_n_s_plus); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 808, __pyx_L1_error)
+  __pyx_tuple__28 = PyTuple_Pack(77, __pyx_n_s_comm, __pyx_n_s_shm_comm, __pyx_n_s_nmodes, __pyx_n_s_nm_min, __pyx_n_s_dH_block, __pyx_n_s_norbital_u, __pyx_n_s_ncell, __pyx_n_s_norbital_m, __pyx_n_s_atomnum_py, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_all_py, __pyx_n_s_catom, __pyx_n_s_key_num, __pyx_n_s_pub_key, __pyx_n_s_key_info1, __pyx_n_s_dQ1, __pyx_n_s_dhamil, __pyx_n_s_inDir, __pyx_n_s_dhamilDir, __pyx_n_s_H5HamName, __pyx_n_s_dhamil_method, __pyx_n_s_Ispin, __pyx_n_s_IsH5, __pyx_n_s_c_comm, __pyx_n_s_c_shm_comm, __pyx_n_s_comm_b, __pyx_n_s_comm_gp, __pyx_n_s_group_all, __pyx_n_s_group, __pyx_n_s_DB_NOB, __pyx_n_s_l_hamil_buf, __pyx_n_s_win, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_n, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_ierr, __pyx_n_s_shm_id, __pyx_n_s_nprocs_p_shm, __pyx_n_s_nprocs_p, __pyx_n_s_color, __pyx_n_s_myid_b, __pyx_n_s_nprocs_b, __pyx_n_s_nprocs_shm, __pyx_n_s_nnodes, __pyx_n_s_s_d, __pyx_n_s_s_int, __pyx_n_s_ncell2, __pyx_n_s_nodelist, __pyx_n_s_imodes_num, __pyx_n_s_imodes, __pyx_n_s_iprocs_num, __pyx_n_s_iprocs, __pyx_n_s_imodes_num_shm, __pyx_n_s_imodes_shm, __pyx_n_s_imodes_num_gather, __pyx_n_s_imodes_gather, __pyx_n_s_imodes_min, __pyx_n_s_imodes_max, __pyx_n_s_iprocs_min, __pyx_n_s_iprocs_max, __pyx_n_s_hamil_buf, __pyx_n_s_ndQ1, __pyx_n_s_dQ2, __pyx_n_s_ndQ2, __pyx_n_s_factor, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_data_name, __pyx_n_s_delta, __pyx_n_s_diff, __pyx_n_s_plus); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 847, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(22, 0, 76, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_deltahamil_b, 808, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 808, __pyx_L1_error)
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(23, 0, 77, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readhamilsparse_pyx, __pyx_n_s_deltahamil_b, 847, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 847, __pyx_L1_error)
 
   /* "View.MemoryView":287
  *         return self.name
@@ -25567,7 +25929,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "readhamilsparse.pyx":118
+  /* "readhamilsparse.pyx":119
  * cdef double* data_buf
  * cdef int* key_buf
  * cdef double Hartree2eV = 27.211396641308             # <<<<<<<<<<<<<<
@@ -25576,64 +25938,64 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_15readhamilsparse_Hartree2eV = 27.211396641308;
 
-  /* "readhamilsparse.pyx":351
+  /* "readhamilsparse.pyx":356
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, int[:,::1] key_num,
  *     int[::1] atom_idx_py, int[::1] atom_idx_all_py,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_1GetSparseNum, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_1GetSparseNum, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 356, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseNum, __pyx_t_1) < 0) __PYX_ERR(0, 351, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseNum, __pyx_t_1) < 0) __PYX_ERR(0, 356, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readhamilsparse.pyx":389
+  /* "readhamilsparse.pyx":394
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, int norbital_u, int ncell, int ncell2,
  *     int[:,::1] key_num, int[:,::1] pub_key, int[:,::1] key_info,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_3GetSparseIdx, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 389, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_3GetSparseIdx, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 394, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseIdx, __pyx_t_1) < 0) __PYX_ERR(0, 389, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseIdx, __pyx_t_1) < 0) __PYX_ERR(0, 394, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readhamilsparse.pyx":445
+  /* "readhamilsparse.pyx":455
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNumSum(             # <<<<<<<<<<<<<<
  *     int ncell, int[:,::1] key_num,
  *     int[:,::1] key_num_s, int[:,::1] key_info
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_5GetSparseNumSum, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 445, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_5GetSparseNumSum, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 455, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseNumSum, __pyx_t_1) < 0) __PYX_ERR(0, 445, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseNumSum, __pyx_t_1) < 0) __PYX_ERR(0, 455, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readhamilsparse.pyx":477
+  /* "readhamilsparse.pyx":487
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdxSum(             # <<<<<<<<<<<<<<
  *     int ncell, int[:,::1] key_num, int[:,::1] key_num_s,
  *     int[:,::1] key_info, int[::1] key_info_s
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_7GetSparseIdxSum, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 477, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_7GetSparseIdxSum, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 487, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseIdxSum, __pyx_t_1) < 0) __PYX_ERR(0, 477, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseIdxSum, __pyx_t_1) < 0) __PYX_ERR(0, 487, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readhamilsparse.pyx":808
+  /* "readhamilsparse.pyx":847
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def deltahamil_b(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, MPI.Comm shm_comm, int nmodes, int nm_min,
  *     int dH_block, int norbital_u, int ncell, int norbital_m,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_9deltahamil_b, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 808, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_15readhamilsparse_9deltahamil_b, NULL, __pyx_n_s_readhamilsparse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 847, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_deltahamil_b, __pyx_t_1) < 0) __PYX_ERR(0, 808, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_deltahamil_b, __pyx_t_1) < 0) __PYX_ERR(0, 847, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "readhamilsparse.pyx":1
@@ -29131,17 +29493,17 @@ __pyx_fail:
     }
 
 /* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(PyObject *obj, int writable_flag) {
+  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(PyObject *obj, int writable_flag) {
     __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
     __Pyx_BufFmt_StackElem stack[1];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_FOLLOW), (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_CONTIG) };
+    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_FOLLOW), (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_FOLLOW), (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_CONTIG) };
     int retcode;
     if (obj == Py_None) {
         result.memview = (struct __pyx_memoryview_obj *) Py_None;
         return result;
     }
     retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, __Pyx_IS_C_CONTIG,
-                                                 (PyBUF_C_CONTIGUOUS | PyBUF_FORMAT) | writable_flag, 2,
+                                                 (PyBUF_C_CONTIGUOUS | PyBUF_FORMAT) | writable_flag, 3,
                                                  &__Pyx_TypeInfo_double, stack,
                                                  &result, obj);
     if (unlikely(retcode == -1))

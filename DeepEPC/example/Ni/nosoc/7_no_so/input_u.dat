@@ -1,0 +1,119 @@
+#
+# File Name
+#
+
+System.CurrrentDirectory         ./    # default=./
+System.Name                      openmx
+level.of.stdout                   1    # default=1 (1-3)
+level.of.fileout                  0    # default=1 (0-2)
+
+#
+# Definition of Atomic Species
+#
+
+Species.Number       1
+<Definition.of.Atomic.Species
+ Ni     Ni6.0H-s3p2d1       Ni_PBE19H
+Definition.of.Atomic.Species>
+
+#
+# Atoms
+#
+#
+# SCF or Electronic System
+#
+
+scf.XcType                 GGA-PBE     # LDA|LSDA-CA|LSDA-PW|GGA-PBE
+scf.SpinPolarization       on        # On|Off|NC
+scf.SpinOrbit.Coupling     off          # On|Off, default=off
+scf.ElectronicTemperature  300.0       # default=300 (K)
+scf.energycutoff           250.0       # default=150 (Ry)
+scf.maxIter                1000        # default=40
+scf.EigenvalueSolver       BAND        # DC|Cluster|Band
+scf.Kgrid                  7 7 7       # means n1 x n2 x n3
+scf.Mixing.Type           rmm-diish    # Simple|Rmm-Diis|Gr-Pulay|Kerker|Rmm-Diisk
+scf.Init.Mixing.Weight     0.30        # default=0.30
+scf.Min.Mixing.Weight      0.001       # default=0.001
+scf.Max.Mixing.Weight      0.400       # default=0.40
+scf.Mixing.History          20         # default=5
+scf.Mixing.StartPulay       30         # default=6
+scf.criterion             1.0e-8      # default=1.0e-6 (Hartree)
+scf.partialCoreCorrection   ON
+
+## 1DFFT ##
+1DFFT.NumGridK                    900
+1DFFT.NumGridR                    900
+1DFFT.EnergyCutoff                3600.0
+
+## Others ##
+scf.ProExpn.VNA                   Off
+
+# DFT+U
+#scf.Hubbard.U             on
+#scf.DFTU.Type             1             # 1:Simplified(Dudarev)|2:General, default=1
+#scf.Hubbard.Occupation      dual        # onsite|full|dual
+#<Hubbard.U.values                       # eV
+#  He  1s 0.0 2s 0.0 1p 0.0
+#  Li  1s 0.0 2s 0.0 1p 0.0
+#  Ti  1s 0.0 2s 0.0 3s 0.0 1p 0.0 2p 0.0 1d 4.1
+#  O   1s 0.0 2s 0.0 1p 0.0 2p 0.0 1d 0.0
+#  H   1s 0.0 2s 0.0 1p 0.0
+#  C   1s 0.0 2s 0.0 1p 0.0 2p 0.0 1d 0.0
+#Hubbard.U.values>
+
+#<Hund.J.values                       # eV
+#H0  1s 0.0 2s 0.0 1p 0.0
+#H1  1s 0.0 2s 0.0 1p 0.0
+#Ti  1s 0.0 2s 0.0 3s 0.0 1p 0.0 2p 0.0 1d 0.0
+#O   1s 0.0 2s 0.0 1p 0.0 2p 0.0 1d 0.0
+#H   1s 0.0 2s 0.0 1p 0.0
+#C   1s 0.0 2s 0.0 1p 0.0 2p 0.0 1d 0.0
+#Hund.J.values>
+
+# Output of molecular orbitals
+#MO.fileout   ON
+#<MO.kpoint
+#  0.0 0.0 0.0
+#MO.kpoint>
+
+#Dos.fileout  on
+#Dos.Erange  -10.0 10.0
+#Dos.Kgrid   1 1 1
+
+#Band.dispersion             on        # on|off, default=off
+#Band.Nkpath                  3
+#<Band.kpath
+#100   0.0000000000   0.0000000000   0.0000000000     0.3333333333   0.6666666666   0.0000000000 Γ K
+#100   0.3333333333   0.6666666666   0.0000000000     0.5000000000   0.5000000000   0.0000000000 K M
+#100   0.5000000000   0.5000000000   0.0000000000     0.0000000000   0.0000000000   0.0000000000 M Γ
+#Band.kpath>
+#120   0.0000000000   0.0000000000   0.0000000000     0.3333333333   0.3333333333   0.0000000000 Γ K
+##80   0.3333333333   0.3333333333   0.0000000000     0.5000000000   0.0000000000   0.0000000000 K M
+##120   0.5000000000   0.0000000000   0.0000000000     0.0000000000   0.0000000000   0.0000000000 M Γ
+
+# VDW DFT-D2
+#scf.dftD            on         # on|off, default=off
+#DFTD.Unit           Ang        # Ang|AU
+#DFTD.rcut_dftD      50.0       # default=100 (DFTD.Unit)
+#DFTD.d              20.0       # default=20
+#DFTD.scale6         0.75       # default=0.75
+#DFTD.IntDirection   1 1 1      # default=1 1 1 (1:on 0:off)
+
+#
+# MD or Geometry Optimization
+#
+
+#<MD.Fixed.Cell.Vectors
+# 0 0 0
+# 0 0 0
+# 1 1 1
+#MD.Fixed.Cell.Vectors>
+
+MD.Type                     nomd #OptC2       # Nomd|Opt|NVE|NVT_VS|NVT_NH
+                                     # Constraint_Opt|DIIS
+#MD.maxIter                    500        # default=1
+#MD.TimeStep                 1.0        # default=0.5 (fs)
+#MD.Opt.criterion         1.0e-6        # default=1.0e-4 (Hartree/Bohr)
+
+DATA.PATH     /home/huangdq_group/tuyouyou/data/opt/openmx3.9-amd/DFT_DATA19
+HS.fileout    On

@@ -4998,7 +4998,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]             # <<<<<<<<<<<<<<
  *     norb_s = norb[myid]
- *     expikR = <double complex*>malloc(s_dcplx*ncell)
+ * 
  */
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) )));
@@ -5007,23 +5007,23 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]             # <<<<<<<<<<<<<<
+ * 
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
- *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  */
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":312
- *     norb_p = norb_num[myid]
+  /* "epcfunc_nl.pyx":313
  *     norb_s = norb[myid]
+ * 
  *     expikR = <double complex*>malloc(s_dcplx*ncell)             # <<<<<<<<<<<<<<
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  */
   __pyx_v_expikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_ncell)));
 
-  /* "epcfunc_nl.pyx":313
- *     norb_s = norb[myid]
+  /* "epcfunc_nl.pyx":314
+ * 
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
@@ -5031,7 +5031,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_drSHexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":314
+  /* "epcfunc_nl.pyx":315
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)             # <<<<<<<<<<<<<<
@@ -5040,7 +5040,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_vdrvexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_nmodes) * __pyx_v_nbands2)));
 
-  /* "epcfunc_nl.pyx":315
+  /* "epcfunc_nl.pyx":316
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_a = <double complex*>malloc(s_dcplx*nkpath*3*norb_p*nbands)             # <<<<<<<<<<<<<<
@@ -5049,7 +5049,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_drveck_a = ((__pyx_t_double_complex *)malloc(((((__pyx_v_s_dcplx * __pyx_v_nkpath) * 3) * __pyx_v_norb_p) * __pyx_v_nbands)));
 
-  /* "epcfunc_nl.pyx":316
+  /* "epcfunc_nl.pyx":317
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_a = <double complex*>malloc(s_dcplx*nkpath*3*norb_p*nbands)
  *     phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)             # <<<<<<<<<<<<<<
@@ -5058,7 +5058,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_phvecval = ((__pyx_t_double_complex *)malloc(((((__pyx_v_s_dcplx * __pyx_v_knum) * __pyx_v_nmodes) * __pyx_v_natom_buffer) * 3)));
 
-  /* "epcfunc_nl.pyx":317
+  /* "epcfunc_nl.pyx":318
  *     drveck_a = <double complex*>malloc(s_dcplx*nkpath*3*norb_p*nbands)
  *     phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -5068,7 +5068,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":318
+    /* "epcfunc_nl.pyx":319
  *     phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)
  *     if (shm_id == 0):
  *         l_drveck = s_dcplx*3*norbnb             # <<<<<<<<<<<<<<
@@ -5077,7 +5077,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_l_drveck = ((__pyx_v_s_dcplx * 3) * __pyx_v_norbnb);
 
-    /* "epcfunc_nl.pyx":317
+    /* "epcfunc_nl.pyx":318
  *     drveck_a = <double complex*>malloc(s_dcplx*nkpath*3*norb_p*nbands)
  *     phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -5087,7 +5087,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
     goto __pyx_L11;
   }
 
-  /* "epcfunc_nl.pyx":320
+  /* "epcfunc_nl.pyx":321
  *         l_drveck = s_dcplx*3*norbnb
  *     else:
  *         l_drveck = 0             # <<<<<<<<<<<<<<
@@ -5099,7 +5099,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
   }
   __pyx_L11:;
 
-  /* "epcfunc_nl.pyx":321
+  /* "epcfunc_nl.pyx":322
  *     else:
  *         l_drveck = 0
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -5108,7 +5108,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_drveck, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_drveck), (&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":324
+  /* "epcfunc_nl.pyx":325
  *         l_drveck,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&drveck,&win
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -5118,7 +5118,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_12 = ((__pyx_v_shm_id != 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":325
+    /* "epcfunc_nl.pyx":326
  *     )
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)             # <<<<<<<<<<<<<<
@@ -5127,7 +5127,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
     (void)(MPI_Win_shared_query(__pyx_v_win, 0, (&__pyx_v_l_drveck), (&__pyx_v_s_dcplx), (&__pyx_v_drveck)));
 
-    /* "epcfunc_nl.pyx":324
+    /* "epcfunc_nl.pyx":325
  *         l_drveck,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&drveck,&win
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -5136,7 +5136,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "epcfunc_nl.pyx":326
+  /* "epcfunc_nl.pyx":327
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -5145,7 +5145,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "epcfunc_nl.pyx":328
+  /* "epcfunc_nl.pyx":329
  *     mpi.MPI_Barrier(shm_comm)
  * 
  *     qnum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -5155,316 +5155,307 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_qnum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":329
+  /* "epcfunc_nl.pyx":330
  * 
  *     qnum_p = kproc_num[myid]
  *     qnum_s = kproc[myid]             # <<<<<<<<<<<<<<
  * 
- *     for ik in range(nkpath):
+ *     if norb_p > 0:
  */
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_qnum_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":331
+  /* "epcfunc_nl.pyx":332
  *     qnum_s = kproc[myid]
  * 
- *     for ik in range(nkpath):             # <<<<<<<<<<<<<<
- *         if nkpath < knum:
- *             kidx_x = <int>round(nq[0]*kpath[ik,0])
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for ik in range(nkpath):
+ *             if nkpath < knum:
  */
-  __pyx_t_2 = __pyx_v_nkpath;
-  __pyx_t_3 = __pyx_t_2;
-  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
-    __pyx_v_ik = __pyx_t_4;
+  __pyx_t_12 = ((__pyx_v_norb_p > 0) != 0);
+  if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":332
+    /* "epcfunc_nl.pyx":333
  * 
- *     for ik in range(nkpath):
- *         if nkpath < knum:             # <<<<<<<<<<<<<<
- *             kidx_x = <int>round(nq[0]*kpath[ik,0])
- *             kidx_y = <int>round(nq[1]*kpath[ik,1])
+ *     if norb_p > 0:
+ *         for ik in range(nkpath):             # <<<<<<<<<<<<<<
+ *             if nkpath < knum:
+ *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
  */
-    __pyx_t_12 = ((__pyx_v_nkpath < __pyx_v_knum) != 0);
-    if (__pyx_t_12) {
-
-      /* "epcfunc_nl.pyx":333
- *     for ik in range(nkpath):
- *         if nkpath < knum:
- *             kidx_x = <int>round(nq[0]*kpath[ik,0])             # <<<<<<<<<<<<<<
- *             kidx_y = <int>round(nq[1]*kpath[ik,1])
- *             kidx_z = <int>round(nq[2]*kpath[ik,2])
- */
-      __pyx_t_9 = 0;
-      __pyx_t_13 = __pyx_v_ik;
-      __pyx_t_14 = 0;
-      __pyx_v_kidx_x = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_14)) ))))));
+    __pyx_t_2 = __pyx_v_nkpath;
+    __pyx_t_3 = __pyx_t_2;
+    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+      __pyx_v_ik = __pyx_t_4;
 
       /* "epcfunc_nl.pyx":334
- *         if nkpath < knum:
- *             kidx_x = <int>round(nq[0]*kpath[ik,0])
- *             kidx_y = <int>round(nq[1]*kpath[ik,1])             # <<<<<<<<<<<<<<
- *             kidx_z = <int>round(nq[2]*kpath[ik,2])
- *         else:
+ *     if norb_p > 0:
+ *         for ik in range(nkpath):
+ *             if nkpath < knum:             # <<<<<<<<<<<<<<
+ *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
+ *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
  */
-      __pyx_t_14 = 1;
-      __pyx_t_13 = __pyx_v_ik;
-      __pyx_t_9 = 1;
-      __pyx_v_kidx_y = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_9)) ))))));
+      __pyx_t_12 = ((__pyx_v_nkpath < __pyx_v_knum) != 0);
+      if (__pyx_t_12) {
 
-      /* "epcfunc_nl.pyx":335
- *             kidx_x = <int>round(nq[0]*kpath[ik,0])
- *             kidx_y = <int>round(nq[1]*kpath[ik,1])
- *             kidx_z = <int>round(nq[2]*kpath[ik,2])             # <<<<<<<<<<<<<<
- *         else:
- *             kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
+        /* "epcfunc_nl.pyx":335
+ *         for ik in range(nkpath):
+ *             if nkpath < knum:
+ *                 kidx_x = <int>round(nq[0]*kpath[ik,0])             # <<<<<<<<<<<<<<
+ *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
+ *                 kidx_z = <int>round(nq[2]*kpath[ik,2])
  */
-      __pyx_t_9 = 2;
-      __pyx_t_13 = __pyx_v_ik;
-      __pyx_t_14 = 2;
-      __pyx_v_kidx_z = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_14)) ))))));
+        __pyx_t_9 = 0;
+        __pyx_t_13 = __pyx_v_ik;
+        __pyx_t_14 = 0;
+        __pyx_v_kidx_x = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_14)) ))))));
 
-      /* "epcfunc_nl.pyx":332
- * 
- *     for ik in range(nkpath):
- *         if nkpath < knum:             # <<<<<<<<<<<<<<
- *             kidx_x = <int>round(nq[0]*kpath[ik,0])
- *             kidx_y = <int>round(nq[1]*kpath[ik,1])
+        /* "epcfunc_nl.pyx":336
+ *             if nkpath < knum:
+ *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
+ *                 kidx_y = <int>round(nq[1]*kpath[ik,1])             # <<<<<<<<<<<<<<
+ *                 kidx_z = <int>round(nq[2]*kpath[ik,2])
+ *             else:
  */
-      goto __pyx_L15;
-    }
+        __pyx_t_14 = 1;
+        __pyx_t_13 = __pyx_v_ik;
+        __pyx_t_9 = 1;
+        __pyx_v_kidx_y = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_9)) ))))));
 
-    /* "epcfunc_nl.pyx":337
- *             kidx_z = <int>round(nq[2]*kpath[ik,2])
- *         else:
- *             kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]             # <<<<<<<<<<<<<<
- *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
+        /* "epcfunc_nl.pyx":337
+ *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
+ *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
+ *                 kidx_z = <int>round(nq[2]*kpath[ik,2])             # <<<<<<<<<<<<<<
+ *             else:
+ *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
  */
-    /*else*/ {
-      __pyx_t_14 = 2;
-      __pyx_v_kidx_z = (__pyx_v_ik % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
-      __pyx_t_14 = 2;
-      __pyx_v_kidx_xy = (__pyx_v_ik / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+        __pyx_t_9 = 2;
+        __pyx_t_13 = __pyx_v_ik;
+        __pyx_t_14 = 2;
+        __pyx_v_kidx_z = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_14)) ))))));
 
-      /* "epcfunc_nl.pyx":338
- *         else:
- *             kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
- *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
- *         kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
+        /* "epcfunc_nl.pyx":334
+ *     if norb_p > 0:
+ *         for ik in range(nkpath):
+ *             if nkpath < knum:             # <<<<<<<<<<<<<<
+ *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
+ *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
  */
-      __pyx_t_14 = 1;
-      __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
-      __pyx_t_14 = 1;
-      __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
-    }
-    __pyx_L15:;
-
-    /* "epcfunc_nl.pyx":339
- *             kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
- *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z             # <<<<<<<<<<<<<<
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- */
-    __pyx_t_14 = 1;
-    __pyx_t_13 = 2;
-    __pyx_v_kidx = ((((__pyx_v_kidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) )))) + __pyx_v_kidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kidx_z);
-
-    /* "epcfunc_nl.pyx":340
- *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- */
-    __pyx_t_13 = 0;
-    __pyx_v_kx = (((double)__pyx_v_kidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":341
- *         kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- */
-    __pyx_t_13 = 1;
-    __pyx_v_ky = (((double)__pyx_v_kidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":342
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx
- */
-    __pyx_t_13 = 2;
-    __pyx_v_kz = (((double)__pyx_v_kidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":343
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):             # <<<<<<<<<<<<<<
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky
- */
-    __pyx_t_5 = __pyx_v_ncell;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
-
-      /* "epcfunc_nl.pyx":344
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx             # <<<<<<<<<<<<<<
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz
- */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_14 = 0;
-      __pyx_v_RKx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_14)) ))) * __pyx_v_kx);
-
-      /* "epcfunc_nl.pyx":345
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky             # <<<<<<<<<<<<<<
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz
- */
-      __pyx_t_14 = __pyx_v_i;
-      __pyx_t_13 = 1;
-      __pyx_v_RKy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_14 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_ky);
-
-      /* "epcfunc_nl.pyx":346
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz             # <<<<<<<<<<<<<<
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)
- */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_14 = 2;
-      __pyx_v_RKz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_14)) ))) * __pyx_v_kz);
-
-      /* "epcfunc_nl.pyx":347
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz             # <<<<<<<<<<<<<<
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):
- */
-      __pyx_v_RK = ((__pyx_v_RKx + __pyx_v_RKy) + __pyx_v_RKz);
-
-      /* "epcfunc_nl.pyx":348
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)             # <<<<<<<<<<<<<<
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
- */
-      (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__pyx_v_pi2j, __pyx_t_double_complex_from_parts(__pyx_v_RK, 0)));
-    }
-
-    /* "epcfunc_nl.pyx":349
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):             # <<<<<<<<<<<<<<
- *             drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- */
-    for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
-      __pyx_v_xyz = __pyx_t_5;
-
-      /* "epcfunc_nl.pyx":350
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]             # <<<<<<<<<<<<<<
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- */
-      __pyx_v_drveck_t = (&(__pyx_v_drveck_a[((((__pyx_v_ik * 3) + __pyx_v_xyz) * __pyx_v_norb_p) * __pyx_v_nbands)]));
-
-      /* "epcfunc_nl.pyx":351
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- */
-      (void)(memset(__pyx_v_drSHexpikR, 0, ((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
-
-      /* "epcfunc_nl.pyx":352
- *             drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):             # <<<<<<<<<<<<<<
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- */
-      __pyx_t_6 = __pyx_v_ncell;
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
-
-        /* "epcfunc_nl.pyx":353
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):             # <<<<<<<<<<<<<<
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(
- */
-        __pyx_t_15 = (__pyx_v_norb_p * __pyx_v_norbital);
-        __pyx_t_16 = __pyx_t_15;
-        for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
-          __pyx_v_k = __pyx_t_17;
-
-          /* "epcfunc_nl.pyx":354
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]             # <<<<<<<<<<<<<<
- *             cblas_zgemm3m(
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- */
-          __pyx_t_18 = __pyx_v_k;
-          __pyx_t_14 = __pyx_v_xyz;
-          __pyx_t_13 = __pyx_v_j;
-          __pyx_t_9 = __pyx_v_k;
-          (__pyx_v_drSHexpikR[__pyx_t_18]) = __Pyx_c_sum_double((__pyx_v_drSHexpikR[__pyx_t_18]), __Pyx_c_prod_double(__pyx_t_double_complex_from_parts((*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_14 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_9)) ))), 0), (__pyx_v_expikR[__pyx_v_j])));
-        }
+        goto __pyx_L16;
       }
 
-      /* "epcfunc_nl.pyx":358
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- *                 nbands,norbital,&c1,drSHexpikR,norbital,
- *                 &bandveck[kidx,0,0],nbands,&c0,drveck_t,nbands             # <<<<<<<<<<<<<<
- *             )
+      /* "epcfunc_nl.pyx":339
+ *                 kidx_z = <int>round(nq[2]*kpath[ik,2])
+ *             else:
+ *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]             # <<<<<<<<<<<<<<
+ *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
+ */
+      /*else*/ {
+        __pyx_t_14 = 2;
+        __pyx_v_kidx_z = (__pyx_v_ik % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+        __pyx_t_14 = 2;
+        __pyx_v_kidx_xy = (__pyx_v_ik / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+
+        /* "epcfunc_nl.pyx":340
+ *             else:
+ *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
+ *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
+ *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ */
+        __pyx_t_14 = 1;
+        __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+        __pyx_t_14 = 1;
+        __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+      }
+      __pyx_L16:;
+
+      /* "epcfunc_nl.pyx":341
+ *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
+ *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z             # <<<<<<<<<<<<<<
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ */
+      __pyx_t_14 = 1;
+      __pyx_t_13 = 2;
+      __pyx_v_kidx = ((((__pyx_v_kidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) )))) + __pyx_v_kidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kidx_z);
+
+      /* "epcfunc_nl.pyx":342
+ *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ */
+      __pyx_t_13 = 0;
+      __pyx_v_kx = (((double)__pyx_v_kidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
+
+      /* "epcfunc_nl.pyx":343
+ *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ */
+      __pyx_t_13 = 1;
+      __pyx_v_ky = (((double)__pyx_v_kidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
+
+      /* "epcfunc_nl.pyx":344
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx
+ */
+      __pyx_t_13 = 2;
+      __pyx_v_kz = (((double)__pyx_v_kidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
+
+      /* "epcfunc_nl.pyx":345
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):             # <<<<<<<<<<<<<<
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky
+ */
+      __pyx_t_5 = __pyx_v_ncell;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
+
+        /* "epcfunc_nl.pyx":346
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx             # <<<<<<<<<<<<<<
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz
+ */
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_14 = 0;
+        __pyx_v_RKx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_14)) ))) * __pyx_v_kx);
+
+        /* "epcfunc_nl.pyx":347
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky             # <<<<<<<<<<<<<<
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz
+ */
+        __pyx_t_14 = __pyx_v_i;
+        __pyx_t_13 = 1;
+        __pyx_v_RKy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_14 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_ky);
+
+        /* "epcfunc_nl.pyx":348
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz             # <<<<<<<<<<<<<<
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)
+ */
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_14 = 2;
+        __pyx_v_RKz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_14)) ))) * __pyx_v_kz);
+
+        /* "epcfunc_nl.pyx":349
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz             # <<<<<<<<<<<<<<
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):
+ */
+        __pyx_v_RK = ((__pyx_v_RKx + __pyx_v_RKy) + __pyx_v_RKz);
+
+        /* "epcfunc_nl.pyx":350
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)             # <<<<<<<<<<<<<<
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
+ */
+        (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__pyx_v_pi2j, __pyx_t_double_complex_from_parts(__pyx_v_RK, 0)));
+      }
+
+      /* "epcfunc_nl.pyx":351
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):             # <<<<<<<<<<<<<<
+ *                 drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ */
+      for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
+        __pyx_v_xyz = __pyx_t_5;
+
+        /* "epcfunc_nl.pyx":352
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]             # <<<<<<<<<<<<<<
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(
+ */
+        __pyx_v_drveck_t = (&(__pyx_v_drveck_a[((((__pyx_v_ik * 3) + __pyx_v_xyz) * __pyx_v_norb_p) * __pyx_v_nbands)]));
+
+        /* "epcfunc_nl.pyx":356
+ *                 cblas_dgemm(
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,             # <<<<<<<<<<<<<<
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ */
+        __pyx_t_14 = __pyx_v_xyz;
+        __pyx_t_13 = 0;
+        __pyx_t_9 = 0;
+
+        /* "epcfunc_nl.pyx":354
+ *                 drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+ */
+        cblas_dgemm(CblasRowMajor, CblasTrans, CblasNoTrans, (__pyx_v_norb_p * __pyx_v_norbital), 2, __pyx_v_ncell, 1.0, (&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_14 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_9)) )))), (__pyx_v_norb_p * __pyx_v_norbital), ((double *)__pyx_v_expikR), 2, 0.0, ((double *)__pyx_v_drSHexpikR), 2);
+
+        /* "epcfunc_nl.pyx":362
+ *                     CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+ *                     nbands,norbital,&c1,drSHexpikR,norbital,
+ *                     &bandveck[kidx,0,0],nbands,&c0,drveck_t,nbands             # <<<<<<<<<<<<<<
+ *                 )
  *     endtime = mpi.MPI_Wtime()
  */
-      __pyx_t_9 = __pyx_v_kidx;
-      __pyx_t_13 = 0;
-      __pyx_t_14 = 0;
+        __pyx_t_9 = __pyx_v_kidx;
+        __pyx_t_13 = 0;
+        __pyx_t_14 = 0;
 
-      /* "epcfunc_nl.pyx":355
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(             # <<<<<<<<<<<<<<
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- *                 nbands,norbital,&c1,drSHexpikR,norbital,
+        /* "epcfunc_nl.pyx":359
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ *                 cblas_zgemm3m(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+ *                     nbands,norbital,&c1,drSHexpikR,norbital,
  */
-      cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, (&(*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_13 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_14)) )))), __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_t, __pyx_v_nbands);
+        cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, (&(*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_13 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_14)) )))), __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_t, __pyx_v_nbands);
+      }
     }
+
+    /* "epcfunc_nl.pyx":332
+ *     qnum_s = kproc[myid]
+ * 
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for ik in range(nkpath):
+ *             if nkpath < knum:
+ */
   }
 
-  /* "epcfunc_nl.pyx":360
- *                 &bandveck[kidx,0,0],nbands,&c0,drveck_t,nbands
- *             )
+  /* "epcfunc_nl.pyx":364
+ *                     &bandveck[kidx,0,0],nbands,&c0,drveck_t,nbands
+ *                 )
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
  *     if myid == 0:
  *         printf("epc_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":361
- *             )
+  /* "epcfunc_nl.pyx":365
+ *                 )
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
  *         printf("epc_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
@@ -5473,7 +5464,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":362
+    /* "epcfunc_nl.pyx":366
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("epc_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)             # <<<<<<<<<<<<<<
@@ -5482,8 +5473,8 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
     (void)(printf(((char const *)"epc_NL(Left) part1 time:%12.4fs.\n"), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "epcfunc_nl.pyx":361
- *             )
+    /* "epcfunc_nl.pyx":365
+ *                 )
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
  *         printf("epc_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
@@ -5491,7 +5482,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "epcfunc_nl.pyx":363
+  /* "epcfunc_nl.pyx":367
  *     if myid == 0:
  *         printf("epc_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):             # <<<<<<<<<<<<<<
@@ -5503,7 +5494,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":364
+    /* "epcfunc_nl.pyx":368
  *         printf("epc_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3             # <<<<<<<<<<<<<<
@@ -5513,7 +5504,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
     __pyx_t_14 = __pyx_v_h;
     __pyx_v_nm_min = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_14)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":365
+    /* "epcfunc_nl.pyx":369
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3             # <<<<<<<<<<<<<<
@@ -5523,7 +5514,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
     __pyx_t_14 = (__pyx_v_h + 1);
     __pyx_v_nm_max = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_14)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":366
+    /* "epcfunc_nl.pyx":370
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min             # <<<<<<<<<<<<<<
@@ -5532,7 +5523,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_nm_num = (__pyx_v_nm_max - __pyx_v_nm_min);
 
-    /* "epcfunc_nl.pyx":367
+    /* "epcfunc_nl.pyx":371
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min
  *         starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -5541,7 +5532,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_starttime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":368
+    /* "epcfunc_nl.pyx":372
  *         nm_num = nm_max-nm_min
  *         starttime = mpi.MPI_Wtime()
  *         for ik in range(nkpath):             # <<<<<<<<<<<<<<
@@ -5553,7 +5544,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_ik = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":369
+      /* "epcfunc_nl.pyx":373
  *         starttime = mpi.MPI_Wtime()
  *         for ik in range(nkpath):
  *             start = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -5562,7 +5553,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
       __pyx_v_start = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":370
+      /* "epcfunc_nl.pyx":374
  *         for ik in range(nkpath):
  *             start = mpi.MPI_Wtime()
  *             if nkpath < knum:             # <<<<<<<<<<<<<<
@@ -5572,7 +5563,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
       __pyx_t_12 = ((__pyx_v_nkpath < __pyx_v_knum) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":371
+        /* "epcfunc_nl.pyx":375
  *             start = mpi.MPI_Wtime()
  *             if nkpath < knum:
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])             # <<<<<<<<<<<<<<
@@ -5584,7 +5575,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_9 = 0;
         __pyx_v_kidx_x = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_9)) ))))));
 
-        /* "epcfunc_nl.pyx":372
+        /* "epcfunc_nl.pyx":376
  *             if nkpath < knum:
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
  *                 kidx_y = <int>round(nq[1]*kpath[ik,1])             # <<<<<<<<<<<<<<
@@ -5596,7 +5587,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_14 = 1;
         __pyx_v_kidx_y = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_14)) ))))));
 
-        /* "epcfunc_nl.pyx":373
+        /* "epcfunc_nl.pyx":377
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
  *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
  *                 kidx_z = <int>round(nq[2]*kpath[ik,2])             # <<<<<<<<<<<<<<
@@ -5608,17 +5599,17 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_9 = 2;
         __pyx_v_kidx_z = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_9)) ))))));
 
-        /* "epcfunc_nl.pyx":370
+        /* "epcfunc_nl.pyx":374
  *         for ik in range(nkpath):
  *             start = mpi.MPI_Wtime()
  *             if nkpath < knum:             # <<<<<<<<<<<<<<
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
  *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
  */
-        goto __pyx_L29;
+        goto __pyx_L26;
       }
 
-      /* "epcfunc_nl.pyx":375
+      /* "epcfunc_nl.pyx":379
  *                 kidx_z = <int>round(nq[2]*kpath[ik,2])
  *             else:
  *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]             # <<<<<<<<<<<<<<
@@ -5631,7 +5622,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_9 = 2;
         __pyx_v_kidx_xy = (__pyx_v_ik / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":376
+        /* "epcfunc_nl.pyx":380
  *             else:
  *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -5643,9 +5634,9 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_9 = 1;
         __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
       }
-      __pyx_L29:;
+      __pyx_L26:;
 
-      /* "epcfunc_nl.pyx":377
+      /* "epcfunc_nl.pyx":381
  *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -5654,7 +5645,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
       (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-      /* "epcfunc_nl.pyx":378
+      /* "epcfunc_nl.pyx":382
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             mpi.MPI_Barrier(shm_comm)
  *             for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -5664,7 +5655,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
       for (__pyx_t_8 = 0; __pyx_t_8 < 3; __pyx_t_8+=1) {
         __pyx_v_xyz = __pyx_t_8;
 
-        /* "epcfunc_nl.pyx":379
+        /* "epcfunc_nl.pyx":383
  *             mpi.MPI_Barrier(shm_comm)
  *             for xyz in range(3):
  *                 for j in range(norb_p*nbands):             # <<<<<<<<<<<<<<
@@ -5676,7 +5667,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
           __pyx_v_j = __pyx_t_17;
 
-          /* "epcfunc_nl.pyx":380
+          /* "epcfunc_nl.pyx":384
  *             for xyz in range(3):
  *                 for j in range(norb_p*nbands):
  *                     drveck[xyz*norbnb+norb_s*nbands+j] \             # <<<<<<<<<<<<<<
@@ -5686,7 +5677,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
           (__pyx_v_drveck[(((__pyx_v_xyz * __pyx_v_norbnb) + (__pyx_v_norb_s * __pyx_v_nbands)) + __pyx_v_j)]) = (__pyx_v_drveck_a[(((((__pyx_v_ik * 3) + __pyx_v_xyz) * __pyx_v_norb_p) * __pyx_v_nbands) + __pyx_v_j)]);
         }
 
-        /* "epcfunc_nl.pyx":382
+        /* "epcfunc_nl.pyx":386
  *                     drveck[xyz*norbnb+norb_s*nbands+j] \
  *                     = drveck_a[(ik*3+xyz)*norb_p*nbands+j]
  *                 mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -5695,7 +5686,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
         (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-        /* "epcfunc_nl.pyx":383
+        /* "epcfunc_nl.pyx":387
  *                     = drveck_a[(ik*3+xyz)*norb_p*nbands+j]
  *                 mpi.MPI_Barrier(shm_comm)
  *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -5705,7 +5696,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
         if (__pyx_t_12) {
 
-          /* "epcfunc_nl.pyx":384
+          /* "epcfunc_nl.pyx":388
  *                 mpi.MPI_Barrier(shm_comm)
  *                 if (shm_id == 0):
  *                     mpi.MPI_Allgatherv(             # <<<<<<<<<<<<<<
@@ -5714,7 +5705,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
           (void)(MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL, (&(__pyx_v_drveck[(__pyx_v_xyz * __pyx_v_norbnb)])), (&(__pyx_v_dr_num[0])), (&(__pyx_v_dr[0])), MPI_DOUBLE_COMPLEX, __pyx_v_remote_comm));
 
-          /* "epcfunc_nl.pyx":383
+          /* "epcfunc_nl.pyx":387
  *                     = drveck_a[(ik*3+xyz)*norb_p*nbands+j]
  *                 mpi.MPI_Barrier(shm_comm)
  *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -5724,7 +5715,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         }
       }
 
-      /* "epcfunc_nl.pyx":389
+      /* "epcfunc_nl.pyx":393
  *                         mpi.MPI_DOUBLE_COMPLEX,remote_comm
  *                     )
  *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -5733,7 +5724,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
       (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-      /* "epcfunc_nl.pyx":390
+      /* "epcfunc_nl.pyx":394
  *                     )
  *             mpi.MPI_Barrier(shm_comm)
  *             for i in range(qnum_p):             # <<<<<<<<<<<<<<
@@ -5745,7 +5736,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
       for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
         __pyx_v_i = __pyx_t_16;
 
-        /* "epcfunc_nl.pyx":391
+        /* "epcfunc_nl.pyx":395
  *             mpi.MPI_Barrier(shm_comm)
  *             for i in range(qnum_p):
  *                 k1 = i+qnum_s             # <<<<<<<<<<<<<<
@@ -5754,7 +5745,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
  */
         __pyx_v_k1 = (__pyx_v_i + __pyx_v_qnum_s);
 
-        /* "epcfunc_nl.pyx":392
+        /* "epcfunc_nl.pyx":396
  *             for i in range(qnum_p):
  *                 k1 = i+qnum_s
  *                 for j in range(nmodes):             # <<<<<<<<<<<<<<
@@ -5766,7 +5757,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         for (__pyx_t_19 = 0; __pyx_t_19 < __pyx_t_18; __pyx_t_19+=1) {
           __pyx_v_j = __pyx_t_19;
 
-          /* "epcfunc_nl.pyx":393
+          /* "epcfunc_nl.pyx":397
  *                 k1 = i+qnum_s
  *                 for j in range(nmodes):
  *                     for k in range(nm_num):             # <<<<<<<<<<<<<<
@@ -5778,7 +5769,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
           for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
             __pyx_v_k = __pyx_t_22;
 
-            /* "epcfunc_nl.pyx":395
+            /* "epcfunc_nl.pyx":399
  *                     for k in range(nm_num):
  *                         phvecval[j*nm_num+k] \
  *                         = phvecval_p[i,j*nmodes+k+nm_min]             # <<<<<<<<<<<<<<
@@ -5788,7 +5779,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
             __pyx_t_9 = __pyx_v_i;
             __pyx_t_13 = (((__pyx_v_j * __pyx_v_nmodes) + __pyx_v_k) + __pyx_v_nm_min);
 
-            /* "epcfunc_nl.pyx":394
+            /* "epcfunc_nl.pyx":398
  *                 for j in range(nmodes):
  *                     for k in range(nm_num):
  *                         phvecval[j*nm_num+k] \             # <<<<<<<<<<<<<<
@@ -5799,7 +5790,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
           }
         }
 
-        /* "epcfunc_nl.pyx":396
+        /* "epcfunc_nl.pyx":400
  *                         phvecval[j*nm_num+k] \
  *                         = phvecval_p[i,j*nmodes+k+nm_min]
  *                 qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
@@ -5811,7 +5802,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 2;
         __pyx_v_qidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":397
+        /* "epcfunc_nl.pyx":401
  *                         = phvecval_p[i,j*nmodes+k+nm_min]
  *                 qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -5823,7 +5814,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 1;
         __pyx_v_qidx_x = (__pyx_v_qidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":398
+        /* "epcfunc_nl.pyx":402
  *                 qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]             # <<<<<<<<<<<<<<
@@ -5833,7 +5824,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 0;
         __pyx_v_kpidx_x = ((__pyx_v_qidx_x + __pyx_v_kidx_x) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":399
+        /* "epcfunc_nl.pyx":403
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]             # <<<<<<<<<<<<<<
@@ -5843,7 +5834,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 1;
         __pyx_v_kpidx_y = ((__pyx_v_qidx_y + __pyx_v_kidx_y) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":400
+        /* "epcfunc_nl.pyx":404
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]             # <<<<<<<<<<<<<<
@@ -5853,7 +5844,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 2;
         __pyx_v_kpidx_z = ((__pyx_v_qidx_z + __pyx_v_kidx_z) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":401
+        /* "epcfunc_nl.pyx":405
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]             # <<<<<<<<<<<<<<
@@ -5866,7 +5857,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
           __pyx_v_kpidx_x = (__pyx_v_kpidx_x + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":402
+        /* "epcfunc_nl.pyx":406
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]             # <<<<<<<<<<<<<<
@@ -5879,7 +5870,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
           __pyx_v_kpidx_y = (__pyx_v_kpidx_y + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":403
+        /* "epcfunc_nl.pyx":407
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]             # <<<<<<<<<<<<<<
@@ -5892,7 +5883,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
           __pyx_v_kpidx_z = (__pyx_v_kpidx_z + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":404
+        /* "epcfunc_nl.pyx":408
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
@@ -5903,7 +5894,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_2MPIepcNL_L(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_9 = 2;
         __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_z);
 
-        /* "epcfunc_nl.pyx":406
+        /* "epcfunc_nl.pyx":410
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 epckqNL_L(
  *                     drveck,bandveck[kpidx],phvecval,vdrvexpikR,             # <<<<<<<<<<<<<<
@@ -5929,7 +5920,7 @@ __pyx_t_23.strides[1] = __pyx_v_bandveck.strides[2];
 
 __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
 
-        /* "epcfunc_nl.pyx":407
+        /* "epcfunc_nl.pyx":411
  *                 epckqNL_L(
  *                     drveck,bandveck[kpidx],phvecval,vdrvexpikR,
  *                     &c1,&epc_t[ik*qnum_p+i,nm_min*nbands2],nmodes,natom,             # <<<<<<<<<<<<<<
@@ -5938,7 +5929,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
         __pyx_t_13 = (__pyx_v_nm_min * __pyx_v_nbands2);
 
-        /* "epcfunc_nl.pyx":405
+        /* "epcfunc_nl.pyx":409
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 epckqNL_L(             # <<<<<<<<<<<<<<
@@ -5951,7 +5942,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
         __pyx_t_23.data = NULL;
       }
 
-      /* "epcfunc_nl.pyx":410
+      /* "epcfunc_nl.pyx":414
  *                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
  *                 )
  *             end = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -5960,7 +5951,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
       __pyx_v_end = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":411
+      /* "epcfunc_nl.pyx":415
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -5970,7 +5961,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
       __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":412
+        /* "epcfunc_nl.pyx":416
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)             # <<<<<<<<<<<<<<
@@ -5979,7 +5970,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
         (void)(printf(((char const *)"time in mode loop %d, knum loop %d:%12.4fs.\n"), __pyx_v_h, __pyx_v_ik, (__pyx_v_end - __pyx_v_start)));
 
-        /* "epcfunc_nl.pyx":411
+        /* "epcfunc_nl.pyx":415
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -5989,7 +5980,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
       }
     }
 
-    /* "epcfunc_nl.pyx":413
+    /* "epcfunc_nl.pyx":417
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
  *         endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -5998,7 +5989,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
     __pyx_v_endtime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":414
+    /* "epcfunc_nl.pyx":418
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -6008,7 +5999,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
     __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
     if (__pyx_t_12) {
 
-      /* "epcfunc_nl.pyx":415
+      /* "epcfunc_nl.pyx":419
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:
  *             printf("epc_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)             # <<<<<<<<<<<<<<
@@ -6017,7 +6008,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
       (void)(printf(((char const *)"epc_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n"), __pyx_v_nm_min, (__pyx_v_nm_min + __pyx_v_nm_num), (__pyx_v_endtime - __pyx_v_starttime)));
 
-      /* "epcfunc_nl.pyx":414
+      /* "epcfunc_nl.pyx":418
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -6027,7 +6018,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
     }
   }
 
-  /* "epcfunc_nl.pyx":417
+  /* "epcfunc_nl.pyx":421
  *             printf("epc_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
  * 
  *     free(drSHexpikR)             # <<<<<<<<<<<<<<
@@ -6036,7 +6027,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_drSHexpikR);
 
-  /* "epcfunc_nl.pyx":418
+  /* "epcfunc_nl.pyx":422
  * 
  *     free(drSHexpikR)
  *     free(vdrvexpikR)             # <<<<<<<<<<<<<<
@@ -6045,7 +6036,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_vdrvexpikR);
 
-  /* "epcfunc_nl.pyx":419
+  /* "epcfunc_nl.pyx":423
  *     free(drSHexpikR)
  *     free(vdrvexpikR)
  *     free(expikR)             # <<<<<<<<<<<<<<
@@ -6054,7 +6045,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_expikR);
 
-  /* "epcfunc_nl.pyx":420
+  /* "epcfunc_nl.pyx":424
  *     free(vdrvexpikR)
  *     free(expikR)
  *     free(nodelist)             # <<<<<<<<<<<<<<
@@ -6063,7 +6054,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_nodelist);
 
-  /* "epcfunc_nl.pyx":421
+  /* "epcfunc_nl.pyx":425
  *     free(expikR)
  *     free(nodelist)
  *     free(dr)             # <<<<<<<<<<<<<<
@@ -6072,7 +6063,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_dr);
 
-  /* "epcfunc_nl.pyx":422
+  /* "epcfunc_nl.pyx":426
  *     free(nodelist)
  *     free(dr)
  *     free(dr_num)             # <<<<<<<<<<<<<<
@@ -6081,7 +6072,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_dr_num);
 
-  /* "epcfunc_nl.pyx":423
+  /* "epcfunc_nl.pyx":427
  *     free(dr)
  *     free(dr_num)
  *     free(drveck_a)             # <<<<<<<<<<<<<<
@@ -6090,7 +6081,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_drveck_a);
 
-  /* "epcfunc_nl.pyx":424
+  /* "epcfunc_nl.pyx":428
  *     free(dr_num)
  *     free(drveck_a)
  *     free(phvecval)             # <<<<<<<<<<<<<<
@@ -6099,7 +6090,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   free(__pyx_v_phvecval);
 
-  /* "epcfunc_nl.pyx":425
+  /* "epcfunc_nl.pyx":429
  *     free(drveck_a)
  *     free(phvecval)
  *     mpi.MPI_Win_free(&win)             # <<<<<<<<<<<<<<
@@ -6108,7 +6099,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
  */
   (void)(MPI_Win_free((&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":426
+  /* "epcfunc_nl.pyx":430
  *     free(phvecval)
  *     mpi.MPI_Win_free(&win)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -6146,7 +6137,7 @@ __pyx_t_9 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_i);
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":431
+/* "epcfunc_nl.pyx":435
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void epckqNL_R(             # <<<<<<<<<<<<<<
@@ -6180,7 +6171,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
   int __pyx_t_13;
   __Pyx_RefNannySetupContext("epckqNL_R", 0);
 
-  /* "epcfunc_nl.pyx":439
+  /* "epcfunc_nl.pyx":443
  * ):
  *     cdef int i, j, k, l, xyz
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -6189,7 +6180,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":440
+  /* "epcfunc_nl.pyx":444
  *     cdef int i, j, k, l, xyz
  *     cdef double complex c0 = 0.0
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -6198,7 +6189,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":445
+  /* "epcfunc_nl.pyx":449
  *     cdef double complex* vdrvexpikR_t
  * 
  *     for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -6208,7 +6199,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
   for (__pyx_t_1 = 0; __pyx_t_1 < 3; __pyx_t_1+=1) {
     __pyx_v_xyz = __pyx_t_1;
 
-    /* "epcfunc_nl.pyx":446
+    /* "epcfunc_nl.pyx":450
  * 
  *     for xyz in range(3):
  *         for i in range(natom):             # <<<<<<<<<<<<<<
@@ -6220,7 +6211,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "epcfunc_nl.pyx":447
+      /* "epcfunc_nl.pyx":451
  *     for xyz in range(3):
  *         for i in range(natom):
  *             bandveck_t = &bandveck[0,0]+norb_u[i]*nbands             # <<<<<<<<<<<<<<
@@ -6232,7 +6223,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
       __pyx_t_7 = __pyx_v_i;
       __pyx_v_bandveck_t = ((&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_5 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_6)) )))) + ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_u.data) + __pyx_t_7)) ))) * __pyx_v_nbands));
 
-      /* "epcfunc_nl.pyx":448
+      /* "epcfunc_nl.pyx":452
  *         for i in range(natom):
  *             bandveck_t = &bandveck[0,0]+norb_u[i]*nbands
  *             drvexpikR_t = &drveck[xyz*norbnb+norb_u[i]*nbands]             # <<<<<<<<<<<<<<
@@ -6242,7 +6233,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
       __pyx_t_7 = __pyx_v_i;
       __pyx_v_drvexpikR_t = (&(__pyx_v_drveck[((__pyx_v_xyz * __pyx_v_norbnb) + ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_u.data) + __pyx_t_7)) ))) * __pyx_v_nbands))]));
 
-      /* "epcfunc_nl.pyx":449
+      /* "epcfunc_nl.pyx":453
  *             bandveck_t = &bandveck[0,0]+norb_u[i]*nbands
  *             drvexpikR_t = &drveck[xyz*norbnb+norb_u[i]*nbands]
  *             vdrvexpikR_t = &vdrvexpikR[(i*3+xyz)*nbands2]             # <<<<<<<<<<<<<<
@@ -6251,7 +6242,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
  */
       __pyx_v_vdrvexpikR_t = (&(__pyx_v_vdrvexpikR[(((__pyx_v_i * 3) + __pyx_v_xyz) * __pyx_v_nbands2)]));
 
-      /* "epcfunc_nl.pyx":452
+      /* "epcfunc_nl.pyx":456
  *             cblas_zgemm3m(
  *                 CblasRowMajor,CblasTrans,CblasNoTrans,
  *                 nbands,nbands,norb_u_num[i],&c1,bandveck_t,             # <<<<<<<<<<<<<<
@@ -6260,7 +6251,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
  */
       __pyx_t_7 = __pyx_v_i;
 
-      /* "epcfunc_nl.pyx":450
+      /* "epcfunc_nl.pyx":454
  *             drvexpikR_t = &drveck[xyz*norbnb+norb_u[i]*nbands]
  *             vdrvexpikR_t = &vdrvexpikR[(i*3+xyz)*nbands2]
  *             cblas_zgemm3m(             # <<<<<<<<<<<<<<
@@ -6269,7 +6260,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
  */
       cblas_zgemm3m(CblasRowMajor, CblasTrans, CblasNoTrans, __pyx_v_nbands, __pyx_v_nbands, (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_u_num.data) + __pyx_t_7)) ))), (&__pyx_v_c1), __pyx_v_bandveck_t, __pyx_v_nbands, __pyx_v_drvexpikR_t, __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_vdrv, __pyx_v_nbands);
 
-      /* "epcfunc_nl.pyx":455
+      /* "epcfunc_nl.pyx":459
  *                 nbands,drvexpikR_t,nbands,&c0,vdrv,nbands
  *             )
  *             for j in range(nbands):             # <<<<<<<<<<<<<<
@@ -6281,7 +6272,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
       for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
         __pyx_v_j = __pyx_t_10;
 
-        /* "epcfunc_nl.pyx":456
+        /* "epcfunc_nl.pyx":460
  *             )
  *             for j in range(nbands):
  *                 for k in range(nbands):             # <<<<<<<<<<<<<<
@@ -6293,7 +6284,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
         for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
           __pyx_v_k = __pyx_t_13;
 
-          /* "epcfunc_nl.pyx":457
+          /* "epcfunc_nl.pyx":461
  *             for j in range(nbands):
  *                 for k in range(nbands):
  *                     vdrvexpikR_t[k*nbands+j] = vdrv[j*nbands+k]             # <<<<<<<<<<<<<<
@@ -6306,7 +6297,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
     }
   }
 
-  /* "epcfunc_nl.pyx":458
+  /* "epcfunc_nl.pyx":462
  *                 for k in range(nbands):
  *                     vdrvexpikR_t[k*nbands+j] = vdrv[j*nbands+k]
  *     cblas_zgemm3m(             # <<<<<<<<<<<<<<
@@ -6315,7 +6306,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
  */
   cblas_zgemm3m(CblasRowMajor, CblasTrans, CblasNoTrans, __pyx_v_nm_num, __pyx_v_nbands2, __pyx_v_nmodes, (&__pyx_v_c1), __pyx_v_phvecval, __pyx_v_nm_num, __pyx_v_vdrvexpikR, __pyx_v_nbands2, __pyx_v_fepc, __pyx_v_epcq, __pyx_v_nbands2);
 
-  /* "epcfunc_nl.pyx":431
+  /* "epcfunc_nl.pyx":435
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void epckqNL_R(             # <<<<<<<<<<<<<<
@@ -6327,7 +6318,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_R(__pyx_t_double_complex *__pyx_v_drvec
   __Pyx_RefNannyFinishContext();
 }
 
-/* "epcfunc_nl.pyx":467
+/* "epcfunc_nl.pyx":471
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R(             # <<<<<<<<<<<<<<
@@ -6433,137 +6424,137 @@ static PyObject *__pyx_pw_10epcfunc_nl_5MPIepcNL_R(PyObject *__pyx_self, PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmodes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 1); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 1); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_loop)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 2); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 2); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_buffer)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 3); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 3); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 4); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 4); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nbands)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 5); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 5); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 6); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 6); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_knum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 7); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 7); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_split)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 8); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 8); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 9); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 9); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 10); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 10); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nkpath)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 11); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 11); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kpath)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 12); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 12); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drSH)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 13); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 13); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bandveck)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 14); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 14); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_phvecval_p)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 15); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 15); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 16); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 16); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 17); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 17); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 18); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 18); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 19); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 19); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 20); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 20); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 21:
         if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 21); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 21); __PYX_ERR(0, 471, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 22:
         if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 22); __PYX_ERR(0, 467, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, 22); __PYX_ERR(0, 471, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_R") < 0)) __PYX_ERR(0, 467, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_R") < 0)) __PYX_ERR(0, 471, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 23) {
       goto __pyx_L5_argtuple_error;
@@ -6593,38 +6584,38 @@ static PyObject *__pyx_pw_10epcfunc_nl_5MPIepcNL_R(PyObject *__pyx_self, PyObjec
       values[22] = PyTuple_GET_ITEM(__pyx_args, 22);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 468, __pyx_L3_error)
-    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 468, __pyx_L3_error)
-    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 468, __pyx_L3_error)
-    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 469, __pyx_L3_error)
-    __pyx_v_nbands = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nbands == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 469, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 469, __pyx_L3_error)
-    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 469, __pyx_L3_error)
-    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 469, __pyx_L3_error)
-    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 470, __pyx_L3_error)
-    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 470, __pyx_L3_error)
-    __pyx_v_nkpath = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_nkpath == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 470, __pyx_L3_error)
-    __pyx_v_kpath = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kpath.memview)) __PYX_ERR(0, 470, __pyx_L3_error)
-    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 470, __pyx_L3_error)
-    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc___pyx_t_double_complex(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 471, __pyx_L3_error)
-    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 471, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 472, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 472, __pyx_L3_error)
-    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 472, __pyx_L3_error)
-    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 472, __pyx_L3_error)
-    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 473, __pyx_L3_error)
-    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 473, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 473, __pyx_L3_error)
+    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 472, __pyx_L3_error)
+    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 472, __pyx_L3_error)
+    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 472, __pyx_L3_error)
+    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 473, __pyx_L3_error)
+    __pyx_v_nbands = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nbands == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 473, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 473, __pyx_L3_error)
+    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 473, __pyx_L3_error)
+    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 473, __pyx_L3_error)
+    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 474, __pyx_L3_error)
+    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 474, __pyx_L3_error)
+    __pyx_v_nkpath = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_nkpath == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 474, __pyx_L3_error)
+    __pyx_v_kpath = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kpath.memview)) __PYX_ERR(0, 474, __pyx_L3_error)
+    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 474, __pyx_L3_error)
+    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc___pyx_t_double_complex(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 475, __pyx_L3_error)
+    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 475, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 476, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 476, __pyx_L3_error)
+    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 476, __pyx_L3_error)
+    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 476, __pyx_L3_error)
+    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 477, __pyx_L3_error)
+    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 477, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 477, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 467, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepcNL_R", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 471, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepcNL_R", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 468, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 472, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_4MPIepcNL_R(__pyx_self, __pyx_v_comm, __pyx_v_nmodes, __pyx_v_natom_loop, __pyx_v_natom_buffer, __pyx_v_norbital, __pyx_v_nbands, __pyx_v_ncell, __pyx_v_knum, __pyx_v_natom_split, __pyx_v_nq, __pyx_v_R_list, __pyx_v_nkpath, __pyx_v_kpath, __pyx_v_drSH, __pyx_v_bandveck, __pyx_v_phvecval_p, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_norb, __pyx_v_norb_num, __pyx_v_norb_u, __pyx_v_norb_u_num, __pyx_v_epc_t);
 
   /* function exit code */
@@ -6739,7 +6730,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __Pyx_memviewslice __pyx_t_23 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_RefNannySetupContext("MPIepcNL_R", 0);
 
-  /* "epcfunc_nl.pyx":475
+  /* "epcfunc_nl.pyx":479
  *     int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -6749,7 +6740,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":487
+  /* "epcfunc_nl.pyx":491
  *     cdef double complex* vdrvexpikR
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3             # <<<<<<<<<<<<<<
@@ -6758,7 +6749,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_natom = (((long)__pyx_v_nmodes) / 3);
 
-  /* "epcfunc_nl.pyx":488
+  /* "epcfunc_nl.pyx":492
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3
  *     cdef int norbnb = norbital*nbands             # <<<<<<<<<<<<<<
@@ -6767,7 +6758,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_norbnb = (__pyx_v_norbital * __pyx_v_nbands);
 
-  /* "epcfunc_nl.pyx":489
+  /* "epcfunc_nl.pyx":493
  *     cdef int natom = nmodes/3
  *     cdef int norbnb = norbital*nbands
  *     cdef int nbands2 = nbands*nbands             # <<<<<<<<<<<<<<
@@ -6776,7 +6767,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_nbands2 = (__pyx_v_nbands * __pyx_v_nbands);
 
-  /* "epcfunc_nl.pyx":490
+  /* "epcfunc_nl.pyx":494
  *     cdef int norbnb = norbital*nbands
  *     cdef int nbands2 = nbands*nbands
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -6785,7 +6776,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "epcfunc_nl.pyx":491
+  /* "epcfunc_nl.pyx":495
  *     cdef int nbands2 = nbands*nbands
  *     cdef int s_int = sizeof(int)
  *     cdef int s_dcplx = sizeof(double complex)             # <<<<<<<<<<<<<<
@@ -6794,7 +6785,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_s_dcplx = (sizeof(__pyx_t_double_complex));
 
-  /* "epcfunc_nl.pyx":504
+  /* "epcfunc_nl.pyx":508
  *     cdef double kpx, kpy, kpz, RKpx, RKpy, RKpz, RKp, \
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j             # <<<<<<<<<<<<<<
@@ -6803,7 +6794,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_pi2j = __Pyx_c_prod_double(__pyx_t_double_complex_from_parts(M_PI, 0), __pyx_t_double_complex_from_parts(0, 2.0));
 
-  /* "epcfunc_nl.pyx":505
+  /* "epcfunc_nl.pyx":509
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -6812,7 +6803,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":506
+  /* "epcfunc_nl.pyx":510
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -6821,7 +6812,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":508
+  /* "epcfunc_nl.pyx":512
  *     cdef double complex c0 = 0.0
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -6830,7 +6821,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":510
+  /* "epcfunc_nl.pyx":514
  *     starttime = mpi.MPI_Wtime()
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -6839,7 +6830,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":511
+  /* "epcfunc_nl.pyx":515
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -6848,7 +6839,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":512
+  /* "epcfunc_nl.pyx":516
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     mpi.MPI_Comm_split_type(             # <<<<<<<<<<<<<<
@@ -6857,7 +6848,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   (void)(MPI_Comm_split_type(__pyx_v_c_comm, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, (&__pyx_v_shm_comm)));
 
-  /* "epcfunc_nl.pyx":515
+  /* "epcfunc_nl.pyx":519
  *         c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)             # <<<<<<<<<<<<<<
@@ -6866,7 +6857,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_shm_comm, (&__pyx_v_shm_nprocs));
 
-  /* "epcfunc_nl.pyx":516
+  /* "epcfunc_nl.pyx":520
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)             # <<<<<<<<<<<<<<
@@ -6875,7 +6866,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_shm_comm, (&__pyx_v_shm_id));
 
-  /* "epcfunc_nl.pyx":518
+  /* "epcfunc_nl.pyx":522
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs             # <<<<<<<<<<<<<<
@@ -6884,7 +6875,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_nnode = (__pyx_v_nprocs / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":519
+  /* "epcfunc_nl.pyx":523
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs             # <<<<<<<<<<<<<<
@@ -6893,7 +6884,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_node_id = (__pyx_v_myid / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":520
+  /* "epcfunc_nl.pyx":524
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)             # <<<<<<<<<<<<<<
@@ -6902,7 +6893,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_nodelist = ((int *)malloc((__pyx_v_s_int * __pyx_v_nnode)));
 
-  /* "epcfunc_nl.pyx":521
+  /* "epcfunc_nl.pyx":525
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -6914,7 +6905,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":522
+    /* "epcfunc_nl.pyx":526
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -6924,7 +6915,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     (__pyx_v_nodelist[__pyx_v_i]) = (__pyx_v_i * __pyx_v_shm_nprocs);
   }
 
-  /* "epcfunc_nl.pyx":523
+  /* "epcfunc_nl.pyx":527
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)             # <<<<<<<<<<<<<<
@@ -6933,7 +6924,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   (void)(MPI_Comm_group(__pyx_v_c_comm, (&__pyx_v_split_gp)));
 
-  /* "epcfunc_nl.pyx":524
+  /* "epcfunc_nl.pyx":528
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)             # <<<<<<<<<<<<<<
@@ -6942,7 +6933,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   (void)(MPI_Group_incl(__pyx_v_split_gp, __pyx_v_nnode, __pyx_v_nodelist, (&__pyx_v_shm_gp)));
 
-  /* "epcfunc_nl.pyx":525
+  /* "epcfunc_nl.pyx":529
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)             # <<<<<<<<<<<<<<
@@ -6951,7 +6942,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_ierr = MPI_Comm_create(__pyx_v_c_comm, __pyx_v_shm_gp, (&__pyx_v_remote_comm));
 
-  /* "epcfunc_nl.pyx":527
+  /* "epcfunc_nl.pyx":531
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)
  * 
  *     dr = <int*>calloc((nnode+1),s_int)             # <<<<<<<<<<<<<<
@@ -6960,7 +6951,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_dr = ((int *)calloc((__pyx_v_nnode + 1), __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":528
+  /* "epcfunc_nl.pyx":532
  * 
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)             # <<<<<<<<<<<<<<
@@ -6969,7 +6960,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_dr_num = ((int *)calloc(__pyx_v_nnode, __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":529
+  /* "epcfunc_nl.pyx":533
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -6981,7 +6972,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":530
+    /* "epcfunc_nl.pyx":534
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -6990,7 +6981,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_shm_proc_s = (__pyx_v_i * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":531
+    /* "epcfunc_nl.pyx":535
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs             # <<<<<<<<<<<<<<
@@ -6999,7 +6990,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_shm_proc_e = ((__pyx_v_i + 1) * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":532
+    /* "epcfunc_nl.pyx":536
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):             # <<<<<<<<<<<<<<
@@ -7011,7 +7002,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     for (__pyx_t_7 = __pyx_v_shm_proc_s; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":533
+      /* "epcfunc_nl.pyx":537
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]*nbands             # <<<<<<<<<<<<<<
@@ -7023,7 +7014,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
       (__pyx_v_dr_num[__pyx_t_8]) = ((__pyx_v_dr_num[__pyx_t_8]) + ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) ))) * __pyx_v_nbands));
     }
 
-    /* "epcfunc_nl.pyx":534
+    /* "epcfunc_nl.pyx":538
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]*nbands
  *         for j in range(i+1,nnode+1):             # <<<<<<<<<<<<<<
@@ -7035,7 +7026,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     for (__pyx_t_5 = (__pyx_v_i + 1); __pyx_t_5 < __pyx_t_11; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "epcfunc_nl.pyx":535
+      /* "epcfunc_nl.pyx":539
  *             dr_num[i] += norb_num[j]*nbands
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]             # <<<<<<<<<<<<<<
@@ -7047,7 +7038,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     }
   }
 
-  /* "epcfunc_nl.pyx":536
+  /* "epcfunc_nl.pyx":540
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]             # <<<<<<<<<<<<<<
@@ -7057,7 +7048,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":537
+  /* "epcfunc_nl.pyx":541
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]             # <<<<<<<<<<<<<<
@@ -7067,7 +7058,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":538
+  /* "epcfunc_nl.pyx":542
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]
  *     qnum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -7077,7 +7068,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_qnum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":539
+  /* "epcfunc_nl.pyx":543
  *     norb_s = norb[myid]
  *     qnum_p = kproc_num[myid]
  *     qnum_s = kproc[myid]             # <<<<<<<<<<<<<<
@@ -7087,7 +7078,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_qnum_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":540
+  /* "epcfunc_nl.pyx":544
  *     qnum_p = kproc_num[myid]
  *     qnum_s = kproc[myid]
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)             # <<<<<<<<<<<<<<
@@ -7096,7 +7087,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_bandveckp = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_nbands)));
 
-  /* "epcfunc_nl.pyx":541
+  /* "epcfunc_nl.pyx":545
  *     qnum_s = kproc[myid]
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)
  *     expikR = <double complex*>malloc(s_dcplx*ncell)             # <<<<<<<<<<<<<<
@@ -7105,7 +7096,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_expikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_ncell)));
 
-  /* "epcfunc_nl.pyx":542
+  /* "epcfunc_nl.pyx":546
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
@@ -7114,7 +7105,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_drSHexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":543
+  /* "epcfunc_nl.pyx":547
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrv = <double complex*>malloc(s_dcplx*nbands2)             # <<<<<<<<<<<<<<
@@ -7123,7 +7114,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_vdrv = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_nbands2)));
 
-  /* "epcfunc_nl.pyx":544
+  /* "epcfunc_nl.pyx":548
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrv = <double complex*>malloc(s_dcplx*nbands2)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)             # <<<<<<<<<<<<<<
@@ -7132,7 +7123,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_vdrvexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_nmodes) * __pyx_v_nbands2)));
 
-  /* "epcfunc_nl.pyx":545
+  /* "epcfunc_nl.pyx":549
  *     vdrv = <double complex*>malloc(s_dcplx*nbands2)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)             # <<<<<<<<<<<<<<
@@ -7141,7 +7132,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_drveck_p = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norb_p) * __pyx_v_nbands)));
 
-  /* "epcfunc_nl.pyx":546
+  /* "epcfunc_nl.pyx":550
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)
  *     phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)             # <<<<<<<<<<<<<<
@@ -7150,7 +7141,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_phvecval = ((__pyx_t_double_complex *)malloc(((((__pyx_v_s_dcplx * __pyx_v_knum) * __pyx_v_nmodes) * __pyx_v_natom_buffer) * 3)));
 
-  /* "epcfunc_nl.pyx":548
+  /* "epcfunc_nl.pyx":552
  *     phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)
  * 
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -7160,7 +7151,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":549
+    /* "epcfunc_nl.pyx":553
  * 
  *     if (shm_id == 0):
  *         l_drveck = s_dcplx*knum*3*norbnb             # <<<<<<<<<<<<<<
@@ -7169,7 +7160,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_l_drveck = (((__pyx_v_s_dcplx * __pyx_v_knum) * 3) * __pyx_v_norbnb);
 
-    /* "epcfunc_nl.pyx":548
+    /* "epcfunc_nl.pyx":552
  *     phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)
  * 
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -7179,7 +7170,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     goto __pyx_L11;
   }
 
-  /* "epcfunc_nl.pyx":551
+  /* "epcfunc_nl.pyx":555
  *         l_drveck = s_dcplx*knum*3*norbnb
  *     else:
  *         l_drveck = 0             # <<<<<<<<<<<<<<
@@ -7191,7 +7182,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   }
   __pyx_L11:;
 
-  /* "epcfunc_nl.pyx":552
+  /* "epcfunc_nl.pyx":556
  *     else:
  *         l_drveck = 0
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -7200,7 +7191,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_drveck, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_drveck), (&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":555
+  /* "epcfunc_nl.pyx":559
  *         l_drveck,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&drveck,&win
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -7210,7 +7201,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_12 = ((__pyx_v_shm_id != 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":556
+    /* "epcfunc_nl.pyx":560
  *     )
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)             # <<<<<<<<<<<<<<
@@ -7219,7 +7210,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
     (void)(MPI_Win_shared_query(__pyx_v_win, 0, (&__pyx_v_l_drveck), (&__pyx_v_s_dcplx), (&__pyx_v_drveck)));
 
-    /* "epcfunc_nl.pyx":555
+    /* "epcfunc_nl.pyx":559
  *         l_drveck,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&drveck,&win
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -7228,333 +7219,324 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "epcfunc_nl.pyx":557
+  /* "epcfunc_nl.pyx":561
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
  * 
- *     for h in range(knum):
+ *     if norb_p > 0:
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "epcfunc_nl.pyx":559
+  /* "epcfunc_nl.pyx":563
  *     mpi.MPI_Barrier(shm_comm)
  * 
- *     for h in range(knum):             # <<<<<<<<<<<<<<
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
  */
-  __pyx_t_2 = __pyx_v_knum;
-  __pyx_t_3 = __pyx_t_2;
-  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
-    __pyx_v_h = __pyx_t_4;
-
-    /* "epcfunc_nl.pyx":560
- * 
- *     for h in range(knum):
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]             # <<<<<<<<<<<<<<
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
- */
-    __pyx_t_9 = 2;
-    __pyx_v_kpidx_z = (__pyx_v_h % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-    __pyx_t_9 = 2;
-    __pyx_v_kpidx_xy = (__pyx_v_h / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-
-    /* "epcfunc_nl.pyx":561
- *     for h in range(knum):
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- */
-    __pyx_t_9 = 1;
-    __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-    __pyx_t_9 = 1;
-    __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-
-    /* "epcfunc_nl.pyx":562
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- */
-    __pyx_t_9 = 1;
-    __pyx_t_13 = 2;
-    __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kpidx_z);
-
-    /* "epcfunc_nl.pyx":563
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- */
-    __pyx_t_13 = 0;
-    __pyx_v_kpx = (((double)__pyx_v_kpidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
+  __pyx_t_12 = ((__pyx_v_norb_p > 0) != 0);
+  if (__pyx_t_12) {
 
     /* "epcfunc_nl.pyx":564
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
+ * 
+ *     if norb_p > 0:
+ *         for h in range(knum):             # <<<<<<<<<<<<<<
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  */
-    __pyx_t_13 = 1;
-    __pyx_v_kpy = (((double)__pyx_v_kpidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
+    __pyx_t_2 = __pyx_v_knum;
+    __pyx_t_3 = __pyx_t_2;
+    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+      __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":565
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx
+      /* "epcfunc_nl.pyx":565
+ *     if norb_p > 0:
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]             # <<<<<<<<<<<<<<
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  */
-    __pyx_t_13 = 2;
-    __pyx_v_kpz = (((double)__pyx_v_kpidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
+      __pyx_t_9 = 2;
+      __pyx_v_kpidx_z = (__pyx_v_h % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+      __pyx_t_9 = 2;
+      __pyx_v_kpidx_xy = (__pyx_v_h / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-    /* "epcfunc_nl.pyx":566
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):             # <<<<<<<<<<<<<<
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy
+      /* "epcfunc_nl.pyx":566
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
  */
-    __pyx_t_5 = __pyx_v_ncell;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
+      __pyx_t_9 = 1;
+      __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+      __pyx_t_9 = 1;
+      __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
       /* "epcfunc_nl.pyx":567
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx             # <<<<<<<<<<<<<<
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
  */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 0;
-      __pyx_v_RKpx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpx);
+      __pyx_t_9 = 1;
+      __pyx_t_13 = 2;
+      __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kpidx_z);
 
       /* "epcfunc_nl.pyx":568
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy             # <<<<<<<<<<<<<<
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
  */
-      __pyx_t_9 = __pyx_v_i;
-      __pyx_t_13 = 1;
-      __pyx_v_RKpy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kpy);
+      __pyx_t_13 = 0;
+      __pyx_v_kpx = (((double)__pyx_v_kpidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
       /* "epcfunc_nl.pyx":569
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz             # <<<<<<<<<<<<<<
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
  */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 2;
-      __pyx_v_RKpz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpz);
+      __pyx_t_13 = 1;
+      __pyx_v_kpy = (((double)__pyx_v_kpidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
       /* "epcfunc_nl.pyx":570
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz             # <<<<<<<<<<<<<<
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx
  */
-      __pyx_v_RKp = ((__pyx_v_RKpx + __pyx_v_RKpy) + __pyx_v_RKpz);
+      __pyx_t_13 = 2;
+      __pyx_v_kpz = (((double)__pyx_v_kpidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
       /* "epcfunc_nl.pyx":571
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)             # <<<<<<<<<<<<<<
- *         for i in range(norbital):
- *             for j in range(nbands):
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):             # <<<<<<<<<<<<<<
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy
  */
-      (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(-1.0, 0), __pyx_v_pi2j), __pyx_t_double_complex_from_parts(__pyx_v_RKp, 0)));
-    }
+      __pyx_t_5 = __pyx_v_ncell;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
 
-    /* "epcfunc_nl.pyx":572
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):             # <<<<<<<<<<<<<<
- *             for j in range(nbands):
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+        /* "epcfunc_nl.pyx":572
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx             # <<<<<<<<<<<<<<
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz
  */
-    __pyx_t_5 = __pyx_v_norbital;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_9 = 0;
+        __pyx_v_RKpx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpx);
 
-      /* "epcfunc_nl.pyx":573
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):
- *             for j in range(nbands):             # <<<<<<<<<<<<<<
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
- *         for xyz in range(3):
+        /* "epcfunc_nl.pyx":573
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy             # <<<<<<<<<<<<<<
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz
  */
-      __pyx_t_8 = __pyx_v_nbands;
-      __pyx_t_14 = __pyx_t_8;
-      for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
-        __pyx_v_j = __pyx_t_15;
+        __pyx_t_9 = __pyx_v_i;
+        __pyx_t_13 = 1;
+        __pyx_v_RKpy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kpy);
 
         /* "epcfunc_nl.pyx":574
- *         for i in range(norbital):
- *             for j in range(nbands):
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])             # <<<<<<<<<<<<<<
- *         for xyz in range(3):
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz             # <<<<<<<<<<<<<<
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
  */
-        __pyx_t_9 = __pyx_v_kpidx;
         __pyx_t_13 = __pyx_v_i;
-        __pyx_t_16 = __pyx_v_j;
-        (__pyx_v_bandveckp[((__pyx_v_i * __pyx_v_nbands) + __pyx_v_j)]) = conj((*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_13 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_16)) ))));
+        __pyx_t_9 = 2;
+        __pyx_v_RKpz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpz);
+
+        /* "epcfunc_nl.pyx":575
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz             # <<<<<<<<<<<<<<
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):
+ */
+        __pyx_v_RKp = ((__pyx_v_RKpx + __pyx_v_RKpy) + __pyx_v_RKpz);
+
+        /* "epcfunc_nl.pyx":576
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)             # <<<<<<<<<<<<<<
+ *             for i in range(norbital):
+ *                 for j in range(nbands):
+ */
+        (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(-1.0, 0), __pyx_v_pi2j), __pyx_t_double_complex_from_parts(__pyx_v_RKp, 0)));
       }
-    }
-
-    /* "epcfunc_nl.pyx":575
- *             for j in range(nbands):
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
- *         for xyz in range(3):             # <<<<<<<<<<<<<<
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- */
-    for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
-      __pyx_v_xyz = __pyx_t_5;
-
-      /* "epcfunc_nl.pyx":576
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
- *         for xyz in range(3):
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- */
-      (void)(memset(__pyx_v_drSHexpikR, 0, ((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
 
       /* "epcfunc_nl.pyx":577
- *         for xyz in range(3):
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):             # <<<<<<<<<<<<<<
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):             # <<<<<<<<<<<<<<
+ *                 for j in range(nbands):
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
  */
-      __pyx_t_6 = __pyx_v_ncell;
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
+      __pyx_t_5 = __pyx_v_norbital;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
 
         /* "epcfunc_nl.pyx":578
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):             # <<<<<<<<<<<<<<
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):
+ *                 for j in range(nbands):             # <<<<<<<<<<<<<<
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+ *             for xyz in range(3):
  */
-        __pyx_t_14 = (__pyx_v_norb_p * __pyx_v_norbital);
-        __pyx_t_15 = __pyx_t_14;
-        for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_15; __pyx_t_17+=1) {
-          __pyx_v_k = __pyx_t_17;
+        __pyx_t_8 = __pyx_v_nbands;
+        __pyx_t_14 = __pyx_t_8;
+        for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
+          __pyx_v_j = __pyx_t_15;
 
           /* "epcfunc_nl.pyx":579
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]             # <<<<<<<<<<<<<<
- *             cblas_zgemm3m(
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+ *             for i in range(norbital):
+ *                 for j in range(nbands):
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])             # <<<<<<<<<<<<<<
+ *             for xyz in range(3):
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
  */
-          __pyx_t_18 = __pyx_v_k;
-          __pyx_t_16 = __pyx_v_xyz;
-          __pyx_t_13 = __pyx_v_j;
-          __pyx_t_9 = __pyx_v_k;
-          (__pyx_v_drSHexpikR[__pyx_t_18]) = __Pyx_c_sum_double((__pyx_v_drSHexpikR[__pyx_t_18]), __Pyx_c_prod_double(__pyx_t_double_complex_from_parts((*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_16 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_9)) ))), 0), (__pyx_v_expikR[__pyx_v_j])));
+          __pyx_t_9 = __pyx_v_kpidx;
+          __pyx_t_13 = __pyx_v_i;
+          __pyx_t_16 = __pyx_v_j;
+          (__pyx_v_bandveckp[((__pyx_v_i * __pyx_v_nbands) + __pyx_v_j)]) = conj((*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_13 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_16)) ))));
         }
       }
 
       /* "epcfunc_nl.pyx":580
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(             # <<<<<<<<<<<<<<
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- *                 nbands,norbital,&c1,drSHexpikR,norbital,
+ *                 for j in range(nbands):
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+ *             for xyz in range(3):             # <<<<<<<<<<<<<<
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(
  */
-      cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, __pyx_v_bandveckp, __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_p, __pyx_v_nbands);
+      for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
+        __pyx_v_xyz = __pyx_t_5;
 
-      /* "epcfunc_nl.pyx":586
- *             )
- *             # drveck_p -> drveck (gather to node comm)
- *             for j in range(norb_p*nbands):             # <<<<<<<<<<<<<<
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)
+        /* "epcfunc_nl.pyx":584
+ *                 cblas_dgemm(
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,             # <<<<<<<<<<<<<<
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
  */
-      __pyx_t_6 = (__pyx_v_norb_p * __pyx_v_nbands);
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
+        __pyx_t_16 = __pyx_v_xyz;
+        __pyx_t_13 = 0;
+        __pyx_t_9 = 0;
+
+        /* "epcfunc_nl.pyx":582
+ *             for xyz in range(3):
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+ */
+        cblas_dgemm(CblasRowMajor, CblasTrans, CblasNoTrans, (__pyx_v_norb_p * __pyx_v_norbital), 2, __pyx_v_ncell, 1.0, (&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_16 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_9)) )))), (__pyx_v_norb_p * __pyx_v_norbital), ((double *)__pyx_v_expikR), 2, 0.0, ((double *)__pyx_v_drSHexpikR), 2);
 
         /* "epcfunc_nl.pyx":587
- *             # drveck_p -> drveck (gather to node comm)
- *             for j in range(norb_p*nbands):
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]             # <<<<<<<<<<<<<<
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):
- */
-        (__pyx_v_drveck[(((((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb) + (__pyx_v_norb_s * __pyx_v_nbands)) + __pyx_v_j)]) = (__pyx_v_drveck_p[__pyx_v_j]);
-      }
-
-      /* "epcfunc_nl.pyx":588
- *             for j in range(norb_p*nbands):
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
- *             if (shm_id == 0):
- *                 mpi.MPI_Allgatherv(
- */
-      (void)(MPI_Barrier(__pyx_v_shm_comm));
-
-      /* "epcfunc_nl.pyx":589
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):             # <<<<<<<<<<<<<<
- *                 mpi.MPI_Allgatherv(
- *                     mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
- */
-      __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
-      if (__pyx_t_12) {
-
-        /* "epcfunc_nl.pyx":590
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):
- *                 mpi.MPI_Allgatherv(             # <<<<<<<<<<<<<<
- *                     mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
- *                     &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
- */
-        (void)(MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL, (&(__pyx_v_drveck[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb)])), (&(__pyx_v_dr_num[0])), (&(__pyx_v_dr[0])), MPI_DOUBLE_COMPLEX, __pyx_v_remote_comm));
-
-        /* "epcfunc_nl.pyx":589
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):             # <<<<<<<<<<<<<<
- *                 mpi.MPI_Allgatherv(
- *                     mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
- */
-      }
-
-      /* "epcfunc_nl.pyx":595
- *                     mpi.MPI_DOUBLE_COMPLEX,remote_comm
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
  *                 )
- *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
+ *                 cblas_zgemm3m(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+ *                     nbands,norbital,&c1,drSHexpikR,norbital,
+ */
+        cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, __pyx_v_bandveckp, __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_p, __pyx_v_nbands);
+
+        /* "epcfunc_nl.pyx":593
+ *                 )
+ *                 # drveck_p -> drveck (gather to node comm)
+ *                 for j in range(norb_p*nbands):             # <<<<<<<<<<<<<<
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)
+ */
+        __pyx_t_6 = (__pyx_v_norb_p * __pyx_v_nbands);
+        __pyx_t_7 = __pyx_t_6;
+        for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+          __pyx_v_j = __pyx_t_8;
+
+          /* "epcfunc_nl.pyx":594
+ *                 # drveck_p -> drveck (gather to node comm)
+ *                 for j in range(norb_p*nbands):
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]             # <<<<<<<<<<<<<<
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):
+ */
+          (__pyx_v_drveck[(((((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb) + (__pyx_v_norb_s * __pyx_v_nbands)) + __pyx_v_j)]) = (__pyx_v_drveck_p[__pyx_v_j]);
+        }
+
+        /* "epcfunc_nl.pyx":595
+ *                 for j in range(norb_p*nbands):
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
+ *                 if (shm_id == 0):
+ *                     mpi.MPI_Allgatherv(
+ */
+        (void)(MPI_Barrier(__pyx_v_shm_comm));
+
+        /* "epcfunc_nl.pyx":596
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
+ *                     mpi.MPI_Allgatherv(
+ *                         mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+ */
+        __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
+        if (__pyx_t_12) {
+
+          /* "epcfunc_nl.pyx":597
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):
+ *                     mpi.MPI_Allgatherv(             # <<<<<<<<<<<<<<
+ *                         mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+ *                         &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
+ */
+          (void)(MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL, (&(__pyx_v_drveck[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb)])), (&(__pyx_v_dr_num[0])), (&(__pyx_v_dr[0])), MPI_DOUBLE_COMPLEX, __pyx_v_remote_comm));
+
+          /* "epcfunc_nl.pyx":596
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
+ *                     mpi.MPI_Allgatherv(
+ *                         mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+ */
+        }
+
+        /* "epcfunc_nl.pyx":602
+ *                         mpi.MPI_DOUBLE_COMPLEX,remote_comm
+ *                     )
+ *                 mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
  * 
  *     free(drveck_p)
  */
-      (void)(MPI_Barrier(__pyx_v_shm_comm));
+        (void)(MPI_Barrier(__pyx_v_shm_comm));
+      }
     }
+
+    /* "epcfunc_nl.pyx":563
+ *     mpi.MPI_Barrier(shm_comm)
+ * 
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ */
   }
 
-  /* "epcfunc_nl.pyx":597
- *             mpi.MPI_Barrier(shm_comm)
+  /* "epcfunc_nl.pyx":604
+ *                 mpi.MPI_Barrier(shm_comm)
  * 
  *     free(drveck_p)             # <<<<<<<<<<<<<<
  *     endtime = mpi.MPI_Wtime()
@@ -7562,7 +7544,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   free(__pyx_v_drveck_p);
 
-  /* "epcfunc_nl.pyx":598
+  /* "epcfunc_nl.pyx":605
  * 
  *     free(drveck_p)
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -7571,7 +7553,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":599
+  /* "epcfunc_nl.pyx":606
  *     free(drveck_p)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -7581,7 +7563,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":600
+    /* "epcfunc_nl.pyx":607
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("epc_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)             # <<<<<<<<<<<<<<
@@ -7590,7 +7572,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
     (void)(printf(((char const *)"epc_NL(Right) part1 time:%12.4fs.\n"), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "epcfunc_nl.pyx":599
+    /* "epcfunc_nl.pyx":606
  *     free(drveck_p)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -7599,7 +7581,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
   }
 
-  /* "epcfunc_nl.pyx":602
+  /* "epcfunc_nl.pyx":609
  *         printf("epc_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
  * 
  *     for h in range(natom_loop):             # <<<<<<<<<<<<<<
@@ -7611,7 +7593,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":603
+    /* "epcfunc_nl.pyx":610
  * 
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3             # <<<<<<<<<<<<<<
@@ -7621,7 +7603,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     __pyx_t_9 = __pyx_v_h;
     __pyx_v_nm_min = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_9)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":604
+    /* "epcfunc_nl.pyx":611
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3             # <<<<<<<<<<<<<<
@@ -7631,7 +7613,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     __pyx_t_9 = (__pyx_v_h + 1);
     __pyx_v_nm_max = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_9)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":605
+    /* "epcfunc_nl.pyx":612
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min             # <<<<<<<<<<<<<<
@@ -7640,7 +7622,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_nm_num = (__pyx_v_nm_max - __pyx_v_nm_min);
 
-    /* "epcfunc_nl.pyx":606
+    /* "epcfunc_nl.pyx":613
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min
  *         starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -7649,7 +7631,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_v_starttime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":607
+    /* "epcfunc_nl.pyx":614
  *         nm_num = nm_max-nm_min
  *         starttime = mpi.MPI_Wtime()
  *         for ik in range(nkpath):             # <<<<<<<<<<<<<<
@@ -7661,7 +7643,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_ik = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":608
+      /* "epcfunc_nl.pyx":615
  *         starttime = mpi.MPI_Wtime()
  *         for ik in range(nkpath):
  *             start = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -7670,7 +7652,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
       __pyx_v_start = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":609
+      /* "epcfunc_nl.pyx":616
  *         for ik in range(nkpath):
  *             start = mpi.MPI_Wtime()
  *             if nkpath < knum:             # <<<<<<<<<<<<<<
@@ -7680,7 +7662,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
       __pyx_t_12 = ((__pyx_v_nkpath < __pyx_v_knum) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":610
+        /* "epcfunc_nl.pyx":617
  *             start = mpi.MPI_Wtime()
  *             if nkpath < knum:
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])             # <<<<<<<<<<<<<<
@@ -7692,7 +7674,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_16 = 0;
         __pyx_v_kidx_x = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_16)) ))))));
 
-        /* "epcfunc_nl.pyx":611
+        /* "epcfunc_nl.pyx":618
  *             if nkpath < knum:
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
  *                 kidx_y = <int>round(nq[1]*kpath[ik,1])             # <<<<<<<<<<<<<<
@@ -7704,7 +7686,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_9 = 1;
         __pyx_v_kidx_y = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_9)) ))))));
 
-        /* "epcfunc_nl.pyx":612
+        /* "epcfunc_nl.pyx":619
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
  *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
  *                 kidx_z = <int>round(nq[2]*kpath[ik,2])             # <<<<<<<<<<<<<<
@@ -7716,17 +7698,17 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_16 = 2;
         __pyx_v_kidx_z = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_kpath.data + __pyx_t_13 * __pyx_v_kpath.strides[0]) )) + __pyx_t_16)) ))))));
 
-        /* "epcfunc_nl.pyx":609
+        /* "epcfunc_nl.pyx":616
  *         for ik in range(nkpath):
  *             start = mpi.MPI_Wtime()
  *             if nkpath < knum:             # <<<<<<<<<<<<<<
  *                 kidx_x = <int>round(nq[0]*kpath[ik,0])
  *                 kidx_y = <int>round(nq[1]*kpath[ik,1])
  */
-        goto __pyx_L35;
+        goto __pyx_L32;
       }
 
-      /* "epcfunc_nl.pyx":614
+      /* "epcfunc_nl.pyx":621
  *                 kidx_z = <int>round(nq[2]*kpath[ik,2])
  *             else:
  *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]             # <<<<<<<<<<<<<<
@@ -7739,7 +7721,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_16 = 2;
         __pyx_v_kidx_xy = (__pyx_v_ik / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) ))));
 
-        /* "epcfunc_nl.pyx":615
+        /* "epcfunc_nl.pyx":622
  *             else:
  *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -7751,9 +7733,9 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_16 = 1;
         __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) ))));
       }
-      __pyx_L35:;
+      __pyx_L32:;
 
-      /* "epcfunc_nl.pyx":616
+      /* "epcfunc_nl.pyx":623
  *                 kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z             # <<<<<<<<<<<<<<
@@ -7764,7 +7746,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
       __pyx_t_13 = 2;
       __pyx_v_kidx = ((((__pyx_v_kidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) )))) + __pyx_v_kidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kidx_z);
 
-      /* "epcfunc_nl.pyx":617
+      /* "epcfunc_nl.pyx":624
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
  *             for l in range(qnum_p):             # <<<<<<<<<<<<<<
@@ -7776,7 +7758,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
       for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
         __pyx_v_l = __pyx_t_15;
 
-        /* "epcfunc_nl.pyx":618
+        /* "epcfunc_nl.pyx":625
  *             kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
  *             for l in range(qnum_p):
  *                 k1 = l+qnum_s             # <<<<<<<<<<<<<<
@@ -7785,7 +7767,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
  */
         __pyx_v_k1 = (__pyx_v_l + __pyx_v_qnum_s);
 
-        /* "epcfunc_nl.pyx":619
+        /* "epcfunc_nl.pyx":626
  *             for l in range(qnum_p):
  *                 k1 = l+qnum_s
  *                 qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
@@ -7797,7 +7779,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 2;
         __pyx_v_qidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":620
+        /* "epcfunc_nl.pyx":627
  *                 k1 = l+qnum_s
  *                 qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -7809,7 +7791,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 1;
         __pyx_v_qidx_x = (__pyx_v_qidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":621
+        /* "epcfunc_nl.pyx":628
  *                 qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *                 kpidx_x = (kidx_x+qidx_x)%nq[0]             # <<<<<<<<<<<<<<
@@ -7819,7 +7801,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 0;
         __pyx_v_kpidx_x = ((__pyx_v_kidx_x + __pyx_v_qidx_x) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":622
+        /* "epcfunc_nl.pyx":629
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *                 kpidx_x = (kidx_x+qidx_x)%nq[0]
  *                 kpidx_y = (kidx_y+qidx_y)%nq[1]             # <<<<<<<<<<<<<<
@@ -7829,7 +7811,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 1;
         __pyx_v_kpidx_y = ((__pyx_v_kidx_y + __pyx_v_qidx_y) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":623
+        /* "epcfunc_nl.pyx":630
  *                 kpidx_x = (kidx_x+qidx_x)%nq[0]
  *                 kpidx_y = (kidx_y+qidx_y)%nq[1]
  *                 kpidx_z = (kidx_z+qidx_z)%nq[2]             # <<<<<<<<<<<<<<
@@ -7839,7 +7821,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_13 = 2;
         __pyx_v_kpidx_z = ((__pyx_v_kidx_z + __pyx_v_qidx_z) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":624
+        /* "epcfunc_nl.pyx":631
  *                 kpidx_y = (kidx_y+qidx_y)%nq[1]
  *                 kpidx_z = (kidx_z+qidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]             # <<<<<<<<<<<<<<
@@ -7852,7 +7834,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
           __pyx_v_kpidx_x = (__pyx_v_kpidx_x + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":625
+        /* "epcfunc_nl.pyx":632
  *                 kpidx_z = (kidx_z+qidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]             # <<<<<<<<<<<<<<
@@ -7865,7 +7847,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
           __pyx_v_kpidx_y = (__pyx_v_kpidx_y + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":626
+        /* "epcfunc_nl.pyx":633
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]             # <<<<<<<<<<<<<<
@@ -7878,7 +7860,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
           __pyx_v_kpidx_z = (__pyx_v_kpidx_z + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":627
+        /* "epcfunc_nl.pyx":634
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
@@ -7889,7 +7871,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         __pyx_t_16 = 2;
         __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) )))) + __pyx_v_kpidx_z);
 
-        /* "epcfunc_nl.pyx":628
+        /* "epcfunc_nl.pyx":635
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 for j in range(nmodes):             # <<<<<<<<<<<<<<
@@ -7901,7 +7883,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
         for (__pyx_t_19 = 0; __pyx_t_19 < __pyx_t_18; __pyx_t_19+=1) {
           __pyx_v_j = __pyx_t_19;
 
-          /* "epcfunc_nl.pyx":629
+          /* "epcfunc_nl.pyx":636
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 for j in range(nmodes):
  *                     for k in range(nm_num):             # <<<<<<<<<<<<<<
@@ -7913,7 +7895,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
           for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
             __pyx_v_k = __pyx_t_22;
 
-            /* "epcfunc_nl.pyx":631
+            /* "epcfunc_nl.pyx":638
  *                     for k in range(nm_num):
  *                         phvecval[j*nm_num+k] \
  *                         = phvecval_p[l,j*nmodes+k+nm_min]             # <<<<<<<<<<<<<<
@@ -7923,7 +7905,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
             __pyx_t_16 = __pyx_v_l;
             __pyx_t_13 = (((__pyx_v_j * __pyx_v_nmodes) + __pyx_v_k) + __pyx_v_nm_min);
 
-            /* "epcfunc_nl.pyx":630
+            /* "epcfunc_nl.pyx":637
  *                 for j in range(nmodes):
  *                     for k in range(nm_num):
  *                         phvecval[j*nm_num+k] \             # <<<<<<<<<<<<<<
@@ -7934,7 +7916,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_4MPIepcNL_R(CYTHON_UNUSED PyObject *__pyx
           }
         }
 
-        /* "epcfunc_nl.pyx":633
+        /* "epcfunc_nl.pyx":640
  *                         = phvecval_p[l,j*nmodes+k+nm_min]
  *                 epckqNL_R(
  *                     &drveck[kpidx*3*norbnb],bandveck[kidx],phvecval,vdrv,             # <<<<<<<<<<<<<<
@@ -7960,7 +7942,7 @@ __pyx_t_23.strides[1] = __pyx_v_bandveck.strides[2];
 
 __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
 
-        /* "epcfunc_nl.pyx":634
+        /* "epcfunc_nl.pyx":641
  *                 epckqNL_R(
  *                     &drveck[kpidx*3*norbnb],bandveck[kidx],phvecval,vdrv,
  *                     vdrvexpikR,&c1,&epc_t[ik*qnum_p+l,nm_min*nbands2],nmodes,natom,             # <<<<<<<<<<<<<<
@@ -7969,7 +7951,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
         __pyx_t_16 = (__pyx_v_nm_min * __pyx_v_nbands2);
 
-        /* "epcfunc_nl.pyx":632
+        /* "epcfunc_nl.pyx":639
  *                         phvecval[j*nm_num+k] \
  *                         = phvecval_p[l,j*nmodes+k+nm_min]
  *                 epckqNL_R(             # <<<<<<<<<<<<<<
@@ -7982,7 +7964,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
         __pyx_t_23.data = NULL;
       }
 
-      /* "epcfunc_nl.pyx":637
+      /* "epcfunc_nl.pyx":644
  *                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
  *                 )
  *             end = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -7991,7 +7973,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
       __pyx_v_end = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":638
+      /* "epcfunc_nl.pyx":645
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -8001,7 +7983,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
       __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":639
+        /* "epcfunc_nl.pyx":646
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)             # <<<<<<<<<<<<<<
@@ -8010,7 +7992,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
         (void)(printf(((char const *)"time in mode loop %d, knum loop %d:%12.4fs.\n"), __pyx_v_h, __pyx_v_ik, (__pyx_v_end - __pyx_v_start)));
 
-        /* "epcfunc_nl.pyx":638
+        /* "epcfunc_nl.pyx":645
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -8020,7 +8002,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
       }
     }
 
-    /* "epcfunc_nl.pyx":640
+    /* "epcfunc_nl.pyx":647
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
  *         endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -8029,7 +8011,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
     __pyx_v_endtime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":641
+    /* "epcfunc_nl.pyx":648
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -8039,7 +8021,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
     __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
     if (__pyx_t_12) {
 
-      /* "epcfunc_nl.pyx":642
+      /* "epcfunc_nl.pyx":649
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:
  *             printf("epc_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)             # <<<<<<<<<<<<<<
@@ -8048,7 +8030,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
       (void)(printf(((char const *)"epc_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n"), __pyx_v_nm_min, (__pyx_v_nm_min + __pyx_v_nm_num), (__pyx_v_endtime - __pyx_v_starttime)));
 
-      /* "epcfunc_nl.pyx":641
+      /* "epcfunc_nl.pyx":648
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -8058,7 +8040,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
     }
   }
 
-  /* "epcfunc_nl.pyx":644
+  /* "epcfunc_nl.pyx":651
  *             printf("epc_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
  * 
  *     free(bandveckp)             # <<<<<<<<<<<<<<
@@ -8067,7 +8049,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_bandveckp);
 
-  /* "epcfunc_nl.pyx":645
+  /* "epcfunc_nl.pyx":652
  * 
  *     free(bandveckp)
  *     free(drSHexpikR)             # <<<<<<<<<<<<<<
@@ -8076,7 +8058,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_drSHexpikR);
 
-  /* "epcfunc_nl.pyx":646
+  /* "epcfunc_nl.pyx":653
  *     free(bandveckp)
  *     free(drSHexpikR)
  *     free(vdrv)             # <<<<<<<<<<<<<<
@@ -8085,7 +8067,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_vdrv);
 
-  /* "epcfunc_nl.pyx":647
+  /* "epcfunc_nl.pyx":654
  *     free(drSHexpikR)
  *     free(vdrv)
  *     free(vdrvexpikR)             # <<<<<<<<<<<<<<
@@ -8094,7 +8076,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_vdrvexpikR);
 
-  /* "epcfunc_nl.pyx":648
+  /* "epcfunc_nl.pyx":655
  *     free(vdrv)
  *     free(vdrvexpikR)
  *     free(expikR)             # <<<<<<<<<<<<<<
@@ -8103,7 +8085,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_expikR);
 
-  /* "epcfunc_nl.pyx":649
+  /* "epcfunc_nl.pyx":656
  *     free(vdrvexpikR)
  *     free(expikR)
  *     free(nodelist)             # <<<<<<<<<<<<<<
@@ -8112,7 +8094,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_nodelist);
 
-  /* "epcfunc_nl.pyx":650
+  /* "epcfunc_nl.pyx":657
  *     free(expikR)
  *     free(nodelist)
  *     free(dr)             # <<<<<<<<<<<<<<
@@ -8121,7 +8103,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_dr);
 
-  /* "epcfunc_nl.pyx":651
+  /* "epcfunc_nl.pyx":658
  *     free(nodelist)
  *     free(dr)
  *     free(dr_num)             # <<<<<<<<<<<<<<
@@ -8130,7 +8112,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_dr_num);
 
-  /* "epcfunc_nl.pyx":652
+  /* "epcfunc_nl.pyx":659
  *     free(dr)
  *     free(dr_num)
  *     free(phvecval)             # <<<<<<<<<<<<<<
@@ -8139,7 +8121,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   free(__pyx_v_phvecval);
 
-  /* "epcfunc_nl.pyx":653
+  /* "epcfunc_nl.pyx":660
  *     free(dr_num)
  *     free(phvecval)
  *     mpi.MPI_Win_free(&win)             # <<<<<<<<<<<<<<
@@ -8148,7 +8130,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   (void)(MPI_Win_free((&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":654
+  /* "epcfunc_nl.pyx":661
  *     free(phvecval)
  *     mpi.MPI_Win_free(&win)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -8157,7 +8139,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":467
+  /* "epcfunc_nl.pyx":471
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R(             # <<<<<<<<<<<<<<
@@ -8186,7 +8168,7 @@ __pyx_t_13 = ((__pyx_v_ik * __pyx_v_qnum_p) + __pyx_v_l);
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":659
+/* "epcfunc_nl.pyx":666
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void epckqNL_p_L(             # <<<<<<<<<<<<<<
@@ -8209,7 +8191,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("epckqNL_p_L", 0);
 
-  /* "epcfunc_nl.pyx":666
+  /* "epcfunc_nl.pyx":673
  * ):
  *     cdef int i, j, k, l, xyz
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -8218,7 +8200,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":667
+  /* "epcfunc_nl.pyx":674
  *     cdef int i, j, k, l, xyz
  *     cdef double complex c0 = 0.0
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -8227,7 +8209,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":670
+  /* "epcfunc_nl.pyx":677
  *     cdef double complex* drvexpikR_t
  * 
  *     for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -8237,7 +8219,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
   for (__pyx_t_1 = 0; __pyx_t_1 < 3; __pyx_t_1+=1) {
     __pyx_v_xyz = __pyx_t_1;
 
-    /* "epcfunc_nl.pyx":671
+    /* "epcfunc_nl.pyx":678
  * 
  *     for xyz in range(3):
  *         for i in range(natom):             # <<<<<<<<<<<<<<
@@ -8249,7 +8231,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "epcfunc_nl.pyx":672
+      /* "epcfunc_nl.pyx":679
  *     for xyz in range(3):
  *         for i in range(natom):
  *             drvexpikR_t = &drveck[xyz*norbital+norb_u[i]]             # <<<<<<<<<<<<<<
@@ -8259,7 +8241,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
       __pyx_t_5 = __pyx_v_i;
       __pyx_v_drvexpikR_t = (&(__pyx_v_drveck[((__pyx_v_xyz * __pyx_v_norbital) + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_u.data) + __pyx_t_5)) ))))]));
 
-      /* "epcfunc_nl.pyx":674
+      /* "epcfunc_nl.pyx":681
  *             drvexpikR_t = &drveck[xyz*norbital+norb_u[i]]
  *             cblas_zdotc_sub(
  *                 norb_u_num[i],&bandveckp[norb_u[i]],1,             # <<<<<<<<<<<<<<
@@ -8269,7 +8251,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
       __pyx_t_5 = __pyx_v_i;
       __pyx_t_6 = __pyx_v_i;
 
-      /* "epcfunc_nl.pyx":673
+      /* "epcfunc_nl.pyx":680
  *         for i in range(natom):
  *             drvexpikR_t = &drveck[xyz*norbital+norb_u[i]]
  *             cblas_zdotc_sub(             # <<<<<<<<<<<<<<
@@ -8280,7 +8262,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
     }
   }
 
-  /* "epcfunc_nl.pyx":677
+  /* "epcfunc_nl.pyx":684
  *                 drvexpikR_t,1,&vdrvexpikR[i*3+xyz]
  *             )
  *     cblas_zgemv(             # <<<<<<<<<<<<<<
@@ -8289,7 +8271,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
  */
   cblas_zgemv(CblasRowMajor, CblasTrans, __pyx_v_nmodes, __pyx_v_nm_num, (&__pyx_v_c1), __pyx_v_phvecval, __pyx_v_nm_num, __pyx_v_vdrvexpikR, 1, __pyx_v_fepc, __pyx_v_epcq, 1);
 
-  /* "epcfunc_nl.pyx":659
+  /* "epcfunc_nl.pyx":666
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void epckqNL_p_L(             # <<<<<<<<<<<<<<
@@ -8301,7 +8283,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_t_double_complex *__pyx_v_drv
   __Pyx_RefNannyFinishContext();
 }
 
-/* "epcfunc_nl.pyx":686
+/* "epcfunc_nl.pyx":693
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_L(             # <<<<<<<<<<<<<<
@@ -8410,143 +8392,143 @@ static PyObject *__pyx_pw_10epcfunc_nl_7MPIepcNL_p_L(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmodes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 1); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 1); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_loop)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 2); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 2); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_buffer)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 3); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 3); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 4); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 4); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 5); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 5); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_knum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 6); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 6); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qnum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 7); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 7); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_split)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 8); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 8); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 9); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 9); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 10); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 10); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drSH)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 11); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 11); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bandveck)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 12); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 12); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_phvecval_p)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 13); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 13); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 14); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 14); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 15); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 15); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 16); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 16); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 17); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 17); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bassel)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 18); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 18); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 19); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 19); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 20); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 20); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 21:
         if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 21); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 21); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 22:
         if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 22); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 22); __PYX_ERR(0, 693, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 23:
         if (likely((values[23] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 23); __PYX_ERR(0, 686, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, 23); __PYX_ERR(0, 693, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_p_L") < 0)) __PYX_ERR(0, 686, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_p_L") < 0)) __PYX_ERR(0, 693, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 24) {
       goto __pyx_L5_argtuple_error;
@@ -8577,39 +8559,39 @@ static PyObject *__pyx_pw_10epcfunc_nl_7MPIepcNL_p_L(PyObject *__pyx_self, PyObj
       values[23] = PyTuple_GET_ITEM(__pyx_args, 23);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 687, __pyx_L3_error)
-    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 687, __pyx_L3_error)
-    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 687, __pyx_L3_error)
-    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 687, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 688, __pyx_L3_error)
-    __pyx_v_knum = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 688, __pyx_L3_error)
-    __pyx_v_qnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_qnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 688, __pyx_L3_error)
-    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 688, __pyx_L3_error)
-    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 688, __pyx_L3_error)
-    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 689, __pyx_L3_error)
-    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 689, __pyx_L3_error)
-    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 689, __pyx_L3_error)
-    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 690, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 690, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 690, __pyx_L3_error)
-    __pyx_v_qproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc.memview)) __PYX_ERR(0, 691, __pyx_L3_error)
-    __pyx_v_qproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc_num.memview)) __PYX_ERR(0, 691, __pyx_L3_error)
-    __pyx_v_bassel = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bassel.memview)) __PYX_ERR(0, 691, __pyx_L3_error)
-    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 691, __pyx_L3_error)
-    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 692, __pyx_L3_error)
-    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 692, __pyx_L3_error)
-    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 692, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[23], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 693, __pyx_L3_error)
+    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 694, __pyx_L3_error)
+    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 694, __pyx_L3_error)
+    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 694, __pyx_L3_error)
+    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 694, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 695, __pyx_L3_error)
+    __pyx_v_knum = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 695, __pyx_L3_error)
+    __pyx_v_qnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_qnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 695, __pyx_L3_error)
+    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 695, __pyx_L3_error)
+    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 695, __pyx_L3_error)
+    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 696, __pyx_L3_error)
+    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 696, __pyx_L3_error)
+    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 696, __pyx_L3_error)
+    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 697, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 697, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 697, __pyx_L3_error)
+    __pyx_v_qproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc.memview)) __PYX_ERR(0, 698, __pyx_L3_error)
+    __pyx_v_qproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc_num.memview)) __PYX_ERR(0, 698, __pyx_L3_error)
+    __pyx_v_bassel = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bassel.memview)) __PYX_ERR(0, 698, __pyx_L3_error)
+    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 698, __pyx_L3_error)
+    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 699, __pyx_L3_error)
+    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 699, __pyx_L3_error)
+    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 699, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[23], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 700, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 686, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_L", 1, 24, 24, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 693, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepcNL_p_L", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 687, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 694, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(__pyx_self, __pyx_v_comm, __pyx_v_nmodes, __pyx_v_natom_loop, __pyx_v_natom_buffer, __pyx_v_norbital, __pyx_v_ncell, __pyx_v_knum, __pyx_v_qnum, __pyx_v_natom_split, __pyx_v_nq, __pyx_v_R_list, __pyx_v_drSH, __pyx_v_bandveck, __pyx_v_phvecval_p, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_qproc, __pyx_v_qproc_num, __pyx_v_bassel, __pyx_v_norb, __pyx_v_norb_num, __pyx_v_norb_u, __pyx_v_norb_u_num, __pyx_v_epc_t);
 
   /* function exit code */
@@ -8643,7 +8625,6 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   int __pyx_v_h;
   int __pyx_v_i;
   int __pyx_v_j;
-  int __pyx_v_k;
   int __pyx_v_l;
   int __pyx_v_xyz;
   int __pyx_v_shm_proc_s;
@@ -8709,15 +8690,14 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   long __pyx_t_11;
   int __pyx_t_12;
   Py_ssize_t __pyx_t_13;
-  int __pyx_t_14;
+  Py_ssize_t __pyx_t_14;
   int __pyx_t_15;
   int __pyx_t_16;
   int __pyx_t_17;
   Py_ssize_t __pyx_t_18;
-  Py_ssize_t __pyx_t_19;
   __Pyx_RefNannySetupContext("MPIepcNL_p_L", 0);
 
-  /* "epcfunc_nl.pyx":695
+  /* "epcfunc_nl.pyx":702
  *     double complex[:,::1] epc_t
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -8727,7 +8707,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":707
+  /* "epcfunc_nl.pyx":714
  *     cdef double complex* vdrvexpikR
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3             # <<<<<<<<<<<<<<
@@ -8736,7 +8716,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_natom = (((long)__pyx_v_nmodes) / 3);
 
-  /* "epcfunc_nl.pyx":708
+  /* "epcfunc_nl.pyx":715
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -8745,7 +8725,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "epcfunc_nl.pyx":709
+  /* "epcfunc_nl.pyx":716
  *     cdef int natom = nmodes/3
  *     cdef int s_int = sizeof(int)
  *     cdef int s_dcplx = sizeof(double complex)             # <<<<<<<<<<<<<<
@@ -8754,7 +8734,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_s_dcplx = (sizeof(__pyx_t_double_complex));
 
-  /* "epcfunc_nl.pyx":722
+  /* "epcfunc_nl.pyx":729
  *     cdef double kx, ky, kz, RKx, RKy, RKz, RK, \
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j             # <<<<<<<<<<<<<<
@@ -8763,7 +8743,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pi2j = __Pyx_c_prod_double(__pyx_t_double_complex_from_parts(M_PI, 0), __pyx_t_double_complex_from_parts(0, 2.0));
 
-  /* "epcfunc_nl.pyx":723
+  /* "epcfunc_nl.pyx":730
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -8772,7 +8752,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":724
+  /* "epcfunc_nl.pyx":731
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -8781,7 +8761,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":726
+  /* "epcfunc_nl.pyx":733
  *     cdef double complex c0 = 0.0
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -8790,7 +8770,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":728
+  /* "epcfunc_nl.pyx":735
  *     starttime = mpi.MPI_Wtime()
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -8799,7 +8779,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":729
+  /* "epcfunc_nl.pyx":736
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -8808,7 +8788,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":730
+  /* "epcfunc_nl.pyx":737
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     mpi.MPI_Comm_split_type(             # <<<<<<<<<<<<<<
@@ -8817,7 +8797,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Comm_split_type(__pyx_v_c_comm, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, (&__pyx_v_shm_comm)));
 
-  /* "epcfunc_nl.pyx":733
+  /* "epcfunc_nl.pyx":740
  *         c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)             # <<<<<<<<<<<<<<
@@ -8826,7 +8806,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_shm_comm, (&__pyx_v_shm_nprocs));
 
-  /* "epcfunc_nl.pyx":734
+  /* "epcfunc_nl.pyx":741
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)             # <<<<<<<<<<<<<<
@@ -8835,7 +8815,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_shm_comm, (&__pyx_v_shm_id));
 
-  /* "epcfunc_nl.pyx":736
+  /* "epcfunc_nl.pyx":743
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs             # <<<<<<<<<<<<<<
@@ -8844,7 +8824,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_nnode = (__pyx_v_nprocs / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":737
+  /* "epcfunc_nl.pyx":744
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs             # <<<<<<<<<<<<<<
@@ -8853,7 +8833,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_node_id = (__pyx_v_myid / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":738
+  /* "epcfunc_nl.pyx":745
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)             # <<<<<<<<<<<<<<
@@ -8862,7 +8842,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_nodelist = ((int *)malloc((__pyx_v_s_int * __pyx_v_nnode)));
 
-  /* "epcfunc_nl.pyx":739
+  /* "epcfunc_nl.pyx":746
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -8874,7 +8854,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":740
+    /* "epcfunc_nl.pyx":747
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -8884,7 +8864,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     (__pyx_v_nodelist[__pyx_v_i]) = (__pyx_v_i * __pyx_v_shm_nprocs);
   }
 
-  /* "epcfunc_nl.pyx":741
+  /* "epcfunc_nl.pyx":748
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)             # <<<<<<<<<<<<<<
@@ -8893,7 +8873,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Comm_group(__pyx_v_c_comm, (&__pyx_v_split_gp)));
 
-  /* "epcfunc_nl.pyx":742
+  /* "epcfunc_nl.pyx":749
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)             # <<<<<<<<<<<<<<
@@ -8902,7 +8882,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Group_incl(__pyx_v_split_gp, __pyx_v_nnode, __pyx_v_nodelist, (&__pyx_v_shm_gp)));
 
-  /* "epcfunc_nl.pyx":743
+  /* "epcfunc_nl.pyx":750
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)             # <<<<<<<<<<<<<<
@@ -8911,7 +8891,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_create(__pyx_v_c_comm, __pyx_v_shm_gp, (&__pyx_v_remote_comm));
 
-  /* "epcfunc_nl.pyx":745
+  /* "epcfunc_nl.pyx":752
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)
  * 
  *     dr = <int*>calloc((nnode+1),s_int)             # <<<<<<<<<<<<<<
@@ -8920,7 +8900,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_dr = ((int *)calloc((__pyx_v_nnode + 1), __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":746
+  /* "epcfunc_nl.pyx":753
  * 
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)             # <<<<<<<<<<<<<<
@@ -8929,7 +8909,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_dr_num = ((int *)calloc(__pyx_v_nnode, __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":747
+  /* "epcfunc_nl.pyx":754
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -8941,7 +8921,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":748
+    /* "epcfunc_nl.pyx":755
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -8950,7 +8930,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_shm_proc_s = (__pyx_v_i * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":749
+    /* "epcfunc_nl.pyx":756
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs             # <<<<<<<<<<<<<<
@@ -8959,7 +8939,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_shm_proc_e = ((__pyx_v_i + 1) * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":750
+    /* "epcfunc_nl.pyx":757
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):             # <<<<<<<<<<<<<<
@@ -8971,7 +8951,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     for (__pyx_t_7 = __pyx_v_shm_proc_s; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":751
+      /* "epcfunc_nl.pyx":758
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]             # <<<<<<<<<<<<<<
@@ -8983,7 +8963,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
       (__pyx_v_dr_num[__pyx_t_8]) = ((__pyx_v_dr_num[__pyx_t_8]) + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) ))));
     }
 
-    /* "epcfunc_nl.pyx":752
+    /* "epcfunc_nl.pyx":759
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]
  *         for j in range(i+1,nnode+1):             # <<<<<<<<<<<<<<
@@ -8995,7 +8975,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     for (__pyx_t_5 = (__pyx_v_i + 1); __pyx_t_5 < __pyx_t_11; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "epcfunc_nl.pyx":753
+      /* "epcfunc_nl.pyx":760
  *             dr_num[i] += norb_num[j]
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]             # <<<<<<<<<<<<<<
@@ -9007,7 +8987,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     }
   }
 
-  /* "epcfunc_nl.pyx":755
+  /* "epcfunc_nl.pyx":762
  *             dr[j] += dr_num[i]
  * 
  *     norb_p = norb_num[myid]             # <<<<<<<<<<<<<<
@@ -9017,7 +8997,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":756
+  /* "epcfunc_nl.pyx":763
  * 
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]             # <<<<<<<<<<<<<<
@@ -9027,7 +9007,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":757
+  /* "epcfunc_nl.pyx":764
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]
  *     expikR = <double complex*>malloc(s_dcplx*ncell)             # <<<<<<<<<<<<<<
@@ -9036,7 +9016,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_expikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_ncell)));
 
-  /* "epcfunc_nl.pyx":758
+  /* "epcfunc_nl.pyx":765
  *     norb_s = norb[myid]
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
@@ -9045,7 +9025,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_drSHexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":759
+  /* "epcfunc_nl.pyx":766
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)             # <<<<<<<<<<<<<<
@@ -9054,7 +9034,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_vdrvexpikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_nmodes)));
 
-  /* "epcfunc_nl.pyx":760
+  /* "epcfunc_nl.pyx":767
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)             # <<<<<<<<<<<<<<
@@ -9063,7 +9043,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_drveck_a = ((__pyx_t_double_complex *)malloc((((__pyx_v_s_dcplx * __pyx_v_knum) * 3) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":761
+  /* "epcfunc_nl.pyx":768
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -9073,7 +9053,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":762
+    /* "epcfunc_nl.pyx":769
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
  *     if (shm_id == 0):
  *         l_phvecval = s_dcplx*qnum*natom_buffer*3*nmodes             # <<<<<<<<<<<<<<
@@ -9082,7 +9062,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_l_phvecval = ((((__pyx_v_s_dcplx * __pyx_v_qnum) * __pyx_v_natom_buffer) * 3) * __pyx_v_nmodes);
 
-    /* "epcfunc_nl.pyx":763
+    /* "epcfunc_nl.pyx":770
  *     if (shm_id == 0):
  *         l_phvecval = s_dcplx*qnum*natom_buffer*3*nmodes
  *         l_drveck = s_dcplx*3*norbital             # <<<<<<<<<<<<<<
@@ -9091,7 +9071,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_l_drveck = ((__pyx_v_s_dcplx * 3) * __pyx_v_norbital);
 
-    /* "epcfunc_nl.pyx":761
+    /* "epcfunc_nl.pyx":768
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -9101,7 +9081,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     goto __pyx_L11;
   }
 
-  /* "epcfunc_nl.pyx":765
+  /* "epcfunc_nl.pyx":772
  *         l_drveck = s_dcplx*3*norbital
  *     else:
  *         l_phvecval = 0             # <<<<<<<<<<<<<<
@@ -9111,7 +9091,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   /*else*/ {
     __pyx_v_l_phvecval = 0;
 
-    /* "epcfunc_nl.pyx":766
+    /* "epcfunc_nl.pyx":773
  *     else:
  *         l_phvecval = 0
  *         l_drveck = 0             # <<<<<<<<<<<<<<
@@ -9122,7 +9102,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   }
   __pyx_L11:;
 
-  /* "epcfunc_nl.pyx":767
+  /* "epcfunc_nl.pyx":774
  *         l_phvecval = 0
  *         l_drveck = 0
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -9131,7 +9111,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_drveck, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_drveck), (&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":770
+  /* "epcfunc_nl.pyx":777
  *         l_drveck,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&drveck,&win
  *     )
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -9140,7 +9120,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_phvecval, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_phvecval), (&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":773
+  /* "epcfunc_nl.pyx":780
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -9150,7 +9130,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   __pyx_t_12 = ((__pyx_v_shm_id != 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":774
+    /* "epcfunc_nl.pyx":781
  *     )
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)             # <<<<<<<<<<<<<<
@@ -9159,7 +9139,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     (void)(MPI_Win_shared_query(__pyx_v_win, 0, (&__pyx_v_l_drveck), (&__pyx_v_s_dcplx), (&__pyx_v_drveck)));
 
-    /* "epcfunc_nl.pyx":775
+    /* "epcfunc_nl.pyx":782
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)             # <<<<<<<<<<<<<<
@@ -9168,7 +9148,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     (void)(MPI_Win_shared_query(__pyx_v_win1, 0, (&__pyx_v_l_phvecval), (&__pyx_v_s_dcplx), (&__pyx_v_phvecval)));
 
-    /* "epcfunc_nl.pyx":773
+    /* "epcfunc_nl.pyx":780
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -9177,7 +9157,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   }
 
-  /* "epcfunc_nl.pyx":776
+  /* "epcfunc_nl.pyx":783
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -9186,7 +9166,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "epcfunc_nl.pyx":778
+  /* "epcfunc_nl.pyx":785
  *     mpi.MPI_Barrier(shm_comm)
  * 
  *     knum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -9196,285 +9176,276 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":779
+  /* "epcfunc_nl.pyx":786
  * 
  *     knum_p = kproc_num[myid]
  *     knum_s = kproc[myid]             # <<<<<<<<<<<<<<
  * 
- *     for h in range(knum):
+ *     if norb_p > 0:
  */
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":781
+  /* "epcfunc_nl.pyx":788
  *     knum_s = kproc[myid]
  * 
- *     for h in range(knum):             # <<<<<<<<<<<<<<
- *         k1 = bassel[h,0]
- *         kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]
  */
-  __pyx_t_2 = __pyx_v_knum;
-  __pyx_t_3 = __pyx_t_2;
-  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
-    __pyx_v_h = __pyx_t_4;
+  __pyx_t_12 = ((__pyx_v_norb_p > 0) != 0);
+  if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":782
+    /* "epcfunc_nl.pyx":789
  * 
- *     for h in range(knum):
- *         k1 = bassel[h,0]             # <<<<<<<<<<<<<<
- *         kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *     if norb_p > 0:
+ *         for h in range(knum):             # <<<<<<<<<<<<<<
+ *             k1 = bassel[h,0]
+ *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  */
-    __pyx_t_9 = __pyx_v_h;
-    __pyx_t_13 = 0;
-    __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_9 * __pyx_v_bassel.strides[0]) )) + __pyx_t_13)) )));
-
-    /* "epcfunc_nl.pyx":783
- *     for h in range(knum):
- *         k1 = bassel[h,0]
- *         kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- */
-    __pyx_t_13 = 2;
-    __pyx_v_kidx_z = (__pyx_v_k1 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-    __pyx_t_13 = 2;
-    __pyx_v_kidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-
-    /* "epcfunc_nl.pyx":784
- *         k1 = bassel[h,0]
- *         kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- */
-    __pyx_t_13 = 1;
-    __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-    __pyx_t_13 = 1;
-    __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-
-    /* "epcfunc_nl.pyx":785
- *         kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- */
-    __pyx_t_13 = 0;
-    __pyx_v_kx = (((double)__pyx_v_kidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":786
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- */
-    __pyx_t_13 = 1;
-    __pyx_v_ky = (((double)__pyx_v_kidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":787
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx
- */
-    __pyx_t_13 = 2;
-    __pyx_v_kz = (((double)__pyx_v_kidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":788
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):             # <<<<<<<<<<<<<<
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky
- */
-    __pyx_t_5 = __pyx_v_ncell;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
-
-      /* "epcfunc_nl.pyx":789
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx             # <<<<<<<<<<<<<<
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz
- */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 0;
-      __pyx_v_RKx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kx);
+    __pyx_t_2 = __pyx_v_knum;
+    __pyx_t_3 = __pyx_t_2;
+    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+      __pyx_v_h = __pyx_t_4;
 
       /* "epcfunc_nl.pyx":790
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky             # <<<<<<<<<<<<<<
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz
+ *     if norb_p > 0:
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]             # <<<<<<<<<<<<<<
+ *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  */
-      __pyx_t_9 = __pyx_v_i;
-      __pyx_t_13 = 1;
-      __pyx_v_RKy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_ky);
+      __pyx_t_9 = __pyx_v_h;
+      __pyx_t_13 = 0;
+      __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_9 * __pyx_v_bassel.strides[0]) )) + __pyx_t_13)) )));
 
       /* "epcfunc_nl.pyx":791
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz             # <<<<<<<<<<<<<<
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]
+ *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
  */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 2;
-      __pyx_v_RKz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kz);
+      __pyx_t_13 = 2;
+      __pyx_v_kidx_z = (__pyx_v_k1 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
+      __pyx_t_13 = 2;
+      __pyx_v_kidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
       /* "epcfunc_nl.pyx":792
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz             # <<<<<<<<<<<<<<
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):
+ *             k1 = bassel[h,0]
+ *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
  */
-      __pyx_v_RK = ((__pyx_v_RKx + __pyx_v_RKy) + __pyx_v_RKz);
+      __pyx_t_13 = 1;
+      __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
+      __pyx_t_13 = 1;
+      __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
       /* "epcfunc_nl.pyx":793
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)             # <<<<<<<<<<<<<<
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+ *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
  */
-      (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__pyx_v_pi2j, __pyx_t_double_complex_from_parts(__pyx_v_RK, 0)));
-    }
+      __pyx_t_13 = 0;
+      __pyx_v_kx = (((double)__pyx_v_kidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
-    /* "epcfunc_nl.pyx":794
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):             # <<<<<<<<<<<<<<
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
+      /* "epcfunc_nl.pyx":794
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
  */
-    for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
-      __pyx_v_xyz = __pyx_t_5;
+      __pyx_t_13 = 1;
+      __pyx_v_ky = (((double)__pyx_v_kidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
       /* "epcfunc_nl.pyx":795
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]             # <<<<<<<<<<<<<<
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx
  */
-      __pyx_v_drveck_t = (&(__pyx_v_drveck_a[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norb_p)]));
+      __pyx_t_13 = 2;
+      __pyx_v_kz = (((double)__pyx_v_kidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
       /* "epcfunc_nl.pyx":796
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):             # <<<<<<<<<<<<<<
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky
  */
-      (void)(memset(__pyx_v_drSHexpikR, 0, ((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
+      __pyx_t_5 = __pyx_v_ncell;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":797
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):             # <<<<<<<<<<<<<<
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
+        /* "epcfunc_nl.pyx":797
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx             # <<<<<<<<<<<<<<
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz
  */
-      __pyx_t_6 = __pyx_v_ncell;
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_9 = 0;
+        __pyx_v_RKx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kx);
 
         /* "epcfunc_nl.pyx":798
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):             # <<<<<<<<<<<<<<
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemv(
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky             # <<<<<<<<<<<<<<
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz
  */
-        __pyx_t_14 = (__pyx_v_norb_p * __pyx_v_norbital);
-        __pyx_t_15 = __pyx_t_14;
-        for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
-          __pyx_v_k = __pyx_t_16;
+        __pyx_t_9 = __pyx_v_i;
+        __pyx_t_13 = 1;
+        __pyx_v_RKy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_ky);
 
-          /* "epcfunc_nl.pyx":799
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]             # <<<<<<<<<<<<<<
- *             cblas_zgemv(
- *                 CblasRowMajor,CblasNoTrans,norb_p,
+        /* "epcfunc_nl.pyx":799
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz             # <<<<<<<<<<<<<<
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)
  */
-          __pyx_t_17 = __pyx_v_k;
-          __pyx_t_9 = __pyx_v_xyz;
-          __pyx_t_13 = __pyx_v_j;
-          __pyx_t_18 = __pyx_v_k;
-          (__pyx_v_drSHexpikR[__pyx_t_17]) = __Pyx_c_sum_double((__pyx_v_drSHexpikR[__pyx_t_17]), __Pyx_c_prod_double(__pyx_t_double_complex_from_parts((*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_9 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_18)) ))), 0), (__pyx_v_expikR[__pyx_v_j])));
-        }
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_9 = 2;
+        __pyx_v_RKz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kz);
+
+        /* "epcfunc_nl.pyx":800
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz             # <<<<<<<<<<<<<<
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):
+ */
+        __pyx_v_RK = ((__pyx_v_RKx + __pyx_v_RKy) + __pyx_v_RKz);
+
+        /* "epcfunc_nl.pyx":801
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)             # <<<<<<<<<<<<<<
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+ */
+        (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__pyx_v_pi2j, __pyx_t_double_complex_from_parts(__pyx_v_RK, 0)));
       }
 
-      /* "epcfunc_nl.pyx":803
- *                 CblasRowMajor,CblasNoTrans,norb_p,
- *                 norbital,&c1,drSHexpikR,norbital,
- *                 &bandveck[h,0],1,&c0,drveck_t,1             # <<<<<<<<<<<<<<
- *             )
+      /* "epcfunc_nl.pyx":802
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):             # <<<<<<<<<<<<<<
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ */
+      for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
+        __pyx_v_xyz = __pyx_t_5;
+
+        /* "epcfunc_nl.pyx":803
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]             # <<<<<<<<<<<<<<
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(
+ */
+        __pyx_v_drveck_t = (&(__pyx_v_drveck_a[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norb_p)]));
+
+        /* "epcfunc_nl.pyx":807
+ *                 cblas_dgemm(
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,             # <<<<<<<<<<<<<<
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ */
+        __pyx_t_9 = __pyx_v_xyz;
+        __pyx_t_13 = 0;
+        __pyx_t_14 = 0;
+
+        /* "epcfunc_nl.pyx":805
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+ */
+        cblas_dgemm(CblasRowMajor, CblasTrans, CblasNoTrans, (__pyx_v_norb_p * __pyx_v_norbital), 2, __pyx_v_ncell, 1.0, (&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_9 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_14)) )))), (__pyx_v_norb_p * __pyx_v_norbital), ((double *)__pyx_v_expikR), 2, 0.0, ((double *)__pyx_v_drSHexpikR), 2);
+
+        /* "epcfunc_nl.pyx":813
+ *                     CblasRowMajor,CblasNoTrans,norb_p,
+ *                     norbital,&c1,drSHexpikR,norbital,
+ *                     &bandveck[h,0],1,&c0,drveck_t,1             # <<<<<<<<<<<<<<
+ *                 )
  *     endtime = mpi.MPI_Wtime()
  */
-      __pyx_t_18 = __pyx_v_h;
-      __pyx_t_13 = 0;
+        __pyx_t_14 = __pyx_v_h;
+        __pyx_t_13 = 0;
 
-      /* "epcfunc_nl.pyx":800
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemv(             # <<<<<<<<<<<<<<
- *                 CblasRowMajor,CblasNoTrans,norb_p,
- *                 norbital,&c1,drSHexpikR,norbital,
+        /* "epcfunc_nl.pyx":810
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ *                 cblas_zgemv(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasNoTrans,norb_p,
+ *                     norbital,&c1,drSHexpikR,norbital,
  */
-      cblas_zgemv(CblasRowMajor, CblasNoTrans, __pyx_v_norb_p, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_18 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_13)) )))), 1, (&__pyx_v_c0), __pyx_v_drveck_t, 1);
+        cblas_zgemv(CblasRowMajor, CblasNoTrans, __pyx_v_norb_p, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_14 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_13)) )))), 1, (&__pyx_v_c0), __pyx_v_drveck_t, 1);
+      }
     }
+
+    /* "epcfunc_nl.pyx":788
+ *     knum_s = kproc[myid]
+ * 
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]
+ */
   }
 
-  /* "epcfunc_nl.pyx":805
- *                 &bandveck[h,0],1,&c0,drveck_t,1
- *             )
+  /* "epcfunc_nl.pyx":815
+ *                     &bandveck[h,0],1,&c0,drveck_t,1
+ *                 )
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
  *     if myid == 0:
  *         printf("epc_p_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":806
- *             )
+  /* "epcfunc_nl.pyx":816
+ *                 )
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
  *         printf("epc_p_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
- *     for h in range(natom_loop):
+ * 
  */
   __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":807
+    /* "epcfunc_nl.pyx":817
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("epc_p_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)             # <<<<<<<<<<<<<<
+ * 
  *     for h in range(natom_loop):
- *         nm_min = natom_split[h]*3
  */
     (void)(printf(((char const *)"epc_p_NL(Left) part1 time:%12.4fs.\n"), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "epcfunc_nl.pyx":806
- *             )
+    /* "epcfunc_nl.pyx":816
+ *                 )
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
  *         printf("epc_p_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
- *     for h in range(natom_loop):
+ * 
  */
   }
 
-  /* "epcfunc_nl.pyx":808
- *     if myid == 0:
+  /* "epcfunc_nl.pyx":819
  *         printf("epc_p_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
+ * 
  *     for h in range(natom_loop):             # <<<<<<<<<<<<<<
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3
@@ -9484,8 +9455,8 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":809
- *         printf("epc_p_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
+    /* "epcfunc_nl.pyx":820
+ * 
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3             # <<<<<<<<<<<<<<
  *         nm_max = natom_split[h+1]*3
@@ -9494,7 +9465,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     __pyx_t_13 = __pyx_v_h;
     __pyx_v_nm_min = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_13)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":810
+    /* "epcfunc_nl.pyx":821
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3             # <<<<<<<<<<<<<<
@@ -9504,7 +9475,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     __pyx_t_13 = (__pyx_v_h + 1);
     __pyx_v_nm_max = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_13)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":811
+    /* "epcfunc_nl.pyx":822
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min             # <<<<<<<<<<<<<<
@@ -9513,7 +9484,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_nm_num = (__pyx_v_nm_max - __pyx_v_nm_min);
 
-    /* "epcfunc_nl.pyx":812
+    /* "epcfunc_nl.pyx":823
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min
  *         phvec_gather(             # <<<<<<<<<<<<<<
@@ -9522,7 +9493,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_f_10epcfunc_nl_phvec_gather(__pyx_v_c_comm, __pyx_v_shm_comm, __pyx_v_remote_comm, __pyx_v_myid, __pyx_v_shm_id, __pyx_v_qnum, __pyx_v_nmodes, __pyx_v_nm_num, __pyx_v_nm_min, __pyx_v_qproc, __pyx_v_qproc_num, __pyx_v_phvecval_p, __pyx_v_phvecval);
 
-    /* "epcfunc_nl.pyx":817
+    /* "epcfunc_nl.pyx":828
  *             qproc,qproc_num,phvecval_p,phvecval
  *         )
  *         starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -9531,7 +9502,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_starttime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":818
+    /* "epcfunc_nl.pyx":829
  *         )
  *         starttime = mpi.MPI_Wtime()
  *         for l in range(knum):             # <<<<<<<<<<<<<<
@@ -9543,7 +9514,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_l = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":819
+      /* "epcfunc_nl.pyx":830
  *         starttime = mpi.MPI_Wtime()
  *         for l in range(knum):
  *             start = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -9552,7 +9523,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
       __pyx_v_start = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":820
+      /* "epcfunc_nl.pyx":831
  *         for l in range(knum):
  *             start = mpi.MPI_Wtime()
  *             k1 = bassel[l,0]             # <<<<<<<<<<<<<<
@@ -9560,34 +9531,34 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  */
       __pyx_t_13 = __pyx_v_l;
-      __pyx_t_18 = 0;
-      __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_13 * __pyx_v_bassel.strides[0]) )) + __pyx_t_18)) )));
+      __pyx_t_14 = 0;
+      __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_13 * __pyx_v_bassel.strides[0]) )) + __pyx_t_14)) )));
 
-      /* "epcfunc_nl.pyx":821
+      /* "epcfunc_nl.pyx":832
  *             start = mpi.MPI_Wtime()
  *             k1 = bassel[l,0]
  *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             mpi.MPI_Barrier(shm_comm)
  */
-      __pyx_t_18 = 2;
-      __pyx_v_kidx_z = (__pyx_v_k1 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
-      __pyx_t_18 = 2;
-      __pyx_v_kidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
+      __pyx_t_14 = 2;
+      __pyx_v_kidx_z = (__pyx_v_k1 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+      __pyx_t_14 = 2;
+      __pyx_v_kidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
 
-      /* "epcfunc_nl.pyx":822
+      /* "epcfunc_nl.pyx":833
  *             k1 = bassel[l,0]
  *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
  *             mpi.MPI_Barrier(shm_comm)
  *             for xyz in range(3):
  */
-      __pyx_t_18 = 1;
-      __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
-      __pyx_t_18 = 1;
-      __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
+      __pyx_t_14 = 1;
+      __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+      __pyx_t_14 = 1;
+      __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
 
-      /* "epcfunc_nl.pyx":823
+      /* "epcfunc_nl.pyx":834
  *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -9596,7 +9567,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
       (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-      /* "epcfunc_nl.pyx":824
+      /* "epcfunc_nl.pyx":835
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             mpi.MPI_Barrier(shm_comm)
  *             for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -9606,19 +9577,19 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
       for (__pyx_t_8 = 0; __pyx_t_8 < 3; __pyx_t_8+=1) {
         __pyx_v_xyz = __pyx_t_8;
 
-        /* "epcfunc_nl.pyx":825
+        /* "epcfunc_nl.pyx":836
  *             mpi.MPI_Barrier(shm_comm)
  *             for xyz in range(3):
  *                 for j in range(norb_p):             # <<<<<<<<<<<<<<
  *                     drveck[xyz*norbital+norb_s+j] \
  *                     = drveck_a[(l*3+xyz)*norb_p+j]
  */
-        __pyx_t_14 = __pyx_v_norb_p;
-        __pyx_t_15 = __pyx_t_14;
-        for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
-          __pyx_v_j = __pyx_t_16;
+        __pyx_t_15 = __pyx_v_norb_p;
+        __pyx_t_16 = __pyx_t_15;
+        for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
+          __pyx_v_j = __pyx_t_17;
 
-          /* "epcfunc_nl.pyx":826
+          /* "epcfunc_nl.pyx":837
  *             for xyz in range(3):
  *                 for j in range(norb_p):
  *                     drveck[xyz*norbital+norb_s+j] \             # <<<<<<<<<<<<<<
@@ -9628,7 +9599,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
           (__pyx_v_drveck[(((__pyx_v_xyz * __pyx_v_norbital) + __pyx_v_norb_s) + __pyx_v_j)]) = (__pyx_v_drveck_a[((((__pyx_v_l * 3) + __pyx_v_xyz) * __pyx_v_norb_p) + __pyx_v_j)]);
         }
 
-        /* "epcfunc_nl.pyx":828
+        /* "epcfunc_nl.pyx":839
  *                     drveck[xyz*norbital+norb_s+j] \
  *                     = drveck_a[(l*3+xyz)*norb_p+j]
  *                 mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -9637,7 +9608,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
         (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-        /* "epcfunc_nl.pyx":829
+        /* "epcfunc_nl.pyx":840
  *                     = drveck_a[(l*3+xyz)*norb_p+j]
  *                 mpi.MPI_Barrier(shm_comm)
  *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -9647,7 +9618,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
         __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
         if (__pyx_t_12) {
 
-          /* "epcfunc_nl.pyx":830
+          /* "epcfunc_nl.pyx":841
  *                 mpi.MPI_Barrier(shm_comm)
  *                 if (shm_id == 0):
  *                     mpi.MPI_Allgatherv(             # <<<<<<<<<<<<<<
@@ -9656,7 +9627,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
           (void)(MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL, (&(__pyx_v_drveck[(__pyx_v_xyz * __pyx_v_norbital)])), (&(__pyx_v_dr_num[0])), (&(__pyx_v_dr[0])), MPI_DOUBLE_COMPLEX, __pyx_v_remote_comm));
 
-          /* "epcfunc_nl.pyx":829
+          /* "epcfunc_nl.pyx":840
  *                     = drveck_a[(l*3+xyz)*norb_p+j]
  *                 mpi.MPI_Barrier(shm_comm)
  *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -9666,7 +9637,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
         }
       }
 
-      /* "epcfunc_nl.pyx":835
+      /* "epcfunc_nl.pyx":846
  *                         mpi.MPI_DOUBLE_COMPLEX,remote_comm
  *                     )
  *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -9675,7 +9646,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
       (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-      /* "epcfunc_nl.pyx":836
+      /* "epcfunc_nl.pyx":847
  *                     )
  *             mpi.MPI_Barrier(shm_comm)
  *             for i in range(knum_p):             # <<<<<<<<<<<<<<
@@ -9683,22 +9654,22 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]
  */
       __pyx_t_8 = __pyx_v_knum_p;
-      __pyx_t_14 = __pyx_t_8;
-      for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
-        __pyx_v_i = __pyx_t_15;
+      __pyx_t_15 = __pyx_t_8;
+      for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+        __pyx_v_i = __pyx_t_16;
 
-        /* "epcfunc_nl.pyx":837
+        /* "epcfunc_nl.pyx":848
  *             mpi.MPI_Barrier(shm_comm)
  *             for i in range(knum_p):
  *                 k2 = bassel[i+knum_s,0]             # <<<<<<<<<<<<<<
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  */
-        __pyx_t_18 = (__pyx_v_i + __pyx_v_knum_s);
+        __pyx_t_14 = (__pyx_v_i + __pyx_v_knum_s);
         __pyx_t_13 = 0;
-        __pyx_v_k2 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_18 * __pyx_v_bassel.strides[0]) )) + __pyx_t_13)) )));
+        __pyx_v_k2 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_14 * __pyx_v_bassel.strides[0]) )) + __pyx_t_13)) )));
 
-        /* "epcfunc_nl.pyx":838
+        /* "epcfunc_nl.pyx":849
  *             for i in range(knum_p):
  *                 k2 = bassel[i+knum_s,0]
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]             # <<<<<<<<<<<<<<
@@ -9710,7 +9681,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
         __pyx_t_13 = 2;
         __pyx_v_kpidx_xy = (__pyx_v_k2 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":839
+        /* "epcfunc_nl.pyx":850
  *                 k2 = bassel[i+knum_s,0]
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -9722,7 +9693,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
         __pyx_t_13 = 1;
         __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":840
+        /* "epcfunc_nl.pyx":851
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]             # <<<<<<<<<<<<<<
@@ -9732,7 +9703,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
         __pyx_t_13 = 0;
         __pyx_v_qidx_x = ((__pyx_v_kpidx_x - __pyx_v_kidx_x) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":841
+        /* "epcfunc_nl.pyx":852
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]
  *                 qidx_y = (kpidx_y-kidx_y)%nq[1]             # <<<<<<<<<<<<<<
@@ -9742,7 +9713,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
         __pyx_t_13 = 1;
         __pyx_v_qidx_y = ((__pyx_v_kpidx_y - __pyx_v_kidx_y) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":842
+        /* "epcfunc_nl.pyx":853
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]
  *                 qidx_y = (kpidx_y-kidx_y)%nq[1]
  *                 qidx_z = (kpidx_z-kidx_z)%nq[2]             # <<<<<<<<<<<<<<
@@ -9752,7 +9723,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
         __pyx_t_13 = 2;
         __pyx_v_qidx_z = ((__pyx_v_kpidx_z - __pyx_v_kidx_z) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":843
+        /* "epcfunc_nl.pyx":854
  *                 qidx_y = (kpidx_y-kidx_y)%nq[1]
  *                 qidx_z = (kpidx_z-kidx_z)%nq[2]
  *                 if qidx_x<0: qidx_x += nq[0]             # <<<<<<<<<<<<<<
@@ -9765,7 +9736,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
           __pyx_v_qidx_x = (__pyx_v_qidx_x + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":844
+        /* "epcfunc_nl.pyx":855
  *                 qidx_z = (kpidx_z-kidx_z)%nq[2]
  *                 if qidx_x<0: qidx_x += nq[0]
  *                 if qidx_y<0: qidx_y += nq[1]             # <<<<<<<<<<<<<<
@@ -9778,7 +9749,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
           __pyx_v_qidx_y = (__pyx_v_qidx_y + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":845
+        /* "epcfunc_nl.pyx":856
  *                 if qidx_x<0: qidx_x += nq[0]
  *                 if qidx_y<0: qidx_y += nq[1]
  *                 if qidx_z<0: qidx_z += nq[2]             # <<<<<<<<<<<<<<
@@ -9791,7 +9762,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
           __pyx_v_qidx_z = (__pyx_v_qidx_z + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":846
+        /* "epcfunc_nl.pyx":857
  *                 if qidx_y<0: qidx_y += nq[1]
  *                 if qidx_z<0: qidx_z += nq[2]
  *                 qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z             # <<<<<<<<<<<<<<
@@ -9799,20 +9770,20 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  *                     drveck,&bandveck[i+knum_s,0],&phvecval[qidx*nm_num*nmodes],
  */
         __pyx_t_13 = 1;
-        __pyx_t_18 = 2;
-        __pyx_v_qidx = ((((__pyx_v_qidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_qidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) )))) + __pyx_v_qidx_z);
+        __pyx_t_14 = 2;
+        __pyx_v_qidx = ((((__pyx_v_qidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_qidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) )))) + __pyx_v_qidx_z);
 
-        /* "epcfunc_nl.pyx":848
+        /* "epcfunc_nl.pyx":859
  *                 qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *                 epckqNL_p_L(
  *                     drveck,&bandveck[i+knum_s,0],&phvecval[qidx*nm_num*nmodes],             # <<<<<<<<<<<<<<
  *                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,
  *                     natom,nm_num,norbital,norb_u,norb_u_num
  */
-        __pyx_t_18 = (__pyx_v_i + __pyx_v_knum_s);
+        __pyx_t_14 = (__pyx_v_i + __pyx_v_knum_s);
         __pyx_t_13 = 0;
 
-        /* "epcfunc_nl.pyx":849
+        /* "epcfunc_nl.pyx":860
  *                 epckqNL_p_L(
  *                     drveck,&bandveck[i+knum_s,0],&phvecval[qidx*nm_num*nmodes],
  *                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,             # <<<<<<<<<<<<<<
@@ -9820,19 +9791,19 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  *                 )
  */
         __pyx_t_9 = ((__pyx_v_l * __pyx_v_knum_p) + __pyx_v_i);
-        __pyx_t_19 = __pyx_v_nm_min;
+        __pyx_t_18 = __pyx_v_nm_min;
 
-        /* "epcfunc_nl.pyx":847
+        /* "epcfunc_nl.pyx":858
  *                 if qidx_z<0: qidx_z += nq[2]
  *                 qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *                 epckqNL_p_L(             # <<<<<<<<<<<<<<
  *                     drveck,&bandveck[i+knum_s,0],&phvecval[qidx*nm_num*nmodes],
  *                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,
  */
-        __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_v_drveck, (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_18 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_13)) )))), (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_9 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_19)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_norbital, __pyx_v_norb_u, __pyx_v_norb_u_num);
+        __pyx_f_10epcfunc_nl_epckqNL_p_L(__pyx_v_drveck, (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_14 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_13)) )))), (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_9 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_18)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_norbital, __pyx_v_norb_u, __pyx_v_norb_u_num);
       }
 
-      /* "epcfunc_nl.pyx":852
+      /* "epcfunc_nl.pyx":863
  *                     natom,nm_num,norbital,norb_u,norb_u_num
  *                 )
  *             end = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -9841,7 +9812,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
       __pyx_v_end = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":853
+      /* "epcfunc_nl.pyx":864
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -9851,7 +9822,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
       __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":854
+        /* "epcfunc_nl.pyx":865
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)             # <<<<<<<<<<<<<<
@@ -9860,7 +9831,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
         (void)(printf(((char const *)"time in mode loop %d, knum loop %d:%12.4fs.\n"), __pyx_v_h, __pyx_v_l, (__pyx_v_end - __pyx_v_start)));
 
-        /* "epcfunc_nl.pyx":853
+        /* "epcfunc_nl.pyx":864
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -9870,7 +9841,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
       }
     }
 
-    /* "epcfunc_nl.pyx":855
+    /* "epcfunc_nl.pyx":866
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
  *         endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -9879,7 +9850,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_endtime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":856
+    /* "epcfunc_nl.pyx":867
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -9889,7 +9860,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
     if (__pyx_t_12) {
 
-      /* "epcfunc_nl.pyx":857
+      /* "epcfunc_nl.pyx":868
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:
  *             printf("epc_p_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)             # <<<<<<<<<<<<<<
@@ -9898,7 +9869,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
       (void)(printf(((char const *)"epc_p_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n"), __pyx_v_nm_min, (__pyx_v_nm_min + __pyx_v_nm_num), (__pyx_v_endtime - __pyx_v_starttime)));
 
-      /* "epcfunc_nl.pyx":856
+      /* "epcfunc_nl.pyx":867
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -9908,7 +9879,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
     }
   }
 
-  /* "epcfunc_nl.pyx":859
+  /* "epcfunc_nl.pyx":870
  *             printf("epc_p_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
  * 
  *     free(drSHexpikR)             # <<<<<<<<<<<<<<
@@ -9917,7 +9888,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_drSHexpikR);
 
-  /* "epcfunc_nl.pyx":860
+  /* "epcfunc_nl.pyx":871
  * 
  *     free(drSHexpikR)
  *     free(vdrvexpikR)             # <<<<<<<<<<<<<<
@@ -9926,7 +9897,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_vdrvexpikR);
 
-  /* "epcfunc_nl.pyx":861
+  /* "epcfunc_nl.pyx":872
  *     free(drSHexpikR)
  *     free(vdrvexpikR)
  *     free(expikR)             # <<<<<<<<<<<<<<
@@ -9935,7 +9906,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_expikR);
 
-  /* "epcfunc_nl.pyx":862
+  /* "epcfunc_nl.pyx":873
  *     free(vdrvexpikR)
  *     free(expikR)
  *     free(nodelist)             # <<<<<<<<<<<<<<
@@ -9944,7 +9915,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_nodelist);
 
-  /* "epcfunc_nl.pyx":863
+  /* "epcfunc_nl.pyx":874
  *     free(expikR)
  *     free(nodelist)
  *     free(dr)             # <<<<<<<<<<<<<<
@@ -9953,7 +9924,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_dr);
 
-  /* "epcfunc_nl.pyx":864
+  /* "epcfunc_nl.pyx":875
  *     free(nodelist)
  *     free(dr)
  *     free(dr_num)             # <<<<<<<<<<<<<<
@@ -9962,7 +9933,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_dr_num);
 
-  /* "epcfunc_nl.pyx":865
+  /* "epcfunc_nl.pyx":876
  *     free(dr)
  *     free(dr_num)
  *     free(drveck_a)             # <<<<<<<<<<<<<<
@@ -9971,7 +9942,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_drveck_a);
 
-  /* "epcfunc_nl.pyx":866
+  /* "epcfunc_nl.pyx":877
  *     free(dr_num)
  *     free(drveck_a)
  *     mpi.MPI_Win_free(&win)             # <<<<<<<<<<<<<<
@@ -9980,7 +9951,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Win_free((&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":867
+  /* "epcfunc_nl.pyx":878
  *     free(drveck_a)
  *     mpi.MPI_Win_free(&win)
  *     mpi.MPI_Win_free(&win1)             # <<<<<<<<<<<<<<
@@ -9989,7 +9960,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Win_free((&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":868
+  /* "epcfunc_nl.pyx":879
  *     mpi.MPI_Win_free(&win)
  *     mpi.MPI_Win_free(&win1)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -9998,7 +9969,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":686
+  /* "epcfunc_nl.pyx":693
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_L(             # <<<<<<<<<<<<<<
@@ -10029,7 +10000,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_6MPIepcNL_p_L(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":873
+/* "epcfunc_nl.pyx":884
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void epckqNL_p_R(             # <<<<<<<<<<<<<<
@@ -10052,7 +10023,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("epckqNL_p_R", 0);
 
-  /* "epcfunc_nl.pyx":880
+  /* "epcfunc_nl.pyx":891
  * ):
  *     cdef int i, j, k, l, xyz
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -10061,7 +10032,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":881
+  /* "epcfunc_nl.pyx":892
  *     cdef int i, j, k, l, xyz
  *     cdef double complex c0 = 0.0
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -10070,7 +10041,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":884
+  /* "epcfunc_nl.pyx":895
  *     cdef double complex* drvexpikR_t
  * 
  *     for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -10080,7 +10051,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
   for (__pyx_t_1 = 0; __pyx_t_1 < 3; __pyx_t_1+=1) {
     __pyx_v_xyz = __pyx_t_1;
 
-    /* "epcfunc_nl.pyx":885
+    /* "epcfunc_nl.pyx":896
  * 
  *     for xyz in range(3):
  *         for i in range(natom):             # <<<<<<<<<<<<<<
@@ -10092,7 +10063,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "epcfunc_nl.pyx":886
+      /* "epcfunc_nl.pyx":897
  *     for xyz in range(3):
  *         for i in range(natom):
  *             drvexpikR_t = &drveck[xyz*norbital+norb_u[i]]             # <<<<<<<<<<<<<<
@@ -10102,7 +10073,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
       __pyx_t_5 = __pyx_v_i;
       __pyx_v_drvexpikR_t = (&(__pyx_v_drveck[((__pyx_v_xyz * __pyx_v_norbital) + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_u.data) + __pyx_t_5)) ))))]));
 
-      /* "epcfunc_nl.pyx":888
+      /* "epcfunc_nl.pyx":899
  *             drvexpikR_t = &drveck[xyz*norbital+norb_u[i]]
  *             cblas_zdotu_sub(
  *                 norb_u_num[i],&bandveck[norb_u[i]],1,             # <<<<<<<<<<<<<<
@@ -10112,7 +10083,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
       __pyx_t_5 = __pyx_v_i;
       __pyx_t_6 = __pyx_v_i;
 
-      /* "epcfunc_nl.pyx":887
+      /* "epcfunc_nl.pyx":898
  *         for i in range(natom):
  *             drvexpikR_t = &drveck[xyz*norbital+norb_u[i]]
  *             cblas_zdotu_sub(             # <<<<<<<<<<<<<<
@@ -10123,7 +10094,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
     }
   }
 
-  /* "epcfunc_nl.pyx":891
+  /* "epcfunc_nl.pyx":902
  *                 drvexpikR_t,1,&vdrvexpikR[i*3+xyz]
  *             )
  *     cblas_zgemv(             # <<<<<<<<<<<<<<
@@ -10132,7 +10103,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
  */
   cblas_zgemv(CblasRowMajor, CblasTrans, __pyx_v_nmodes, __pyx_v_nm_num, (&__pyx_v_c1), __pyx_v_phvecval, __pyx_v_nm_num, __pyx_v_vdrvexpikR, 1, __pyx_v_fepc, __pyx_v_epcq, 1);
 
-  /* "epcfunc_nl.pyx":873
+  /* "epcfunc_nl.pyx":884
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void epckqNL_p_R(             # <<<<<<<<<<<<<<
@@ -10144,7 +10115,7 @@ static void __pyx_f_10epcfunc_nl_epckqNL_p_R(__pyx_t_double_complex *__pyx_v_drv
   __Pyx_RefNannyFinishContext();
 }
 
-/* "epcfunc_nl.pyx":900
+/* "epcfunc_nl.pyx":911
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_R(             # <<<<<<<<<<<<<<
@@ -10253,143 +10224,143 @@ static PyObject *__pyx_pw_10epcfunc_nl_9MPIepcNL_p_R(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmodes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 1); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 1); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_loop)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 2); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 2); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_buffer)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 3); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 3); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 4); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 4); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 5); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 5); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_knum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 6); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 6); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qnum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 7); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 7); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_split)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 8); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 8); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 9); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 9); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 10); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 10); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drSH)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 11); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 11); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bandveck)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 12); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 12); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_phvecval_p)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 13); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 13); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 14); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 14); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 15); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 15); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 16); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 16); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 17); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 17); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bassel)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 18); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 18); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 19); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 19); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 20); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 20); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 21:
         if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 21); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 21); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 22:
         if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 22); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 22); __PYX_ERR(0, 911, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 23:
         if (likely((values[23] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 23); __PYX_ERR(0, 900, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, 23); __PYX_ERR(0, 911, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_p_R") < 0)) __PYX_ERR(0, 900, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_p_R") < 0)) __PYX_ERR(0, 911, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 24) {
       goto __pyx_L5_argtuple_error;
@@ -10420,39 +10391,39 @@ static PyObject *__pyx_pw_10epcfunc_nl_9MPIepcNL_p_R(PyObject *__pyx_self, PyObj
       values[23] = PyTuple_GET_ITEM(__pyx_args, 23);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 901, __pyx_L3_error)
-    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 901, __pyx_L3_error)
-    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 901, __pyx_L3_error)
-    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 901, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 902, __pyx_L3_error)
-    __pyx_v_knum = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 902, __pyx_L3_error)
-    __pyx_v_qnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_qnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 902, __pyx_L3_error)
-    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 902, __pyx_L3_error)
-    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 902, __pyx_L3_error)
-    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 903, __pyx_L3_error)
-    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 903, __pyx_L3_error)
-    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 903, __pyx_L3_error)
-    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 904, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 904, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 904, __pyx_L3_error)
-    __pyx_v_qproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc.memview)) __PYX_ERR(0, 905, __pyx_L3_error)
-    __pyx_v_qproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc_num.memview)) __PYX_ERR(0, 905, __pyx_L3_error)
-    __pyx_v_bassel = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bassel.memview)) __PYX_ERR(0, 905, __pyx_L3_error)
-    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 905, __pyx_L3_error)
-    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 906, __pyx_L3_error)
-    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 906, __pyx_L3_error)
-    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 906, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[23], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 907, __pyx_L3_error)
+    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 912, __pyx_L3_error)
+    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 912, __pyx_L3_error)
+    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 912, __pyx_L3_error)
+    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 912, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 913, __pyx_L3_error)
+    __pyx_v_knum = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 913, __pyx_L3_error)
+    __pyx_v_qnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_qnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 913, __pyx_L3_error)
+    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 913, __pyx_L3_error)
+    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 913, __pyx_L3_error)
+    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 914, __pyx_L3_error)
+    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 914, __pyx_L3_error)
+    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 914, __pyx_L3_error)
+    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 915, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 915, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 915, __pyx_L3_error)
+    __pyx_v_qproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc.memview)) __PYX_ERR(0, 916, __pyx_L3_error)
+    __pyx_v_qproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qproc_num.memview)) __PYX_ERR(0, 916, __pyx_L3_error)
+    __pyx_v_bassel = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bassel.memview)) __PYX_ERR(0, 916, __pyx_L3_error)
+    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 916, __pyx_L3_error)
+    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 917, __pyx_L3_error)
+    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 917, __pyx_L3_error)
+    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 917, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[23], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 918, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 900, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepcNL_p_R", 1, 24, 24, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 911, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepcNL_p_R", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 901, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 912, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(__pyx_self, __pyx_v_comm, __pyx_v_nmodes, __pyx_v_natom_loop, __pyx_v_natom_buffer, __pyx_v_norbital, __pyx_v_ncell, __pyx_v_knum, __pyx_v_qnum, __pyx_v_natom_split, __pyx_v_nq, __pyx_v_R_list, __pyx_v_drSH, __pyx_v_bandveck, __pyx_v_phvecval_p, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_qproc, __pyx_v_qproc_num, __pyx_v_bassel, __pyx_v_norb, __pyx_v_norb_num, __pyx_v_norb_u, __pyx_v_norb_u_num, __pyx_v_epc_t);
 
   /* function exit code */
@@ -10485,7 +10456,6 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   int __pyx_v_h;
   int __pyx_v_i;
   int __pyx_v_j;
-  int __pyx_v_k;
   int __pyx_v_l;
   int __pyx_v_xyz;
   int __pyx_v_shm_proc_s;
@@ -10552,15 +10522,13 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   long __pyx_t_11;
   int __pyx_t_12;
   Py_ssize_t __pyx_t_13;
-  int __pyx_t_14;
+  Py_ssize_t __pyx_t_14;
   int __pyx_t_15;
   int __pyx_t_16;
-  int __pyx_t_17;
-  Py_ssize_t __pyx_t_18;
-  Py_ssize_t __pyx_t_19;
+  Py_ssize_t __pyx_t_17;
   __Pyx_RefNannySetupContext("MPIepcNL_p_R", 0);
 
-  /* "epcfunc_nl.pyx":909
+  /* "epcfunc_nl.pyx":920
  *     double complex[:,::1] epc_t
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -10570,7 +10538,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":921
+  /* "epcfunc_nl.pyx":932
  *     cdef double complex* vdrvexpikR
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3             # <<<<<<<<<<<<<<
@@ -10579,7 +10547,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_natom = (((long)__pyx_v_nmodes) / 3);
 
-  /* "epcfunc_nl.pyx":922
+  /* "epcfunc_nl.pyx":933
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -10588,7 +10556,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "epcfunc_nl.pyx":923
+  /* "epcfunc_nl.pyx":934
  *     cdef int natom = nmodes/3
  *     cdef int s_int = sizeof(int)
  *     cdef int s_dcplx = sizeof(double complex)             # <<<<<<<<<<<<<<
@@ -10597,7 +10565,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_s_dcplx = (sizeof(__pyx_t_double_complex));
 
-  /* "epcfunc_nl.pyx":936
+  /* "epcfunc_nl.pyx":947
  *     cdef double kpx, kpy, kpz, RKpx, RKpy, RKpz, RKp, \
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j             # <<<<<<<<<<<<<<
@@ -10606,7 +10574,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_pi2j = __Pyx_c_prod_double(__pyx_t_double_complex_from_parts(M_PI, 0), __pyx_t_double_complex_from_parts(0, 2.0));
 
-  /* "epcfunc_nl.pyx":937
+  /* "epcfunc_nl.pyx":948
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -10615,7 +10583,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":938
+  /* "epcfunc_nl.pyx":949
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -10624,7 +10592,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":940
+  /* "epcfunc_nl.pyx":951
  *     cdef double complex c0 = 0.0
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -10633,7 +10601,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":942
+  /* "epcfunc_nl.pyx":953
  *     starttime = mpi.MPI_Wtime()
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -10642,7 +10610,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":943
+  /* "epcfunc_nl.pyx":954
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -10651,7 +10619,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":944
+  /* "epcfunc_nl.pyx":955
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     mpi.MPI_Comm_split_type(             # <<<<<<<<<<<<<<
@@ -10660,7 +10628,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Comm_split_type(__pyx_v_c_comm, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, (&__pyx_v_shm_comm)));
 
-  /* "epcfunc_nl.pyx":947
+  /* "epcfunc_nl.pyx":958
  *         c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)             # <<<<<<<<<<<<<<
@@ -10669,7 +10637,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_shm_comm, (&__pyx_v_shm_nprocs));
 
-  /* "epcfunc_nl.pyx":948
+  /* "epcfunc_nl.pyx":959
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)             # <<<<<<<<<<<<<<
@@ -10678,7 +10646,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_shm_comm, (&__pyx_v_shm_id));
 
-  /* "epcfunc_nl.pyx":950
+  /* "epcfunc_nl.pyx":961
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs             # <<<<<<<<<<<<<<
@@ -10687,7 +10655,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_nnode = (__pyx_v_nprocs / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":951
+  /* "epcfunc_nl.pyx":962
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs             # <<<<<<<<<<<<<<
@@ -10696,7 +10664,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_node_id = (__pyx_v_myid / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":952
+  /* "epcfunc_nl.pyx":963
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)             # <<<<<<<<<<<<<<
@@ -10705,7 +10673,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_nodelist = ((int *)malloc((__pyx_v_s_int * __pyx_v_nnode)));
 
-  /* "epcfunc_nl.pyx":953
+  /* "epcfunc_nl.pyx":964
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -10717,7 +10685,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":954
+    /* "epcfunc_nl.pyx":965
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -10727,7 +10695,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     (__pyx_v_nodelist[__pyx_v_i]) = (__pyx_v_i * __pyx_v_shm_nprocs);
   }
 
-  /* "epcfunc_nl.pyx":955
+  /* "epcfunc_nl.pyx":966
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)             # <<<<<<<<<<<<<<
@@ -10736,7 +10704,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Comm_group(__pyx_v_c_comm, (&__pyx_v_split_gp)));
 
-  /* "epcfunc_nl.pyx":956
+  /* "epcfunc_nl.pyx":967
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)             # <<<<<<<<<<<<<<
@@ -10745,7 +10713,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Group_incl(__pyx_v_split_gp, __pyx_v_nnode, __pyx_v_nodelist, (&__pyx_v_shm_gp)));
 
-  /* "epcfunc_nl.pyx":957
+  /* "epcfunc_nl.pyx":968
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)             # <<<<<<<<<<<<<<
@@ -10754,7 +10722,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_ierr = MPI_Comm_create(__pyx_v_c_comm, __pyx_v_shm_gp, (&__pyx_v_remote_comm));
 
-  /* "epcfunc_nl.pyx":959
+  /* "epcfunc_nl.pyx":970
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)
  * 
  *     dr = <int*>calloc((nnode+1),s_int)             # <<<<<<<<<<<<<<
@@ -10763,7 +10731,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_dr = ((int *)calloc((__pyx_v_nnode + 1), __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":960
+  /* "epcfunc_nl.pyx":971
  * 
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)             # <<<<<<<<<<<<<<
@@ -10772,7 +10740,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_dr_num = ((int *)calloc(__pyx_v_nnode, __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":961
+  /* "epcfunc_nl.pyx":972
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -10784,7 +10752,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":962
+    /* "epcfunc_nl.pyx":973
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -10793,7 +10761,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_shm_proc_s = (__pyx_v_i * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":963
+    /* "epcfunc_nl.pyx":974
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs             # <<<<<<<<<<<<<<
@@ -10802,7 +10770,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_shm_proc_e = ((__pyx_v_i + 1) * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":964
+    /* "epcfunc_nl.pyx":975
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):             # <<<<<<<<<<<<<<
@@ -10814,7 +10782,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     for (__pyx_t_7 = __pyx_v_shm_proc_s; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":965
+      /* "epcfunc_nl.pyx":976
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]             # <<<<<<<<<<<<<<
@@ -10826,7 +10794,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
       (__pyx_v_dr_num[__pyx_t_8]) = ((__pyx_v_dr_num[__pyx_t_8]) + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) ))));
     }
 
-    /* "epcfunc_nl.pyx":966
+    /* "epcfunc_nl.pyx":977
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]
  *         for j in range(i+1,nnode+1):             # <<<<<<<<<<<<<<
@@ -10838,7 +10806,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     for (__pyx_t_5 = (__pyx_v_i + 1); __pyx_t_5 < __pyx_t_11; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "epcfunc_nl.pyx":967
+      /* "epcfunc_nl.pyx":978
  *             dr_num[i] += norb_num[j]
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]             # <<<<<<<<<<<<<<
@@ -10850,7 +10818,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     }
   }
 
-  /* "epcfunc_nl.pyx":969
+  /* "epcfunc_nl.pyx":980
  *             dr[j] += dr_num[i]
  * 
  *     norb_p = norb_num[myid]             # <<<<<<<<<<<<<<
@@ -10860,7 +10828,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":970
+  /* "epcfunc_nl.pyx":981
  * 
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]             # <<<<<<<<<<<<<<
@@ -10870,7 +10838,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":971
+  /* "epcfunc_nl.pyx":982
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital)             # <<<<<<<<<<<<<<
@@ -10879,7 +10847,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_bandveckp = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_norbital)));
 
-  /* "epcfunc_nl.pyx":972
+  /* "epcfunc_nl.pyx":983
  *     norb_s = norb[myid]
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital)
  *     expikR = <double complex*>malloc(s_dcplx*ncell)             # <<<<<<<<<<<<<<
@@ -10888,7 +10856,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_expikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_ncell)));
 
-  /* "epcfunc_nl.pyx":973
+  /* "epcfunc_nl.pyx":984
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital)
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
@@ -10897,7 +10865,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_drSHexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":974
+  /* "epcfunc_nl.pyx":985
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)             # <<<<<<<<<<<<<<
@@ -10906,7 +10874,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_vdrvexpikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_nmodes)));
 
-  /* "epcfunc_nl.pyx":975
+  /* "epcfunc_nl.pyx":986
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)             # <<<<<<<<<<<<<<
@@ -10915,7 +10883,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_drveck_a = ((__pyx_t_double_complex *)malloc((((__pyx_v_s_dcplx * __pyx_v_knum) * 3) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":976
+  /* "epcfunc_nl.pyx":987
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -10925,7 +10893,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":977
+    /* "epcfunc_nl.pyx":988
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
  *     if (shm_id == 0):
  *         l_phvecval = s_dcplx*qnum*natom_buffer*3*nmodes             # <<<<<<<<<<<<<<
@@ -10934,7 +10902,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_l_phvecval = ((((__pyx_v_s_dcplx * __pyx_v_qnum) * __pyx_v_natom_buffer) * 3) * __pyx_v_nmodes);
 
-    /* "epcfunc_nl.pyx":976
+    /* "epcfunc_nl.pyx":987
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -10944,7 +10912,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     goto __pyx_L11;
   }
 
-  /* "epcfunc_nl.pyx":979
+  /* "epcfunc_nl.pyx":990
  *         l_phvecval = s_dcplx*qnum*natom_buffer*3*nmodes
  *     else:
  *         l_phvecval = 0             # <<<<<<<<<<<<<<
@@ -10956,7 +10924,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   }
   __pyx_L11:;
 
-  /* "epcfunc_nl.pyx":980
+  /* "epcfunc_nl.pyx":991
  *     else:
  *         l_phvecval = 0
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -10965,7 +10933,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_phvecval, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_phvecval), (&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":983
+  /* "epcfunc_nl.pyx":994
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -10975,7 +10943,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   __pyx_t_12 = ((__pyx_v_shm_id != 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":984
+    /* "epcfunc_nl.pyx":995
  *     )
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)             # <<<<<<<<<<<<<<
@@ -10984,7 +10952,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     (void)(MPI_Win_shared_query(__pyx_v_win1, 0, (&__pyx_v_l_phvecval), (&__pyx_v_s_dcplx), (&__pyx_v_phvecval)));
 
-    /* "epcfunc_nl.pyx":983
+    /* "epcfunc_nl.pyx":994
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -10993,7 +10961,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   }
 
-  /* "epcfunc_nl.pyx":985
+  /* "epcfunc_nl.pyx":996
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -11002,7 +10970,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "epcfunc_nl.pyx":987
+  /* "epcfunc_nl.pyx":998
  *     mpi.MPI_Barrier(shm_comm)
  * 
  *     knum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -11012,261 +10980,252 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":988
+  /* "epcfunc_nl.pyx":999
  * 
  *     knum_p = kproc_num[myid]
  *     knum_s = kproc[myid]             # <<<<<<<<<<<<<<
  * 
- *     for h in range(knum):
+ *     if norb_p > 0:
  */
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":990
+  /* "epcfunc_nl.pyx":1001
  *     knum_s = kproc[myid]
  * 
- *     for h in range(knum):             # <<<<<<<<<<<<<<
- *         k1 = bassel[h,0]
- *         kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]
  */
-  __pyx_t_2 = __pyx_v_knum;
-  __pyx_t_3 = __pyx_t_2;
-  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
-    __pyx_v_h = __pyx_t_4;
+  __pyx_t_12 = ((__pyx_v_norb_p > 0) != 0);
+  if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":991
+    /* "epcfunc_nl.pyx":1002
  * 
- *     for h in range(knum):
- *         k1 = bassel[h,0]             # <<<<<<<<<<<<<<
- *         kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *     if norb_p > 0:
+ *         for h in range(knum):             # <<<<<<<<<<<<<<
+ *             k1 = bassel[h,0]
+ *             kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
  */
-    __pyx_t_9 = __pyx_v_h;
-    __pyx_t_13 = 0;
-    __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_9 * __pyx_v_bassel.strides[0]) )) + __pyx_t_13)) )));
+    __pyx_t_2 = __pyx_v_knum;
+    __pyx_t_3 = __pyx_t_2;
+    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+      __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":992
- *     for h in range(knum):
- *         k1 = bassel[h,0]
- *         kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- */
-    __pyx_t_13 = 2;
-    __pyx_v_kpidx_z = (__pyx_v_k1 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-    __pyx_t_13 = 2;
-    __pyx_v_kpidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-
-    /* "epcfunc_nl.pyx":993
- *         k1 = bassel[h,0]
- *         kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- */
-    __pyx_t_13 = 1;
-    __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-    __pyx_t_13 = 1;
-    __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
-
-    /* "epcfunc_nl.pyx":994
- *         kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- */
-    __pyx_t_13 = 0;
-    __pyx_v_kpx = (((double)__pyx_v_kpidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":995
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- */
-    __pyx_t_13 = 1;
-    __pyx_v_kpy = (((double)__pyx_v_kpidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":996
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx
- */
-    __pyx_t_13 = 2;
-    __pyx_v_kpz = (((double)__pyx_v_kpidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":997
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):             # <<<<<<<<<<<<<<
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy
- */
-    __pyx_t_5 = __pyx_v_ncell;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
-
-      /* "epcfunc_nl.pyx":998
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx             # <<<<<<<<<<<<<<
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz
- */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 0;
-      __pyx_v_RKpx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpx);
-
-      /* "epcfunc_nl.pyx":999
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy             # <<<<<<<<<<<<<<
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz
- */
-      __pyx_t_9 = __pyx_v_i;
-      __pyx_t_13 = 1;
-      __pyx_v_RKpy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kpy);
-
-      /* "epcfunc_nl.pyx":1000
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz             # <<<<<<<<<<<<<<
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 2;
-      __pyx_v_RKpz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpz);
-
-      /* "epcfunc_nl.pyx":1001
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz             # <<<<<<<<<<<<<<
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):
- */
-      __pyx_v_RKp = ((__pyx_v_RKpx + __pyx_v_RKpy) + __pyx_v_RKpz);
-
-      /* "epcfunc_nl.pyx":1002
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)             # <<<<<<<<<<<<<<
- *         for i in range(norbital):
- *             bandveckp[i] = conj(bandveck[h,i])
- */
-      (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(-1.0, 0), __pyx_v_pi2j), __pyx_t_double_complex_from_parts(__pyx_v_RKp, 0)));
-    }
-
-    /* "epcfunc_nl.pyx":1003
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):             # <<<<<<<<<<<<<<
- *             bandveckp[i] = conj(bandveck[h,i])
- *         for xyz in range(3):
- */
-    __pyx_t_5 = __pyx_v_norbital;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
-
-      /* "epcfunc_nl.pyx":1004
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):
- *             bandveckp[i] = conj(bandveck[h,i])             # <<<<<<<<<<<<<<
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+      /* "epcfunc_nl.pyx":1003
+ *     if norb_p > 0:
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]             # <<<<<<<<<<<<<<
+ *             kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  */
       __pyx_t_9 = __pyx_v_h;
-      __pyx_t_13 = __pyx_v_i;
-      (__pyx_v_bandveckp[__pyx_v_i]) = conj((*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_13)) ))));
-    }
+      __pyx_t_13 = 0;
+      __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_9 * __pyx_v_bassel.strides[0]) )) + __pyx_t_13)) )));
 
-    /* "epcfunc_nl.pyx":1005
- *         for i in range(norbital):
- *             bandveckp[i] = conj(bandveck[h,i])
- *         for xyz in range(3):             # <<<<<<<<<<<<<<
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
+      /* "epcfunc_nl.pyx":1004
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]
+ *             kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
  */
-    for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
-      __pyx_v_xyz = __pyx_t_5;
+      __pyx_t_13 = 2;
+      __pyx_v_kpidx_z = (__pyx_v_k1 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
+      __pyx_t_13 = 2;
+      __pyx_v_kpidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
+
+      /* "epcfunc_nl.pyx":1005
+ *             k1 = bassel[h,0]
+ *             kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ */
+      __pyx_t_13 = 1;
+      __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
+      __pyx_t_13 = 1;
+      __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
       /* "epcfunc_nl.pyx":1006
- *             bandveckp[i] = conj(bandveck[h,i])
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]             # <<<<<<<<<<<<<<
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
+ *             kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
  */
-      __pyx_v_drveck_t = (&(__pyx_v_drveck_a[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norb_p)]));
+      __pyx_t_13 = 0;
+      __pyx_v_kpx = (((double)__pyx_v_kpidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
       /* "epcfunc_nl.pyx":1007
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
  */
-      (void)(memset(__pyx_v_drSHexpikR, 0, ((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
+      __pyx_t_13 = 1;
+      __pyx_v_kpy = (((double)__pyx_v_kpidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
       /* "epcfunc_nl.pyx":1008
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):             # <<<<<<<<<<<<<<
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx
  */
-      __pyx_t_6 = __pyx_v_ncell;
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
+      __pyx_t_13 = 2;
+      __pyx_v_kpz = (((double)__pyx_v_kpidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
-        /* "epcfunc_nl.pyx":1009
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):             # <<<<<<<<<<<<<<
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemv(
+      /* "epcfunc_nl.pyx":1009
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):             # <<<<<<<<<<<<<<
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy
  */
-        __pyx_t_14 = (__pyx_v_norb_p * __pyx_v_norbital);
-        __pyx_t_15 = __pyx_t_14;
-        for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
-          __pyx_v_k = __pyx_t_16;
+      __pyx_t_5 = __pyx_v_ncell;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
 
-          /* "epcfunc_nl.pyx":1010
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]             # <<<<<<<<<<<<<<
- *             cblas_zgemv(
- *                 CblasRowMajor,CblasNoTrans,norb_p,
+        /* "epcfunc_nl.pyx":1010
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx             # <<<<<<<<<<<<<<
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz
  */
-          __pyx_t_17 = __pyx_v_k;
-          __pyx_t_13 = __pyx_v_xyz;
-          __pyx_t_9 = __pyx_v_j;
-          __pyx_t_18 = __pyx_v_k;
-          (__pyx_v_drSHexpikR[__pyx_t_17]) = __Pyx_c_sum_double((__pyx_v_drSHexpikR[__pyx_t_17]), __Pyx_c_prod_double(__pyx_t_double_complex_from_parts((*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_13 * __pyx_v_drSH.strides[0]) ) + __pyx_t_9 * __pyx_v_drSH.strides[1]) )) + __pyx_t_18)) ))), 0), (__pyx_v_expikR[__pyx_v_j])));
-        }
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_9 = 0;
+        __pyx_v_RKpx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpx);
+
+        /* "epcfunc_nl.pyx":1011
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy             # <<<<<<<<<<<<<<
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz
+ */
+        __pyx_t_9 = __pyx_v_i;
+        __pyx_t_13 = 1;
+        __pyx_v_RKpy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kpy);
+
+        /* "epcfunc_nl.pyx":1012
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz             # <<<<<<<<<<<<<<
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ */
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_9 = 2;
+        __pyx_v_RKpz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpz);
+
+        /* "epcfunc_nl.pyx":1013
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz             # <<<<<<<<<<<<<<
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):
+ */
+        __pyx_v_RKp = ((__pyx_v_RKpx + __pyx_v_RKpy) + __pyx_v_RKpz);
+
+        /* "epcfunc_nl.pyx":1014
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)             # <<<<<<<<<<<<<<
+ *             for i in range(norbital):
+ *                 bandveckp[i] = conj(bandveck[h,i])
+ */
+        (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(-1.0, 0), __pyx_v_pi2j), __pyx_t_double_complex_from_parts(__pyx_v_RKp, 0)));
       }
 
-      /* "epcfunc_nl.pyx":1011
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemv(             # <<<<<<<<<<<<<<
- *                 CblasRowMajor,CblasNoTrans,norb_p,
- *                 norbital,&c1,drSHexpikR,norbital,
+      /* "epcfunc_nl.pyx":1015
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):             # <<<<<<<<<<<<<<
+ *                 bandveckp[i] = conj(bandveck[h,i])
+ *             for xyz in range(3):
  */
-      cblas_zgemv(CblasRowMajor, CblasNoTrans, __pyx_v_norb_p, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, __pyx_v_bandveckp, 1, (&__pyx_v_c0), __pyx_v_drveck_t, 1);
+      __pyx_t_5 = __pyx_v_norbital;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
+
+        /* "epcfunc_nl.pyx":1016
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):
+ *                 bandveckp[i] = conj(bandveck[h,i])             # <<<<<<<<<<<<<<
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+ */
+        __pyx_t_9 = __pyx_v_h;
+        __pyx_t_13 = __pyx_v_i;
+        (__pyx_v_bandveckp[__pyx_v_i]) = conj((*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_13)) ))));
+      }
+
+      /* "epcfunc_nl.pyx":1017
+ *             for i in range(norbital):
+ *                 bandveckp[i] = conj(bandveck[h,i])
+ *             for xyz in range(3):             # <<<<<<<<<<<<<<
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ */
+      for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
+        __pyx_v_xyz = __pyx_t_5;
+
+        /* "epcfunc_nl.pyx":1018
+ *                 bandveckp[i] = conj(bandveck[h,i])
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]             # <<<<<<<<<<<<<<
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(
+ */
+        __pyx_v_drveck_t = (&(__pyx_v_drveck_a[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norb_p)]));
+
+        /* "epcfunc_nl.pyx":1022
+ *                 cblas_dgemm(
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,             # <<<<<<<<<<<<<<
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ */
+        __pyx_t_13 = __pyx_v_xyz;
+        __pyx_t_9 = 0;
+        __pyx_t_14 = 0;
+
+        /* "epcfunc_nl.pyx":1020
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+ */
+        cblas_dgemm(CblasRowMajor, CblasTrans, CblasNoTrans, (__pyx_v_norb_p * __pyx_v_norbital), 2, __pyx_v_ncell, 1.0, (&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_13 * __pyx_v_drSH.strides[0]) ) + __pyx_t_9 * __pyx_v_drSH.strides[1]) )) + __pyx_t_14)) )))), (__pyx_v_norb_p * __pyx_v_norbital), ((double *)__pyx_v_expikR), 2, 0.0, ((double *)__pyx_v_drSHexpikR), 2);
+
+        /* "epcfunc_nl.pyx":1025
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ *                 cblas_zgemv(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasNoTrans,norb_p,
+ *                     norbital,&c1,drSHexpikR,norbital,
+ */
+        cblas_zgemv(CblasRowMajor, CblasNoTrans, __pyx_v_norb_p, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, __pyx_v_bandveckp, 1, (&__pyx_v_c0), __pyx_v_drveck_t, 1);
+      }
     }
+
+    /* "epcfunc_nl.pyx":1001
+ *     knum_s = kproc[myid]
+ * 
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             k1 = bassel[h,0]
+ */
   }
 
-  /* "epcfunc_nl.pyx":1017
- *             )
+  /* "epcfunc_nl.pyx":1031
+ *                 )
  *     # drveck_a -> drveck_p (alltoallv)
  *     drveck_p = <double complex*>malloc(s_dcplx*knum_p*3*norbital)             # <<<<<<<<<<<<<<
  *     drveck_alltoall(
@@ -11274,7 +11233,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_v_drveck_p = ((__pyx_t_double_complex *)malloc((((__pyx_v_s_dcplx * __pyx_v_knum_p) * 3) * __pyx_v_norbital)));
 
-  /* "epcfunc_nl.pyx":1018
+  /* "epcfunc_nl.pyx":1032
  *     # drveck_a -> drveck_p (alltoallv)
  *     drveck_p = <double complex*>malloc(s_dcplx*knum_p*3*norbital)
  *     drveck_alltoall(             # <<<<<<<<<<<<<<
@@ -11283,26 +11242,26 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   __pyx_f_10epcfunc_nl_drveck_alltoall(__pyx_v_c_comm, __pyx_v_nprocs, __pyx_v_myid, __pyx_v_nmodes, 1, __pyx_v_knum, __pyx_v_norbital, __pyx_v_drveck_a, __pyx_v_drveck_p, __pyx_v_norb, __pyx_v_norb_num, __pyx_v_kproc, __pyx_v_kproc_num);
 
-  /* "epcfunc_nl.pyx":1022
+  /* "epcfunc_nl.pyx":1036
  *         drveck_a,drveck_p,norb,norb_num,kproc,kproc_num
  *     )
  *     free(drveck_a)             # <<<<<<<<<<<<<<
+ * 
  *     endtime = mpi.MPI_Wtime()
- *     if myid == 0:
  */
   free(__pyx_v_drveck_a);
 
-  /* "epcfunc_nl.pyx":1023
- *     )
+  /* "epcfunc_nl.pyx":1038
  *     free(drveck_a)
+ * 
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
  *     if myid == 0:
  *         printf("epc_p_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":1024
- *     free(drveck_a)
+  /* "epcfunc_nl.pyx":1039
+ * 
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
  *         printf("epc_p_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
@@ -11311,7 +11270,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1025
+    /* "epcfunc_nl.pyx":1040
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("epc_p_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)             # <<<<<<<<<<<<<<
@@ -11320,8 +11279,8 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     (void)(printf(((char const *)"epc_p_NL(Right) part1 time:%12.4fs.\n"), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "epcfunc_nl.pyx":1024
- *     free(drveck_a)
+    /* "epcfunc_nl.pyx":1039
+ * 
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
  *         printf("epc_p_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
@@ -11329,7 +11288,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   }
 
-  /* "epcfunc_nl.pyx":1026
+  /* "epcfunc_nl.pyx":1041
  *     if myid == 0:
  *         printf("epc_p_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):             # <<<<<<<<<<<<<<
@@ -11341,27 +11300,27 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1027
+    /* "epcfunc_nl.pyx":1042
  *         printf("epc_p_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3             # <<<<<<<<<<<<<<
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min
  */
-    __pyx_t_18 = __pyx_v_h;
-    __pyx_v_nm_min = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_18)) ))) * 3);
+    __pyx_t_14 = __pyx_v_h;
+    __pyx_v_nm_min = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_14)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":1028
+    /* "epcfunc_nl.pyx":1043
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3             # <<<<<<<<<<<<<<
  *         nm_num = nm_max-nm_min
  *         phvec_gather(
  */
-    __pyx_t_18 = (__pyx_v_h + 1);
-    __pyx_v_nm_max = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_18)) ))) * 3);
+    __pyx_t_14 = (__pyx_v_h + 1);
+    __pyx_v_nm_max = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_14)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":1029
+    /* "epcfunc_nl.pyx":1044
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min             # <<<<<<<<<<<<<<
@@ -11370,7 +11329,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_nm_num = (__pyx_v_nm_max - __pyx_v_nm_min);
 
-    /* "epcfunc_nl.pyx":1030
+    /* "epcfunc_nl.pyx":1045
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min
  *         phvec_gather(             # <<<<<<<<<<<<<<
@@ -11379,7 +11338,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     __pyx_f_10epcfunc_nl_phvec_gather(__pyx_v_c_comm, __pyx_v_shm_comm, __pyx_v_remote_comm, __pyx_v_myid, __pyx_v_shm_id, __pyx_v_qnum, __pyx_v_nmodes, __pyx_v_nm_num, __pyx_v_nm_min, __pyx_v_qproc, __pyx_v_qproc_num, __pyx_v_phvecval_p, __pyx_v_phvecval);
 
-    /* "epcfunc_nl.pyx":1035
+    /* "epcfunc_nl.pyx":1050
  *             qproc,qproc_num,phvecval_p,phvecval
  *         )
  *         starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -11388,7 +11347,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_starttime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":1036
+    /* "epcfunc_nl.pyx":1051
  *         )
  *         starttime = mpi.MPI_Wtime()
  *         for l in range(knum):             # <<<<<<<<<<<<<<
@@ -11400,7 +11359,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_l = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":1037
+      /* "epcfunc_nl.pyx":1052
  *         starttime = mpi.MPI_Wtime()
  *         for l in range(knum):
  *             start = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -11409,18 +11368,18 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
       __pyx_v_start = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":1038
+      /* "epcfunc_nl.pyx":1053
  *         for l in range(knum):
  *             start = mpi.MPI_Wtime()
  *             k1 = bassel[l,0]             # <<<<<<<<<<<<<<
  *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  */
-      __pyx_t_18 = __pyx_v_l;
+      __pyx_t_14 = __pyx_v_l;
       __pyx_t_9 = 0;
-      __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_18 * __pyx_v_bassel.strides[0]) )) + __pyx_t_9)) )));
+      __pyx_v_k1 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_14 * __pyx_v_bassel.strides[0]) )) + __pyx_t_9)) )));
 
-      /* "epcfunc_nl.pyx":1039
+      /* "epcfunc_nl.pyx":1054
  *             start = mpi.MPI_Wtime()
  *             k1 = bassel[l,0]
  *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
@@ -11432,7 +11391,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
       __pyx_t_9 = 2;
       __pyx_v_kidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-      /* "epcfunc_nl.pyx":1040
+      /* "epcfunc_nl.pyx":1055
  *             k1 = bassel[l,0]
  *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -11444,7 +11403,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
       __pyx_t_9 = 1;
       __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-      /* "epcfunc_nl.pyx":1041
+      /* "epcfunc_nl.pyx":1056
  *             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             for i in range(knum_p):             # <<<<<<<<<<<<<<
@@ -11452,11 +11411,11 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]
  */
       __pyx_t_8 = __pyx_v_knum_p;
-      __pyx_t_14 = __pyx_t_8;
-      for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
-        __pyx_v_i = __pyx_t_15;
+      __pyx_t_15 = __pyx_t_8;
+      for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+        __pyx_v_i = __pyx_t_16;
 
-        /* "epcfunc_nl.pyx":1042
+        /* "epcfunc_nl.pyx":1057
  *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *             for i in range(knum_p):
  *                 k2 = bassel[i+knum_s,0]             # <<<<<<<<<<<<<<
@@ -11464,45 +11423,45 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  */
         __pyx_t_9 = (__pyx_v_i + __pyx_v_knum_s);
-        __pyx_t_18 = 0;
-        __pyx_v_k2 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_9 * __pyx_v_bassel.strides[0]) )) + __pyx_t_18)) )));
+        __pyx_t_14 = 0;
+        __pyx_v_k2 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_bassel.data + __pyx_t_9 * __pyx_v_bassel.strides[0]) )) + __pyx_t_14)) )));
 
-        /* "epcfunc_nl.pyx":1043
+        /* "epcfunc_nl.pyx":1058
  *             for i in range(knum_p):
  *                 k2 = bassel[i+knum_s,0]
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]             # <<<<<<<<<<<<<<
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  */
-        __pyx_t_18 = 2;
-        __pyx_v_kpidx_z = (__pyx_v_k2 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
-        __pyx_t_18 = 2;
-        __pyx_v_kpidx_xy = (__pyx_v_k2 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
+        __pyx_t_14 = 2;
+        __pyx_v_kpidx_z = (__pyx_v_k2 % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+        __pyx_t_14 = 2;
+        __pyx_v_kpidx_xy = (__pyx_v_k2 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
 
-        /* "epcfunc_nl.pyx":1044
+        /* "epcfunc_nl.pyx":1059
  *                 k2 = bassel[i+knum_s,0]
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]
  */
-        __pyx_t_18 = 1;
-        __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
-        __pyx_t_18 = 1;
-        __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
+        __pyx_t_14 = 1;
+        __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+        __pyx_t_14 = 1;
+        __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
 
-        /* "epcfunc_nl.pyx":1045
+        /* "epcfunc_nl.pyx":1060
  *                 kpidx_z = k2%nq[2]; kpidx_xy = k2/nq[2]
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]
  *                 qidx_y = (kpidx_y-kidx_y)%nq[1]
  */
-        __pyx_t_18 = 1;
+        __pyx_t_14 = 1;
         __pyx_t_9 = 2;
-        __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_z);
+        __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_z);
 
-        /* "epcfunc_nl.pyx":1046
+        /* "epcfunc_nl.pyx":1061
  *                 kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]             # <<<<<<<<<<<<<<
@@ -11512,7 +11471,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
         __pyx_t_9 = 0;
         __pyx_v_qidx_x = ((__pyx_v_kpidx_x - __pyx_v_kidx_x) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1047
+        /* "epcfunc_nl.pyx":1062
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]
  *                 qidx_y = (kpidx_y-kidx_y)%nq[1]             # <<<<<<<<<<<<<<
@@ -11522,7 +11481,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
         __pyx_t_9 = 1;
         __pyx_v_qidx_y = ((__pyx_v_kpidx_y - __pyx_v_kidx_y) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1048
+        /* "epcfunc_nl.pyx":1063
  *                 qidx_x = (kpidx_x-kidx_x)%nq[0]
  *                 qidx_y = (kpidx_y-kidx_y)%nq[1]
  *                 qidx_z = (kpidx_z-kidx_z)%nq[2]             # <<<<<<<<<<<<<<
@@ -11532,7 +11491,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
         __pyx_t_9 = 2;
         __pyx_v_qidx_z = ((__pyx_v_kpidx_z - __pyx_v_kidx_z) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1049
+        /* "epcfunc_nl.pyx":1064
  *                 qidx_y = (kpidx_y-kidx_y)%nq[1]
  *                 qidx_z = (kpidx_z-kidx_z)%nq[2]
  *                 if qidx_x<0: qidx_x += nq[0]             # <<<<<<<<<<<<<<
@@ -11545,7 +11504,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
           __pyx_v_qidx_x = (__pyx_v_qidx_x + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1050
+        /* "epcfunc_nl.pyx":1065
  *                 qidx_z = (kpidx_z-kidx_z)%nq[2]
  *                 if qidx_x<0: qidx_x += nq[0]
  *                 if qidx_y<0: qidx_y += nq[1]             # <<<<<<<<<<<<<<
@@ -11558,7 +11517,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
           __pyx_v_qidx_y = (__pyx_v_qidx_y + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1051
+        /* "epcfunc_nl.pyx":1066
  *                 if qidx_x<0: qidx_x += nq[0]
  *                 if qidx_y<0: qidx_y += nq[1]
  *                 if qidx_z<0: qidx_z += nq[2]             # <<<<<<<<<<<<<<
@@ -11571,7 +11530,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
           __pyx_v_qidx_z = (__pyx_v_qidx_z + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1052
+        /* "epcfunc_nl.pyx":1067
  *                 if qidx_y<0: qidx_y += nq[1]
  *                 if qidx_z<0: qidx_z += nq[2]
  *                 qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z             # <<<<<<<<<<<<<<
@@ -11579,20 +11538,20 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  *                     &drveck_p[i*3*norbital],&bandveck[l,0],&phvecval[qidx*nm_num*nmodes],
  */
         __pyx_t_9 = 1;
-        __pyx_t_18 = 2;
-        __pyx_v_qidx = ((((__pyx_v_qidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_qidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) )))) + __pyx_v_qidx_z);
+        __pyx_t_14 = 2;
+        __pyx_v_qidx = ((((__pyx_v_qidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_qidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) )))) + __pyx_v_qidx_z);
 
-        /* "epcfunc_nl.pyx":1054
+        /* "epcfunc_nl.pyx":1069
  *                 qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *                 epckqNL_p_R(
  *                     &drveck_p[i*3*norbital],&bandveck[l,0],&phvecval[qidx*nm_num*nmodes],             # <<<<<<<<<<<<<<
  *                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,
  *                     natom,nm_num,norbital,norb_u,norb_u_num
  */
-        __pyx_t_18 = __pyx_v_l;
+        __pyx_t_14 = __pyx_v_l;
         __pyx_t_9 = 0;
 
-        /* "epcfunc_nl.pyx":1055
+        /* "epcfunc_nl.pyx":1070
  *                 epckqNL_p_R(
  *                     &drveck_p[i*3*norbital],&bandveck[l,0],&phvecval[qidx*nm_num*nmodes],
  *                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,             # <<<<<<<<<<<<<<
@@ -11600,19 +11559,19 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  *                 )
  */
         __pyx_t_13 = ((__pyx_v_l * __pyx_v_knum_p) + __pyx_v_i);
-        __pyx_t_19 = __pyx_v_nm_min;
+        __pyx_t_17 = __pyx_v_nm_min;
 
-        /* "epcfunc_nl.pyx":1053
+        /* "epcfunc_nl.pyx":1068
  *                 if qidx_z<0: qidx_z += nq[2]
  *                 qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *                 epckqNL_p_R(             # <<<<<<<<<<<<<<
  *                     &drveck_p[i*3*norbital],&bandveck[l,0],&phvecval[qidx*nm_num*nmodes],
  *                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,
  */
-        __pyx_f_10epcfunc_nl_epckqNL_p_R((&(__pyx_v_drveck_p[((__pyx_v_i * 3) * __pyx_v_norbital)])), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_18 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_9)) )))), (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_13 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_19)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_norbital, __pyx_v_norb_u, __pyx_v_norb_u_num);
+        __pyx_f_10epcfunc_nl_epckqNL_p_R((&(__pyx_v_drveck_p[((__pyx_v_i * 3) * __pyx_v_norbital)])), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_14 * __pyx_v_bandveck.strides[0]) )) + __pyx_t_9)) )))), (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_13 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_17)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_norbital, __pyx_v_norb_u, __pyx_v_norb_u_num);
       }
 
-      /* "epcfunc_nl.pyx":1058
+      /* "epcfunc_nl.pyx":1073
  *                     natom,nm_num,norbital,norb_u,norb_u_num
  *                 )
  *             end = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -11621,7 +11580,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
       __pyx_v_end = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":1059
+      /* "epcfunc_nl.pyx":1074
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -11631,7 +11590,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
       __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":1060
+        /* "epcfunc_nl.pyx":1075
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)             # <<<<<<<<<<<<<<
@@ -11640,7 +11599,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
         (void)(printf(((char const *)"time in mode loop %d, knum loop %d:%12.4fs.\n"), __pyx_v_h, __pyx_v_l, (__pyx_v_end - __pyx_v_start)));
 
-        /* "epcfunc_nl.pyx":1059
+        /* "epcfunc_nl.pyx":1074
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -11650,7 +11609,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
       }
     }
 
-    /* "epcfunc_nl.pyx":1061
+    /* "epcfunc_nl.pyx":1076
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
  *         endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -11659,7 +11618,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
     __pyx_v_endtime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":1062
+    /* "epcfunc_nl.pyx":1077
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -11669,7 +11628,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
     if (__pyx_t_12) {
 
-      /* "epcfunc_nl.pyx":1063
+      /* "epcfunc_nl.pyx":1078
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:
  *             printf("epc_p_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)             # <<<<<<<<<<<<<<
@@ -11678,7 +11637,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
       (void)(printf(((char const *)"epc_p_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n"), __pyx_v_nm_min, (__pyx_v_nm_min + __pyx_v_nm_num), (__pyx_v_endtime - __pyx_v_starttime)));
 
-      /* "epcfunc_nl.pyx":1062
+      /* "epcfunc_nl.pyx":1077
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -11688,7 +11647,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
     }
   }
 
-  /* "epcfunc_nl.pyx":1065
+  /* "epcfunc_nl.pyx":1080
  *             printf("epc_p_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
  * 
  *     free(bandveckp)             # <<<<<<<<<<<<<<
@@ -11697,7 +11656,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_bandveckp);
 
-  /* "epcfunc_nl.pyx":1066
+  /* "epcfunc_nl.pyx":1081
  * 
  *     free(bandveckp)
  *     free(drSHexpikR)             # <<<<<<<<<<<<<<
@@ -11706,7 +11665,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_drSHexpikR);
 
-  /* "epcfunc_nl.pyx":1067
+  /* "epcfunc_nl.pyx":1082
  *     free(bandveckp)
  *     free(drSHexpikR)
  *     free(vdrvexpikR)             # <<<<<<<<<<<<<<
@@ -11715,7 +11674,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_vdrvexpikR);
 
-  /* "epcfunc_nl.pyx":1068
+  /* "epcfunc_nl.pyx":1083
  *     free(drSHexpikR)
  *     free(vdrvexpikR)
  *     free(expikR)             # <<<<<<<<<<<<<<
@@ -11724,7 +11683,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_expikR);
 
-  /* "epcfunc_nl.pyx":1069
+  /* "epcfunc_nl.pyx":1084
  *     free(vdrvexpikR)
  *     free(expikR)
  *     free(nodelist)             # <<<<<<<<<<<<<<
@@ -11733,7 +11692,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_nodelist);
 
-  /* "epcfunc_nl.pyx":1070
+  /* "epcfunc_nl.pyx":1085
  *     free(expikR)
  *     free(nodelist)
  *     free(dr)             # <<<<<<<<<<<<<<
@@ -11742,7 +11701,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_dr);
 
-  /* "epcfunc_nl.pyx":1071
+  /* "epcfunc_nl.pyx":1086
  *     free(nodelist)
  *     free(dr)
  *     free(dr_num)             # <<<<<<<<<<<<<<
@@ -11751,7 +11710,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_dr_num);
 
-  /* "epcfunc_nl.pyx":1072
+  /* "epcfunc_nl.pyx":1087
  *     free(dr)
  *     free(dr_num)
  *     free(drveck_p)             # <<<<<<<<<<<<<<
@@ -11760,7 +11719,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   free(__pyx_v_drveck_p);
 
-  /* "epcfunc_nl.pyx":1073
+  /* "epcfunc_nl.pyx":1088
  *     free(dr_num)
  *     free(drveck_p)
  *     mpi.MPI_Win_free(&win1)             # <<<<<<<<<<<<<<
@@ -11769,7 +11728,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Win_free((&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":1074
+  /* "epcfunc_nl.pyx":1089
  *     free(drveck_p)
  *     mpi.MPI_Win_free(&win1)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -11778,7 +11737,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":900
+  /* "epcfunc_nl.pyx":911
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_R(             # <<<<<<<<<<<<<<
@@ -11809,7 +11768,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_8MPIepcNL_p_R(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":1079
+/* "epcfunc_nl.pyx":1094
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_L_q(             # <<<<<<<<<<<<<<
@@ -11915,137 +11874,137 @@ static PyObject *__pyx_pw_10epcfunc_nl_11MPIepcNL_L_q(PyObject *__pyx_self, PyOb
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmodes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 1); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 1); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_loop)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 2); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 2); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_buffer)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 3); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 3); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 4); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 4); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nbands)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 5); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 5); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 6); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 6); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_knum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 7); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 7); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_split)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 8); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 8); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 9); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 9); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 10); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 10); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nqpath)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 11); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 11); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qpath)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 12); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 12); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drSH)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 13); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 13); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bandveck)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 14); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 14); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_phvecval_p)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 15); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 15); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 16); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 16); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 17); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 17); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 18); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 18); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 19); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 19); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 20); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 20); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 21:
         if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 21); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 21); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 22:
         if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 22); __PYX_ERR(0, 1079, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, 22); __PYX_ERR(0, 1094, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_L_q") < 0)) __PYX_ERR(0, 1079, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_L_q") < 0)) __PYX_ERR(0, 1094, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 23) {
       goto __pyx_L5_argtuple_error;
@@ -12075,38 +12034,38 @@ static PyObject *__pyx_pw_10epcfunc_nl_11MPIepcNL_L_q(PyObject *__pyx_self, PyOb
       values[22] = PyTuple_GET_ITEM(__pyx_args, 22);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1080, __pyx_L3_error)
-    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1080, __pyx_L3_error)
-    __pyx_v_natom_buffer = __Pyx_PyInt_As_long(values[3]); if (unlikely((__pyx_v_natom_buffer == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1080, __pyx_L3_error)
-    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
-    __pyx_v_nbands = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nbands == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
-    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
-    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 1081, __pyx_L3_error)
-    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 1082, __pyx_L3_error)
-    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 1082, __pyx_L3_error)
-    __pyx_v_nqpath = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_nqpath == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1082, __pyx_L3_error)
-    __pyx_v_qpath = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qpath.memview)) __PYX_ERR(0, 1082, __pyx_L3_error)
-    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1082, __pyx_L3_error)
-    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc___pyx_t_double_complex(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 1083, __pyx_L3_error)
-    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 1083, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1084, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1084, __pyx_L3_error)
-    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 1084, __pyx_L3_error)
-    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 1084, __pyx_L3_error)
-    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 1085, __pyx_L3_error)
-    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 1085, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1085, __pyx_L3_error)
+    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1095, __pyx_L3_error)
+    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1095, __pyx_L3_error)
+    __pyx_v_natom_buffer = __Pyx_PyInt_As_long(values[3]); if (unlikely((__pyx_v_natom_buffer == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1095, __pyx_L3_error)
+    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1096, __pyx_L3_error)
+    __pyx_v_nbands = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nbands == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1096, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1096, __pyx_L3_error)
+    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1096, __pyx_L3_error)
+    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 1096, __pyx_L3_error)
+    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 1097, __pyx_L3_error)
+    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 1097, __pyx_L3_error)
+    __pyx_v_nqpath = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_nqpath == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1097, __pyx_L3_error)
+    __pyx_v_qpath = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qpath.memview)) __PYX_ERR(0, 1097, __pyx_L3_error)
+    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1097, __pyx_L3_error)
+    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc___pyx_t_double_complex(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 1098, __pyx_L3_error)
+    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 1098, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1099, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1099, __pyx_L3_error)
+    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 1099, __pyx_L3_error)
+    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 1099, __pyx_L3_error)
+    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 1100, __pyx_L3_error)
+    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 1100, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1100, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1079, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepcNL_L_q", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1094, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepcNL_L_q", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1080, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1095, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(__pyx_self, __pyx_v_comm, __pyx_v_nmodes, __pyx_v_natom_loop, __pyx_v_natom_buffer, __pyx_v_norbital, __pyx_v_nbands, __pyx_v_ncell, __pyx_v_knum, __pyx_v_natom_split, __pyx_v_nq, __pyx_v_R_list, __pyx_v_nqpath, __pyx_v_qpath, __pyx_v_drSH, __pyx_v_bandveck, __pyx_v_phvecval_p, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_norb, __pyx_v_norb_num, __pyx_v_norb_u, __pyx_v_norb_u_num, __pyx_v_epc_t);
 
   /* function exit code */
@@ -12140,7 +12099,6 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   int __pyx_v_h;
   int __pyx_v_i;
   int __pyx_v_j;
-  int __pyx_v_k;
   int __pyx_v_l;
   int __pyx_v_iq;
   int __pyx_v_xyz;
@@ -12207,15 +12165,13 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   long __pyx_t_11;
   int __pyx_t_12;
   Py_ssize_t __pyx_t_13;
-  int __pyx_t_14;
+  Py_ssize_t __pyx_t_14;
   int __pyx_t_15;
   int __pyx_t_16;
-  int __pyx_t_17;
-  Py_ssize_t __pyx_t_18;
-  __Pyx_memviewslice __pyx_t_19 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_t_17 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_RefNannySetupContext("MPIepcNL_L_q", 0);
 
-  /* "epcfunc_nl.pyx":1087
+  /* "epcfunc_nl.pyx":1102
  *     int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -12225,7 +12181,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":1098
+  /* "epcfunc_nl.pyx":1113
  *     cdef double complex* vdrvexpikR
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3             # <<<<<<<<<<<<<<
@@ -12234,7 +12190,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_natom = (((long)__pyx_v_nmodes) / 3);
 
-  /* "epcfunc_nl.pyx":1099
+  /* "epcfunc_nl.pyx":1114
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3
  *     cdef int norbnb = norbital*nbands             # <<<<<<<<<<<<<<
@@ -12243,7 +12199,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_norbnb = (__pyx_v_norbital * __pyx_v_nbands);
 
-  /* "epcfunc_nl.pyx":1100
+  /* "epcfunc_nl.pyx":1115
  *     cdef int natom = nmodes/3
  *     cdef int norbnb = norbital*nbands
  *     cdef int nbands2 = nbands*nbands             # <<<<<<<<<<<<<<
@@ -12252,7 +12208,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_nbands2 = (__pyx_v_nbands * __pyx_v_nbands);
 
-  /* "epcfunc_nl.pyx":1101
+  /* "epcfunc_nl.pyx":1116
  *     cdef int norbnb = norbital*nbands
  *     cdef int nbands2 = nbands*nbands
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -12261,7 +12217,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "epcfunc_nl.pyx":1102
+  /* "epcfunc_nl.pyx":1117
  *     cdef int nbands2 = nbands*nbands
  *     cdef int s_int = sizeof(int)
  *     cdef int s_dcplx = sizeof(double complex)             # <<<<<<<<<<<<<<
@@ -12270,7 +12226,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_s_dcplx = (sizeof(__pyx_t_double_complex));
 
-  /* "epcfunc_nl.pyx":1115
+  /* "epcfunc_nl.pyx":1130
  *     cdef double kx, ky, kz, RKx, RKy, RKz, RK, \
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j             # <<<<<<<<<<<<<<
@@ -12279,7 +12235,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_pi2j = __Pyx_c_prod_double(__pyx_t_double_complex_from_parts(M_PI, 0), __pyx_t_double_complex_from_parts(0, 2.0));
 
-  /* "epcfunc_nl.pyx":1116
+  /* "epcfunc_nl.pyx":1131
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -12288,7 +12244,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":1117
+  /* "epcfunc_nl.pyx":1132
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -12297,7 +12253,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":1119
+  /* "epcfunc_nl.pyx":1134
  *     cdef double complex c0 = 0.0
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -12306,7 +12262,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":1121
+  /* "epcfunc_nl.pyx":1136
  *     starttime = mpi.MPI_Wtime()
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -12315,7 +12271,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":1122
+  /* "epcfunc_nl.pyx":1137
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -12324,7 +12280,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":1123
+  /* "epcfunc_nl.pyx":1138
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     mpi.MPI_Comm_split_type(             # <<<<<<<<<<<<<<
@@ -12333,7 +12289,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Comm_split_type(__pyx_v_c_comm, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, (&__pyx_v_shm_comm)));
 
-  /* "epcfunc_nl.pyx":1126
+  /* "epcfunc_nl.pyx":1141
  *         c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)             # <<<<<<<<<<<<<<
@@ -12342,7 +12298,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_shm_comm, (&__pyx_v_shm_nprocs));
 
-  /* "epcfunc_nl.pyx":1127
+  /* "epcfunc_nl.pyx":1142
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)             # <<<<<<<<<<<<<<
@@ -12351,7 +12307,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_shm_comm, (&__pyx_v_shm_id));
 
-  /* "epcfunc_nl.pyx":1129
+  /* "epcfunc_nl.pyx":1144
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs             # <<<<<<<<<<<<<<
@@ -12360,7 +12316,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_nnode = (__pyx_v_nprocs / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":1130
+  /* "epcfunc_nl.pyx":1145
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs             # <<<<<<<<<<<<<<
@@ -12369,7 +12325,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_node_id = (__pyx_v_myid / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":1131
+  /* "epcfunc_nl.pyx":1146
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)             # <<<<<<<<<<<<<<
@@ -12378,7 +12334,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_nodelist = ((int *)malloc((__pyx_v_s_int * __pyx_v_nnode)));
 
-  /* "epcfunc_nl.pyx":1132
+  /* "epcfunc_nl.pyx":1147
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -12390,7 +12346,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1133
+    /* "epcfunc_nl.pyx":1148
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -12400,7 +12356,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     (__pyx_v_nodelist[__pyx_v_i]) = (__pyx_v_i * __pyx_v_shm_nprocs);
   }
 
-  /* "epcfunc_nl.pyx":1134
+  /* "epcfunc_nl.pyx":1149
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)             # <<<<<<<<<<<<<<
@@ -12409,7 +12365,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Comm_group(__pyx_v_c_comm, (&__pyx_v_split_gp)));
 
-  /* "epcfunc_nl.pyx":1135
+  /* "epcfunc_nl.pyx":1150
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)             # <<<<<<<<<<<<<<
@@ -12418,7 +12374,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Group_incl(__pyx_v_split_gp, __pyx_v_nnode, __pyx_v_nodelist, (&__pyx_v_shm_gp)));
 
-  /* "epcfunc_nl.pyx":1136
+  /* "epcfunc_nl.pyx":1151
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)             # <<<<<<<<<<<<<<
@@ -12427,7 +12383,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_create(__pyx_v_c_comm, __pyx_v_shm_gp, (&__pyx_v_remote_comm));
 
-  /* "epcfunc_nl.pyx":1138
+  /* "epcfunc_nl.pyx":1153
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)
  * 
  *     dr = <int*>calloc((nnode+1),s_int)             # <<<<<<<<<<<<<<
@@ -12436,7 +12392,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_dr = ((int *)calloc((__pyx_v_nnode + 1), __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":1139
+  /* "epcfunc_nl.pyx":1154
  * 
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)             # <<<<<<<<<<<<<<
@@ -12445,7 +12401,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_dr_num = ((int *)calloc(__pyx_v_nnode, __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":1140
+  /* "epcfunc_nl.pyx":1155
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -12457,7 +12413,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1141
+    /* "epcfunc_nl.pyx":1156
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -12466,7 +12422,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_shm_proc_s = (__pyx_v_i * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":1142
+    /* "epcfunc_nl.pyx":1157
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs             # <<<<<<<<<<<<<<
@@ -12475,7 +12431,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_shm_proc_e = ((__pyx_v_i + 1) * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":1143
+    /* "epcfunc_nl.pyx":1158
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):             # <<<<<<<<<<<<<<
@@ -12487,7 +12443,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     for (__pyx_t_7 = __pyx_v_shm_proc_s; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":1144
+      /* "epcfunc_nl.pyx":1159
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]*nbands             # <<<<<<<<<<<<<<
@@ -12499,7 +12455,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
       (__pyx_v_dr_num[__pyx_t_8]) = ((__pyx_v_dr_num[__pyx_t_8]) + ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) ))) * __pyx_v_nbands));
     }
 
-    /* "epcfunc_nl.pyx":1145
+    /* "epcfunc_nl.pyx":1160
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]*nbands
  *         for j in range(i+1,nnode+1):             # <<<<<<<<<<<<<<
@@ -12511,7 +12467,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     for (__pyx_t_5 = (__pyx_v_i + 1); __pyx_t_5 < __pyx_t_11; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "epcfunc_nl.pyx":1146
+      /* "epcfunc_nl.pyx":1161
  *             dr_num[i] += norb_num[j]*nbands
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]             # <<<<<<<<<<<<<<
@@ -12523,7 +12479,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     }
   }
 
-  /* "epcfunc_nl.pyx":1147
+  /* "epcfunc_nl.pyx":1162
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]             # <<<<<<<<<<<<<<
@@ -12533,7 +12489,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1148
+  /* "epcfunc_nl.pyx":1163
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]             # <<<<<<<<<<<<<<
@@ -12543,7 +12499,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1149
+  /* "epcfunc_nl.pyx":1164
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]
  *     expikR = <double complex*>malloc(s_dcplx*ncell)             # <<<<<<<<<<<<<<
@@ -12552,7 +12508,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_expikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_ncell)));
 
-  /* "epcfunc_nl.pyx":1150
+  /* "epcfunc_nl.pyx":1165
  *     norb_s = norb[myid]
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
@@ -12561,7 +12517,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_drSHexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":1151
+  /* "epcfunc_nl.pyx":1166
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)             # <<<<<<<<<<<<<<
@@ -12570,7 +12526,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_vdrvexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_nmodes) * __pyx_v_nbands2)));
 
-  /* "epcfunc_nl.pyx":1152
+  /* "epcfunc_nl.pyx":1167
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p*nbands)             # <<<<<<<<<<<<<<
@@ -12579,7 +12535,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_drveck_a = ((__pyx_t_double_complex *)malloc(((((__pyx_v_s_dcplx * __pyx_v_knum) * 3) * __pyx_v_norb_p) * __pyx_v_nbands)));
 
-  /* "epcfunc_nl.pyx":1153
+  /* "epcfunc_nl.pyx":1168
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p*nbands)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -12589,7 +12545,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1154
+    /* "epcfunc_nl.pyx":1169
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p*nbands)
  *     if (shm_id == 0):
  *         l_phvecval = s_dcplx*knum*natom_buffer*3*nmodes             # <<<<<<<<<<<<<<
@@ -12598,7 +12554,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_l_phvecval = ((((__pyx_v_s_dcplx * __pyx_v_knum) * __pyx_v_natom_buffer) * 3) * __pyx_v_nmodes);
 
-    /* "epcfunc_nl.pyx":1153
+    /* "epcfunc_nl.pyx":1168
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p*nbands)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -12608,7 +12564,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     goto __pyx_L11;
   }
 
-  /* "epcfunc_nl.pyx":1156
+  /* "epcfunc_nl.pyx":1171
  *         l_phvecval = s_dcplx*knum*natom_buffer*3*nmodes
  *     else:
  *         l_phvecval = 0             # <<<<<<<<<<<<<<
@@ -12620,7 +12576,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   }
   __pyx_L11:;
 
-  /* "epcfunc_nl.pyx":1157
+  /* "epcfunc_nl.pyx":1172
  *     else:
  *         l_phvecval = 0
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -12629,7 +12585,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_phvecval, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_phvecval), (&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":1160
+  /* "epcfunc_nl.pyx":1175
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -12639,7 +12595,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   __pyx_t_12 = ((__pyx_v_shm_id != 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1161
+    /* "epcfunc_nl.pyx":1176
  *     )
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)             # <<<<<<<<<<<<<<
@@ -12648,7 +12604,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     (void)(MPI_Win_shared_query(__pyx_v_win1, 0, (&__pyx_v_l_phvecval), (&__pyx_v_s_dcplx), (&__pyx_v_phvecval)));
 
-    /* "epcfunc_nl.pyx":1160
+    /* "epcfunc_nl.pyx":1175
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -12657,7 +12613,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   }
 
-  /* "epcfunc_nl.pyx":1162
+  /* "epcfunc_nl.pyx":1177
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -12666,7 +12622,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "epcfunc_nl.pyx":1164
+  /* "epcfunc_nl.pyx":1179
  *     mpi.MPI_Barrier(shm_comm)
  * 
  *     knum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -12676,237 +12632,228 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1165
+  /* "epcfunc_nl.pyx":1180
  * 
  *     knum_p = kproc_num[myid]
  *     knum_s = kproc[myid]             # <<<<<<<<<<<<<<
  * 
- *     for h in range(knum):
+ *     if norb_p > 0:
  */
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1167
+  /* "epcfunc_nl.pyx":1182
  *     knum_s = kproc[myid]
  * 
- *     for h in range(knum):             # <<<<<<<<<<<<<<
- *         kidx_z = h%nq[2]; kidx_xy = h/nq[2]
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             kidx_z = h%nq[2]; kidx_xy = h/nq[2]
  */
-  __pyx_t_2 = __pyx_v_knum;
-  __pyx_t_3 = __pyx_t_2;
-  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
-    __pyx_v_h = __pyx_t_4;
+  __pyx_t_12 = ((__pyx_v_norb_p > 0) != 0);
+  if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1168
+    /* "epcfunc_nl.pyx":1183
  * 
- *     for h in range(knum):
- *         kidx_z = h%nq[2]; kidx_xy = h/nq[2]             # <<<<<<<<<<<<<<
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *     if norb_p > 0:
+ *         for h in range(knum):             # <<<<<<<<<<<<<<
+ *             kidx_z = h%nq[2]; kidx_xy = h/nq[2]
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  */
-    __pyx_t_9 = 2;
-    __pyx_v_kidx_z = (__pyx_v_h % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-    __pyx_t_9 = 2;
-    __pyx_v_kidx_xy = (__pyx_v_h / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+    __pyx_t_2 = __pyx_v_knum;
+    __pyx_t_3 = __pyx_t_2;
+    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+      __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1169
- *     for h in range(knum):
- *         kidx_z = h%nq[2]; kidx_xy = h/nq[2]
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
+      /* "epcfunc_nl.pyx":1184
+ *     if norb_p > 0:
+ *         for h in range(knum):
+ *             kidx_z = h%nq[2]; kidx_xy = h/nq[2]             # <<<<<<<<<<<<<<
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
  */
-    __pyx_t_9 = 1;
-    __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-    __pyx_t_9 = 1;
-    __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-
-    /* "epcfunc_nl.pyx":1170
- *         kidx_z = h%nq[2]; kidx_xy = h/nq[2]
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- */
-    __pyx_t_9 = 0;
-    __pyx_v_kx = (((double)__pyx_v_kidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))));
-
-    /* "epcfunc_nl.pyx":1171
- *         kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- */
-    __pyx_t_9 = 1;
-    __pyx_v_ky = (((double)__pyx_v_kidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))));
-
-    /* "epcfunc_nl.pyx":1172
- *         kx = (<double>(kidx_x))/(<double>(nq[0]))
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx
- */
-    __pyx_t_9 = 2;
-    __pyx_v_kz = (((double)__pyx_v_kidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))));
-
-    /* "epcfunc_nl.pyx":1173
- *         ky = (<double>(kidx_y))/(<double>(nq[1]))
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):             # <<<<<<<<<<<<<<
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky
- */
-    __pyx_t_5 = __pyx_v_ncell;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
-
-      /* "epcfunc_nl.pyx":1174
- *         kz = (<double>(kidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx             # <<<<<<<<<<<<<<
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz
- */
-      __pyx_t_9 = __pyx_v_i;
-      __pyx_t_13 = 0;
-      __pyx_v_RKx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kx);
-
-      /* "epcfunc_nl.pyx":1175
- *         for i in range(ncell):
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky             # <<<<<<<<<<<<<<
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz
- */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 1;
-      __pyx_v_RKy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_ky);
-
-      /* "epcfunc_nl.pyx":1176
- *             RKx = R_list[i,0]*kx
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz             # <<<<<<<<<<<<<<
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)
- */
-      __pyx_t_9 = __pyx_v_i;
-      __pyx_t_13 = 2;
-      __pyx_v_RKz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kz);
-
-      /* "epcfunc_nl.pyx":1177
- *             RKy = R_list[i,1]*ky
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz             # <<<<<<<<<<<<<<
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):
- */
-      __pyx_v_RK = ((__pyx_v_RKx + __pyx_v_RKy) + __pyx_v_RKz);
-
-      /* "epcfunc_nl.pyx":1178
- *             RKz = R_list[i,2]*kz
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)             # <<<<<<<<<<<<<<
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
- */
-      (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__pyx_v_pi2j, __pyx_t_double_complex_from_parts(__pyx_v_RK, 0)));
-    }
-
-    /* "epcfunc_nl.pyx":1179
- *             RK = RKx + RKy + RKz
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):             # <<<<<<<<<<<<<<
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- */
-    for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
-      __pyx_v_xyz = __pyx_t_5;
-
-      /* "epcfunc_nl.pyx":1180
- *             expikR[i] = cexp(pi2j*RK)
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]             # <<<<<<<<<<<<<<
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- */
-      __pyx_v_drveck_t = (&(__pyx_v_drveck_a[((((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norb_p) * __pyx_v_nbands)]));
-
-      /* "epcfunc_nl.pyx":1181
- *         for xyz in range(3):
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- */
-      (void)(memset(__pyx_v_drSHexpikR, 0, ((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
-
-      /* "epcfunc_nl.pyx":1182
- *             drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):             # <<<<<<<<<<<<<<
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- */
-      __pyx_t_6 = __pyx_v_ncell;
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
-
-        /* "epcfunc_nl.pyx":1183
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):             # <<<<<<<<<<<<<<
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(
- */
-        __pyx_t_14 = (__pyx_v_norb_p * __pyx_v_norbital);
-        __pyx_t_15 = __pyx_t_14;
-        for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
-          __pyx_v_k = __pyx_t_16;
-
-          /* "epcfunc_nl.pyx":1184
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]             # <<<<<<<<<<<<<<
- *             cblas_zgemm3m(
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- */
-          __pyx_t_17 = __pyx_v_k;
-          __pyx_t_13 = __pyx_v_xyz;
-          __pyx_t_9 = __pyx_v_j;
-          __pyx_t_18 = __pyx_v_k;
-          (__pyx_v_drSHexpikR[__pyx_t_17]) = __Pyx_c_sum_double((__pyx_v_drSHexpikR[__pyx_t_17]), __Pyx_c_prod_double(__pyx_t_double_complex_from_parts((*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_13 * __pyx_v_drSH.strides[0]) ) + __pyx_t_9 * __pyx_v_drSH.strides[1]) )) + __pyx_t_18)) ))), 0), (__pyx_v_expikR[__pyx_v_j])));
-        }
-      }
-
-      /* "epcfunc_nl.pyx":1188
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- *                 nbands,norbital,&c1,drSHexpikR,norbital,
- *                 &bandveck[h,0,0],nbands,&c0,drveck_t,nbands             # <<<<<<<<<<<<<<
- *             )
- *     # drveck_a -> drveck_p (alltoallv)
- */
-      __pyx_t_18 = __pyx_v_h;
-      __pyx_t_9 = 0;
-      __pyx_t_13 = 0;
+      __pyx_t_9 = 2;
+      __pyx_v_kidx_z = (__pyx_v_h % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+      __pyx_t_9 = 2;
+      __pyx_v_kidx_xy = (__pyx_v_h / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
       /* "epcfunc_nl.pyx":1185
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(             # <<<<<<<<<<<<<<
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- *                 nbands,norbital,&c1,drSHexpikR,norbital,
+ *         for h in range(knum):
+ *             kidx_z = h%nq[2]; kidx_xy = h/nq[2]
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
  */
-      cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, (&(*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_18 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_9 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_13)) )))), __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_t, __pyx_v_nbands);
+      __pyx_t_9 = 1;
+      __pyx_v_kidx_y = (__pyx_v_kidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+      __pyx_t_9 = 1;
+      __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+
+      /* "epcfunc_nl.pyx":1186
+ *             kidx_z = h%nq[2]; kidx_xy = h/nq[2]
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ */
+      __pyx_t_9 = 0;
+      __pyx_v_kx = (((double)__pyx_v_kidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))));
+
+      /* "epcfunc_nl.pyx":1187
+ *             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ */
+      __pyx_t_9 = 1;
+      __pyx_v_ky = (((double)__pyx_v_kidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))));
+
+      /* "epcfunc_nl.pyx":1188
+ *             kx = (<double>(kidx_x))/(<double>(nq[0]))
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx
+ */
+      __pyx_t_9 = 2;
+      __pyx_v_kz = (((double)__pyx_v_kidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))));
+
+      /* "epcfunc_nl.pyx":1189
+ *             ky = (<double>(kidx_y))/(<double>(nq[1]))
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):             # <<<<<<<<<<<<<<
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky
+ */
+      __pyx_t_5 = __pyx_v_ncell;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
+
+        /* "epcfunc_nl.pyx":1190
+ *             kz = (<double>(kidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx             # <<<<<<<<<<<<<<
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz
+ */
+        __pyx_t_9 = __pyx_v_i;
+        __pyx_t_13 = 0;
+        __pyx_v_RKx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kx);
+
+        /* "epcfunc_nl.pyx":1191
+ *             for i in range(ncell):
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky             # <<<<<<<<<<<<<<
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz
+ */
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_9 = 1;
+        __pyx_v_RKy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_ky);
+
+        /* "epcfunc_nl.pyx":1192
+ *                 RKx = R_list[i,0]*kx
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz             # <<<<<<<<<<<<<<
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)
+ */
+        __pyx_t_9 = __pyx_v_i;
+        __pyx_t_13 = 2;
+        __pyx_v_RKz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kz);
+
+        /* "epcfunc_nl.pyx":1193
+ *                 RKy = R_list[i,1]*ky
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz             # <<<<<<<<<<<<<<
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):
+ */
+        __pyx_v_RK = ((__pyx_v_RKx + __pyx_v_RKy) + __pyx_v_RKz);
+
+        /* "epcfunc_nl.pyx":1194
+ *                 RKz = R_list[i,2]*kz
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)             # <<<<<<<<<<<<<<
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
+ */
+        (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__pyx_v_pi2j, __pyx_t_double_complex_from_parts(__pyx_v_RK, 0)));
+      }
+
+      /* "epcfunc_nl.pyx":1195
+ *                 RK = RKx + RKy + RKz
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):             # <<<<<<<<<<<<<<
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ */
+      for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
+        __pyx_v_xyz = __pyx_t_5;
+
+        /* "epcfunc_nl.pyx":1196
+ *                 expikR[i] = cexp(pi2j*RK)
+ *             for xyz in range(3):
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]             # <<<<<<<<<<<<<<
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(
+ */
+        __pyx_v_drveck_t = (&(__pyx_v_drveck_a[((((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norb_p) * __pyx_v_nbands)]));
+
+        /* "epcfunc_nl.pyx":1200
+ *                 cblas_dgemm(
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,             # <<<<<<<<<<<<<<
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ */
+        __pyx_t_13 = __pyx_v_xyz;
+        __pyx_t_9 = 0;
+        __pyx_t_14 = 0;
+
+        /* "epcfunc_nl.pyx":1198
+ *                 drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+ */
+        cblas_dgemm(CblasRowMajor, CblasTrans, CblasNoTrans, (__pyx_v_norb_p * __pyx_v_norbital), 2, __pyx_v_ncell, 1.0, (&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_13 * __pyx_v_drSH.strides[0]) ) + __pyx_t_9 * __pyx_v_drSH.strides[1]) )) + __pyx_t_14)) )))), (__pyx_v_norb_p * __pyx_v_norbital), ((double *)__pyx_v_expikR), 2, 0.0, ((double *)__pyx_v_drSHexpikR), 2);
+
+        /* "epcfunc_nl.pyx":1206
+ *                     CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+ *                     nbands,norbital,&c1,drSHexpikR,norbital,
+ *                     &bandveck[h,0,0],nbands,&c0,drveck_t,nbands             # <<<<<<<<<<<<<<
+ *                 )
+ *     # drveck_a -> drveck_p (alltoallv)
+ */
+        __pyx_t_14 = __pyx_v_h;
+        __pyx_t_9 = 0;
+        __pyx_t_13 = 0;
+
+        /* "epcfunc_nl.pyx":1203
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ *                 cblas_zgemm3m(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+ *                     nbands,norbital,&c1,drSHexpikR,norbital,
+ */
+        cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, (&(*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_14 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_9 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_13)) )))), __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_t, __pyx_v_nbands);
+      }
     }
+
+    /* "epcfunc_nl.pyx":1182
+ *     knum_s = kproc[myid]
+ * 
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             kidx_z = h%nq[2]; kidx_xy = h/nq[2]
+ */
   }
 
-  /* "epcfunc_nl.pyx":1191
- *             )
+  /* "epcfunc_nl.pyx":1209
+ *                 )
  *     # drveck_a -> drveck_p (alltoallv)
  *     drveck_p = <double complex*>malloc(s_dcplx*knum_p*3*norbnb)             # <<<<<<<<<<<<<<
  *     drveck_alltoall(
@@ -12914,7 +12861,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_drveck_p = ((__pyx_t_double_complex *)malloc((((__pyx_v_s_dcplx * __pyx_v_knum_p) * 3) * __pyx_v_norbnb)));
 
-  /* "epcfunc_nl.pyx":1192
+  /* "epcfunc_nl.pyx":1210
  *     # drveck_a -> drveck_p (alltoallv)
  *     drveck_p = <double complex*>malloc(s_dcplx*knum_p*3*norbnb)
  *     drveck_alltoall(             # <<<<<<<<<<<<<<
@@ -12923,7 +12870,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_f_10epcfunc_nl_drveck_alltoall(__pyx_v_c_comm, __pyx_v_nprocs, __pyx_v_myid, __pyx_v_nmodes, __pyx_v_nbands, __pyx_v_knum, __pyx_v_norbital, __pyx_v_drveck_a, __pyx_v_drveck_p, __pyx_v_norb, __pyx_v_norb_num, __pyx_v_kproc, __pyx_v_kproc_num);
 
-  /* "epcfunc_nl.pyx":1196
+  /* "epcfunc_nl.pyx":1214
  *         drveck_a,drveck_p,norb,norb_num,kproc,kproc_num
  *     )
  *     free(drveck_a)             # <<<<<<<<<<<<<<
@@ -12932,7 +12879,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   free(__pyx_v_drveck_a);
 
-  /* "epcfunc_nl.pyx":1197
+  /* "epcfunc_nl.pyx":1215
  *     )
  *     free(drveck_a)
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -12941,7 +12888,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":1198
+  /* "epcfunc_nl.pyx":1216
  *     free(drveck_a)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -12951,7 +12898,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1199
+    /* "epcfunc_nl.pyx":1217
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("epc_NL(Left)_q part1 time:%12.4fs.\n",endtime-starttime)             # <<<<<<<<<<<<<<
@@ -12960,7 +12907,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     (void)(printf(((char const *)"epc_NL(Left)_q part1 time:%12.4fs.\n"), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "epcfunc_nl.pyx":1198
+    /* "epcfunc_nl.pyx":1216
  *     free(drveck_a)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -12969,7 +12916,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
   }
 
-  /* "epcfunc_nl.pyx":1200
+  /* "epcfunc_nl.pyx":1218
  *     if myid == 0:
  *         printf("epc_NL(Left)_q part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):             # <<<<<<<<<<<<<<
@@ -12981,7 +12928,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1201
+    /* "epcfunc_nl.pyx":1219
  *         printf("epc_NL(Left)_q part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3             # <<<<<<<<<<<<<<
@@ -12991,7 +12938,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     __pyx_t_13 = __pyx_v_h;
     __pyx_v_nm_min = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_13)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":1202
+    /* "epcfunc_nl.pyx":1220
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3             # <<<<<<<<<<<<<<
@@ -13001,7 +12948,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     __pyx_t_13 = (__pyx_v_h + 1);
     __pyx_v_nm_max = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_13)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":1203
+    /* "epcfunc_nl.pyx":1221
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min             # <<<<<<<<<<<<<<
@@ -13010,7 +12957,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_nm_num = (__pyx_v_nm_max - __pyx_v_nm_min);
 
-    /* "epcfunc_nl.pyx":1204
+    /* "epcfunc_nl.pyx":1222
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min
  *         phvec_gather(             # <<<<<<<<<<<<<<
@@ -13019,7 +12966,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_f_10epcfunc_nl_phvec_gather(__pyx_v_c_comm, __pyx_v_shm_comm, __pyx_v_remote_comm, __pyx_v_myid, __pyx_v_shm_id, __pyx_v_knum, __pyx_v_nmodes, __pyx_v_nm_num, __pyx_v_nm_min, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_phvecval_p, __pyx_v_phvecval);
 
-    /* "epcfunc_nl.pyx":1209
+    /* "epcfunc_nl.pyx":1227
  *             kproc,kproc_num,phvecval_p,phvecval
  *         )
  *         starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -13028,7 +12975,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_starttime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":1210
+    /* "epcfunc_nl.pyx":1228
  *         )
  *         starttime = mpi.MPI_Wtime()
  *         for iq in range(nqpath):             # <<<<<<<<<<<<<<
@@ -13040,7 +12987,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_iq = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":1211
+      /* "epcfunc_nl.pyx":1229
  *         starttime = mpi.MPI_Wtime()
  *         for iq in range(nqpath):
  *             start = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -13049,7 +12996,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
       __pyx_v_start = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":1212
+      /* "epcfunc_nl.pyx":1230
  *         for iq in range(nqpath):
  *             start = mpi.MPI_Wtime()
  *             if nqpath < knum:             # <<<<<<<<<<<<<<
@@ -13059,7 +13006,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
       __pyx_t_12 = ((__pyx_v_nqpath < __pyx_v_knum) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":1213
+        /* "epcfunc_nl.pyx":1231
  *             start = mpi.MPI_Wtime()
  *             if nqpath < knum:
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])             # <<<<<<<<<<<<<<
@@ -13068,22 +13015,22 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
         __pyx_t_13 = 0;
         __pyx_t_9 = __pyx_v_iq;
-        __pyx_t_18 = 0;
-        __pyx_v_qidx_x = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_9 * __pyx_v_qpath.strides[0]) )) + __pyx_t_18)) ))))));
+        __pyx_t_14 = 0;
+        __pyx_v_qidx_x = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_9 * __pyx_v_qpath.strides[0]) )) + __pyx_t_14)) ))))));
 
-        /* "epcfunc_nl.pyx":1214
+        /* "epcfunc_nl.pyx":1232
  *             if nqpath < knum:
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])
  *                 qidx_y = <int>round(nq[1]*qpath[iq,1])             # <<<<<<<<<<<<<<
  *                 qidx_z = <int>round(nq[2]*qpath[iq,2])
  *             else:
  */
-        __pyx_t_18 = 1;
+        __pyx_t_14 = 1;
         __pyx_t_9 = __pyx_v_iq;
         __pyx_t_13 = 1;
-        __pyx_v_qidx_y = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_9 * __pyx_v_qpath.strides[0]) )) + __pyx_t_13)) ))))));
+        __pyx_v_qidx_y = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_9 * __pyx_v_qpath.strides[0]) )) + __pyx_t_13)) ))))));
 
-        /* "epcfunc_nl.pyx":1215
+        /* "epcfunc_nl.pyx":1233
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])
  *                 qidx_y = <int>round(nq[1]*qpath[iq,1])
  *                 qidx_z = <int>round(nq[2]*qpath[iq,2])             # <<<<<<<<<<<<<<
@@ -13092,20 +13039,20 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
         __pyx_t_13 = 2;
         __pyx_t_9 = __pyx_v_iq;
-        __pyx_t_18 = 2;
-        __pyx_v_qidx_z = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_9 * __pyx_v_qpath.strides[0]) )) + __pyx_t_18)) ))))));
+        __pyx_t_14 = 2;
+        __pyx_v_qidx_z = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_9 * __pyx_v_qpath.strides[0]) )) + __pyx_t_14)) ))))));
 
-        /* "epcfunc_nl.pyx":1212
+        /* "epcfunc_nl.pyx":1230
  *         for iq in range(nqpath):
  *             start = mpi.MPI_Wtime()
  *             if nqpath < knum:             # <<<<<<<<<<<<<<
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])
  *                 qidx_y = <int>round(nq[1]*qpath[iq,1])
  */
-        goto __pyx_L28;
+        goto __pyx_L25;
       }
 
-      /* "epcfunc_nl.pyx":1217
+      /* "epcfunc_nl.pyx":1235
  *                 qidx_z = <int>round(nq[2]*qpath[iq,2])
  *             else:
  *                 qidx_z = iq%nq[2]; qidx_xy = iq/nq[2]             # <<<<<<<<<<<<<<
@@ -13113,37 +13060,37 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  */
       /*else*/ {
-        __pyx_t_18 = 2;
-        __pyx_v_qidx_z = (__pyx_v_iq % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
-        __pyx_t_18 = 2;
-        __pyx_v_qidx_xy = (__pyx_v_iq / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
+        __pyx_t_14 = 2;
+        __pyx_v_qidx_z = (__pyx_v_iq % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+        __pyx_t_14 = 2;
+        __pyx_v_qidx_xy = (__pyx_v_iq / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
 
-        /* "epcfunc_nl.pyx":1218
+        /* "epcfunc_nl.pyx":1236
  *             else:
  *                 qidx_z = iq%nq[2]; qidx_xy = iq/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]             # <<<<<<<<<<<<<<
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *             for l in range(knum_p):
  */
-        __pyx_t_18 = 1;
-        __pyx_v_qidx_y = (__pyx_v_qidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
-        __pyx_t_18 = 1;
-        __pyx_v_qidx_x = (__pyx_v_qidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) ))));
+        __pyx_t_14 = 1;
+        __pyx_v_qidx_y = (__pyx_v_qidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
+        __pyx_t_14 = 1;
+        __pyx_v_qidx_x = (__pyx_v_qidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) ))));
       }
-      __pyx_L28:;
+      __pyx_L25:;
 
-      /* "epcfunc_nl.pyx":1219
+      /* "epcfunc_nl.pyx":1237
  *                 qidx_z = iq%nq[2]; qidx_xy = iq/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z             # <<<<<<<<<<<<<<
  *             for l in range(knum_p):
  *                 k1 = l+knum_s
  */
-      __pyx_t_18 = 1;
+      __pyx_t_14 = 1;
       __pyx_t_9 = 2;
-      __pyx_v_qidx = ((((__pyx_v_qidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) )))) + __pyx_v_qidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_qidx_z);
+      __pyx_v_qidx = ((((__pyx_v_qidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) )))) + __pyx_v_qidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_qidx_z);
 
-      /* "epcfunc_nl.pyx":1220
+      /* "epcfunc_nl.pyx":1238
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *             for l in range(knum_p):             # <<<<<<<<<<<<<<
@@ -13151,11 +13098,11 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  *                 kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  */
       __pyx_t_8 = __pyx_v_knum_p;
-      __pyx_t_14 = __pyx_t_8;
-      for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
-        __pyx_v_l = __pyx_t_15;
+      __pyx_t_15 = __pyx_t_8;
+      for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
+        __pyx_v_l = __pyx_t_16;
 
-        /* "epcfunc_nl.pyx":1221
+        /* "epcfunc_nl.pyx":1239
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *             for l in range(knum_p):
  *                 k1 = l+knum_s             # <<<<<<<<<<<<<<
@@ -13164,7 +13111,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  */
         __pyx_v_k1 = (__pyx_v_l + __pyx_v_knum_s);
 
-        /* "epcfunc_nl.pyx":1222
+        /* "epcfunc_nl.pyx":1240
  *             for l in range(knum_p):
  *                 k1 = l+knum_s
  *                 kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
@@ -13176,7 +13123,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
         __pyx_t_9 = 2;
         __pyx_v_kidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1223
+        /* "epcfunc_nl.pyx":1241
  *                 k1 = l+knum_s
  *                 kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -13188,7 +13135,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
         __pyx_t_9 = 1;
         __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1224
+        /* "epcfunc_nl.pyx":1242
  *                 kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]             # <<<<<<<<<<<<<<
@@ -13198,7 +13145,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
         __pyx_t_9 = 0;
         __pyx_v_kpidx_x = ((__pyx_v_qidx_x + __pyx_v_kidx_x) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1225
+        /* "epcfunc_nl.pyx":1243
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]             # <<<<<<<<<<<<<<
@@ -13208,7 +13155,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
         __pyx_t_9 = 1;
         __pyx_v_kpidx_y = ((__pyx_v_qidx_y + __pyx_v_kidx_y) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1226
+        /* "epcfunc_nl.pyx":1244
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]             # <<<<<<<<<<<<<<
@@ -13218,7 +13165,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
         __pyx_t_9 = 2;
         __pyx_v_kpidx_z = ((__pyx_v_qidx_z + __pyx_v_kidx_z) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-        /* "epcfunc_nl.pyx":1227
+        /* "epcfunc_nl.pyx":1245
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]             # <<<<<<<<<<<<<<
@@ -13231,7 +13178,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
           __pyx_v_kpidx_x = (__pyx_v_kpidx_x + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1228
+        /* "epcfunc_nl.pyx":1246
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]             # <<<<<<<<<<<<<<
@@ -13244,7 +13191,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
           __pyx_v_kpidx_y = (__pyx_v_kpidx_y + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1229
+        /* "epcfunc_nl.pyx":1247
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]             # <<<<<<<<<<<<<<
@@ -13257,7 +13204,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
           __pyx_v_kpidx_z = (__pyx_v_kpidx_z + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1230
+        /* "epcfunc_nl.pyx":1248
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
@@ -13265,36 +13212,36 @@ static PyObject *__pyx_pf_10epcfunc_nl_10MPIepcNL_L_q(CYTHON_UNUSED PyObject *__
  *                     &drveck_p[l*3*norbnb],bandveck[kpidx],&phvecval[qidx*nm_num*nmodes],
  */
         __pyx_t_9 = 1;
-        __pyx_t_18 = 2;
-        __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_18)) )))) + __pyx_v_kpidx_z);
+        __pyx_t_14 = 2;
+        __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_14)) )))) + __pyx_v_kpidx_z);
 
-        /* "epcfunc_nl.pyx":1232
+        /* "epcfunc_nl.pyx":1250
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 epckqNL_L(
  *                     &drveck_p[l*3*norbnb],bandveck[kpidx],&phvecval[qidx*nm_num*nmodes],             # <<<<<<<<<<<<<<
  *                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,
  *                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
  */
-        __pyx_t_19.data = __pyx_v_bandveck.data;
-        __pyx_t_19.memview = __pyx_v_bandveck.memview;
-        __PYX_INC_MEMVIEW(&__pyx_t_19, 0);
+        __pyx_t_17.data = __pyx_v_bandveck.data;
+        __pyx_t_17.memview = __pyx_v_bandveck.memview;
+        __PYX_INC_MEMVIEW(&__pyx_t_17, 0);
         {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_kpidx;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_bandveck.strides[0];
-        __pyx_t_19.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_17.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_19.shape[0] = __pyx_v_bandveck.shape[1];
-__pyx_t_19.strides[0] = __pyx_v_bandveck.strides[1];
-    __pyx_t_19.suboffsets[0] = -1;
+__pyx_t_17.shape[0] = __pyx_v_bandveck.shape[1];
+__pyx_t_17.strides[0] = __pyx_v_bandveck.strides[1];
+    __pyx_t_17.suboffsets[0] = -1;
 
-__pyx_t_19.shape[1] = __pyx_v_bandveck.shape[2];
-__pyx_t_19.strides[1] = __pyx_v_bandveck.strides[2];
-    __pyx_t_19.suboffsets[1] = -1;
+__pyx_t_17.shape[1] = __pyx_v_bandveck.shape[2];
+__pyx_t_17.strides[1] = __pyx_v_bandveck.strides[2];
+    __pyx_t_17.suboffsets[1] = -1;
 
-__pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
+__pyx_t_14 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
 
-        /* "epcfunc_nl.pyx":1233
+        /* "epcfunc_nl.pyx":1251
  *                 epckqNL_L(
  *                     &drveck_p[l*3*norbnb],bandveck[kpidx],&phvecval[qidx*nm_num*nmodes],
  *                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,             # <<<<<<<<<<<<<<
@@ -13303,20 +13250,20 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
         __pyx_t_9 = (__pyx_v_nm_min * __pyx_v_nbands2);
 
-        /* "epcfunc_nl.pyx":1231
+        /* "epcfunc_nl.pyx":1249
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 epckqNL_L(             # <<<<<<<<<<<<<<
  *                     &drveck_p[l*3*norbnb],bandveck[kpidx],&phvecval[qidx*nm_num*nmodes],
  *                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,
  */
-        __pyx_f_10epcfunc_nl_epckqNL_L((&(__pyx_v_drveck_p[((__pyx_v_l * 3) * __pyx_v_norbnb)])), __pyx_t_19, (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_18 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_9)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_nbands, __pyx_v_norbital, __pyx_v_nbands2, __pyx_v_norbnb, __pyx_v_norb_u, __pyx_v_norb_u_num);
-        __PYX_XDEC_MEMVIEW(&__pyx_t_19, 1);
-        __pyx_t_19.memview = NULL;
-        __pyx_t_19.data = NULL;
+        __pyx_f_10epcfunc_nl_epckqNL_L((&(__pyx_v_drveck_p[((__pyx_v_l * 3) * __pyx_v_norbnb)])), __pyx_t_17, (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_14 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_9)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_nbands, __pyx_v_norbital, __pyx_v_nbands2, __pyx_v_norbnb, __pyx_v_norb_u, __pyx_v_norb_u_num);
+        __PYX_XDEC_MEMVIEW(&__pyx_t_17, 1);
+        __pyx_t_17.memview = NULL;
+        __pyx_t_17.data = NULL;
       }
 
-      /* "epcfunc_nl.pyx":1236
+      /* "epcfunc_nl.pyx":1254
  *                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
  *                 )
  *             end = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -13325,7 +13272,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
       __pyx_v_end = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":1237
+      /* "epcfunc_nl.pyx":1255
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -13335,7 +13282,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
       __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":1238
+        /* "epcfunc_nl.pyx":1256
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)             # <<<<<<<<<<<<<<
@@ -13344,7 +13291,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
         (void)(printf(((char const *)"time in mode loop %d, knum loop %d:%12.4fs.\n"), __pyx_v_h, __pyx_v_iq, (__pyx_v_end - __pyx_v_start)));
 
-        /* "epcfunc_nl.pyx":1237
+        /* "epcfunc_nl.pyx":1255
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -13354,7 +13301,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
       }
     }
 
-    /* "epcfunc_nl.pyx":1239
+    /* "epcfunc_nl.pyx":1257
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
  *         endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -13363,7 +13310,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
     __pyx_v_endtime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":1240
+    /* "epcfunc_nl.pyx":1258
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -13373,7 +13320,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
     __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
     if (__pyx_t_12) {
 
-      /* "epcfunc_nl.pyx":1241
+      /* "epcfunc_nl.pyx":1259
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:
  *             printf("epc_NL(Left)_q part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)             # <<<<<<<<<<<<<<
@@ -13382,7 +13329,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
       (void)(printf(((char const *)"epc_NL(Left)_q part2 time in mode[%4d,%4d]:%12.4fs.\n"), __pyx_v_nm_min, (__pyx_v_nm_min + __pyx_v_nm_num), (__pyx_v_endtime - __pyx_v_starttime)));
 
-      /* "epcfunc_nl.pyx":1240
+      /* "epcfunc_nl.pyx":1258
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -13392,7 +13339,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
     }
   }
 
-  /* "epcfunc_nl.pyx":1243
+  /* "epcfunc_nl.pyx":1261
  *             printf("epc_NL(Left)_q part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
  * 
  *     free(drSHexpikR)             # <<<<<<<<<<<<<<
@@ -13401,7 +13348,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_drSHexpikR);
 
-  /* "epcfunc_nl.pyx":1244
+  /* "epcfunc_nl.pyx":1262
  * 
  *     free(drSHexpikR)
  *     free(vdrvexpikR)             # <<<<<<<<<<<<<<
@@ -13410,7 +13357,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_vdrvexpikR);
 
-  /* "epcfunc_nl.pyx":1245
+  /* "epcfunc_nl.pyx":1263
  *     free(drSHexpikR)
  *     free(vdrvexpikR)
  *     free(expikR)             # <<<<<<<<<<<<<<
@@ -13419,7 +13366,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_expikR);
 
-  /* "epcfunc_nl.pyx":1246
+  /* "epcfunc_nl.pyx":1264
  *     free(vdrvexpikR)
  *     free(expikR)
  *     free(nodelist)             # <<<<<<<<<<<<<<
@@ -13428,7 +13375,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_nodelist);
 
-  /* "epcfunc_nl.pyx":1247
+  /* "epcfunc_nl.pyx":1265
  *     free(expikR)
  *     free(nodelist)
  *     free(dr)             # <<<<<<<<<<<<<<
@@ -13437,7 +13384,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_dr);
 
-  /* "epcfunc_nl.pyx":1248
+  /* "epcfunc_nl.pyx":1266
  *     free(nodelist)
  *     free(dr)
  *     free(dr_num)             # <<<<<<<<<<<<<<
@@ -13446,7 +13393,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_dr_num);
 
-  /* "epcfunc_nl.pyx":1249
+  /* "epcfunc_nl.pyx":1267
  *     free(dr)
  *     free(dr_num)
  *     free(drveck_p)             # <<<<<<<<<<<<<<
@@ -13455,7 +13402,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_drveck_p);
 
-  /* "epcfunc_nl.pyx":1250
+  /* "epcfunc_nl.pyx":1268
  *     free(dr_num)
  *     free(drveck_p)
  *     mpi.MPI_Win_free(&win1)             # <<<<<<<<<<<<<<
@@ -13464,7 +13411,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   (void)(MPI_Win_free((&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":1251
+  /* "epcfunc_nl.pyx":1269
  *     free(drveck_p)
  *     mpi.MPI_Win_free(&win1)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -13473,7 +13420,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":1079
+  /* "epcfunc_nl.pyx":1094
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_L_q(             # <<<<<<<<<<<<<<
@@ -13502,7 +13449,7 @@ __pyx_t_18 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":1256
+/* "epcfunc_nl.pyx":1274
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R_q(             # <<<<<<<<<<<<<<
@@ -13608,137 +13555,137 @@ static PyObject *__pyx_pw_10epcfunc_nl_13MPIepcNL_R_q(PyObject *__pyx_self, PyOb
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmodes)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 1); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 1); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_loop)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 2); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 2); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_buffer)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 3); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 3); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 4); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 4); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nbands)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 5); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 5); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ncell)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 6); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 6); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_knum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 7); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 7); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom_split)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 8); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 8); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nq)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 9); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 9); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_R_list)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 10); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 10); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nqpath)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 11); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 11); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_qpath)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 12); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 12); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drSH)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 13); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 13); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_bandveck)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 14); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 14); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_phvecval_p)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 15); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 15); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 16); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 16); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 17); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 17); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 18); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 18); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 19); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 19); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 20); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 20); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 21:
         if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 21); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 21); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 22:
         if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 22); __PYX_ERR(0, 1256, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, 22); __PYX_ERR(0, 1274, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_R_q") < 0)) __PYX_ERR(0, 1256, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepcNL_R_q") < 0)) __PYX_ERR(0, 1274, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 23) {
       goto __pyx_L5_argtuple_error;
@@ -13768,38 +13715,38 @@ static PyObject *__pyx_pw_10epcfunc_nl_13MPIepcNL_R_q(PyObject *__pyx_self, PyOb
       values[22] = PyTuple_GET_ITEM(__pyx_args, 22);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1257, __pyx_L3_error)
-    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1257, __pyx_L3_error)
-    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1257, __pyx_L3_error)
-    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1258, __pyx_L3_error)
-    __pyx_v_nbands = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nbands == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1258, __pyx_L3_error)
-    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1258, __pyx_L3_error)
-    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1258, __pyx_L3_error)
-    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 1258, __pyx_L3_error)
-    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 1259, __pyx_L3_error)
-    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 1259, __pyx_L3_error)
-    __pyx_v_nqpath = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_nqpath == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1259, __pyx_L3_error)
-    __pyx_v_qpath = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qpath.memview)) __PYX_ERR(0, 1259, __pyx_L3_error)
-    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1259, __pyx_L3_error)
-    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc___pyx_t_double_complex(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 1260, __pyx_L3_error)
-    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 1260, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1261, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1261, __pyx_L3_error)
-    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 1261, __pyx_L3_error)
-    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 1261, __pyx_L3_error)
-    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 1262, __pyx_L3_error)
-    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 1262, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1262, __pyx_L3_error)
+    __pyx_v_nmodes = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmodes == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1275, __pyx_L3_error)
+    __pyx_v_natom_loop = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_natom_loop == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1275, __pyx_L3_error)
+    __pyx_v_natom_buffer = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom_buffer == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1275, __pyx_L3_error)
+    __pyx_v_norbital = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1276, __pyx_L3_error)
+    __pyx_v_nbands = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nbands == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1276, __pyx_L3_error)
+    __pyx_v_ncell = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_ncell == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1276, __pyx_L3_error)
+    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1276, __pyx_L3_error)
+    __pyx_v_natom_split = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_natom_split.memview)) __PYX_ERR(0, 1276, __pyx_L3_error)
+    __pyx_v_nq = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_nq.memview)) __PYX_ERR(0, 1277, __pyx_L3_error)
+    __pyx_v_R_list = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_R_list.memview)) __PYX_ERR(0, 1277, __pyx_L3_error)
+    __pyx_v_nqpath = __Pyx_PyInt_As_int(values[11]); if (unlikely((__pyx_v_nqpath == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1277, __pyx_L3_error)
+    __pyx_v_qpath = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_qpath.memview)) __PYX_ERR(0, 1277, __pyx_L3_error)
+    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1277, __pyx_L3_error)
+    __pyx_v_bandveck = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc___pyx_t_double_complex(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_bandveck.memview)) __PYX_ERR(0, 1278, __pyx_L3_error)
+    __pyx_v_phvecval_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_phvecval_p.memview)) __PYX_ERR(0, 1278, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1279, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1279, __pyx_L3_error)
+    __pyx_v_norb = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb.memview)) __PYX_ERR(0, 1279, __pyx_L3_error)
+    __pyx_v_norb_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_num.memview)) __PYX_ERR(0, 1279, __pyx_L3_error)
+    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 1280, __pyx_L3_error)
+    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 1280, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[22], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1280, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1256, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepcNL_R_q", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1274, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepcNL_R_q", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1257, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1275, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(__pyx_self, __pyx_v_comm, __pyx_v_nmodes, __pyx_v_natom_loop, __pyx_v_natom_buffer, __pyx_v_norbital, __pyx_v_nbands, __pyx_v_ncell, __pyx_v_knum, __pyx_v_natom_split, __pyx_v_nq, __pyx_v_R_list, __pyx_v_nqpath, __pyx_v_qpath, __pyx_v_drSH, __pyx_v_bandveck, __pyx_v_phvecval_p, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_norb, __pyx_v_norb_num, __pyx_v_norb_u, __pyx_v_norb_u_num, __pyx_v_epc_t);
 
   /* function exit code */
@@ -13836,7 +13783,6 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   int __pyx_v_h;
   int __pyx_v_i;
   int __pyx_v_j;
-  int __pyx_v_k;
   int __pyx_v_l;
   int __pyx_v_xyz;
   int __pyx_v_iq;
@@ -13907,12 +13853,10 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   int __pyx_t_14;
   int __pyx_t_15;
   Py_ssize_t __pyx_t_16;
-  int __pyx_t_17;
-  int __pyx_t_18;
-  __Pyx_memviewslice __pyx_t_19 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_t_17 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_RefNannySetupContext("MPIepcNL_R_q", 0);
 
-  /* "epcfunc_nl.pyx":1264
+  /* "epcfunc_nl.pyx":1282
  *     int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -13922,7 +13866,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":1277
+  /* "epcfunc_nl.pyx":1295
  *     cdef double complex* vdrvexpikR
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3             # <<<<<<<<<<<<<<
@@ -13931,7 +13875,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_natom = (((long)__pyx_v_nmodes) / 3);
 
-  /* "epcfunc_nl.pyx":1278
+  /* "epcfunc_nl.pyx":1296
  *     cdef double complex* expikR
  *     cdef int natom = nmodes/3
  *     cdef int norbnb = norbital*nbands             # <<<<<<<<<<<<<<
@@ -13940,7 +13884,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_norbnb = (__pyx_v_norbital * __pyx_v_nbands);
 
-  /* "epcfunc_nl.pyx":1279
+  /* "epcfunc_nl.pyx":1297
  *     cdef int natom = nmodes/3
  *     cdef int norbnb = norbital*nbands
  *     cdef int nbands2 = nbands*nbands             # <<<<<<<<<<<<<<
@@ -13949,7 +13893,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_nbands2 = (__pyx_v_nbands * __pyx_v_nbands);
 
-  /* "epcfunc_nl.pyx":1280
+  /* "epcfunc_nl.pyx":1298
  *     cdef int norbnb = norbital*nbands
  *     cdef int nbands2 = nbands*nbands
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -13958,7 +13902,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "epcfunc_nl.pyx":1281
+  /* "epcfunc_nl.pyx":1299
  *     cdef int nbands2 = nbands*nbands
  *     cdef int s_int = sizeof(int)
  *     cdef int s_dcplx = sizeof(double complex)             # <<<<<<<<<<<<<<
@@ -13967,7 +13911,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_s_dcplx = (sizeof(__pyx_t_double_complex));
 
-  /* "epcfunc_nl.pyx":1294
+  /* "epcfunc_nl.pyx":1312
  *     cdef double kpx, kpy, kpz, RKpx, RKpy, RKpz, RKp, \
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j             # <<<<<<<<<<<<<<
@@ -13976,7 +13920,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_pi2j = __Pyx_c_prod_double(__pyx_t_double_complex_from_parts(M_PI, 0), __pyx_t_double_complex_from_parts(0, 2.0));
 
-  /* "epcfunc_nl.pyx":1295
+  /* "epcfunc_nl.pyx":1313
  *                 starttime, endtime
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0             # <<<<<<<<<<<<<<
@@ -13985,7 +13929,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_c1 = __pyx_t_double_complex_from_parts(1.0, 0);
 
-  /* "epcfunc_nl.pyx":1296
+  /* "epcfunc_nl.pyx":1314
  *     cdef double complex pi2j = M_PI*2j
  *     cdef double complex c1 = 1.0
  *     cdef double complex c0 = 0.0             # <<<<<<<<<<<<<<
@@ -13994,7 +13938,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_c0 = __pyx_t_double_complex_from_parts(0.0, 0);
 
-  /* "epcfunc_nl.pyx":1298
+  /* "epcfunc_nl.pyx":1316
  *     cdef double complex c0 = 0.0
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -14003,7 +13947,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":1300
+  /* "epcfunc_nl.pyx":1318
  *     starttime = mpi.MPI_Wtime()
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -14012,7 +13956,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":1301
+  /* "epcfunc_nl.pyx":1319
  *     # get shm_comm
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -14021,7 +13965,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":1302
+  /* "epcfunc_nl.pyx":1320
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     mpi.MPI_Comm_split_type(             # <<<<<<<<<<<<<<
@@ -14030,7 +13974,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Comm_split_type(__pyx_v_c_comm, MPI_COMM_TYPE_SHARED, 0, MPI_INFO_NULL, (&__pyx_v_shm_comm)));
 
-  /* "epcfunc_nl.pyx":1305
+  /* "epcfunc_nl.pyx":1323
  *         c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)             # <<<<<<<<<<<<<<
@@ -14039,7 +13983,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_shm_comm, (&__pyx_v_shm_nprocs));
 
-  /* "epcfunc_nl.pyx":1306
+  /* "epcfunc_nl.pyx":1324
  *     )
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)             # <<<<<<<<<<<<<<
@@ -14048,7 +13992,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_shm_comm, (&__pyx_v_shm_id));
 
-  /* "epcfunc_nl.pyx":1308
+  /* "epcfunc_nl.pyx":1326
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs             # <<<<<<<<<<<<<<
@@ -14057,7 +14001,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_nnode = (__pyx_v_nprocs / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":1309
+  /* "epcfunc_nl.pyx":1327
  *     # create internode group/comm
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs             # <<<<<<<<<<<<<<
@@ -14066,7 +14010,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_node_id = (__pyx_v_myid / __pyx_v_shm_nprocs);
 
-  /* "epcfunc_nl.pyx":1310
+  /* "epcfunc_nl.pyx":1328
  *     nnode = nprocs/shm_nprocs
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)             # <<<<<<<<<<<<<<
@@ -14075,7 +14019,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_nodelist = ((int *)malloc((__pyx_v_s_int * __pyx_v_nnode)));
 
-  /* "epcfunc_nl.pyx":1311
+  /* "epcfunc_nl.pyx":1329
  *     node_id = myid/shm_nprocs
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -14087,7 +14031,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1312
+    /* "epcfunc_nl.pyx":1330
  *     nodelist = <int*>malloc(s_int*nnode)
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -14097,7 +14041,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     (__pyx_v_nodelist[__pyx_v_i]) = (__pyx_v_i * __pyx_v_shm_nprocs);
   }
 
-  /* "epcfunc_nl.pyx":1313
+  /* "epcfunc_nl.pyx":1331
  *     for i in range(nnode):
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)             # <<<<<<<<<<<<<<
@@ -14106,7 +14050,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Comm_group(__pyx_v_c_comm, (&__pyx_v_split_gp)));
 
-  /* "epcfunc_nl.pyx":1314
+  /* "epcfunc_nl.pyx":1332
  *         nodelist[i] = i*shm_nprocs
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)             # <<<<<<<<<<<<<<
@@ -14115,7 +14059,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Group_incl(__pyx_v_split_gp, __pyx_v_nnode, __pyx_v_nodelist, (&__pyx_v_shm_gp)));
 
-  /* "epcfunc_nl.pyx":1315
+  /* "epcfunc_nl.pyx":1333
  *     mpi.MPI_Comm_group(c_comm,&split_gp)
  *     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)             # <<<<<<<<<<<<<<
@@ -14124,7 +14068,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_create(__pyx_v_c_comm, __pyx_v_shm_gp, (&__pyx_v_remote_comm));
 
-  /* "epcfunc_nl.pyx":1317
+  /* "epcfunc_nl.pyx":1335
  *     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)
  * 
  *     dr = <int*>calloc((nnode+1),s_int)             # <<<<<<<<<<<<<<
@@ -14133,7 +14077,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_dr = ((int *)calloc((__pyx_v_nnode + 1), __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":1318
+  /* "epcfunc_nl.pyx":1336
  * 
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)             # <<<<<<<<<<<<<<
@@ -14142,7 +14086,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_dr_num = ((int *)calloc(__pyx_v_nnode, __pyx_v_s_int));
 
-  /* "epcfunc_nl.pyx":1319
+  /* "epcfunc_nl.pyx":1337
  *     dr = <int*>calloc((nnode+1),s_int)
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):             # <<<<<<<<<<<<<<
@@ -14154,7 +14098,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1320
+    /* "epcfunc_nl.pyx":1338
  *     dr_num = <int*>calloc(nnode,s_int)
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs             # <<<<<<<<<<<<<<
@@ -14163,7 +14107,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_shm_proc_s = (__pyx_v_i * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":1321
+    /* "epcfunc_nl.pyx":1339
  *     for i in range(nnode):
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs             # <<<<<<<<<<<<<<
@@ -14172,7 +14116,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_shm_proc_e = ((__pyx_v_i + 1) * __pyx_v_shm_nprocs);
 
-    /* "epcfunc_nl.pyx":1322
+    /* "epcfunc_nl.pyx":1340
  *         shm_proc_s = i*shm_nprocs
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):             # <<<<<<<<<<<<<<
@@ -14184,7 +14128,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     for (__pyx_t_7 = __pyx_v_shm_proc_s; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_j = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":1323
+      /* "epcfunc_nl.pyx":1341
  *         shm_proc_e = (i+1)*shm_nprocs
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]*nbands             # <<<<<<<<<<<<<<
@@ -14196,7 +14140,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
       (__pyx_v_dr_num[__pyx_t_8]) = ((__pyx_v_dr_num[__pyx_t_8]) + ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) ))) * __pyx_v_nbands));
     }
 
-    /* "epcfunc_nl.pyx":1324
+    /* "epcfunc_nl.pyx":1342
  *         for j in range(shm_proc_s,shm_proc_e):
  *             dr_num[i] += norb_num[j]*nbands
  *         for j in range(i+1,nnode+1):             # <<<<<<<<<<<<<<
@@ -14208,7 +14152,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     for (__pyx_t_5 = (__pyx_v_i + 1); __pyx_t_5 < __pyx_t_11; __pyx_t_5+=1) {
       __pyx_v_j = __pyx_t_5;
 
-      /* "epcfunc_nl.pyx":1325
+      /* "epcfunc_nl.pyx":1343
  *             dr_num[i] += norb_num[j]*nbands
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]             # <<<<<<<<<<<<<<
@@ -14220,7 +14164,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     }
   }
 
-  /* "epcfunc_nl.pyx":1326
+  /* "epcfunc_nl.pyx":1344
  *         for j in range(i+1,nnode+1):
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]             # <<<<<<<<<<<<<<
@@ -14230,7 +14174,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1327
+  /* "epcfunc_nl.pyx":1345
  *             dr[j] += dr_num[i]
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]             # <<<<<<<<<<<<<<
@@ -14240,7 +14184,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_norb_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1328
+  /* "epcfunc_nl.pyx":1346
  *     norb_p = norb_num[myid]
  *     norb_s = norb[myid]
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)             # <<<<<<<<<<<<<<
@@ -14249,7 +14193,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_bandveckp = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_nbands)));
 
-  /* "epcfunc_nl.pyx":1329
+  /* "epcfunc_nl.pyx":1347
  *     norb_s = norb[myid]
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)
  *     expikR = <double complex*>malloc(s_dcplx*ncell)             # <<<<<<<<<<<<<<
@@ -14258,7 +14202,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_expikR = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_ncell)));
 
-  /* "epcfunc_nl.pyx":1330
+  /* "epcfunc_nl.pyx":1348
  *     bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
@@ -14267,7 +14211,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_drSHexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
 
-  /* "epcfunc_nl.pyx":1331
+  /* "epcfunc_nl.pyx":1349
  *     expikR = <double complex*>malloc(s_dcplx*ncell)
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrv = <double complex*>malloc(s_dcplx*nbands2)             # <<<<<<<<<<<<<<
@@ -14276,7 +14220,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_vdrv = ((__pyx_t_double_complex *)malloc((__pyx_v_s_dcplx * __pyx_v_nbands2)));
 
-  /* "epcfunc_nl.pyx":1332
+  /* "epcfunc_nl.pyx":1350
  *     drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
  *     vdrv = <double complex*>malloc(s_dcplx*nbands2)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)             # <<<<<<<<<<<<<<
@@ -14285,7 +14229,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_vdrvexpikR = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_nmodes) * __pyx_v_nbands2)));
 
-  /* "epcfunc_nl.pyx":1333
+  /* "epcfunc_nl.pyx":1351
  *     vdrv = <double complex*>malloc(s_dcplx*nbands2)
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)             # <<<<<<<<<<<<<<
@@ -14294,7 +14238,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_drveck_p = ((__pyx_t_double_complex *)malloc(((__pyx_v_s_dcplx * __pyx_v_norb_p) * __pyx_v_nbands)));
 
-  /* "epcfunc_nl.pyx":1334
+  /* "epcfunc_nl.pyx":1352
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -14304,7 +14248,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1335
+    /* "epcfunc_nl.pyx":1353
  *     drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)
  *     if (shm_id == 0):
  *         l_phvecval = s_dcplx*knum*natom_buffer*3*nmodes             # <<<<<<<<<<<<<<
@@ -14313,7 +14257,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_l_phvecval = ((((__pyx_v_s_dcplx * __pyx_v_knum) * __pyx_v_natom_buffer) * 3) * __pyx_v_nmodes);
 
-    /* "epcfunc_nl.pyx":1336
+    /* "epcfunc_nl.pyx":1354
  *     if (shm_id == 0):
  *         l_phvecval = s_dcplx*knum*natom_buffer*3*nmodes
  *         l_drveck = s_dcplx*knum*3*norbnb             # <<<<<<<<<<<<<<
@@ -14322,7 +14266,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_l_drveck = (((__pyx_v_s_dcplx * __pyx_v_knum) * 3) * __pyx_v_norbnb);
 
-    /* "epcfunc_nl.pyx":1334
+    /* "epcfunc_nl.pyx":1352
  *     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
  *     drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)
  *     if (shm_id == 0):             # <<<<<<<<<<<<<<
@@ -14332,7 +14276,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     goto __pyx_L11;
   }
 
-  /* "epcfunc_nl.pyx":1338
+  /* "epcfunc_nl.pyx":1356
  *         l_drveck = s_dcplx*knum*3*norbnb
  *     else:
  *         l_phvecval = 0             # <<<<<<<<<<<<<<
@@ -14342,7 +14286,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   /*else*/ {
     __pyx_v_l_phvecval = 0;
 
-    /* "epcfunc_nl.pyx":1339
+    /* "epcfunc_nl.pyx":1357
  *     else:
  *         l_phvecval = 0
  *         l_drveck = 0             # <<<<<<<<<<<<<<
@@ -14353,7 +14297,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   }
   __pyx_L11:;
 
-  /* "epcfunc_nl.pyx":1340
+  /* "epcfunc_nl.pyx":1358
  *         l_phvecval = 0
  *         l_drveck = 0
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -14362,7 +14306,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_drveck, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_drveck), (&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":1343
+  /* "epcfunc_nl.pyx":1361
  *         l_drveck,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&drveck,&win
  *     )
  *     mpi.MPI_Win_allocate_shared(             # <<<<<<<<<<<<<<
@@ -14371,7 +14315,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Win_allocate_shared(__pyx_v_l_phvecval, __pyx_v_s_dcplx, MPI_INFO_NULL, __pyx_v_shm_comm, (&__pyx_v_phvecval), (&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":1346
+  /* "epcfunc_nl.pyx":1364
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -14381,7 +14325,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   __pyx_t_12 = ((__pyx_v_shm_id != 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1347
+    /* "epcfunc_nl.pyx":1365
  *     )
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)             # <<<<<<<<<<<<<<
@@ -14390,7 +14334,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     (void)(MPI_Win_shared_query(__pyx_v_win, 0, (&__pyx_v_l_drveck), (&__pyx_v_s_dcplx), (&__pyx_v_drveck)));
 
-    /* "epcfunc_nl.pyx":1348
+    /* "epcfunc_nl.pyx":1366
  *     if (shm_id != 0):
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)             # <<<<<<<<<<<<<<
@@ -14399,7 +14343,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     (void)(MPI_Win_shared_query(__pyx_v_win1, 0, (&__pyx_v_l_phvecval), (&__pyx_v_s_dcplx), (&__pyx_v_phvecval)));
 
-    /* "epcfunc_nl.pyx":1346
+    /* "epcfunc_nl.pyx":1364
  *         l_phvecval,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&phvecval,&win1
  *     )
  *     if (shm_id != 0):             # <<<<<<<<<<<<<<
@@ -14408,7 +14352,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   }
 
-  /* "epcfunc_nl.pyx":1349
+  /* "epcfunc_nl.pyx":1367
  *         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
  *         mpi.MPI_Win_shared_query(win1,0,&l_phvecval,&s_dcplx,&phvecval)
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -14417,7 +14361,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "epcfunc_nl.pyx":1351
+  /* "epcfunc_nl.pyx":1369
  *     mpi.MPI_Barrier(shm_comm)
  * 
  *     knum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -14427,334 +14371,325 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1352
+  /* "epcfunc_nl.pyx":1370
  * 
  *     knum_p = kproc_num[myid]
  *     knum_s = kproc[myid]             # <<<<<<<<<<<<<<
  * 
- *     for h in range(knum):
+ *     if norb_p > 0:
  */
   __pyx_t_9 = __pyx_v_myid;
   __pyx_v_knum_s = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_9)) )));
 
-  /* "epcfunc_nl.pyx":1354
+  /* "epcfunc_nl.pyx":1372
  *     knum_s = kproc[myid]
  * 
- *     for h in range(knum):             # <<<<<<<<<<<<<<
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
  */
-  __pyx_t_2 = __pyx_v_knum;
-  __pyx_t_3 = __pyx_t_2;
-  for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
-    __pyx_v_h = __pyx_t_4;
+  __pyx_t_12 = ((__pyx_v_norb_p > 0) != 0);
+  if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1355
+    /* "epcfunc_nl.pyx":1373
  * 
- *     for h in range(knum):
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]             # <<<<<<<<<<<<<<
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+ *     if norb_p > 0:
+ *         for h in range(knum):             # <<<<<<<<<<<<<<
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
  */
-    __pyx_t_9 = 2;
-    __pyx_v_kpidx_z = (__pyx_v_h % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-    __pyx_t_9 = 2;
-    __pyx_v_kpidx_xy = (__pyx_v_h / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+    __pyx_t_2 = __pyx_v_knum;
+    __pyx_t_3 = __pyx_t_2;
+    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
+      __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1356
- *     for h in range(knum):
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+      /* "epcfunc_nl.pyx":1374
+ *     if norb_p > 0:
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]             # <<<<<<<<<<<<<<
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  */
-    __pyx_t_9 = 1;
-    __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-    __pyx_t_9 = 1;
-    __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
-
-    /* "epcfunc_nl.pyx":1357
- *         kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- */
-    __pyx_t_9 = 1;
-    __pyx_t_13 = 2;
-    __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kpidx_z);
-
-    /* "epcfunc_nl.pyx":1358
- *         kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- */
-    __pyx_t_13 = 0;
-    __pyx_v_kpx = (((double)__pyx_v_kpidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":1359
- *         kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- */
-    __pyx_t_13 = 1;
-    __pyx_v_kpy = (((double)__pyx_v_kpidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":1360
- *         kpx = (<double>(kpidx_x))/(<double>(nq[0]))
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx
- */
-    __pyx_t_13 = 2;
-    __pyx_v_kpz = (((double)__pyx_v_kpidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
-
-    /* "epcfunc_nl.pyx":1361
- *         kpy = (<double>(kpidx_y))/(<double>(nq[1]))
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):             # <<<<<<<<<<<<<<
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy
- */
-    __pyx_t_5 = __pyx_v_ncell;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
-
-      /* "epcfunc_nl.pyx":1362
- *         kpz = (<double>(kpidx_z))/(<double>(nq[2]))
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx             # <<<<<<<<<<<<<<
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz
- */
-      __pyx_t_13 = __pyx_v_i;
-      __pyx_t_9 = 0;
-      __pyx_v_RKpx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpx);
-
-      /* "epcfunc_nl.pyx":1363
- *         for i in range(ncell):
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy             # <<<<<<<<<<<<<<
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz
- */
-      __pyx_t_9 = __pyx_v_i;
-      __pyx_t_13 = 1;
-      __pyx_v_RKpy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kpy);
-
-      /* "epcfunc_nl.pyx":1364
- *             RKpx = R_list[i,0]*kpx
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz             # <<<<<<<<<<<<<<
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- */
-      __pyx_t_13 = __pyx_v_i;
       __pyx_t_9 = 2;
-      __pyx_v_RKpz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpz);
+      __pyx_v_kpidx_z = (__pyx_v_h % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+      __pyx_t_9 = 2;
+      __pyx_v_kpidx_xy = (__pyx_v_h / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-      /* "epcfunc_nl.pyx":1365
- *             RKpy = R_list[i,1]*kpy
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz             # <<<<<<<<<<<<<<
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):
+      /* "epcfunc_nl.pyx":1375
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]             # <<<<<<<<<<<<<<
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
  */
-      __pyx_v_RKp = ((__pyx_v_RKpx + __pyx_v_RKpy) + __pyx_v_RKpz);
+      __pyx_t_9 = 1;
+      __pyx_v_kpidx_y = (__pyx_v_kpidx_xy % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
+      __pyx_t_9 = 1;
+      __pyx_v_kpidx_x = (__pyx_v_kpidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))));
 
-      /* "epcfunc_nl.pyx":1366
- *             RKpz = R_list[i,2]*kpz
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)             # <<<<<<<<<<<<<<
- *         for i in range(norbital):
- *             for j in range(nbands):
+      /* "epcfunc_nl.pyx":1376
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
  */
-      (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(-1.0, 0), __pyx_v_pi2j), __pyx_t_double_complex_from_parts(__pyx_v_RKp, 0)));
-    }
+      __pyx_t_9 = 1;
+      __pyx_t_13 = 2;
+      __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kpidx_z);
 
-    /* "epcfunc_nl.pyx":1367
- *             RKp = RKpx + RKpy + RKpz
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):             # <<<<<<<<<<<<<<
- *             for j in range(nbands):
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+      /* "epcfunc_nl.pyx":1377
+ *             kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))             # <<<<<<<<<<<<<<
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
  */
-    __pyx_t_5 = __pyx_v_norbital;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_i = __pyx_t_7;
+      __pyx_t_13 = 0;
+      __pyx_v_kpx = (((double)__pyx_v_kpidx_x) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
-      /* "epcfunc_nl.pyx":1368
- *             expikR[i] = cexp(-1.0*pi2j*RKp)
- *         for i in range(norbital):
- *             for j in range(nbands):             # <<<<<<<<<<<<<<
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
- *         for xyz in range(3):
+      /* "epcfunc_nl.pyx":1378
+ *             kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))             # <<<<<<<<<<<<<<
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
  */
-      __pyx_t_8 = __pyx_v_nbands;
-      __pyx_t_14 = __pyx_t_8;
-      for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
-        __pyx_v_j = __pyx_t_15;
+      __pyx_t_13 = 1;
+      __pyx_v_kpy = (((double)__pyx_v_kpidx_y) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
 
-        /* "epcfunc_nl.pyx":1369
- *         for i in range(norbital):
- *             for j in range(nbands):
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])             # <<<<<<<<<<<<<<
- *         for xyz in range(3):
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
+      /* "epcfunc_nl.pyx":1379
+ *             kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))             # <<<<<<<<<<<<<<
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx
  */
-        __pyx_t_9 = __pyx_v_kpidx;
+      __pyx_t_13 = 2;
+      __pyx_v_kpz = (((double)__pyx_v_kpidx_z) / ((double)(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))));
+
+      /* "epcfunc_nl.pyx":1380
+ *             kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):             # <<<<<<<<<<<<<<
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy
+ */
+      __pyx_t_5 = __pyx_v_ncell;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
+
+        /* "epcfunc_nl.pyx":1381
+ *             kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx             # <<<<<<<<<<<<<<
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz
+ */
         __pyx_t_13 = __pyx_v_i;
-        __pyx_t_16 = __pyx_v_j;
-        (__pyx_v_bandveckp[((__pyx_v_i * __pyx_v_nbands) + __pyx_v_j)]) = conj((*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_13 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_16)) ))));
+        __pyx_t_9 = 0;
+        __pyx_v_RKpx = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpx);
+
+        /* "epcfunc_nl.pyx":1382
+ *             for i in range(ncell):
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy             # <<<<<<<<<<<<<<
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz
+ */
+        __pyx_t_9 = __pyx_v_i;
+        __pyx_t_13 = 1;
+        __pyx_v_RKpy = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_9 * __pyx_v_R_list.strides[0]) )) + __pyx_t_13)) ))) * __pyx_v_kpy);
+
+        /* "epcfunc_nl.pyx":1383
+ *                 RKpx = R_list[i,0]*kpx
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz             # <<<<<<<<<<<<<<
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ */
+        __pyx_t_13 = __pyx_v_i;
+        __pyx_t_9 = 2;
+        __pyx_v_RKpz = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_R_list.data + __pyx_t_13 * __pyx_v_R_list.strides[0]) )) + __pyx_t_9)) ))) * __pyx_v_kpz);
+
+        /* "epcfunc_nl.pyx":1384
+ *                 RKpy = R_list[i,1]*kpy
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz             # <<<<<<<<<<<<<<
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):
+ */
+        __pyx_v_RKp = ((__pyx_v_RKpx + __pyx_v_RKpy) + __pyx_v_RKpz);
+
+        /* "epcfunc_nl.pyx":1385
+ *                 RKpz = R_list[i,2]*kpz
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)             # <<<<<<<<<<<<<<
+ *             for i in range(norbital):
+ *                 for j in range(nbands):
+ */
+        (__pyx_v_expikR[__pyx_v_i]) = cexp(__Pyx_c_prod_double(__Pyx_c_prod_double(__pyx_t_double_complex_from_parts(-1.0, 0), __pyx_v_pi2j), __pyx_t_double_complex_from_parts(__pyx_v_RKp, 0)));
       }
-    }
 
-    /* "epcfunc_nl.pyx":1370
- *             for j in range(nbands):
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
- *         for xyz in range(3):             # <<<<<<<<<<<<<<
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
+      /* "epcfunc_nl.pyx":1386
+ *                 RKp = RKpx + RKpy + RKpz
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):             # <<<<<<<<<<<<<<
+ *                 for j in range(nbands):
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
  */
-    for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
-      __pyx_v_xyz = __pyx_t_5;
+      __pyx_t_5 = __pyx_v_norbital;
+      __pyx_t_6 = __pyx_t_5;
+      for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
+        __pyx_v_i = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":1371
- *                 bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
- *         for xyz in range(3):
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)             # <<<<<<<<<<<<<<
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
+        /* "epcfunc_nl.pyx":1387
+ *                 expikR[i] = cexp(-1.0*pi2j*RKp)
+ *             for i in range(norbital):
+ *                 for j in range(nbands):             # <<<<<<<<<<<<<<
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+ *             for xyz in range(3):
  */
-      (void)(memset(__pyx_v_drSHexpikR, 0, ((__pyx_v_s_dcplx * __pyx_v_norbital) * __pyx_v_norb_p)));
+        __pyx_t_8 = __pyx_v_nbands;
+        __pyx_t_14 = __pyx_t_8;
+        for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
+          __pyx_v_j = __pyx_t_15;
 
-      /* "epcfunc_nl.pyx":1372
- *         for xyz in range(3):
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):             # <<<<<<<<<<<<<<
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
+          /* "epcfunc_nl.pyx":1388
+ *             for i in range(norbital):
+ *                 for j in range(nbands):
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])             # <<<<<<<<<<<<<<
+ *             for xyz in range(3):
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
  */
-      __pyx_t_6 = __pyx_v_ncell;
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
-
-        /* "epcfunc_nl.pyx":1373
- *             memset(drSHexpikR,0,s_dcplx*norbital*norb_p)
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):             # <<<<<<<<<<<<<<
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(
- */
-        __pyx_t_14 = (__pyx_v_norb_p * __pyx_v_norbital);
-        __pyx_t_15 = __pyx_t_14;
-        for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_15; __pyx_t_17+=1) {
-          __pyx_v_k = __pyx_t_17;
-
-          /* "epcfunc_nl.pyx":1374
- *             for j in range(ncell):
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]             # <<<<<<<<<<<<<<
- *             cblas_zgemm3m(
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- */
-          __pyx_t_18 = __pyx_v_k;
-          __pyx_t_16 = __pyx_v_xyz;
-          __pyx_t_13 = __pyx_v_j;
-          __pyx_t_9 = __pyx_v_k;
-          (__pyx_v_drSHexpikR[__pyx_t_18]) = __Pyx_c_sum_double((__pyx_v_drSHexpikR[__pyx_t_18]), __Pyx_c_prod_double(__pyx_t_double_complex_from_parts((*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_16 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_9)) ))), 0), (__pyx_v_expikR[__pyx_v_j])));
+          __pyx_t_9 = __pyx_v_kpidx;
+          __pyx_t_13 = __pyx_v_i;
+          __pyx_t_16 = __pyx_v_j;
+          (__pyx_v_bandveckp[((__pyx_v_i * __pyx_v_nbands) + __pyx_v_j)]) = conj((*((__pyx_t_double_complex *) ( /* dim=2 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_bandveck.data + __pyx_t_9 * __pyx_v_bandveck.strides[0]) ) + __pyx_t_13 * __pyx_v_bandveck.strides[1]) )) + __pyx_t_16)) ))));
         }
       }
 
-      /* "epcfunc_nl.pyx":1375
- *                 for k in range(norb_p*norbital):
- *                     drSHexpikR[k] += drSH[xyz,j,k]*expikR[j]
- *             cblas_zgemm3m(             # <<<<<<<<<<<<<<
- *                 CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
- *                 nbands,norbital,&c1,drSHexpikR,norbital,
+      /* "epcfunc_nl.pyx":1389
+ *                 for j in range(nbands):
+ *                     bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+ *             for xyz in range(3):             # <<<<<<<<<<<<<<
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(
  */
-      cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, __pyx_v_bandveckp, __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_p, __pyx_v_nbands);
+      for (__pyx_t_5 = 0; __pyx_t_5 < 3; __pyx_t_5+=1) {
+        __pyx_v_xyz = __pyx_t_5;
 
-      /* "epcfunc_nl.pyx":1381
- *             )
- *             # drveck_p -> drveck (gather to node comm)
- *             for j in range(norb_p*nbands):             # <<<<<<<<<<<<<<
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)
- */
-      __pyx_t_6 = (__pyx_v_norb_p * __pyx_v_nbands);
-      __pyx_t_7 = __pyx_t_6;
-      for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
-        __pyx_v_j = __pyx_t_8;
-
-        /* "epcfunc_nl.pyx":1382
- *             # drveck_p -> drveck (gather to node comm)
- *             for j in range(norb_p*nbands):
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]             # <<<<<<<<<<<<<<
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):
- */
-        (__pyx_v_drveck[(((((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb) + (__pyx_v_norb_s * __pyx_v_nbands)) + __pyx_v_j)]) = (__pyx_v_drveck_p[__pyx_v_j]);
-      }
-
-      /* "epcfunc_nl.pyx":1383
- *             for j in range(norb_p*nbands):
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
- *             if (shm_id == 0):
- *                 mpi.MPI_Allgatherv(
- */
-      (void)(MPI_Barrier(__pyx_v_shm_comm));
-
-      /* "epcfunc_nl.pyx":1384
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):             # <<<<<<<<<<<<<<
- *                 mpi.MPI_Allgatherv(
- *                     mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
- */
-      __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
-      if (__pyx_t_12) {
-
-        /* "epcfunc_nl.pyx":1385
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):
- *                 mpi.MPI_Allgatherv(             # <<<<<<<<<<<<<<
- *                     mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
- *                     &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
- */
-        (void)(MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL, (&(__pyx_v_drveck[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb)])), (&(__pyx_v_dr_num[0])), (&(__pyx_v_dr[0])), MPI_DOUBLE_COMPLEX, __pyx_v_remote_comm));
-
-        /* "epcfunc_nl.pyx":1384
- *                 drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
- *             mpi.MPI_Barrier(shm_comm)
- *             if (shm_id == 0):             # <<<<<<<<<<<<<<
- *                 mpi.MPI_Allgatherv(
- *                     mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
- */
-      }
-
-      /* "epcfunc_nl.pyx":1390
- *                     mpi.MPI_DOUBLE_COMPLEX,remote_comm
+        /* "epcfunc_nl.pyx":1393
+ *                 cblas_dgemm(
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,             # <<<<<<<<<<<<<<
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
  *                 )
- *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
+ */
+        __pyx_t_16 = __pyx_v_xyz;
+        __pyx_t_13 = 0;
+        __pyx_t_9 = 0;
+
+        /* "epcfunc_nl.pyx":1391
+ *             for xyz in range(3):
+ *                 # drSH[nR,norb_p*norb]*expikR[nR,2]
+ *                 cblas_dgemm(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+ *                     2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+ */
+        cblas_dgemm(CblasRowMajor, CblasTrans, CblasNoTrans, (__pyx_v_norb_p * __pyx_v_norbital), 2, __pyx_v_ncell, 1.0, (&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_16 * __pyx_v_drSH.strides[0]) ) + __pyx_t_13 * __pyx_v_drSH.strides[1]) )) + __pyx_t_9)) )))), (__pyx_v_norb_p * __pyx_v_norbital), ((double *)__pyx_v_expikR), 2, 0.0, ((double *)__pyx_v_drSHexpikR), 2);
+
+        /* "epcfunc_nl.pyx":1396
+ *                     <double*>expikR,2,0.0,<double*>drSHexpikR,2
+ *                 )
+ *                 cblas_zgemm3m(             # <<<<<<<<<<<<<<
+ *                     CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+ *                     nbands,norbital,&c1,drSHexpikR,norbital,
+ */
+        cblas_zgemm3m(CblasRowMajor, CblasNoTrans, CblasNoTrans, __pyx_v_norb_p, __pyx_v_nbands, __pyx_v_norbital, (&__pyx_v_c1), __pyx_v_drSHexpikR, __pyx_v_norbital, __pyx_v_bandveckp, __pyx_v_nbands, (&__pyx_v_c0), __pyx_v_drveck_p, __pyx_v_nbands);
+
+        /* "epcfunc_nl.pyx":1402
+ *                 )
+ *                 # drveck_p -> drveck (gather to node comm)
+ *                 for j in range(norb_p*nbands):             # <<<<<<<<<<<<<<
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)
+ */
+        __pyx_t_6 = (__pyx_v_norb_p * __pyx_v_nbands);
+        __pyx_t_7 = __pyx_t_6;
+        for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+          __pyx_v_j = __pyx_t_8;
+
+          /* "epcfunc_nl.pyx":1403
+ *                 # drveck_p -> drveck (gather to node comm)
+ *                 for j in range(norb_p*nbands):
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]             # <<<<<<<<<<<<<<
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):
+ */
+          (__pyx_v_drveck[(((((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb) + (__pyx_v_norb_s * __pyx_v_nbands)) + __pyx_v_j)]) = (__pyx_v_drveck_p[__pyx_v_j]);
+        }
+
+        /* "epcfunc_nl.pyx":1404
+ *                 for j in range(norb_p*nbands):
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
+ *                 if (shm_id == 0):
+ *                     mpi.MPI_Allgatherv(
+ */
+        (void)(MPI_Barrier(__pyx_v_shm_comm));
+
+        /* "epcfunc_nl.pyx":1405
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
+ *                     mpi.MPI_Allgatherv(
+ *                         mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+ */
+        __pyx_t_12 = ((__pyx_v_shm_id == 0) != 0);
+        if (__pyx_t_12) {
+
+          /* "epcfunc_nl.pyx":1406
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):
+ *                     mpi.MPI_Allgatherv(             # <<<<<<<<<<<<<<
+ *                         mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+ *                         &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
+ */
+          (void)(MPI_Allgatherv(MPI_IN_PLACE, 0, MPI_DATATYPE_NULL, (&(__pyx_v_drveck[(((__pyx_v_h * 3) + __pyx_v_xyz) * __pyx_v_norbnb)])), (&(__pyx_v_dr_num[0])), (&(__pyx_v_dr[0])), MPI_DOUBLE_COMPLEX, __pyx_v_remote_comm));
+
+          /* "epcfunc_nl.pyx":1405
+ *                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+ *                 mpi.MPI_Barrier(shm_comm)
+ *                 if (shm_id == 0):             # <<<<<<<<<<<<<<
+ *                     mpi.MPI_Allgatherv(
+ *                         mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+ */
+        }
+
+        /* "epcfunc_nl.pyx":1411
+ *                         mpi.MPI_DOUBLE_COMPLEX,remote_comm
+ *                     )
+ *                 mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
  * 
  *     free(drveck_p)
  */
-      (void)(MPI_Barrier(__pyx_v_shm_comm));
+        (void)(MPI_Barrier(__pyx_v_shm_comm));
+      }
     }
+
+    /* "epcfunc_nl.pyx":1372
+ *     knum_s = kproc[myid]
+ * 
+ *     if norb_p > 0:             # <<<<<<<<<<<<<<
+ *         for h in range(knum):
+ *             kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+ */
   }
 
-  /* "epcfunc_nl.pyx":1392
- *             mpi.MPI_Barrier(shm_comm)
+  /* "epcfunc_nl.pyx":1413
+ *                 mpi.MPI_Barrier(shm_comm)
  * 
  *     free(drveck_p)             # <<<<<<<<<<<<<<
  *     mpi.MPI_Barrier(shm_comm)
@@ -14762,7 +14697,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   free(__pyx_v_drveck_p);
 
-  /* "epcfunc_nl.pyx":1393
+  /* "epcfunc_nl.pyx":1414
  * 
  *     free(drveck_p)
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -14771,7 +14706,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "epcfunc_nl.pyx":1394
+  /* "epcfunc_nl.pyx":1415
  *     free(drveck_p)
  *     mpi.MPI_Barrier(shm_comm)
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -14780,7 +14715,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":1395
+  /* "epcfunc_nl.pyx":1416
  *     mpi.MPI_Barrier(shm_comm)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -14790,7 +14725,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_12) {
 
-    /* "epcfunc_nl.pyx":1396
+    /* "epcfunc_nl.pyx":1417
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("epc_NL(Right)_q part1 time:%12.4fs.\n",endtime-starttime)             # <<<<<<<<<<<<<<
@@ -14799,7 +14734,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     (void)(printf(((char const *)"epc_NL(Right)_q part1 time:%12.4fs.\n"), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "epcfunc_nl.pyx":1395
+    /* "epcfunc_nl.pyx":1416
  *     mpi.MPI_Barrier(shm_comm)
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -14808,7 +14743,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
   }
 
-  /* "epcfunc_nl.pyx":1397
+  /* "epcfunc_nl.pyx":1418
  *     if myid == 0:
  *         printf("epc_NL(Right)_q part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):             # <<<<<<<<<<<<<<
@@ -14820,7 +14755,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_h = __pyx_t_4;
 
-    /* "epcfunc_nl.pyx":1398
+    /* "epcfunc_nl.pyx":1419
  *         printf("epc_NL(Right)_q part1 time:%12.4fs.\n",endtime-starttime)
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3             # <<<<<<<<<<<<<<
@@ -14830,7 +14765,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     __pyx_t_9 = __pyx_v_h;
     __pyx_v_nm_min = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_9)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":1399
+    /* "epcfunc_nl.pyx":1420
  *     for h in range(natom_loop):
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3             # <<<<<<<<<<<<<<
@@ -14840,7 +14775,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     __pyx_t_9 = (__pyx_v_h + 1);
     __pyx_v_nm_max = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_natom_split.data) + __pyx_t_9)) ))) * 3);
 
-    /* "epcfunc_nl.pyx":1400
+    /* "epcfunc_nl.pyx":1421
  *         nm_min = natom_split[h]*3
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min             # <<<<<<<<<<<<<<
@@ -14849,7 +14784,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_nm_num = (__pyx_v_nm_max - __pyx_v_nm_min);
 
-    /* "epcfunc_nl.pyx":1401
+    /* "epcfunc_nl.pyx":1422
  *         nm_max = natom_split[h+1]*3
  *         nm_num = nm_max-nm_min
  *         phvec_gather(             # <<<<<<<<<<<<<<
@@ -14858,7 +14793,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_f_10epcfunc_nl_phvec_gather(__pyx_v_c_comm, __pyx_v_shm_comm, __pyx_v_remote_comm, __pyx_v_myid, __pyx_v_shm_id, __pyx_v_knum, __pyx_v_nmodes, __pyx_v_nm_num, __pyx_v_nm_min, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_phvecval_p, __pyx_v_phvecval);
 
-    /* "epcfunc_nl.pyx":1406
+    /* "epcfunc_nl.pyx":1427
  *             kproc,kproc_num,phvecval_p,phvecval
  *         )
  *         starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -14867,7 +14802,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
     __pyx_v_starttime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":1407
+    /* "epcfunc_nl.pyx":1428
  *         )
  *         starttime = mpi.MPI_Wtime()
  *         for iq in range(nqpath):             # <<<<<<<<<<<<<<
@@ -14879,7 +14814,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
     for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
       __pyx_v_iq = __pyx_t_7;
 
-      /* "epcfunc_nl.pyx":1408
+      /* "epcfunc_nl.pyx":1429
  *         starttime = mpi.MPI_Wtime()
  *         for iq in range(nqpath):
  *             start = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -14888,7 +14823,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
       __pyx_v_start = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":1409
+      /* "epcfunc_nl.pyx":1430
  *         for iq in range(nqpath):
  *             start = mpi.MPI_Wtime()
  *             if nqpath < knum:             # <<<<<<<<<<<<<<
@@ -14898,7 +14833,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
       __pyx_t_12 = ((__pyx_v_nqpath < __pyx_v_knum) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":1410
+        /* "epcfunc_nl.pyx":1431
  *             start = mpi.MPI_Wtime()
  *             if nqpath < knum:
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])             # <<<<<<<<<<<<<<
@@ -14910,7 +14845,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_16 = 0;
         __pyx_v_qidx_x = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_13 * __pyx_v_qpath.strides[0]) )) + __pyx_t_16)) ))))));
 
-        /* "epcfunc_nl.pyx":1411
+        /* "epcfunc_nl.pyx":1432
  *             if nqpath < knum:
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])
  *                 qidx_y = <int>round(nq[1]*qpath[iq,1])             # <<<<<<<<<<<<<<
@@ -14922,7 +14857,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_9 = 1;
         __pyx_v_qidx_y = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_13 * __pyx_v_qpath.strides[0]) )) + __pyx_t_9)) ))))));
 
-        /* "epcfunc_nl.pyx":1412
+        /* "epcfunc_nl.pyx":1433
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])
  *                 qidx_y = <int>round(nq[1]*qpath[iq,1])
  *                 qidx_z = <int>round(nq[2]*qpath[iq,2])             # <<<<<<<<<<<<<<
@@ -14934,17 +14869,17 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_16 = 2;
         __pyx_v_qidx_z = ((int)round(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_9)) ))) * (*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_qpath.data + __pyx_t_13 * __pyx_v_qpath.strides[0]) )) + __pyx_t_16)) ))))));
 
-        /* "epcfunc_nl.pyx":1409
+        /* "epcfunc_nl.pyx":1430
  *         for iq in range(nqpath):
  *             start = mpi.MPI_Wtime()
  *             if nqpath < knum:             # <<<<<<<<<<<<<<
  *                 qidx_x = <int>round(nq[0]*qpath[iq,0])
  *                 qidx_y = <int>round(nq[1]*qpath[iq,1])
  */
-        goto __pyx_L35;
+        goto __pyx_L32;
       }
 
-      /* "epcfunc_nl.pyx":1414
+      /* "epcfunc_nl.pyx":1435
  *                 qidx_z = <int>round(nq[2]*qpath[iq,2])
  *             else:
  *                 qidx_z = iq%nq[2]; qidx_xy = iq/nq[2]             # <<<<<<<<<<<<<<
@@ -14957,7 +14892,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_16 = 2;
         __pyx_v_qidx_xy = (__pyx_v_iq / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) ))));
 
-        /* "epcfunc_nl.pyx":1415
+        /* "epcfunc_nl.pyx":1436
  *             else:
  *                 qidx_z = iq%nq[2]; qidx_xy = iq/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -14969,9 +14904,9 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_16 = 1;
         __pyx_v_qidx_x = (__pyx_v_qidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) ))));
       }
-      __pyx_L35:;
+      __pyx_L32:;
 
-      /* "epcfunc_nl.pyx":1416
+      /* "epcfunc_nl.pyx":1437
  *                 qidx_z = iq%nq[2]; qidx_xy = iq/nq[2]
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z             # <<<<<<<<<<<<<<
@@ -14982,7 +14917,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
       __pyx_t_13 = 2;
       __pyx_v_qidx = ((((__pyx_v_qidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) )))) + __pyx_v_qidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_qidx_z);
 
-      /* "epcfunc_nl.pyx":1417
+      /* "epcfunc_nl.pyx":1438
  *                 qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *             for l in range(knum_p):             # <<<<<<<<<<<<<<
@@ -14994,7 +14929,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
       for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
         __pyx_v_l = __pyx_t_15;
 
-        /* "epcfunc_nl.pyx":1418
+        /* "epcfunc_nl.pyx":1439
  *             qidx = (qidx_x*nq[1]+qidx_y)*nq[2]+qidx_z
  *             for l in range(knum_p):
  *                 k1 = l+knum_s             # <<<<<<<<<<<<<<
@@ -15003,7 +14938,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
  */
         __pyx_v_k1 = (__pyx_v_l + __pyx_v_knum_s);
 
-        /* "epcfunc_nl.pyx":1419
+        /* "epcfunc_nl.pyx":1440
  *             for l in range(knum_p):
  *                 k1 = l+knum_s
  *                 kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]             # <<<<<<<<<<<<<<
@@ -15015,7 +14950,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_13 = 2;
         __pyx_v_kidx_xy = (__pyx_v_k1 / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":1420
+        /* "epcfunc_nl.pyx":1441
  *                 k1 = l+knum_s
  *                 kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]             # <<<<<<<<<<<<<<
@@ -15027,7 +14962,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_13 = 1;
         __pyx_v_kidx_x = (__pyx_v_kidx_xy / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":1421
+        /* "epcfunc_nl.pyx":1442
  *                 kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]             # <<<<<<<<<<<<<<
@@ -15037,7 +14972,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_13 = 0;
         __pyx_v_kpidx_x = ((__pyx_v_qidx_x + __pyx_v_kidx_x) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":1422
+        /* "epcfunc_nl.pyx":1443
  *                 kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]             # <<<<<<<<<<<<<<
@@ -15047,7 +14982,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_13 = 1;
         __pyx_v_kpidx_y = ((__pyx_v_qidx_y + __pyx_v_kidx_y) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":1423
+        /* "epcfunc_nl.pyx":1444
  *                 kpidx_x = (qidx_x+kidx_x)%nq[0]
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]             # <<<<<<<<<<<<<<
@@ -15057,7 +14992,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_13 = 2;
         __pyx_v_kpidx_z = ((__pyx_v_qidx_z + __pyx_v_kidx_z) % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
 
-        /* "epcfunc_nl.pyx":1424
+        /* "epcfunc_nl.pyx":1445
  *                 kpidx_y = (qidx_y+kidx_y)%nq[1]
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]             # <<<<<<<<<<<<<<
@@ -15070,7 +15005,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
           __pyx_v_kpidx_x = (__pyx_v_kpidx_x + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1425
+        /* "epcfunc_nl.pyx":1446
  *                 kpidx_z = (qidx_z+kidx_z)%nq[2]
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]             # <<<<<<<<<<<<<<
@@ -15083,7 +15018,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
           __pyx_v_kpidx_y = (__pyx_v_kpidx_y + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1426
+        /* "epcfunc_nl.pyx":1447
  *                 if kpidx_x<0: kpidx_x += nq[0]
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]             # <<<<<<<<<<<<<<
@@ -15096,7 +15031,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
           __pyx_v_kpidx_z = (__pyx_v_kpidx_z + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) ))));
         }
 
-        /* "epcfunc_nl.pyx":1427
+        /* "epcfunc_nl.pyx":1448
  *                 if kpidx_y<0: kpidx_y += nq[1]
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z             # <<<<<<<<<<<<<<
@@ -15107,33 +15042,33 @@ static PyObject *__pyx_pf_10epcfunc_nl_12MPIepcNL_R_q(CYTHON_UNUSED PyObject *__
         __pyx_t_16 = 2;
         __pyx_v_kpidx = ((((__pyx_v_kpidx_x * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_13)) )))) + __pyx_v_kpidx_y) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_nq.data) + __pyx_t_16)) )))) + __pyx_v_kpidx_z);
 
-        /* "epcfunc_nl.pyx":1429
+        /* "epcfunc_nl.pyx":1450
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 epckqNL_R(
  *                     &drveck[kpidx*3*norbnb],bandveck[k1],&phvecval[qidx*nm_num*nmodes],vdrv,             # <<<<<<<<<<<<<<
  *                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,
  *                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
  */
-        __pyx_t_19.data = __pyx_v_bandveck.data;
-        __pyx_t_19.memview = __pyx_v_bandveck.memview;
-        __PYX_INC_MEMVIEW(&__pyx_t_19, 0);
+        __pyx_t_17.data = __pyx_v_bandveck.data;
+        __pyx_t_17.memview = __pyx_v_bandveck.memview;
+        __PYX_INC_MEMVIEW(&__pyx_t_17, 0);
         {
     Py_ssize_t __pyx_tmp_idx = __pyx_v_k1;
     Py_ssize_t __pyx_tmp_stride = __pyx_v_bandveck.strides[0];
-        __pyx_t_19.data += __pyx_tmp_idx * __pyx_tmp_stride;
+        __pyx_t_17.data += __pyx_tmp_idx * __pyx_tmp_stride;
 }
 
-__pyx_t_19.shape[0] = __pyx_v_bandveck.shape[1];
-__pyx_t_19.strides[0] = __pyx_v_bandveck.strides[1];
-    __pyx_t_19.suboffsets[0] = -1;
+__pyx_t_17.shape[0] = __pyx_v_bandveck.shape[1];
+__pyx_t_17.strides[0] = __pyx_v_bandveck.strides[1];
+    __pyx_t_17.suboffsets[0] = -1;
 
-__pyx_t_19.shape[1] = __pyx_v_bandveck.shape[2];
-__pyx_t_19.strides[1] = __pyx_v_bandveck.strides[2];
-    __pyx_t_19.suboffsets[1] = -1;
+__pyx_t_17.shape[1] = __pyx_v_bandveck.shape[2];
+__pyx_t_17.strides[1] = __pyx_v_bandveck.strides[2];
+    __pyx_t_17.suboffsets[1] = -1;
 
 __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
 
-        /* "epcfunc_nl.pyx":1430
+        /* "epcfunc_nl.pyx":1451
  *                 epckqNL_R(
  *                     &drveck[kpidx*3*norbnb],bandveck[k1],&phvecval[qidx*nm_num*nmodes],vdrv,
  *                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,             # <<<<<<<<<<<<<<
@@ -15142,20 +15077,20 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
         __pyx_t_13 = (__pyx_v_nm_min * __pyx_v_nbands2);
 
-        /* "epcfunc_nl.pyx":1428
+        /* "epcfunc_nl.pyx":1449
  *                 if kpidx_z<0: kpidx_z += nq[2]
  *                 kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
  *                 epckqNL_R(             # <<<<<<<<<<<<<<
  *                     &drveck[kpidx*3*norbnb],bandveck[k1],&phvecval[qidx*nm_num*nmodes],vdrv,
  *                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,
  */
-        __pyx_f_10epcfunc_nl_epckqNL_R((&(__pyx_v_drveck[((__pyx_v_kpidx * 3) * __pyx_v_norbnb)])), __pyx_t_19, (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrv, __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_16 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_13)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_nbands, __pyx_v_norbital, __pyx_v_nbands2, __pyx_v_norbnb, __pyx_v_norb_u, __pyx_v_norb_u_num);
-        __PYX_XDEC_MEMVIEW(&__pyx_t_19, 1);
-        __pyx_t_19.memview = NULL;
-        __pyx_t_19.data = NULL;
+        __pyx_f_10epcfunc_nl_epckqNL_R((&(__pyx_v_drveck[((__pyx_v_kpidx * 3) * __pyx_v_norbnb)])), __pyx_t_17, (&(__pyx_v_phvecval[((__pyx_v_qidx * __pyx_v_nm_num) * __pyx_v_nmodes)])), __pyx_v_vdrv, __pyx_v_vdrvexpikR, (&__pyx_v_c1), (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_16 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_13)) )))), __pyx_v_nmodes, __pyx_v_natom, __pyx_v_nm_num, __pyx_v_nbands, __pyx_v_norbital, __pyx_v_nbands2, __pyx_v_norbnb, __pyx_v_norb_u, __pyx_v_norb_u_num);
+        __PYX_XDEC_MEMVIEW(&__pyx_t_17, 1);
+        __pyx_t_17.memview = NULL;
+        __pyx_t_17.data = NULL;
       }
 
-      /* "epcfunc_nl.pyx":1433
+      /* "epcfunc_nl.pyx":1454
  *                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
  *                 )
  *             end = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -15164,7 +15099,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
       __pyx_v_end = MPI_Wtime();
 
-      /* "epcfunc_nl.pyx":1434
+      /* "epcfunc_nl.pyx":1455
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -15174,7 +15109,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
       __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
       if (__pyx_t_12) {
 
-        /* "epcfunc_nl.pyx":1435
+        /* "epcfunc_nl.pyx":1456
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)             # <<<<<<<<<<<<<<
@@ -15183,7 +15118,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
         (void)(printf(((char const *)"time in mode loop %d, knum loop %d:%12.4fs.\n"), __pyx_v_h, __pyx_v_iq, (__pyx_v_end - __pyx_v_start)));
 
-        /* "epcfunc_nl.pyx":1434
+        /* "epcfunc_nl.pyx":1455
  *                 )
  *             end = mpi.MPI_Wtime()
  *             if myid == 0:             # <<<<<<<<<<<<<<
@@ -15193,7 +15128,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
       }
     }
 
-    /* "epcfunc_nl.pyx":1436
+    /* "epcfunc_nl.pyx":1457
  *             if myid == 0:
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
  *         endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -15202,7 +15137,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
     __pyx_v_endtime = MPI_Wtime();
 
-    /* "epcfunc_nl.pyx":1437
+    /* "epcfunc_nl.pyx":1458
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -15212,7 +15147,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
     __pyx_t_12 = ((__pyx_v_myid == 0) != 0);
     if (__pyx_t_12) {
 
-      /* "epcfunc_nl.pyx":1438
+      /* "epcfunc_nl.pyx":1459
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:
  *             printf("epc_NL(Right)_q part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)             # <<<<<<<<<<<<<<
@@ -15221,7 +15156,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
       (void)(printf(((char const *)"epc_NL(Right)_q part2 time in mode[%4d,%4d]:%12.4fs.\n"), __pyx_v_nm_min, (__pyx_v_nm_min + __pyx_v_nm_num), (__pyx_v_endtime - __pyx_v_starttime)));
 
-      /* "epcfunc_nl.pyx":1437
+      /* "epcfunc_nl.pyx":1458
  *                 printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
  *         endtime = mpi.MPI_Wtime()
  *         if myid == 0:             # <<<<<<<<<<<<<<
@@ -15231,7 +15166,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
     }
   }
 
-  /* "epcfunc_nl.pyx":1440
+  /* "epcfunc_nl.pyx":1461
  *             printf("epc_NL(Right)_q part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
  * 
  *     free(bandveckp)             # <<<<<<<<<<<<<<
@@ -15240,7 +15175,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_bandveckp);
 
-  /* "epcfunc_nl.pyx":1441
+  /* "epcfunc_nl.pyx":1462
  * 
  *     free(bandveckp)
  *     free(drSHexpikR)             # <<<<<<<<<<<<<<
@@ -15249,7 +15184,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_drSHexpikR);
 
-  /* "epcfunc_nl.pyx":1442
+  /* "epcfunc_nl.pyx":1463
  *     free(bandveckp)
  *     free(drSHexpikR)
  *     free(vdrv)             # <<<<<<<<<<<<<<
@@ -15258,7 +15193,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_vdrv);
 
-  /* "epcfunc_nl.pyx":1443
+  /* "epcfunc_nl.pyx":1464
  *     free(drSHexpikR)
  *     free(vdrv)
  *     free(vdrvexpikR)             # <<<<<<<<<<<<<<
@@ -15267,7 +15202,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_vdrvexpikR);
 
-  /* "epcfunc_nl.pyx":1444
+  /* "epcfunc_nl.pyx":1465
  *     free(vdrv)
  *     free(vdrvexpikR)
  *     free(expikR)             # <<<<<<<<<<<<<<
@@ -15276,7 +15211,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_expikR);
 
-  /* "epcfunc_nl.pyx":1445
+  /* "epcfunc_nl.pyx":1466
  *     free(vdrvexpikR)
  *     free(expikR)
  *     free(nodelist)             # <<<<<<<<<<<<<<
@@ -15285,7 +15220,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_nodelist);
 
-  /* "epcfunc_nl.pyx":1446
+  /* "epcfunc_nl.pyx":1467
  *     free(expikR)
  *     free(nodelist)
  *     free(dr)             # <<<<<<<<<<<<<<
@@ -15294,7 +15229,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_dr);
 
-  /* "epcfunc_nl.pyx":1447
+  /* "epcfunc_nl.pyx":1468
  *     free(nodelist)
  *     free(dr)
  *     free(dr_num)             # <<<<<<<<<<<<<<
@@ -15303,7 +15238,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   free(__pyx_v_dr_num);
 
-  /* "epcfunc_nl.pyx":1448
+  /* "epcfunc_nl.pyx":1469
  *     free(dr)
  *     free(dr_num)
  *     mpi.MPI_Win_free(&win)             # <<<<<<<<<<<<<<
@@ -15312,7 +15247,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   (void)(MPI_Win_free((&__pyx_v_win)));
 
-  /* "epcfunc_nl.pyx":1449
+  /* "epcfunc_nl.pyx":1470
  *     free(dr_num)
  *     mpi.MPI_Win_free(&win)
  *     mpi.MPI_Win_free(&win1)             # <<<<<<<<<<<<<<
@@ -15321,7 +15256,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   (void)(MPI_Win_free((&__pyx_v_win1)));
 
-  /* "epcfunc_nl.pyx":1450
+  /* "epcfunc_nl.pyx":1471
  *     mpi.MPI_Win_free(&win)
  *     mpi.MPI_Win_free(&win1)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -15330,7 +15265,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":1256
+  /* "epcfunc_nl.pyx":1274
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R_q(             # <<<<<<<<<<<<<<
@@ -15359,7 +15294,7 @@ __pyx_t_16 = ((__pyx_v_l * __pyx_v_nqpath) + __pyx_v_iq);
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":1455
+/* "epcfunc_nl.pyx":1476
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p(             # <<<<<<<<<<<<<<
@@ -15417,41 +15352,41 @@ static PyObject *__pyx_pw_10epcfunc_nl_15MPIepc_write_p(PyObject *__pyx_self, Py
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kfactor)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 1); __PYX_ERR(0, 1455, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 1); __PYX_ERR(0, 1476, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmnb2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 2); __PYX_ERR(0, 1455, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 2); __PYX_ERR(0, 1476, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 3); __PYX_ERR(0, 1455, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 3); __PYX_ERR(0, 1476, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 4); __PYX_ERR(0, 1455, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 4); __PYX_ERR(0, 1476, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 5); __PYX_ERR(0, 1455, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 5); __PYX_ERR(0, 1476, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_filename)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 6); __PYX_ERR(0, 1455, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, 6); __PYX_ERR(0, 1476, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepc_write_p") < 0)) __PYX_ERR(0, 1455, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepc_write_p") < 0)) __PYX_ERR(0, 1476, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -15465,22 +15400,22 @@ static PyObject *__pyx_pw_10epcfunc_nl_15MPIepc_write_p(PyObject *__pyx_self, Py
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_kfactor = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_kfactor == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1456, __pyx_L3_error)
-    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1456, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1457, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1457, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1458, __pyx_L3_error)
-    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[6]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1458, __pyx_L3_error)
+    __pyx_v_kfactor = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_kfactor == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1477, __pyx_L3_error)
+    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1477, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1478, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1478, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1479, __pyx_L3_error)
+    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[6]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1479, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1455, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepc_write_p", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1476, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepc_write_p", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1456, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1477, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_14MPIepc_write_p(__pyx_self, __pyx_v_comm, __pyx_v_kfactor, __pyx_v_nmnb2, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_epc_t, __pyx_v_filename);
 
   /* function exit code */
@@ -15517,7 +15452,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   Py_ssize_t __pyx_t_9;
   __Pyx_RefNannySetupContext("MPIepc_write_p", 0);
 
-  /* "epcfunc_nl.pyx":1460
+  /* "epcfunc_nl.pyx":1481
  *     double complex[:,::1] epc_t, char* filename
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -15527,7 +15462,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":1463
+  /* "epcfunc_nl.pyx":1484
  *     cdef mpi.MPI_Datatype CPLX_N
  *     cdef int nprocs, myid, ierr, i, knum_p, knum
  *     cdef long nmnb2l = nmnb2             # <<<<<<<<<<<<<<
@@ -15536,7 +15471,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   __pyx_v_nmnb2l = __pyx_v_nmnb2;
 
-  /* "epcfunc_nl.pyx":1467
+  /* "epcfunc_nl.pyx":1488
  *     cdef FILE* fp
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -15545,7 +15480,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":1468
+  /* "epcfunc_nl.pyx":1489
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -15554,7 +15489,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":1469
+  /* "epcfunc_nl.pyx":1490
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     knum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -15564,7 +15499,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   __pyx_t_2 = __pyx_v_myid;
   __pyx_v_knum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_2)) )));
 
-  /* "epcfunc_nl.pyx":1470
+  /* "epcfunc_nl.pyx":1491
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     knum_p = kproc_num[myid]
  *     knum = kproc[nprocs]             # <<<<<<<<<<<<<<
@@ -15574,7 +15509,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   __pyx_t_2 = __pyx_v_nprocs;
   __pyx_v_knum = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_2)) )));
 
-  /* "epcfunc_nl.pyx":1472
+  /* "epcfunc_nl.pyx":1493
  *     knum = kproc[nprocs]
  * 
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -15584,7 +15519,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   __pyx_t_3 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_3) {
 
-    /* "epcfunc_nl.pyx":1473
+    /* "epcfunc_nl.pyx":1494
  * 
  *     if (myid==0):
  *         epc_buf = <double complex*>malloc(knum*nmnb2l*16)             # <<<<<<<<<<<<<<
@@ -15593,7 +15528,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
     __pyx_v_epc_buf = ((__pyx_t_double_complex *)malloc(((__pyx_v_knum * __pyx_v_nmnb2l) * 16)));
 
-    /* "epcfunc_nl.pyx":1474
+    /* "epcfunc_nl.pyx":1495
  *     if (myid==0):
  *         epc_buf = <double complex*>malloc(knum*nmnb2l*16)
  *         fp = fopen(filename,"wb")             # <<<<<<<<<<<<<<
@@ -15602,7 +15537,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
     __pyx_v_fp = fopen(__pyx_v_filename, ((char const *)"wb"));
 
-    /* "epcfunc_nl.pyx":1472
+    /* "epcfunc_nl.pyx":1493
  *     knum = kproc[nprocs]
  * 
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -15611,7 +15546,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "epcfunc_nl.pyx":1475
+  /* "epcfunc_nl.pyx":1496
  *         epc_buf = <double complex*>malloc(knum*nmnb2l*16)
  *         fp = fopen(filename,"wb")
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -15620,7 +15555,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":1477
+  /* "epcfunc_nl.pyx":1498
  *     mpi.MPI_Barrier(c_comm)
  * 
  *     mpi.MPI_Type_contiguous(             # <<<<<<<<<<<<<<
@@ -15629,7 +15564,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   (void)(MPI_Type_contiguous(__pyx_v_nmnb2, MPI_DOUBLE_COMPLEX, (&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1480
+  /* "epcfunc_nl.pyx":1501
  *         nmnb2,mpi.MPI_DOUBLE_COMPLEX,&CPLX_N
  *     )
  *     mpi.MPI_Type_commit(&CPLX_N)             # <<<<<<<<<<<<<<
@@ -15638,7 +15573,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   (void)(MPI_Type_commit((&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1481
+  /* "epcfunc_nl.pyx":1502
  *     )
  *     mpi.MPI_Type_commit(&CPLX_N)
  *     for i in range(kfactor):             # <<<<<<<<<<<<<<
@@ -15650,7 +15585,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
     __pyx_v_i = __pyx_t_6;
 
-    /* "epcfunc_nl.pyx":1483
+    /* "epcfunc_nl.pyx":1504
  *     for i in range(kfactor):
  *         mpi.MPI_Gatherv(
  *             &epc_t[i*knum_p,0],knum_p,CPLX_N,epc_buf,             # <<<<<<<<<<<<<<
@@ -15660,7 +15595,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
     __pyx_t_2 = (__pyx_v_i * __pyx_v_knum_p);
     __pyx_t_7 = 0;
 
-    /* "epcfunc_nl.pyx":1484
+    /* "epcfunc_nl.pyx":1505
  *         mpi.MPI_Gatherv(
  *             &epc_t[i*knum_p,0],knum_p,CPLX_N,epc_buf,
  *             &kproc_num[0],&kproc[0],CPLX_N,0,c_comm             # <<<<<<<<<<<<<<
@@ -15670,7 +15605,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
     __pyx_t_8 = 0;
     __pyx_t_9 = 0;
 
-    /* "epcfunc_nl.pyx":1482
+    /* "epcfunc_nl.pyx":1503
  *     mpi.MPI_Type_commit(&CPLX_N)
  *     for i in range(kfactor):
  *         mpi.MPI_Gatherv(             # <<<<<<<<<<<<<<
@@ -15679,7 +15614,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
     (void)(MPI_Gatherv((&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_2 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_7)) )))), __pyx_v_knum_p, __pyx_v_CPLX_N, __pyx_v_epc_buf, (&(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_8)) )))), (&(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_9)) )))), __pyx_v_CPLX_N, 0, __pyx_v_c_comm));
 
-    /* "epcfunc_nl.pyx":1486
+    /* "epcfunc_nl.pyx":1507
  *             &kproc_num[0],&kproc[0],CPLX_N,0,c_comm
  *         )
  *         if (myid==0):             # <<<<<<<<<<<<<<
@@ -15689,7 +15624,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
     __pyx_t_3 = ((__pyx_v_myid == 0) != 0);
     if (__pyx_t_3) {
 
-      /* "epcfunc_nl.pyx":1487
+      /* "epcfunc_nl.pyx":1508
  *         )
  *         if (myid==0):
  *             fwrite(epc_buf,16,knum*nmnb2l,fp);             # <<<<<<<<<<<<<<
@@ -15698,7 +15633,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
       (void)(fwrite(__pyx_v_epc_buf, 16, (__pyx_v_knum * __pyx_v_nmnb2l), __pyx_v_fp));
 
-      /* "epcfunc_nl.pyx":1486
+      /* "epcfunc_nl.pyx":1507
  *             &kproc_num[0],&kproc[0],CPLX_N,0,c_comm
  *         )
  *         if (myid==0):             # <<<<<<<<<<<<<<
@@ -15708,7 +15643,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
     }
   }
 
-  /* "epcfunc_nl.pyx":1488
+  /* "epcfunc_nl.pyx":1509
  *         if (myid==0):
  *             fwrite(epc_buf,16,knum*nmnb2l,fp);
  *     mpi.MPI_Type_free(&CPLX_N)             # <<<<<<<<<<<<<<
@@ -15717,7 +15652,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   (void)(MPI_Type_free((&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1489
+  /* "epcfunc_nl.pyx":1510
  *             fwrite(epc_buf,16,knum*nmnb2l,fp);
  *     mpi.MPI_Type_free(&CPLX_N)
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -15727,7 +15662,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   __pyx_t_3 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_3) {
 
-    /* "epcfunc_nl.pyx":1490
+    /* "epcfunc_nl.pyx":1511
  *     mpi.MPI_Type_free(&CPLX_N)
  *     if (myid==0):
  *         free(epc_buf)             # <<<<<<<<<<<<<<
@@ -15736,7 +15671,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
     free(__pyx_v_epc_buf);
 
-    /* "epcfunc_nl.pyx":1491
+    /* "epcfunc_nl.pyx":1512
  *     if (myid==0):
  *         free(epc_buf)
  *         fclose(fp)             # <<<<<<<<<<<<<<
@@ -15745,7 +15680,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
     (void)(fclose(__pyx_v_fp));
 
-    /* "epcfunc_nl.pyx":1489
+    /* "epcfunc_nl.pyx":1510
  *             fwrite(epc_buf,16,knum*nmnb2l,fp);
  *     mpi.MPI_Type_free(&CPLX_N)
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -15754,7 +15689,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   }
 
-  /* "epcfunc_nl.pyx":1492
+  /* "epcfunc_nl.pyx":1513
  *         free(epc_buf)
  *         fclose(fp)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -15763,7 +15698,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":1455
+  /* "epcfunc_nl.pyx":1476
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p(             # <<<<<<<<<<<<<<
@@ -15781,7 +15716,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_14MPIepc_write_p(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":1497
+/* "epcfunc_nl.pyx":1518
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p_MPI(             # <<<<<<<<<<<<<<
@@ -15839,41 +15774,41 @@ static PyObject *__pyx_pw_10epcfunc_nl_17MPIepc_write_p_MPI(PyObject *__pyx_self
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kfactor)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 1); __PYX_ERR(0, 1497, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 1); __PYX_ERR(0, 1518, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmnb2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 2); __PYX_ERR(0, 1497, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 2); __PYX_ERR(0, 1518, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 3); __PYX_ERR(0, 1497, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 3); __PYX_ERR(0, 1518, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 4); __PYX_ERR(0, 1497, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 4); __PYX_ERR(0, 1518, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 5); __PYX_ERR(0, 1497, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 5); __PYX_ERR(0, 1518, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_filename)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 6); __PYX_ERR(0, 1497, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, 6); __PYX_ERR(0, 1518, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepc_write_p_MPI") < 0)) __PYX_ERR(0, 1497, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepc_write_p_MPI") < 0)) __PYX_ERR(0, 1518, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 7) {
       goto __pyx_L5_argtuple_error;
@@ -15887,22 +15822,22 @@ static PyObject *__pyx_pw_10epcfunc_nl_17MPIepc_write_p_MPI(PyObject *__pyx_self
       values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_kfactor = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_kfactor == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1498, __pyx_L3_error)
-    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1498, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1499, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1499, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1500, __pyx_L3_error)
-    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[6]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1500, __pyx_L3_error)
+    __pyx_v_kfactor = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_kfactor == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1519, __pyx_L3_error)
+    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1519, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1520, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1520, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[5], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1521, __pyx_L3_error)
+    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[6]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1521, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1497, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepc_write_p_MPI", 1, 7, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1518, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepc_write_p_MPI", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1498, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1519, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(__pyx_self, __pyx_v_comm, __pyx_v_kfactor, __pyx_v_nmnb2, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_epc_t, __pyx_v_filename);
 
   /* function exit code */
@@ -15937,7 +15872,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("MPIepc_write_p_MPI", 0);
 
-  /* "epcfunc_nl.pyx":1502
+  /* "epcfunc_nl.pyx":1523
  *     double complex[:,::1] epc_t, char* filename
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -15947,7 +15882,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":1505
+  /* "epcfunc_nl.pyx":1526
  *     cdef mpi.MPI_Datatype CPLX_N
  *     cdef int nprocs, myid, ierr, i, knum_p, knum
  *     cdef long nmnb2l = nmnb2             # <<<<<<<<<<<<<<
@@ -15956,7 +15891,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   __pyx_v_nmnb2l = __pyx_v_nmnb2;
 
-  /* "epcfunc_nl.pyx":1510
+  /* "epcfunc_nl.pyx":1531
  *     cdef mpi.MPI_File fh
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -15965,7 +15900,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":1511
+  /* "epcfunc_nl.pyx":1532
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -15974,7 +15909,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":1512
+  /* "epcfunc_nl.pyx":1533
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     knum_p = kproc_num[myid]             # <<<<<<<<<<<<<<
@@ -15984,7 +15919,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
   __pyx_t_2 = __pyx_v_myid;
   __pyx_v_knum_p = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_2)) )));
 
-  /* "epcfunc_nl.pyx":1513
+  /* "epcfunc_nl.pyx":1534
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  *     knum_p = kproc_num[myid]
  *     knum = kproc[nprocs]             # <<<<<<<<<<<<<<
@@ -15994,7 +15929,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
   __pyx_t_2 = __pyx_v_nprocs;
   __pyx_v_knum = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_2)) )));
 
-  /* "epcfunc_nl.pyx":1515
+  /* "epcfunc_nl.pyx":1536
  *     knum = kproc[nprocs]
  * 
  *     mpi.MPI_Type_contiguous(             # <<<<<<<<<<<<<<
@@ -16003,7 +15938,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   (void)(MPI_Type_contiguous(__pyx_v_nmnb2, MPI_DOUBLE_COMPLEX, (&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1518
+  /* "epcfunc_nl.pyx":1539
  *         nmnb2,mpi.MPI_DOUBLE_COMPLEX,&CPLX_N
  *     )
  *     mpi.MPI_Type_commit(&CPLX_N)             # <<<<<<<<<<<<<<
@@ -16012,7 +15947,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   (void)(MPI_Type_commit((&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1519
+  /* "epcfunc_nl.pyx":1540
  *     )
  *     mpi.MPI_Type_commit(&CPLX_N)
  *     mpi.MPI_File_open(             # <<<<<<<<<<<<<<
@@ -16021,7 +15956,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   (void)(MPI_File_open(MPI_COMM_WORLD, __pyx_v_filename, (MPI_MODE_CREATE | MPI_MODE_WRONLY), MPI_INFO_NULL, (&__pyx_v_fh)));
 
-  /* "epcfunc_nl.pyx":1524
+  /* "epcfunc_nl.pyx":1545
  *         mpi.MPI_INFO_NULL,&fh
  *     )
  *     offset = nmnb2l*kproc[myid]*16             # <<<<<<<<<<<<<<
@@ -16031,7 +15966,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
   __pyx_t_2 = __pyx_v_myid;
   __pyx_v_offset = ((__pyx_v_nmnb2l * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_2)) )))) * 16);
 
-  /* "epcfunc_nl.pyx":1525
+  /* "epcfunc_nl.pyx":1546
  *     )
  *     offset = nmnb2l*kproc[myid]*16
  *     for i in range(kfactor):             # <<<<<<<<<<<<<<
@@ -16043,7 +15978,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "epcfunc_nl.pyx":1526
+    /* "epcfunc_nl.pyx":1547
  *     offset = nmnb2l*kproc[myid]*16
  *     for i in range(kfactor):
  *         offset = nmnb2l*(i*knum+kproc[myid])*16             # <<<<<<<<<<<<<<
@@ -16053,7 +15988,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
     __pyx_t_2 = __pyx_v_myid;
     __pyx_v_offset = ((__pyx_v_nmnb2l * ((__pyx_v_i * __pyx_v_knum) + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_2)) ))))) * 16);
 
-    /* "epcfunc_nl.pyx":1528
+    /* "epcfunc_nl.pyx":1549
  *         offset = nmnb2l*(i*knum+kproc[myid])*16
  *         mpi.MPI_File_write_at_all(
  *             fh,offset,&epc_t[i*knum_p,0],knum_p,CPLX_N,&status             # <<<<<<<<<<<<<<
@@ -16063,7 +15998,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
     __pyx_t_2 = (__pyx_v_i * __pyx_v_knum_p);
     __pyx_t_6 = 0;
 
-    /* "epcfunc_nl.pyx":1527
+    /* "epcfunc_nl.pyx":1548
  *     for i in range(kfactor):
  *         offset = nmnb2l*(i*knum+kproc[myid])*16
  *         mpi.MPI_File_write_at_all(             # <<<<<<<<<<<<<<
@@ -16073,7 +16008,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
     (void)(MPI_File_write_at_all(__pyx_v_fh, __pyx_v_offset, (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_2 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_6)) )))), __pyx_v_knum_p, __pyx_v_CPLX_N, (&__pyx_v_status)));
   }
 
-  /* "epcfunc_nl.pyx":1530
+  /* "epcfunc_nl.pyx":1551
  *             fh,offset,&epc_t[i*knum_p,0],knum_p,CPLX_N,&status
  *         )
  *     mpi.MPI_File_close(&fh)             # <<<<<<<<<<<<<<
@@ -16082,7 +16017,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   (void)(MPI_File_close((&__pyx_v_fh)));
 
-  /* "epcfunc_nl.pyx":1531
+  /* "epcfunc_nl.pyx":1552
  *         )
  *     mpi.MPI_File_close(&fh)
  *     mpi.MPI_Type_free(&CPLX_N)             # <<<<<<<<<<<<<<
@@ -16091,7 +16026,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   (void)(MPI_Type_free((&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1532
+  /* "epcfunc_nl.pyx":1553
  *     mpi.MPI_File_close(&fh)
  *     mpi.MPI_Type_free(&CPLX_N)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -16100,7 +16035,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "epcfunc_nl.pyx":1497
+  /* "epcfunc_nl.pyx":1518
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p_MPI(             # <<<<<<<<<<<<<<
@@ -16118,7 +16053,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_16MPIepc_write_p_MPI(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":1537
+/* "epcfunc_nl.pyx":1558
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write(             # <<<<<<<<<<<<<<
@@ -16173,35 +16108,35 @@ static PyObject *__pyx_pw_10epcfunc_nl_19MPIepc_write(PyObject *__pyx_self, PyOb
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmnb2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 1); __PYX_ERR(0, 1537, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 1); __PYX_ERR(0, 1558, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 2); __PYX_ERR(0, 1537, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 2); __PYX_ERR(0, 1558, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 3); __PYX_ERR(0, 1537, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 3); __PYX_ERR(0, 1558, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_t)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 4); __PYX_ERR(0, 1537, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 4); __PYX_ERR(0, 1558, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_filename)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 5); __PYX_ERR(0, 1537, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, 5); __PYX_ERR(0, 1558, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepc_write") < 0)) __PYX_ERR(0, 1537, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "MPIepc_write") < 0)) __PYX_ERR(0, 1558, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -16214,21 +16149,21 @@ static PyObject *__pyx_pw_10epcfunc_nl_19MPIepc_write(PyObject *__pyx_self, PyOb
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1538, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1539, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1539, __pyx_L3_error)
-    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1540, __pyx_L3_error)
-    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[5]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1540, __pyx_L3_error)
+    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1559, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1560, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1560, __pyx_L3_error)
+    __pyx_v_epc_t = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_t.memview)) __PYX_ERR(0, 1561, __pyx_L3_error)
+    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[5]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1561, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1537, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("MPIepc_write", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1558, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.MPIepc_write", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1538, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1559, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_18MPIepc_write(__pyx_self, __pyx_v_comm, __pyx_v_nmnb2, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_epc_t, __pyx_v_filename);
 
   /* function exit code */
@@ -16258,7 +16193,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
   Py_ssize_t __pyx_t_4;
   __Pyx_RefNannySetupContext("MPIepc_write", 0);
 
-  /* "epcfunc_nl.pyx":1542
+  /* "epcfunc_nl.pyx":1563
  *     double complex[:,::1] epc_t, char* filename
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -16268,7 +16203,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":1545
+  /* "epcfunc_nl.pyx":1566
  *     cdef mpi.MPI_Datatype CPLX_N
  *     cdef int nprocs, myid, ierr
  *     cdef long nmnb2l = nmnb2             # <<<<<<<<<<<<<<
@@ -16277,7 +16212,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_nmnb2l = __pyx_v_nmnb2;
 
-  /* "epcfunc_nl.pyx":1550
+  /* "epcfunc_nl.pyx":1571
  *     cdef mpi.MPI_File fh
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)             # <<<<<<<<<<<<<<
@@ -16286,7 +16221,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_c_comm, (&__pyx_v_nprocs));
 
-  /* "epcfunc_nl.pyx":1551
+  /* "epcfunc_nl.pyx":1572
  * 
  *     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)             # <<<<<<<<<<<<<<
@@ -16295,7 +16230,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_c_comm, (&__pyx_v_myid));
 
-  /* "epcfunc_nl.pyx":1553
+  /* "epcfunc_nl.pyx":1574
  *     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
  * 
  *     mpi.MPI_Type_contiguous(             # <<<<<<<<<<<<<<
@@ -16304,7 +16239,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Type_contiguous(__pyx_v_nmnb2, MPI_DOUBLE_COMPLEX, (&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1556
+  /* "epcfunc_nl.pyx":1577
  *         nmnb2,mpi.MPI_DOUBLE_COMPLEX,&CPLX_N
  *     )
  *     mpi.MPI_Type_commit(&CPLX_N)             # <<<<<<<<<<<<<<
@@ -16313,7 +16248,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_Type_commit((&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1557
+  /* "epcfunc_nl.pyx":1578
  *     )
  *     mpi.MPI_Type_commit(&CPLX_N)
  *     mpi.MPI_File_open(             # <<<<<<<<<<<<<<
@@ -16322,7 +16257,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_File_open(MPI_COMM_WORLD, __pyx_v_filename, (MPI_MODE_CREATE | MPI_MODE_WRONLY), MPI_INFO_NULL, (&__pyx_v_fh)));
 
-  /* "epcfunc_nl.pyx":1562
+  /* "epcfunc_nl.pyx":1583
  *         mpi.MPI_INFO_NULL,&fh
  *     )
  *     offset = nmnb2l*kproc[myid]*sizeof(double complex)             # <<<<<<<<<<<<<<
@@ -16332,7 +16267,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
   __pyx_t_2 = __pyx_v_myid;
   __pyx_v_offset = ((__pyx_v_nmnb2l * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_2)) )))) * (sizeof(__pyx_t_double_complex)));
 
-  /* "epcfunc_nl.pyx":1564
+  /* "epcfunc_nl.pyx":1585
  *     offset = nmnb2l*kproc[myid]*sizeof(double complex)
  *     mpi.MPI_File_write_at_all(
  *         fh,offset,&epc_t[0,0],kproc_num[myid],CPLX_N,&status             # <<<<<<<<<<<<<<
@@ -16343,7 +16278,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
   __pyx_t_3 = 0;
   __pyx_t_4 = __pyx_v_myid;
 
-  /* "epcfunc_nl.pyx":1563
+  /* "epcfunc_nl.pyx":1584
  *     )
  *     offset = nmnb2l*kproc[myid]*sizeof(double complex)
  *     mpi.MPI_File_write_at_all(             # <<<<<<<<<<<<<<
@@ -16352,25 +16287,34 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
  */
   (void)(MPI_File_write_at_all(__pyx_v_fh, __pyx_v_offset, (&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_t.data + __pyx_t_2 * __pyx_v_epc_t.strides[0]) )) + __pyx_t_3)) )))), (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_4)) ))), __pyx_v_CPLX_N, (&__pyx_v_status)));
 
-  /* "epcfunc_nl.pyx":1566
+  /* "epcfunc_nl.pyx":1587
  *         fh,offset,&epc_t[0,0],kproc_num[myid],CPLX_N,&status
  *     )
  *     mpi.MPI_File_close(&fh)             # <<<<<<<<<<<<<<
  *     mpi.MPI_Type_free(&CPLX_N)
- * 
+ *     mpi.MPI_Barrier(c_comm)
  */
   (void)(MPI_File_close((&__pyx_v_fh)));
 
-  /* "epcfunc_nl.pyx":1567
+  /* "epcfunc_nl.pyx":1588
  *     )
  *     mpi.MPI_File_close(&fh)
  *     mpi.MPI_Type_free(&CPLX_N)             # <<<<<<<<<<<<<<
- * 
+ *     mpi.MPI_Barrier(c_comm)
  * 
  */
   (void)(MPI_Type_free((&__pyx_v_CPLX_N)));
 
-  /* "epcfunc_nl.pyx":1537
+  /* "epcfunc_nl.pyx":1589
+ *     mpi.MPI_File_close(&fh)
+ *     mpi.MPI_Type_free(&CPLX_N)
+ *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  (void)(MPI_Barrier(__pyx_v_c_comm));
+
+  /* "epcfunc_nl.pyx":1558
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write(             # <<<<<<<<<<<<<<
@@ -16388,7 +16332,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_18MPIepc_write(CYTHON_UNUSED PyObject *__
   return __pyx_r;
 }
 
-/* "epcfunc_nl.pyx":1573
+/* "epcfunc_nl.pyx":1594
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def FileRead(             # <<<<<<<<<<<<<<
@@ -16461,71 +16405,71 @@ static PyObject *__pyx_pw_10epcfunc_nl_21FileRead(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_EpcType)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 1); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 1); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_comm)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 2); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 2); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_myid)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 3); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 3); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nprocs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 4); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 4); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ntime)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 5); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 5); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kfactor)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 6); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 6); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_knum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 7); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 7); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nmnb2)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 8); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 8); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 9); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 9); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_kproc_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 10); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 10); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_epc_p)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 11); __PYX_ERR(0, 1573, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, 11); __PYX_ERR(0, 1594, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "FileRead") < 0)) __PYX_ERR(0, 1573, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "FileRead") < 0)) __PYX_ERR(0, 1594, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 12) {
       goto __pyx_L5_argtuple_error;
@@ -16543,28 +16487,28 @@ static PyObject *__pyx_pw_10epcfunc_nl_21FileRead(PyObject *__pyx_self, PyObject
       values[10] = PyTuple_GET_ITEM(__pyx_args, 10);
       values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
     }
-    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1574, __pyx_L3_error)
-    __pyx_v_EpcType = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_EpcType) && PyErr_Occurred())) __PYX_ERR(0, 1574, __pyx_L3_error)
+    __pyx_v_filename = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_filename) && PyErr_Occurred())) __PYX_ERR(0, 1595, __pyx_L3_error)
+    __pyx_v_EpcType = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_EpcType) && PyErr_Occurred())) __PYX_ERR(0, 1595, __pyx_L3_error)
     __pyx_v_comm = ((struct PyMPICommObject *)values[2]);
-    __pyx_v_myid = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_myid == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1574, __pyx_L3_error)
-    __pyx_v_nprocs = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_nprocs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1575, __pyx_L3_error)
-    __pyx_v_ntime = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_ntime == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1575, __pyx_L3_error)
-    __pyx_v_kfactor = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_kfactor == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1575, __pyx_L3_error)
-    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1575, __pyx_L3_error)
-    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1575, __pyx_L3_error)
-    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1576, __pyx_L3_error)
-    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1576, __pyx_L3_error)
-    __pyx_v_epc_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_p.memview)) __PYX_ERR(0, 1576, __pyx_L3_error)
+    __pyx_v_myid = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_myid == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1595, __pyx_L3_error)
+    __pyx_v_nprocs = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_nprocs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1596, __pyx_L3_error)
+    __pyx_v_ntime = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_ntime == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1596, __pyx_L3_error)
+    __pyx_v_kfactor = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_kfactor == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1596, __pyx_L3_error)
+    __pyx_v_knum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_knum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1596, __pyx_L3_error)
+    __pyx_v_nmnb2 = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_nmnb2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1596, __pyx_L3_error)
+    __pyx_v_kproc = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc.memview)) __PYX_ERR(0, 1597, __pyx_L3_error)
+    __pyx_v_kproc_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_kproc_num.memview)) __PYX_ERR(0, 1597, __pyx_L3_error)
+    __pyx_v_epc_p = __Pyx_PyObject_to_MemoryviewSlice_d_dc___pyx_t_double_complex(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_epc_p.memview)) __PYX_ERR(0, 1597, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1573, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("FileRead", 1, 12, 12, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1594, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("epcfunc_nl.FileRead", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1574, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1595, __pyx_L1_error)
   __pyx_r = __pyx_pf_10epcfunc_nl_20FileRead(__pyx_self, __pyx_v_filename, __pyx_v_EpcType, __pyx_v_comm, __pyx_v_myid, __pyx_v_nprocs, __pyx_v_ntime, __pyx_v_kfactor, __pyx_v_knum, __pyx_v_nmnb2, __pyx_v_kproc, __pyx_v_kproc_num, __pyx_v_epc_p);
 
   /* function exit code */
@@ -16643,7 +16587,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("FileRead", 0);
 
-  /* "epcfunc_nl.pyx":1578
+  /* "epcfunc_nl.pyx":1599
  *     int[::1] kproc, int[::1] kproc_num, double complex[:,::1] epc_p
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -16653,7 +16597,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "epcfunc_nl.pyx":1583
+  /* "epcfunc_nl.pyx":1604
  *              knum_buf, kf_buf, kf_min, kf_max, kf_num, kf_buf_p
  *     cdef long offset_s, offset_e, datalen
  *     cdef long nmnb2_l = nmnb2             # <<<<<<<<<<<<<<
@@ -16662,31 +16606,31 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_nmnb2_l = __pyx_v_nmnb2;
 
-  /* "epcfunc_nl.pyx":1588
+  /* "epcfunc_nl.pyx":1609
  *     cdef double complex* epc_sbuf
  *     cdef double complex* epc_rbuf
  *     cdef s_dcplx = sizeof(double complex)             # <<<<<<<<<<<<<<
  *     cdef s_int = sizeof(int)
  *     cdef int * scount
  */
-  __pyx_t_2 = __Pyx_PyInt_FromSize_t((sizeof(__pyx_t_double_complex))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1588, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_FromSize_t((sizeof(__pyx_t_double_complex))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1609, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_s_dcplx = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "epcfunc_nl.pyx":1589
+  /* "epcfunc_nl.pyx":1610
  *     cdef double complex* epc_rbuf
  *     cdef s_dcplx = sizeof(double complex)
  *     cdef s_int = sizeof(int)             # <<<<<<<<<<<<<<
  *     cdef int * scount
  *     cdef int * sdispl
  */
-  __pyx_t_2 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1589, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_FromSize_t((sizeof(int))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1610, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_v_s_int = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "epcfunc_nl.pyx":1596
+  /* "epcfunc_nl.pyx":1617
  *     cdef int * kfproc
  *     cdef int * kfproc_num
  *     cdef char* EPCTYPE = "AKQ"             # <<<<<<<<<<<<<<
@@ -16695,7 +16639,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_EPCTYPE = ((char *)"AKQ");
 
-  /* "epcfunc_nl.pyx":1599
+  /* "epcfunc_nl.pyx":1620
  *     cdef FILE* fp
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -16704,7 +16648,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":1601
+  /* "epcfunc_nl.pyx":1622
  *     starttime = mpi.MPI_Wtime()
  * 
  *     fp = fopen(filename,'rb')             # <<<<<<<<<<<<<<
@@ -16713,7 +16657,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_fp = fopen(__pyx_v_filename, ((char const *)"rb"));
 
-  /* "epcfunc_nl.pyx":1602
+  /* "epcfunc_nl.pyx":1623
  * 
  *     fp = fopen(filename,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
@@ -16722,7 +16666,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "epcfunc_nl.pyx":1603
+  /* "epcfunc_nl.pyx":1624
  *     fp = fopen(filename,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     if EpcType[0] == EPCTYPE[2]:             # <<<<<<<<<<<<<<
@@ -16732,7 +16676,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
   __pyx_t_3 = (((__pyx_v_EpcType[0]) == (__pyx_v_EPCTYPE[2])) != 0);
   if (__pyx_t_3) {
 
-    /* "epcfunc_nl.pyx":1604
+    /* "epcfunc_nl.pyx":1625
  *     fseek(fp,0,SEEK_SET)
  *     if EpcType[0] == EPCTYPE[2]:
  *         fseek(fp,kproc[myid]*kfactor*nmnb2_l*s_dcplx,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -16740,16 +16684,16 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  *             kf_min = <int>((kproc_num[myid]*i)/ntime)
  */
     __pyx_t_4 = __pyx_v_myid;
-    __pyx_t_2 = __Pyx_PyInt_From_long((((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_4)) ))) * __pyx_v_kfactor) * __pyx_v_nmnb2_l)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1604, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_long((((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_4)) ))) * __pyx_v_kfactor) * __pyx_v_nmnb2_l)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1625, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_v_s_dcplx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1604, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_v_s_dcplx); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1625, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1604, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1625, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     (void)(fseek(__pyx_v_fp, __pyx_t_6, SEEK_CUR));
 
-    /* "epcfunc_nl.pyx":1605
+    /* "epcfunc_nl.pyx":1626
  *     if EpcType[0] == EPCTYPE[2]:
  *         fseek(fp,kproc[myid]*kfactor*nmnb2_l*s_dcplx,SEEK_CUR)
  *         for i in range(ntime):             # <<<<<<<<<<<<<<
@@ -16761,7 +16705,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
     for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
       __pyx_v_i = __pyx_t_9;
 
-      /* "epcfunc_nl.pyx":1606
+      /* "epcfunc_nl.pyx":1627
  *         fseek(fp,kproc[myid]*kfactor*nmnb2_l*s_dcplx,SEEK_CUR)
  *         for i in range(ntime):
  *             kf_min = <int>((kproc_num[myid]*i)/ntime)             # <<<<<<<<<<<<<<
@@ -16771,7 +16715,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
       __pyx_t_4 = __pyx_v_myid;
       __pyx_v_kf_min = ((int)(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_4)) ))) * __pyx_v_i) / __pyx_v_ntime));
 
-      /* "epcfunc_nl.pyx":1607
+      /* "epcfunc_nl.pyx":1628
  *         for i in range(ntime):
  *             kf_min = <int>((kproc_num[myid]*i)/ntime)
  *             kf_max = <int>((kproc_num[myid]*(i+1))/ntime)             # <<<<<<<<<<<<<<
@@ -16781,7 +16725,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
       __pyx_t_4 = __pyx_v_myid;
       __pyx_v_kf_max = ((int)(((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_4)) ))) * (__pyx_v_i + 1)) / ((long)__pyx_v_ntime)));
 
-      /* "epcfunc_nl.pyx":1608
+      /* "epcfunc_nl.pyx":1629
  *             kf_min = <int>((kproc_num[myid]*i)/ntime)
  *             kf_max = <int>((kproc_num[myid]*(i+1))/ntime)
  *             kf_num = kf_max-kf_min             # <<<<<<<<<<<<<<
@@ -16790,7 +16734,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_kf_num = (__pyx_v_kf_max - __pyx_v_kf_min);
 
-      /* "epcfunc_nl.pyx":1610
+      /* "epcfunc_nl.pyx":1631
  *             kf_num = kf_max-kf_min
  * 
  *             datalen = kf_num*kfactor*nmnb2_l             # <<<<<<<<<<<<<<
@@ -16799,7 +16743,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_datalen = ((__pyx_v_kf_num * __pyx_v_kfactor) * __pyx_v_nmnb2_l);
 
-      /* "epcfunc_nl.pyx":1611
+      /* "epcfunc_nl.pyx":1632
  * 
  *             datalen = kf_num*kfactor*nmnb2_l
  *             fread(&epc_p[kf_min*kfactor,0],s_dcplx,datalen,fp)             # <<<<<<<<<<<<<<
@@ -16808,11 +16752,11 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_t_4 = (__pyx_v_kf_min * __pyx_v_kfactor);
       __pyx_t_10 = 0;
-      __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_v_s_dcplx); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1611, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_v_s_dcplx); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1632, __pyx_L1_error)
       (void)(fread((&(*((__pyx_t_double_complex *) ( /* dim=1 */ ((char *) (((__pyx_t_double_complex *) ( /* dim=0 */ (__pyx_v_epc_p.data + __pyx_t_4 * __pyx_v_epc_p.strides[0]) )) + __pyx_t_10)) )))), __pyx_t_11, __pyx_v_datalen, __pyx_v_fp));
     }
 
-    /* "epcfunc_nl.pyx":1603
+    /* "epcfunc_nl.pyx":1624
  *     fp = fopen(filename,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     if EpcType[0] == EPCTYPE[2]:             # <<<<<<<<<<<<<<
@@ -16822,7 +16766,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
     goto __pyx_L3;
   }
 
-  /* "epcfunc_nl.pyx":1613
+  /* "epcfunc_nl.pyx":1634
  *             fread(&epc_p[kf_min*kfactor,0],s_dcplx,datalen,fp)
  *     else:
  *         scount = <int*>malloc(nprocs*s_int)             # <<<<<<<<<<<<<<
@@ -16830,96 +16774,96 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  *         rcount = <int*>malloc(nprocs*s_int)
  */
   /*else*/ {
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1613, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1634, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_s_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1613, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_s_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1634, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1613, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1634, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_scount = ((int *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1614
+    /* "epcfunc_nl.pyx":1635
  *     else:
  *         scount = <int*>malloc(nprocs*s_int)
  *         sdispl = <int*>malloc(nprocs*s_int)             # <<<<<<<<<<<<<<
  *         rcount = <int*>malloc(nprocs*s_int)
  *         rdispl = <int*>malloc(nprocs*s_int)
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1614, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1635, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_v_s_int); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1614, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_v_s_int); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1635, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1614, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1635, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_sdispl = ((int *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1615
+    /* "epcfunc_nl.pyx":1636
  *         scount = <int*>malloc(nprocs*s_int)
  *         sdispl = <int*>malloc(nprocs*s_int)
  *         rcount = <int*>malloc(nprocs*s_int)             # <<<<<<<<<<<<<<
  *         rdispl = <int*>malloc(nprocs*s_int)
  *         kfproc = <int*>malloc(s_int*nprocs)
  */
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1615, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1636, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_s_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1615, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_t_5, __pyx_v_s_int); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1636, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1615, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1636, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_rcount = ((int *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1616
+    /* "epcfunc_nl.pyx":1637
  *         sdispl = <int*>malloc(nprocs*s_int)
  *         rcount = <int*>malloc(nprocs*s_int)
  *         rdispl = <int*>malloc(nprocs*s_int)             # <<<<<<<<<<<<<<
  *         kfproc = <int*>malloc(s_int*nprocs)
  *         kfproc_num = <int*>malloc(s_int*nprocs)
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1616, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1637, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_v_s_int); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1616, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_2, __pyx_v_s_int); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1637, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1616, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1637, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_rdispl = ((int *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1617
+    /* "epcfunc_nl.pyx":1638
  *         rcount = <int*>malloc(nprocs*s_int)
  *         rdispl = <int*>malloc(nprocs*s_int)
  *         kfproc = <int*>malloc(s_int*nprocs)             # <<<<<<<<<<<<<<
  *         kfproc_num = <int*>malloc(s_int*nprocs)
  * 
  */
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1617, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1638, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_v_s_int, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1617, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_v_s_int, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1638, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1617, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1638, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_kfproc = ((int *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1618
+    /* "epcfunc_nl.pyx":1639
  *         rdispl = <int*>malloc(nprocs*s_int)
  *         kfproc = <int*>malloc(s_int*nprocs)
  *         kfproc_num = <int*>malloc(s_int*nprocs)             # <<<<<<<<<<<<<<
  * 
  *         mpi.MPI_Type_contiguous(
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1618, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_nprocs); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1639, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_v_s_int, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1618, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_v_s_int, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1639, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1618, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1639, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_kfproc_num = ((int *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1620
+    /* "epcfunc_nl.pyx":1641
  *         kfproc_num = <int*>malloc(s_int*nprocs)
  * 
  *         mpi.MPI_Type_contiguous(             # <<<<<<<<<<<<<<
@@ -16928,7 +16872,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     (void)(MPI_Type_contiguous(__pyx_v_nmnb2, MPI_DOUBLE_COMPLEX, (&__pyx_v_CPLX_N)));
 
-    /* "epcfunc_nl.pyx":1623
+    /* "epcfunc_nl.pyx":1644
  *             nmnb2,mpi.MPI_DOUBLE_COMPLEX,&CPLX_N
  *         )
  *         mpi.MPI_Type_commit(&CPLX_N)             # <<<<<<<<<<<<<<
@@ -16937,7 +16881,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     (void)(MPI_Type_commit((&__pyx_v_CPLX_N)));
 
-    /* "epcfunc_nl.pyx":1625
+    /* "epcfunc_nl.pyx":1646
  *         mpi.MPI_Type_commit(&CPLX_N)
  * 
  *         knum_buf = <int>(knum/nprocs)             # <<<<<<<<<<<<<<
@@ -16946,7 +16890,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_v_knum_buf = ((int)(__pyx_v_knum / __pyx_v_nprocs));
 
-    /* "epcfunc_nl.pyx":1626
+    /* "epcfunc_nl.pyx":1647
  * 
  *         knum_buf = <int>(knum/nprocs)
  *         if knum%nprocs != 0:             # <<<<<<<<<<<<<<
@@ -16956,7 +16900,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
     __pyx_t_3 = (((__pyx_v_knum % __pyx_v_nprocs) != 0) != 0);
     if (__pyx_t_3) {
 
-      /* "epcfunc_nl.pyx":1627
+      /* "epcfunc_nl.pyx":1648
  *         knum_buf = <int>(knum/nprocs)
  *         if knum%nprocs != 0:
  *             knum_buf += 1             # <<<<<<<<<<<<<<
@@ -16965,7 +16909,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_knum_buf = (__pyx_v_knum_buf + 1);
 
-      /* "epcfunc_nl.pyx":1626
+      /* "epcfunc_nl.pyx":1647
  * 
  *         knum_buf = <int>(knum/nprocs)
  *         if knum%nprocs != 0:             # <<<<<<<<<<<<<<
@@ -16974,7 +16918,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     }
 
-    /* "epcfunc_nl.pyx":1628
+    /* "epcfunc_nl.pyx":1649
  *         if knum%nprocs != 0:
  *             knum_buf += 1
  *         kf_buf = <int>(kfactor/ntime)             # <<<<<<<<<<<<<<
@@ -16983,7 +16927,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_v_kf_buf = ((int)(__pyx_v_kfactor / __pyx_v_ntime));
 
-    /* "epcfunc_nl.pyx":1629
+    /* "epcfunc_nl.pyx":1650
  *             knum_buf += 1
  *         kf_buf = <int>(kfactor/ntime)
  *         if kfactor%ntime != 0:             # <<<<<<<<<<<<<<
@@ -16993,7 +16937,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
     __pyx_t_3 = (((__pyx_v_kfactor % __pyx_v_ntime) != 0) != 0);
     if (__pyx_t_3) {
 
-      /* "epcfunc_nl.pyx":1630
+      /* "epcfunc_nl.pyx":1651
  *         kf_buf = <int>(kfactor/ntime)
  *         if kfactor%ntime != 0:
  *             kf_buf += 1             # <<<<<<<<<<<<<<
@@ -17002,7 +16946,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_kf_buf = (__pyx_v_kf_buf + 1);
 
-      /* "epcfunc_nl.pyx":1629
+      /* "epcfunc_nl.pyx":1650
  *             knum_buf += 1
  *         kf_buf = <int>(kfactor/ntime)
  *         if kfactor%ntime != 0:             # <<<<<<<<<<<<<<
@@ -17011,7 +16955,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     }
 
-    /* "epcfunc_nl.pyx":1631
+    /* "epcfunc_nl.pyx":1652
  *         if kfactor%ntime != 0:
  *             kf_buf += 1
  *         kf_buf_p = <int>(kf_buf/nprocs)             # <<<<<<<<<<<<<<
@@ -17020,7 +16964,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_v_kf_buf_p = ((int)(__pyx_v_kf_buf / __pyx_v_nprocs));
 
-    /* "epcfunc_nl.pyx":1632
+    /* "epcfunc_nl.pyx":1653
  *             kf_buf += 1
  *         kf_buf_p = <int>(kf_buf/nprocs)
  *         if kf_buf%nprocs != 0:             # <<<<<<<<<<<<<<
@@ -17030,7 +16974,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
     __pyx_t_3 = (((__pyx_v_kf_buf % __pyx_v_nprocs) != 0) != 0);
     if (__pyx_t_3) {
 
-      /* "epcfunc_nl.pyx":1633
+      /* "epcfunc_nl.pyx":1654
  *         kf_buf_p = <int>(kf_buf/nprocs)
  *         if kf_buf%nprocs != 0:
  *             kf_buf_p += 1             # <<<<<<<<<<<<<<
@@ -17039,7 +16983,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_kf_buf_p = (__pyx_v_kf_buf_p + 1);
 
-      /* "epcfunc_nl.pyx":1632
+      /* "epcfunc_nl.pyx":1653
  *             kf_buf += 1
  *         kf_buf_p = <int>(kf_buf/nprocs)
  *         if kf_buf%nprocs != 0:             # <<<<<<<<<<<<<<
@@ -17048,91 +16992,91 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     }
 
-    /* "epcfunc_nl.pyx":1635
+    /* "epcfunc_nl.pyx":1656
  *             kf_buf_p += 1
  * 
  *         epc_dbuf = <double complex*>malloc(s_dcplx*kf_buf_p*knum*nmnb2_l)             # <<<<<<<<<<<<<<
  *         epc_sbuf = <double complex*>malloc(s_dcplx*kf_buf_p*knum*nmnb2_l)
  *         epc_rbuf = <double complex*>malloc(s_dcplx*kf_buf*knum_buf*nmnb2_l)
  */
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_kf_buf_p); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1635, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_kf_buf_p); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1656, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_v_s_dcplx, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1635, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_v_s_dcplx, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1656, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1635, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1656, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_12 = PyNumber_Multiply(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1635, __pyx_L1_error)
+    __pyx_t_12 = PyNumber_Multiply(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1656, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1635, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1656, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1635, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1656, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1635, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1656, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_epc_dbuf = ((__pyx_t_double_complex *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1636
+    /* "epcfunc_nl.pyx":1657
  * 
  *         epc_dbuf = <double complex*>malloc(s_dcplx*kf_buf_p*knum*nmnb2_l)
  *         epc_sbuf = <double complex*>malloc(s_dcplx*kf_buf_p*knum*nmnb2_l)             # <<<<<<<<<<<<<<
  *         epc_rbuf = <double complex*>malloc(s_dcplx*kf_buf*knum_buf*nmnb2_l)
  * 
  */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_kf_buf_p); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1636, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_kf_buf_p); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_v_s_dcplx, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1636, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_v_s_dcplx, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1636, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_12 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1636, __pyx_L1_error)
+    __pyx_t_12 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1636, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = PyNumber_Multiply(__pyx_t_12, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1636, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Multiply(__pyx_t_12, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1657, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1636, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_5); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1657, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_v_epc_sbuf = ((__pyx_t_double_complex *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1637
+    /* "epcfunc_nl.pyx":1658
  *         epc_dbuf = <double complex*>malloc(s_dcplx*kf_buf_p*knum*nmnb2_l)
  *         epc_sbuf = <double complex*>malloc(s_dcplx*kf_buf_p*knum*nmnb2_l)
  *         epc_rbuf = <double complex*>malloc(s_dcplx*kf_buf*knum_buf*nmnb2_l)             # <<<<<<<<<<<<<<
  * 
  *         for i in range(ntime):
  */
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_kf_buf); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1637, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_kf_buf); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_v_s_dcplx, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1637, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_v_s_dcplx, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_knum_buf); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1637, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_knum_buf); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_12 = PyNumber_Multiply(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1637, __pyx_L1_error)
+    __pyx_t_12 = PyNumber_Multiply(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_12);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1637, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1637, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1658, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1637, __pyx_L1_error)
+    __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_t_2); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1658, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_epc_rbuf = ((__pyx_t_double_complex *)malloc(__pyx_t_11));
 
-    /* "epcfunc_nl.pyx":1639
+    /* "epcfunc_nl.pyx":1660
  *         epc_rbuf = <double complex*>malloc(s_dcplx*kf_buf*knum_buf*nmnb2_l)
  * 
  *         for i in range(ntime):             # <<<<<<<<<<<<<<
@@ -17144,7 +17088,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
     for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
       __pyx_v_i = __pyx_t_9;
 
-      /* "epcfunc_nl.pyx":1640
+      /* "epcfunc_nl.pyx":1661
  * 
  *         for i in range(ntime):
  *             kf_min = <int>((kfactor*i)/ntime)             # <<<<<<<<<<<<<<
@@ -17153,7 +17097,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_kf_min = ((int)((__pyx_v_kfactor * __pyx_v_i) / __pyx_v_ntime));
 
-      /* "epcfunc_nl.pyx":1641
+      /* "epcfunc_nl.pyx":1662
  *         for i in range(ntime):
  *             kf_min = <int>((kfactor*i)/ntime)
  *             kf_max = <int>((kfactor*(i+1))/ntime)             # <<<<<<<<<<<<<<
@@ -17162,7 +17106,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_kf_max = ((int)((__pyx_v_kfactor * (__pyx_v_i + 1)) / ((long)__pyx_v_ntime)));
 
-      /* "epcfunc_nl.pyx":1642
+      /* "epcfunc_nl.pyx":1663
  *             kf_min = <int>((kfactor*i)/ntime)
  *             kf_max = <int>((kfactor*(i+1))/ntime)
  *             kf_num = kf_max-kf_min             # <<<<<<<<<<<<<<
@@ -17171,7 +17115,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       __pyx_v_kf_num = (__pyx_v_kf_max - __pyx_v_kf_min);
 
-      /* "epcfunc_nl.pyx":1644
+      /* "epcfunc_nl.pyx":1665
  *             kf_num = kf_max-kf_min
  * 
  *             for j in range(nprocs):             # <<<<<<<<<<<<<<
@@ -17183,7 +17127,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
       for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
         __pyx_v_j = __pyx_t_15;
 
-        /* "epcfunc_nl.pyx":1645
+        /* "epcfunc_nl.pyx":1666
  * 
  *             for j in range(nprocs):
  *                 kfproc[j] = <int>((kf_num*j)/nprocs)             # <<<<<<<<<<<<<<
@@ -17192,7 +17136,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
         (__pyx_v_kfproc[__pyx_v_j]) = ((int)((__pyx_v_kf_num * __pyx_v_j) / __pyx_v_nprocs));
 
-        /* "epcfunc_nl.pyx":1646
+        /* "epcfunc_nl.pyx":1667
  *             for j in range(nprocs):
  *                 kfproc[j] = <int>((kf_num*j)/nprocs)
  *                 kfproc_num[j] = <int>((kf_num*(j+1))/nprocs)-kfproc[j]             # <<<<<<<<<<<<<<
@@ -17202,7 +17146,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         (__pyx_v_kfproc_num[__pyx_v_j]) = (((int)((__pyx_v_kf_num * (__pyx_v_j + 1)) / ((long)__pyx_v_nprocs))) - (__pyx_v_kfproc[__pyx_v_j]));
       }
 
-      /* "epcfunc_nl.pyx":1647
+      /* "epcfunc_nl.pyx":1668
  *                 kfproc[j] = <int>((kf_num*j)/nprocs)
  *                 kfproc_num[j] = <int>((kf_num*(j+1))/nprocs)-kfproc[j]
  *             for j in range(nprocs):             # <<<<<<<<<<<<<<
@@ -17214,7 +17158,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
       for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
         __pyx_v_j = __pyx_t_15;
 
-        /* "epcfunc_nl.pyx":1648
+        /* "epcfunc_nl.pyx":1669
  *                 kfproc_num[j] = <int>((kf_num*(j+1))/nprocs)-kfproc[j]
  *             for j in range(nprocs):
  *                 scount[j] = kfproc_num[myid]*kproc_num[j]             # <<<<<<<<<<<<<<
@@ -17224,7 +17168,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         __pyx_t_10 = __pyx_v_j;
         (__pyx_v_scount[__pyx_v_j]) = ((__pyx_v_kfproc_num[__pyx_v_myid]) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_10)) ))));
 
-        /* "epcfunc_nl.pyx":1649
+        /* "epcfunc_nl.pyx":1670
  *             for j in range(nprocs):
  *                 scount[j] = kfproc_num[myid]*kproc_num[j]
  *                 rcount[j] = kproc_num[myid]*kfproc_num[j]             # <<<<<<<<<<<<<<
@@ -17234,7 +17178,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         __pyx_t_10 = __pyx_v_myid;
         (__pyx_v_rcount[__pyx_v_j]) = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_10)) ))) * (__pyx_v_kfproc_num[__pyx_v_j]));
 
-        /* "epcfunc_nl.pyx":1650
+        /* "epcfunc_nl.pyx":1671
  *                 scount[j] = kfproc_num[myid]*kproc_num[j]
  *                 rcount[j] = kproc_num[myid]*kfproc_num[j]
  *                 sdispl[j] = kfproc_num[myid]*kproc[j]             # <<<<<<<<<<<<<<
@@ -17244,7 +17188,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         __pyx_t_10 = __pyx_v_j;
         (__pyx_v_sdispl[__pyx_v_j]) = ((__pyx_v_kfproc_num[__pyx_v_myid]) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_10)) ))));
 
-        /* "epcfunc_nl.pyx":1651
+        /* "epcfunc_nl.pyx":1672
  *                 rcount[j] = kproc_num[myid]*kfproc_num[j]
  *                 sdispl[j] = kfproc_num[myid]*kproc[j]
  *                 rdispl[j] = kproc_num[myid]*kfproc[j]             # <<<<<<<<<<<<<<
@@ -17255,121 +17199,121 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         (__pyx_v_rdispl[__pyx_v_j]) = ((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_10)) ))) * (__pyx_v_kfproc[__pyx_v_j]));
       }
 
-      /* "epcfunc_nl.pyx":1653
+      /* "epcfunc_nl.pyx":1674
  *                 rdispl[j] = kproc_num[myid]*kfproc[j]
  * 
  *             kf_min_p = kfproc[myid]             # <<<<<<<<<<<<<<
  *             kf_num_p = kfproc_num[myid]
  *             kf_max_p = kf_min_p+kf_num_p
  */
-      __pyx_t_2 = __Pyx_PyInt_From_int((__pyx_v_kfproc[__pyx_v_myid])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1653, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int((__pyx_v_kfproc[__pyx_v_myid])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1674, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_XDECREF_SET(__pyx_v_kf_min_p, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "epcfunc_nl.pyx":1654
+      /* "epcfunc_nl.pyx":1675
  * 
  *             kf_min_p = kfproc[myid]
  *             kf_num_p = kfproc_num[myid]             # <<<<<<<<<<<<<<
  *             kf_max_p = kf_min_p+kf_num_p
  * 
  */
-      __pyx_t_2 = __Pyx_PyInt_From_int((__pyx_v_kfproc_num[__pyx_v_myid])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1654, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int((__pyx_v_kfproc_num[__pyx_v_myid])); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1675, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_XDECREF_SET(__pyx_v_kf_num_p, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "epcfunc_nl.pyx":1655
+      /* "epcfunc_nl.pyx":1676
  *             kf_min_p = kfproc[myid]
  *             kf_num_p = kfproc_num[myid]
  *             kf_max_p = kf_min_p+kf_num_p             # <<<<<<<<<<<<<<
  * 
  *             offset_s = kf_min_p*knum*nmnb2_l*s_dcplx
  */
-      __pyx_t_2 = PyNumber_Add(__pyx_v_kf_min_p, __pyx_v_kf_num_p); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1655, __pyx_L1_error)
+      __pyx_t_2 = PyNumber_Add(__pyx_v_kf_min_p, __pyx_v_kf_num_p); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1676, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_XDECREF_SET(__pyx_v_kf_max_p, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "epcfunc_nl.pyx":1657
+      /* "epcfunc_nl.pyx":1678
  *             kf_max_p = kf_min_p+kf_num_p
  * 
  *             offset_s = kf_min_p*knum*nmnb2_l*s_dcplx             # <<<<<<<<<<<<<<
  *             offset_e = (kf_num-kf_max_p)*knum*nmnb2_l*s_dcplx
  *             datalen = kf_num_p*knum*nmnb2_l
  */
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1657, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1678, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_5 = PyNumber_Multiply(__pyx_v_kf_min_p, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1657, __pyx_L1_error)
+      __pyx_t_5 = PyNumber_Multiply(__pyx_v_kf_min_p, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1678, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1657, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1678, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_12 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1657, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1678, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_v_s_dcplx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1657, __pyx_L1_error)
+      __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_v_s_dcplx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1678, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1657, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1678, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_offset_s = __pyx_t_6;
 
-      /* "epcfunc_nl.pyx":1658
+      /* "epcfunc_nl.pyx":1679
  * 
  *             offset_s = kf_min_p*knum*nmnb2_l*s_dcplx
  *             offset_e = (kf_num-kf_max_p)*knum*nmnb2_l*s_dcplx             # <<<<<<<<<<<<<<
  *             datalen = kf_num_p*knum*nmnb2_l
  *             fseek(fp,offset_s,SEEK_CUR)
  */
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_kf_num); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_kf_num); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_12 = PyNumber_Subtract(__pyx_t_2, __pyx_v_kf_max_p); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Subtract(__pyx_t_2, __pyx_v_kf_max_p); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_5 = PyNumber_Multiply(__pyx_t_12, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_5 = PyNumber_Multiply(__pyx_t_12, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_12 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Multiply(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_v_s_dcplx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_2 = PyNumber_Multiply(__pyx_t_12, __pyx_v_s_dcplx); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1658, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_2); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1679, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_offset_e = __pyx_t_6;
 
-      /* "epcfunc_nl.pyx":1659
+      /* "epcfunc_nl.pyx":1680
  *             offset_s = kf_min_p*knum*nmnb2_l*s_dcplx
  *             offset_e = (kf_num-kf_max_p)*knum*nmnb2_l*s_dcplx
  *             datalen = kf_num_p*knum*nmnb2_l             # <<<<<<<<<<<<<<
  *             fseek(fp,offset_s,SEEK_CUR)
  *             fread(epc_dbuf,s_dcplx,datalen,fp)
  */
-      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1659, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_knum); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1680, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_12 = PyNumber_Multiply(__pyx_v_kf_num_p, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1659, __pyx_L1_error)
+      __pyx_t_12 = PyNumber_Multiply(__pyx_v_kf_num_p, __pyx_t_2); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1680, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_12);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1659, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_nmnb2_l); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1680, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_5 = PyNumber_Multiply(__pyx_t_12, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1659, __pyx_L1_error)
+      __pyx_t_5 = PyNumber_Multiply(__pyx_t_12, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1680, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1659, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyInt_As_long(__pyx_t_5); if (unlikely((__pyx_t_6 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1680, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_v_datalen = __pyx_t_6;
 
-      /* "epcfunc_nl.pyx":1660
+      /* "epcfunc_nl.pyx":1681
  *             offset_e = (kf_num-kf_max_p)*knum*nmnb2_l*s_dcplx
  *             datalen = kf_num_p*knum*nmnb2_l
  *             fseek(fp,offset_s,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -17378,17 +17322,17 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       (void)(fseek(__pyx_v_fp, __pyx_v_offset_s, SEEK_CUR));
 
-      /* "epcfunc_nl.pyx":1661
+      /* "epcfunc_nl.pyx":1682
  *             datalen = kf_num_p*knum*nmnb2_l
  *             fseek(fp,offset_s,SEEK_CUR)
  *             fread(epc_dbuf,s_dcplx,datalen,fp)             # <<<<<<<<<<<<<<
  *             fseek(fp,offset_e,SEEK_CUR)
  * 
  */
-      __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_v_s_dcplx); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1661, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyInt_As_size_t(__pyx_v_s_dcplx); if (unlikely((__pyx_t_11 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1682, __pyx_L1_error)
       (void)(fread(__pyx_v_epc_dbuf, __pyx_t_11, __pyx_v_datalen, __pyx_v_fp));
 
-      /* "epcfunc_nl.pyx":1662
+      /* "epcfunc_nl.pyx":1683
  *             fseek(fp,offset_s,SEEK_CUR)
  *             fread(epc_dbuf,s_dcplx,datalen,fp)
  *             fseek(fp,offset_e,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -17397,7 +17341,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       (void)(fseek(__pyx_v_fp, __pyx_v_offset_e, SEEK_CUR));
 
-      /* "epcfunc_nl.pyx":1664
+      /* "epcfunc_nl.pyx":1685
  *             fseek(fp,offset_e,SEEK_CUR)
  * 
  *             for j in range(nprocs):             # <<<<<<<<<<<<<<
@@ -17409,7 +17353,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
       for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
         __pyx_v_j = __pyx_t_15;
 
-        /* "epcfunc_nl.pyx":1665
+        /* "epcfunc_nl.pyx":1686
  * 
  *             for j in range(nprocs):
  *                 for k in range(scount[j]):             # <<<<<<<<<<<<<<
@@ -17421,7 +17365,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
           __pyx_v_k = __pyx_t_18;
 
-          /* "epcfunc_nl.pyx":1666
+          /* "epcfunc_nl.pyx":1687
  *             for j in range(nprocs):
  *                 for k in range(scount[j]):
  *                     m = <int>(k/kproc_num[j])             # <<<<<<<<<<<<<<
@@ -17431,7 +17375,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
           __pyx_t_10 = __pyx_v_j;
           __pyx_v_m = ((int)(__pyx_v_k / (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_10)) )))));
 
-          /* "epcfunc_nl.pyx":1667
+          /* "epcfunc_nl.pyx":1688
  *                 for k in range(scount[j]):
  *                     m = <int>(k/kproc_num[j])
  *                     n = k%kproc_num[j]             # <<<<<<<<<<<<<<
@@ -17441,7 +17385,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
           __pyx_t_10 = __pyx_v_j;
           __pyx_v_n = (__pyx_v_k % (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_10)) ))));
 
-          /* "epcfunc_nl.pyx":1668
+          /* "epcfunc_nl.pyx":1689
  *                     m = <int>(k/kproc_num[j])
  *                     n = k%kproc_num[j]
  *                     p = sdispl[j]+k             # <<<<<<<<<<<<<<
@@ -17450,7 +17394,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
           __pyx_v_p = ((__pyx_v_sdispl[__pyx_v_j]) + __pyx_v_k);
 
-          /* "epcfunc_nl.pyx":1669
+          /* "epcfunc_nl.pyx":1690
  *                     n = k%kproc_num[j]
  *                     p = sdispl[j]+k
  *                     q = m*knum+(n+kproc[j])             # <<<<<<<<<<<<<<
@@ -17460,7 +17404,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
           __pyx_t_10 = __pyx_v_j;
           __pyx_v_q = ((__pyx_v_m * __pyx_v_knum) + (__pyx_v_n + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc.data) + __pyx_t_10)) )))));
 
-          /* "epcfunc_nl.pyx":1670
+          /* "epcfunc_nl.pyx":1691
  *                     p = sdispl[j]+k
  *                     q = m*knum+(n+kproc[j])
  *                     for l in range(nmnb2):             # <<<<<<<<<<<<<<
@@ -17472,7 +17416,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
           for (__pyx_t_21 = 0; __pyx_t_21 < __pyx_t_20; __pyx_t_21+=1) {
             __pyx_v_l = __pyx_t_21;
 
-            /* "epcfunc_nl.pyx":1671
+            /* "epcfunc_nl.pyx":1692
  *                     q = m*knum+(n+kproc[j])
  *                     for l in range(nmnb2):
  *                         epc_sbuf[p*nmnb2+l] = epc_dbuf[q*nmnb2+l]             # <<<<<<<<<<<<<<
@@ -17484,7 +17428,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         }
       }
 
-      /* "epcfunc_nl.pyx":1673
+      /* "epcfunc_nl.pyx":1694
  *                         epc_sbuf[p*nmnb2+l] = epc_dbuf[q*nmnb2+l]
  * 
  *             mpi.MPI_Alltoallv(             # <<<<<<<<<<<<<<
@@ -17493,7 +17437,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
       (void)(MPI_Alltoallv(__pyx_v_epc_sbuf, __pyx_v_scount, __pyx_v_sdispl, __pyx_v_CPLX_N, __pyx_v_epc_rbuf, __pyx_v_rcount, __pyx_v_rdispl, __pyx_v_CPLX_N, __pyx_v_c_comm));
 
-      /* "epcfunc_nl.pyx":1677
+      /* "epcfunc_nl.pyx":1698
  *                 epc_rbuf,rcount,rdispl,CPLX_N,c_comm
  *             )
  *             for j in range(kf_num):             # <<<<<<<<<<<<<<
@@ -17505,7 +17449,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
       for (__pyx_t_15 = 0; __pyx_t_15 < __pyx_t_14; __pyx_t_15+=1) {
         __pyx_v_j = __pyx_t_15;
 
-        /* "epcfunc_nl.pyx":1678
+        /* "epcfunc_nl.pyx":1699
  *             )
  *             for j in range(kf_num):
  *                 for k in range(kproc_num[myid]):             # <<<<<<<<<<<<<<
@@ -17518,7 +17462,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
         for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_17; __pyx_t_18+=1) {
           __pyx_v_k = __pyx_t_18;
 
-          /* "epcfunc_nl.pyx":1679
+          /* "epcfunc_nl.pyx":1700
  *             for j in range(kf_num):
  *                 for k in range(kproc_num[myid]):
  *                     m = (j+kf_min)*kproc_num[myid]+k             # <<<<<<<<<<<<<<
@@ -17528,7 +17472,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
           __pyx_t_10 = __pyx_v_myid;
           __pyx_v_m = (((__pyx_v_j + __pyx_v_kf_min) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_10)) )))) + __pyx_v_k);
 
-          /* "epcfunc_nl.pyx":1680
+          /* "epcfunc_nl.pyx":1701
  *                 for k in range(kproc_num[myid]):
  *                     m = (j+kf_min)*kproc_num[myid]+k
  *                     n = j*kproc_num[myid]+k             # <<<<<<<<<<<<<<
@@ -17538,7 +17482,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
           __pyx_t_10 = __pyx_v_myid;
           __pyx_v_n = ((__pyx_v_j * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_kproc_num.data) + __pyx_t_10)) )))) + __pyx_v_k);
 
-          /* "epcfunc_nl.pyx":1681
+          /* "epcfunc_nl.pyx":1702
  *                     m = (j+kf_min)*kproc_num[myid]+k
  *                     n = j*kproc_num[myid]+k
  *                     for l in range(nmnb2):             # <<<<<<<<<<<<<<
@@ -17550,7 +17494,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
           for (__pyx_t_21 = 0; __pyx_t_21 < __pyx_t_20; __pyx_t_21+=1) {
             __pyx_v_l = __pyx_t_21;
 
-            /* "epcfunc_nl.pyx":1682
+            /* "epcfunc_nl.pyx":1703
  *                     n = j*kproc_num[myid]+k
  *                     for l in range(nmnb2):
  *                         epc_p[m,l] = epc_rbuf[n*nmnb2+l]             # <<<<<<<<<<<<<<
@@ -17565,7 +17509,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
       }
     }
 
-    /* "epcfunc_nl.pyx":1684
+    /* "epcfunc_nl.pyx":1705
  *                         epc_p[m,l] = epc_rbuf[n*nmnb2+l]
  * 
  *         mpi.MPI_Type_free(&CPLX_N)             # <<<<<<<<<<<<<<
@@ -17574,7 +17518,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     (void)(MPI_Type_free((&__pyx_v_CPLX_N)));
 
-    /* "epcfunc_nl.pyx":1686
+    /* "epcfunc_nl.pyx":1707
  *         mpi.MPI_Type_free(&CPLX_N)
  * 
  *         free(epc_dbuf)             # <<<<<<<<<<<<<<
@@ -17583,7 +17527,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_epc_dbuf);
 
-    /* "epcfunc_nl.pyx":1687
+    /* "epcfunc_nl.pyx":1708
  * 
  *         free(epc_dbuf)
  *         free(epc_sbuf)             # <<<<<<<<<<<<<<
@@ -17592,7 +17536,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_epc_sbuf);
 
-    /* "epcfunc_nl.pyx":1688
+    /* "epcfunc_nl.pyx":1709
  *         free(epc_dbuf)
  *         free(epc_sbuf)
  *         free(epc_rbuf)             # <<<<<<<<<<<<<<
@@ -17601,7 +17545,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_epc_rbuf);
 
-    /* "epcfunc_nl.pyx":1689
+    /* "epcfunc_nl.pyx":1710
  *         free(epc_sbuf)
  *         free(epc_rbuf)
  *         free(scount)             # <<<<<<<<<<<<<<
@@ -17610,7 +17554,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_scount);
 
-    /* "epcfunc_nl.pyx":1690
+    /* "epcfunc_nl.pyx":1711
  *         free(epc_rbuf)
  *         free(scount)
  *         free(sdispl)             # <<<<<<<<<<<<<<
@@ -17619,7 +17563,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_sdispl);
 
-    /* "epcfunc_nl.pyx":1691
+    /* "epcfunc_nl.pyx":1712
  *         free(scount)
  *         free(sdispl)
  *         free(rcount)             # <<<<<<<<<<<<<<
@@ -17628,7 +17572,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_rcount);
 
-    /* "epcfunc_nl.pyx":1692
+    /* "epcfunc_nl.pyx":1713
  *         free(sdispl)
  *         free(rcount)
  *         free(rdispl)             # <<<<<<<<<<<<<<
@@ -17637,7 +17581,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_rdispl);
 
-    /* "epcfunc_nl.pyx":1693
+    /* "epcfunc_nl.pyx":1714
  *         free(rcount)
  *         free(rdispl)
  *         free(kfproc)             # <<<<<<<<<<<<<<
@@ -17646,7 +17590,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
     free(__pyx_v_kfproc);
 
-    /* "epcfunc_nl.pyx":1694
+    /* "epcfunc_nl.pyx":1715
  *         free(rdispl)
  *         free(kfproc)
  *         free(kfproc_num)             # <<<<<<<<<<<<<<
@@ -17657,7 +17601,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
   }
   __pyx_L3:;
 
-  /* "epcfunc_nl.pyx":1696
+  /* "epcfunc_nl.pyx":1717
  *         free(kfproc_num)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
@@ -17666,7 +17610,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "epcfunc_nl.pyx":1698
+  /* "epcfunc_nl.pyx":1719
  *     fclose(fp)
  * 
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -17675,7 +17619,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "epcfunc_nl.pyx":1699
+  /* "epcfunc_nl.pyx":1720
  * 
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -17684,14 +17628,14 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
   __pyx_t_3 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_3) {
 
-    /* "epcfunc_nl.pyx":1700
+    /* "epcfunc_nl.pyx":1721
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("Read %s as %d part(s) in %.5fs.\n",filename,ntime,endtime-starttime)             # <<<<<<<<<<<<<<
  */
     (void)(printf(((char const *)"Read %s as %d part(s) in %.5fs.\n"), __pyx_v_filename, __pyx_v_ntime, (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "epcfunc_nl.pyx":1699
+    /* "epcfunc_nl.pyx":1720
  * 
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -17699,7 +17643,7 @@ static PyObject *__pyx_pf_10epcfunc_nl_20FileRead(CYTHON_UNUSED PyObject *__pyx_
  */
   }
 
-  /* "epcfunc_nl.pyx":1573
+  /* "epcfunc_nl.pyx":1594
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def FileRead(             # <<<<<<<<<<<<<<
@@ -32049,113 +31993,113 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__22);
   __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(23, 0, 99, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_L, 241, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 241, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":467
+  /* "epcfunc_nl.pyx":471
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer,
  *     int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
  */
-  __pyx_tuple__24 = PyTuple_Pack(100, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_nbands, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_nkpath, __pyx_n_s_kpath, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_bandveckp, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck, __pyx_n_s_drveck_p, __pyx_n_s_vdrv, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_norbnb, __pyx_n_s_nbands2, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_ik, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_qnum_p, __pyx_n_s_qnum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_nm_num, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kpx, __pyx_n_s_kpy, __pyx_n_s_kpz, __pyx_n_s_RKpx, __pyx_n_s_RKpy, __pyx_n_s_RKpz, __pyx_n_s_RKp, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_drveck, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 467, __pyx_L1_error)
+  __pyx_tuple__24 = PyTuple_Pack(100, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_nbands, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_nkpath, __pyx_n_s_kpath, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_bandveckp, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck, __pyx_n_s_drveck_p, __pyx_n_s_vdrv, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_norbnb, __pyx_n_s_nbands2, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_ik, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_qnum_p, __pyx_n_s_qnum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_nm_num, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kpx, __pyx_n_s_kpy, __pyx_n_s_kpz, __pyx_n_s_RKpx, __pyx_n_s_RKpy, __pyx_n_s_RKpz, __pyx_n_s_RKp, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_drveck, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 471, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(23, 0, 100, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_R, 467, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 467, __pyx_L1_error)
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(23, 0, 100, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_R, 471, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 471, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":686
+  /* "epcfunc_nl.pyx":693
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_L(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer, int norbital,
  *     int ncell, int knum, int qnum, int[::1] natom_split, int[::1] nq,
  */
-  __pyx_tuple__26 = PyTuple_Pack(100, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_qnum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_qproc, __pyx_n_s_qproc_num, __pyx_n_s_bassel, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_l_drveck, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck, __pyx_n_s_drveck_a, __pyx_n_s_drveck_t, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_k2, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nm_num, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kx, __pyx_n_s_ky, __pyx_n_s_kz, __pyx_n_s_RKx, __pyx_n_s_RKy, __pyx_n_s_RKz, __pyx_n_s_RK, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 686, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(100, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_qnum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_qproc, __pyx_n_s_qproc_num, __pyx_n_s_bassel, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_l_drveck, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck, __pyx_n_s_drveck_a, __pyx_n_s_drveck_t, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_k2, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nm_num, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kx, __pyx_n_s_ky, __pyx_n_s_kz, __pyx_n_s_RKx, __pyx_n_s_RKy, __pyx_n_s_RKz, __pyx_n_s_RK, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 693, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(24, 0, 100, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_p_L, 686, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 686, __pyx_L1_error)
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(24, 0, 100, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_p_L, 693, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 693, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":900
+  /* "epcfunc_nl.pyx":911
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_R(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer, int norbital,
  *     int ncell, int knum, int qnum, int[::1] natom_split, int[::1] nq,
  */
-  __pyx_tuple__28 = PyTuple_Pack(100, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_qnum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_qproc, __pyx_n_s_qproc_num, __pyx_n_s_bassel, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_bandveckp, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck_p, __pyx_n_s_drveck_a, __pyx_n_s_drveck_t, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_k2, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nm_num, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kpx, __pyx_n_s_kpy, __pyx_n_s_kpz, __pyx_n_s_RKpx, __pyx_n_s_RKpy, __pyx_n_s_RKpz, __pyx_n_s_RKp, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 900, __pyx_L1_error)
+  __pyx_tuple__28 = PyTuple_Pack(100, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_qnum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_qproc, __pyx_n_s_qproc_num, __pyx_n_s_bassel, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_bandveckp, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck_p, __pyx_n_s_drveck_a, __pyx_n_s_drveck_t, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_k2, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nm_num, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kpx, __pyx_n_s_kpy, __pyx_n_s_kpz, __pyx_n_s_RKpx, __pyx_n_s_RKpy, __pyx_n_s_RKpz, __pyx_n_s_RKp, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 911, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(24, 0, 100, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_p_R, 900, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 900, __pyx_L1_error)
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(24, 0, 100, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_p_R, 911, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 911, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":1079
+  /* "epcfunc_nl.pyx":1094
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_L_q(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, long natom_buffer,
  *     int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
  */
-  __pyx_tuple__30 = PyTuple_Pack(99, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_nbands, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_nqpath, __pyx_n_s_qpath, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck_a, __pyx_n_s_drveck_p, __pyx_n_s_drveck_t, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_norbnb, __pyx_n_s_nbands2, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_iq, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_nm_num, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kx, __pyx_n_s_ky, __pyx_n_s_kz, __pyx_n_s_RKx, __pyx_n_s_RKy, __pyx_n_s_RKz, __pyx_n_s_RK, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 1079, __pyx_L1_error)
+  __pyx_tuple__30 = PyTuple_Pack(99, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_nbands, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_nqpath, __pyx_n_s_qpath, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck_a, __pyx_n_s_drveck_p, __pyx_n_s_drveck_t, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_norbnb, __pyx_n_s_nbands2, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_iq, __pyx_n_s_xyz, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_nm_num, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kx, __pyx_n_s_ky, __pyx_n_s_kz, __pyx_n_s_RKx, __pyx_n_s_RKy, __pyx_n_s_RKz, __pyx_n_s_RK, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 1094, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__30);
   __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(23, 0, 99, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_L_q, 1079, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 1079, __pyx_L1_error)
+  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(23, 0, 99, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_L_q, 1094, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 1094, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":1256
+  /* "epcfunc_nl.pyx":1274
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R_q(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer,
  *     int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
  */
-  __pyx_tuple__32 = PyTuple_Pack(101, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_nbands, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_nqpath, __pyx_n_s_qpath, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_l_drveck, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_bandveckp, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck, __pyx_n_s_drveck_p, __pyx_n_s_vdrv, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_norbnb, __pyx_n_s_nbands2, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_xyz, __pyx_n_s_iq, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_nm_num, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kpx, __pyx_n_s_kpy, __pyx_n_s_kpz, __pyx_n_s_RKpx, __pyx_n_s_RKpy, __pyx_n_s_RKpz, __pyx_n_s_RKp, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 1256, __pyx_L1_error)
+  __pyx_tuple__32 = PyTuple_Pack(101, __pyx_n_s_comm, __pyx_n_s_nmodes, __pyx_n_s_natom_loop, __pyx_n_s_natom_buffer, __pyx_n_s_norbital, __pyx_n_s_nbands, __pyx_n_s_ncell, __pyx_n_s_knum, __pyx_n_s_natom_split, __pyx_n_s_nq, __pyx_n_s_R_list, __pyx_n_s_nqpath, __pyx_n_s_qpath, __pyx_n_s_drSH, __pyx_n_s_bandveck, __pyx_n_s_phvecval_p, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_norb, __pyx_n_s_norb_num, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_epc_t, __pyx_n_s_c_comm, __pyx_n_s_shm_comm, __pyx_n_s_remote_comm, __pyx_n_s_split_gp, __pyx_n_s_shm_gp, __pyx_n_s_l_drveck, __pyx_n_s_win, __pyx_n_s_win1, __pyx_n_s_phvecval, __pyx_n_s_bandveckp, __pyx_n_s_drSHexpikR, __pyx_n_s_drveck, __pyx_n_s_drveck_p, __pyx_n_s_vdrv, __pyx_n_s_vdrvexpikR, __pyx_n_s_expikR, __pyx_n_s_natom, __pyx_n_s_norbnb, __pyx_n_s_nbands2, __pyx_n_s_s_int, __pyx_n_s_s_dcplx, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_xyz, __pyx_n_s_iq, __pyx_n_s_shm_proc_s, __pyx_n_s_shm_proc_e, __pyx_n_s_ierr, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_shm_id, __pyx_n_s_shm_nprocs, __pyx_n_s_nnode, __pyx_n_s_kidx_x, __pyx_n_s_kidx_y, __pyx_n_s_kidx_z, __pyx_n_s_kidx_xy, __pyx_n_s_kidx, __pyx_n_s_qidx_x, __pyx_n_s_qidx_y, __pyx_n_s_qidx_z, __pyx_n_s_qidx_xy, __pyx_n_s_qidx, __pyx_n_s_kpidx_x, __pyx_n_s_kpidx_y, __pyx_n_s_kpidx_z, __pyx_n_s_kpidx_xy, __pyx_n_s_kpidx, __pyx_n_s_knum_p, __pyx_n_s_knum_s, __pyx_n_s_norb_p, __pyx_n_s_norb_s, __pyx_n_s_k1, __pyx_n_s_nm_num, __pyx_n_s_nm_min, __pyx_n_s_nm_max, __pyx_n_s_nodelist, __pyx_n_s_dr, __pyx_n_s_dr_num, __pyx_n_s_kpx, __pyx_n_s_kpy, __pyx_n_s_kpz, __pyx_n_s_RKpx, __pyx_n_s_RKpy, __pyx_n_s_RKpz, __pyx_n_s_RKp, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_pi2j, __pyx_n_s_c1, __pyx_n_s_c0, __pyx_n_s_node_id, __pyx_n_s_l_phvecval, __pyx_n_s_start, __pyx_n_s_end); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 1274, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__32);
   __Pyx_GIVEREF(__pyx_tuple__32);
-  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(23, 0, 101, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_R_q, 1256, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 1256, __pyx_L1_error)
+  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(23, 0, 101, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepcNL_R_q, 1274, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 1274, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":1455
+  /* "epcfunc_nl.pyx":1476
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int kfactor, int nmnb2,
  *     int[::1] kproc, int[::1] kproc_num,
  */
-  __pyx_tuple__34 = PyTuple_Pack(18, __pyx_n_s_comm, __pyx_n_s_kfactor, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_t, __pyx_n_s_filename, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_ierr, __pyx_n_s_i, __pyx_n_s_knum_p, __pyx_n_s_knum, __pyx_n_s_nmnb2l, __pyx_n_s_epc_buf, __pyx_n_s_fp); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 1455, __pyx_L1_error)
+  __pyx_tuple__34 = PyTuple_Pack(18, __pyx_n_s_comm, __pyx_n_s_kfactor, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_t, __pyx_n_s_filename, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_ierr, __pyx_n_s_i, __pyx_n_s_knum_p, __pyx_n_s_knum, __pyx_n_s_nmnb2l, __pyx_n_s_epc_buf, __pyx_n_s_fp); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 1476, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__34);
   __Pyx_GIVEREF(__pyx_tuple__34);
-  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(7, 0, 18, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepc_write_p, 1455, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 1455, __pyx_L1_error)
+  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(7, 0, 18, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepc_write_p, 1476, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 1476, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":1497
+  /* "epcfunc_nl.pyx":1518
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p_MPI(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int kfactor, int nmnb2,
  *     int[::1] kproc, int[::1] kproc_num,
  */
-  __pyx_tuple__36 = PyTuple_Pack(19, __pyx_n_s_comm, __pyx_n_s_kfactor, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_t, __pyx_n_s_filename, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_ierr, __pyx_n_s_i, __pyx_n_s_knum_p, __pyx_n_s_knum, __pyx_n_s_nmnb2l, __pyx_n_s_offset, __pyx_n_s_status, __pyx_n_s_fh); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 1497, __pyx_L1_error)
+  __pyx_tuple__36 = PyTuple_Pack(19, __pyx_n_s_comm, __pyx_n_s_kfactor, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_t, __pyx_n_s_filename, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_ierr, __pyx_n_s_i, __pyx_n_s_knum_p, __pyx_n_s_knum, __pyx_n_s_nmnb2l, __pyx_n_s_offset, __pyx_n_s_status, __pyx_n_s_fh); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 1518, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__36);
   __Pyx_GIVEREF(__pyx_tuple__36);
-  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(7, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepc_write_p_MPI, 1497, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 1497, __pyx_L1_error)
+  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(7, 0, 19, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepc_write_p_MPI, 1518, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 1518, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":1537
+  /* "epcfunc_nl.pyx":1558
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmnb2,
  *     int[::1] kproc, int[::1] kproc_num,
  */
-  __pyx_tuple__38 = PyTuple_Pack(15, __pyx_n_s_comm, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_t, __pyx_n_s_filename, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_ierr, __pyx_n_s_nmnb2l, __pyx_n_s_offset, __pyx_n_s_status, __pyx_n_s_fh); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 1537, __pyx_L1_error)
+  __pyx_tuple__38 = PyTuple_Pack(15, __pyx_n_s_comm, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_t, __pyx_n_s_filename, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_ierr, __pyx_n_s_nmnb2l, __pyx_n_s_offset, __pyx_n_s_status, __pyx_n_s_fh); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 1558, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__38);
   __Pyx_GIVEREF(__pyx_tuple__38);
-  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(6, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepc_write, 1537, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 1537, __pyx_L1_error)
+  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(6, 0, 15, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_MPIepc_write, 1558, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 1558, __pyx_L1_error)
 
-  /* "epcfunc_nl.pyx":1573
+  /* "epcfunc_nl.pyx":1594
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def FileRead(             # <<<<<<<<<<<<<<
  *     char* filename, char* EpcType, MPI.Comm comm, int myid,
  *     int nprocs, int ntime, int kfactor, int knum, int nmnb2,
  */
-  __pyx_tuple__40 = PyTuple_Pack(50, __pyx_n_s_filename, __pyx_n_s_EpcType, __pyx_n_s_comm, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_ntime, __pyx_n_s_kfactor, __pyx_n_s_knum, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_p, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_n, __pyx_n_s_p, __pyx_n_s_q, __pyx_n_s_knum_buf, __pyx_n_s_kf_buf, __pyx_n_s_kf_min, __pyx_n_s_kf_max, __pyx_n_s_kf_num, __pyx_n_s_kf_buf_p, __pyx_n_s_offset_s, __pyx_n_s_offset_e, __pyx_n_s_datalen, __pyx_n_s_nmnb2_l, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_epc_dbuf, __pyx_n_s_epc_sbuf, __pyx_n_s_epc_rbuf, __pyx_n_s_s_dcplx, __pyx_n_s_s_int, __pyx_n_s_scount, __pyx_n_s_sdispl, __pyx_n_s_rcount, __pyx_n_s_rdispl, __pyx_n_s_kfproc, __pyx_n_s_kfproc_num, __pyx_n_s_EPCTYPE, __pyx_n_s_fp, __pyx_n_s_kf_min_p, __pyx_n_s_kf_num_p, __pyx_n_s_kf_max_p); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 1573, __pyx_L1_error)
+  __pyx_tuple__40 = PyTuple_Pack(50, __pyx_n_s_filename, __pyx_n_s_EpcType, __pyx_n_s_comm, __pyx_n_s_myid, __pyx_n_s_nprocs, __pyx_n_s_ntime, __pyx_n_s_kfactor, __pyx_n_s_knum, __pyx_n_s_nmnb2, __pyx_n_s_kproc, __pyx_n_s_kproc_num, __pyx_n_s_epc_p, __pyx_n_s_c_comm, __pyx_n_s_CPLX_N, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_n, __pyx_n_s_p, __pyx_n_s_q, __pyx_n_s_knum_buf, __pyx_n_s_kf_buf, __pyx_n_s_kf_min, __pyx_n_s_kf_max, __pyx_n_s_kf_num, __pyx_n_s_kf_buf_p, __pyx_n_s_offset_s, __pyx_n_s_offset_e, __pyx_n_s_datalen, __pyx_n_s_nmnb2_l, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_epc_dbuf, __pyx_n_s_epc_sbuf, __pyx_n_s_epc_rbuf, __pyx_n_s_s_dcplx, __pyx_n_s_s_int, __pyx_n_s_scount, __pyx_n_s_sdispl, __pyx_n_s_rcount, __pyx_n_s_rdispl, __pyx_n_s_kfproc, __pyx_n_s_kfproc_num, __pyx_n_s_EPCTYPE, __pyx_n_s_fp, __pyx_n_s_kf_min_p, __pyx_n_s_kf_num_p, __pyx_n_s_kf_max_p); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 1594, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__40);
   __Pyx_GIVEREF(__pyx_tuple__40);
-  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(12, 0, 50, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_FileRead, 1573, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 1573, __pyx_L1_error)
+  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(12, 0, 50, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_epcfunc_nl_pyx, __pyx_n_s_FileRead, 1594, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 1594, __pyx_L1_error)
 
   /* "View.MemoryView":287
  *         return self.name
@@ -32622,112 +32566,112 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_L, __pyx_t_1) < 0) __PYX_ERR(0, 241, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":467
+  /* "epcfunc_nl.pyx":471
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer,
  *     int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_5MPIepcNL_R, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 467, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_5MPIepcNL_R, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 471, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_R, __pyx_t_1) < 0) __PYX_ERR(0, 467, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_R, __pyx_t_1) < 0) __PYX_ERR(0, 471, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":686
+  /* "epcfunc_nl.pyx":693
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_L(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer, int norbital,
  *     int ncell, int knum, int qnum, int[::1] natom_split, int[::1] nq,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_7MPIepcNL_p_L, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 686, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_7MPIepcNL_p_L, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 693, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_p_L, __pyx_t_1) < 0) __PYX_ERR(0, 686, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_p_L, __pyx_t_1) < 0) __PYX_ERR(0, 693, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":900
+  /* "epcfunc_nl.pyx":911
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_p_R(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer, int norbital,
  *     int ncell, int knum, int qnum, int[::1] natom_split, int[::1] nq,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_9MPIepcNL_p_R, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 900, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_9MPIepcNL_p_R, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 911, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_p_R, __pyx_t_1) < 0) __PYX_ERR(0, 900, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_p_R, __pyx_t_1) < 0) __PYX_ERR(0, 911, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":1079
+  /* "epcfunc_nl.pyx":1094
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_L_q(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, long natom_buffer,
  *     int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_11MPIepcNL_L_q, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1079, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_11MPIepcNL_L_q, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1094, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_L_q, __pyx_t_1) < 0) __PYX_ERR(0, 1079, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_L_q, __pyx_t_1) < 0) __PYX_ERR(0, 1094, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":1256
+  /* "epcfunc_nl.pyx":1274
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepcNL_R_q(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer,
  *     int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_13MPIepcNL_R_q, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1256, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_13MPIepcNL_R_q, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1274, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_R_q, __pyx_t_1) < 0) __PYX_ERR(0, 1256, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepcNL_R_q, __pyx_t_1) < 0) __PYX_ERR(0, 1274, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":1455
+  /* "epcfunc_nl.pyx":1476
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int kfactor, int nmnb2,
  *     int[::1] kproc, int[::1] kproc_num,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_15MPIepc_write_p, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1455, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_15MPIepc_write_p, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1476, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepc_write_p, __pyx_t_1) < 0) __PYX_ERR(0, 1455, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepc_write_p, __pyx_t_1) < 0) __PYX_ERR(0, 1476, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":1497
+  /* "epcfunc_nl.pyx":1518
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write_p_MPI(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int kfactor, int nmnb2,
  *     int[::1] kproc, int[::1] kproc_num,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_17MPIepc_write_p_MPI, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1497, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_17MPIepc_write_p_MPI, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1518, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepc_write_p_MPI, __pyx_t_1) < 0) __PYX_ERR(0, 1497, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepc_write_p_MPI, __pyx_t_1) < 0) __PYX_ERR(0, 1518, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":1537
+  /* "epcfunc_nl.pyx":1558
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def MPIepc_write(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nmnb2,
  *     int[::1] kproc, int[::1] kproc_num,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_19MPIepc_write, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1537, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_19MPIepc_write, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1558, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepc_write, __pyx_t_1) < 0) __PYX_ERR(0, 1537, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_MPIepc_write, __pyx_t_1) < 0) __PYX_ERR(0, 1558, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "epcfunc_nl.pyx":1573
+  /* "epcfunc_nl.pyx":1594
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def FileRead(             # <<<<<<<<<<<<<<
  *     char* filename, char* EpcType, MPI.Comm comm, int myid,
  *     int nprocs, int ntime, int kfactor, int knum, int nmnb2,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_21FileRead, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1573, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_10epcfunc_nl_21FileRead, NULL, __pyx_n_s_epcfunc_nl); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1594, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_FileRead, __pyx_t_1) < 0) __PYX_ERR(0, 1573, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_FileRead, __pyx_t_1) < 0) __PYX_ERR(0, 1594, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "epcfunc_nl.pyx":1

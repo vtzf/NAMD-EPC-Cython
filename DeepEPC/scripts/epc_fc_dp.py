@@ -13,6 +13,10 @@ conf.read('config.ini',encoding='utf-8')
 phonon_method = conf['epc']['phonon_method']
 inDir = conf['epc']['inDir']+'/'
 phononDir = conf['epc']['phononDir']+'/'
+ifcname = conf['epc']['ifcname']
+ifcRstr = conf['epc']['ifcRcut']
+if ifcRstr == '': ifcRcut = None
+else: ifcRcut = float(ifcRstr)
 ucellidx_str = conf['epc']['ucellidx']
 ucellidx_list = ucellidx_str[1:-1].split(',')
 ucellidx = [int(i) for i in ucellidx_list]
@@ -26,8 +30,8 @@ ph.calc = DP(model='./graph.pb')
 ph.run()
 
 # Read forces and assemble the force constant matrix
-ph.read(method='standard',symmetrize=3,acoustic=True,cutoff=None) #standard, frederiksen
-np.save(inDir+phononDir+'fc_avg.npy',ph.D_N)
+ph.read(method='standard',symmetrize=3,acoustic=True,cutoff=ifcRcut) #standard, frederiksen
+np.save(inDir+phononDir+ifcname,ph.D_N)
 
 end = time.time()
 print('Running time: %.2fs'%(end-start))

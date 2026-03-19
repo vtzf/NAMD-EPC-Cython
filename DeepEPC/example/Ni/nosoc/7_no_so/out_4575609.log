@@ -1,0 +1,3094 @@
+============================================================
+Currently Loaded Modulefiles:
+ 1) intel/oneapi/2023.2.0  
+MKLROOT=/apps/support/intel_spr_rocky8.9/oneapi/2023.2.0/mkl/2023.2.0
+============================================================
+Job ID: tyy
+Job name: tyy
+Number of nodes: 4
+Number of processors: 256
+Task is running on the following nodes:
+qhcn[145-148]
+OMP_NUM_THREADS = 1
+============================================================
+
+
+The number of threads in each node for OpenMP parallelization is 1.
+
+
+*******************************************************
+*******************************************************
+ Welcome to OpenMX   Ver. 3.9.9                           
+ Copyright (C), 2002-2019, T. Ozaki                    
+ OpenMX comes with ABSOLUTELY NO WARRANTY.             
+ This is free software, and you are welcome to         
+ redistribute it under the constitution of the GNU-GPL.
+*******************************************************
+*******************************************************
+
+
+
+<Input_std>  Your input file was normally read.
+<Input_std>  The system includes 1 species and 343 atoms.
+
+*******************************************************
+                     PAO and VPS                       
+*******************************************************
+
+<SetPara_DFT>  PAOs of species Ni were normally found.
+<SetPara_DFT>  VPSs of species Ni were normally found.
+               Ni_PBE19H.vps is j-dependent.
+               In case of scf.SpinOrbit.Coupling=off,
+               j-dependent pseudo potentials are averaged by j-degeneracy,
+               which corresponds to a scalar relativistic treatment.
+
+*******************************************************
+     Fourier transform of PAO and projectors of VNL    
+*******************************************************
+
+<FT_PAO>          Fourier transform of pseudo atomic orbitals
+<FT_NLP>          Fourier transform of non-local projectors
+
+*******************************************************
+  Allocation of atoms to processors at MD_iter=    1     
+*******************************************************
+
+ proc =   0  # of atoms=   1  estimated weight=         1.00000
+ proc =   1  # of atoms=   1  estimated weight=         1.00000
+ proc =   2  # of atoms=   1  estimated weight=         1.00000
+ proc =   3  # of atoms=   2  estimated weight=         2.00000
+ proc =   4  # of atoms=   1  estimated weight=         1.00000
+ proc =   5  # of atoms=   1  estimated weight=         1.00000
+ proc =   6  # of atoms=   1  estimated weight=         1.00000
+ proc =   7  # of atoms=   2  estimated weight=         2.00000
+ proc =   8  # of atoms=   1  estimated weight=         1.00000
+ proc =   9  # of atoms=   1  estimated weight=         1.00000
+ proc =  10  # of atoms=   1  estimated weight=         1.00000
+ proc =  11  # of atoms=   2  estimated weight=         2.00000
+ proc =  12  # of atoms=   1  estimated weight=         1.00000
+ proc =  13  # of atoms=   2  estimated weight=         2.00000
+ proc =  14  # of atoms=   1  estimated weight=         1.00000
+ proc =  15  # of atoms=   2  estimated weight=         2.00000
+ proc =  16  # of atoms=   1  estimated weight=         1.00000
+ proc =  17  # of atoms=   1  estimated weight=         1.00000
+ proc =  18  # of atoms=   1  estimated weight=         1.00000
+ proc =  19  # of atoms=   2  estimated weight=         2.00000
+ proc =  20  # of atoms=   1  estimated weight=         1.00000
+ proc =  21  # of atoms=   1  estimated weight=         1.00000
+ proc =  22  # of atoms=   1  estimated weight=         1.00000
+ proc =  23  # of atoms=   2  estimated weight=         2.00000
+ proc =  24  # of atoms=   1  estimated weight=         1.00000
+ proc =  25  # of atoms=   1  estimated weight=         1.00000
+ proc =  26  # of atoms=   1  estimated weight=         1.00000
+ proc =  27  # of atoms=   2  estimated weight=         2.00000
+ proc =  28  # of atoms=   1  estimated weight=         1.00000
+ proc =  29  # of atoms=   2  estimated weight=         2.00000
+ proc =  30  # of atoms=   1  estimated weight=         1.00000
+ proc =  31  # of atoms=   2  estimated weight=         2.00000
+ proc =  32  # of atoms=   1  estimated weight=         1.00000
+ proc =  33  # of atoms=   1  estimated weight=         1.00000
+ proc =  34  # of atoms=   1  estimated weight=         1.00000
+ proc =  35  # of atoms=   2  estimated weight=         2.00000
+ proc =  36  # of atoms=   1  estimated weight=         1.00000
+ proc =  37  # of atoms=   1  estimated weight=         1.00000
+ proc =  38  # of atoms=   1  estimated weight=         1.00000
+ proc =  39  # of atoms=   2  estimated weight=         2.00000
+ proc =  40  # of atoms=   1  estimated weight=         1.00000
+ proc =  41  # of atoms=   1  estimated weight=         1.00000
+ proc =  42  # of atoms=   1  estimated weight=         1.00000
+ proc =  43  # of atoms=   2  estimated weight=         2.00000
+ proc =  44  # of atoms=   1  estimated weight=         1.00000
+ proc =  45  # of atoms=   2  estimated weight=         2.00000
+ proc =  46  # of atoms=   1  estimated weight=         1.00000
+ proc =  47  # of atoms=   2  estimated weight=         2.00000
+ proc =  48  # of atoms=   1  estimated weight=         1.00000
+ proc =  49  # of atoms=   1  estimated weight=         1.00000
+ proc =  50  # of atoms=   1  estimated weight=         1.00000
+ proc =  51  # of atoms=   2  estimated weight=         2.00000
+ proc =  52  # of atoms=   1  estimated weight=         1.00000
+ proc =  53  # of atoms=   2  estimated weight=         2.00000
+ proc =  54  # of atoms=   1  estimated weight=         1.00000
+ proc =  55  # of atoms=   2  estimated weight=         2.00000
+ proc =  56  # of atoms=   1  estimated weight=         1.00000
+ proc =  57  # of atoms=   1  estimated weight=         1.00000
+ proc =  58  # of atoms=   1  estimated weight=         1.00000
+ proc =  59  # of atoms=   2  estimated weight=         2.00000
+ proc =  60  # of atoms=   1  estimated weight=         1.00000
+ proc =  61  # of atoms=   2  estimated weight=         2.00000
+ proc =  62  # of atoms=   1  estimated weight=         1.00000
+ proc =  63  # of atoms=   2  estimated weight=         2.00000
+ proc =  64  # of atoms=   1  estimated weight=         1.00000
+ proc =  65  # of atoms=   1  estimated weight=         1.00000
+ proc =  66  # of atoms=   1  estimated weight=         1.00000
+ proc =  67  # of atoms=   2  estimated weight=         2.00000
+ proc =  68  # of atoms=   1  estimated weight=         1.00000
+ proc =  69  # of atoms=   1  estimated weight=         1.00000
+ proc =  70  # of atoms=   1  estimated weight=         1.00000
+ proc =  71  # of atoms=   2  estimated weight=         2.00000
+ proc =  72  # of atoms=   1  estimated weight=         1.00000
+ proc =  73  # of atoms=   1  estimated weight=         1.00000
+ proc =  74  # of atoms=   1  estimated weight=         1.00000
+ proc =  75  # of atoms=   2  estimated weight=         2.00000
+ proc =  76  # of atoms=   1  estimated weight=         1.00000
+ proc =  77  # of atoms=   2  estimated weight=         2.00000
+ proc =  78  # of atoms=   1  estimated weight=         1.00000
+ proc =  79  # of atoms=   2  estimated weight=         2.00000
+ proc =  80  # of atoms=   1  estimated weight=         1.00000
+ proc =  81  # of atoms=   1  estimated weight=         1.00000
+ proc =  82  # of atoms=   1  estimated weight=         1.00000
+ proc =  83  # of atoms=   2  estimated weight=         2.00000
+ proc =  84  # of atoms=   1  estimated weight=         1.00000
+ proc =  85  # of atoms=   2  estimated weight=         2.00000
+ proc =  86  # of atoms=   1  estimated weight=         1.00000
+ proc =  87  # of atoms=   2  estimated weight=         2.00000
+ proc =  88  # of atoms=   1  estimated weight=         1.00000
+ proc =  89  # of atoms=   1  estimated weight=         1.00000
+ proc =  90  # of atoms=   1  estimated weight=         1.00000
+ proc =  91  # of atoms=   2  estimated weight=         2.00000
+ proc =  92  # of atoms=   1  estimated weight=         1.00000
+ proc =  93  # of atoms=   2  estimated weight=         2.00000
+ proc =  94  # of atoms=   1  estimated weight=         1.00000
+ proc =  95  # of atoms=   2  estimated weight=         2.00000
+ proc =  96  # of atoms=   1  estimated weight=         1.00000
+ proc =  97  # of atoms=   1  estimated weight=         1.00000
+ proc =  98  # of atoms=   1  estimated weight=         1.00000
+ proc =  99  # of atoms=   2  estimated weight=         2.00000
+ proc = 100  # of atoms=   1  estimated weight=         1.00000
+ proc = 101  # of atoms=   1  estimated weight=         1.00000
+ proc = 102  # of atoms=   1  estimated weight=         1.00000
+ proc = 103  # of atoms=   2  estimated weight=         2.00000
+ proc = 104  # of atoms=   1  estimated weight=         1.00000
+ proc = 105  # of atoms=   1  estimated weight=         1.00000
+ proc = 106  # of atoms=   1  estimated weight=         1.00000
+ proc = 107  # of atoms=   2  estimated weight=         2.00000
+ proc = 108  # of atoms=   1  estimated weight=         1.00000
+ proc = 109  # of atoms=   2  estimated weight=         2.00000
+ proc = 110  # of atoms=   1  estimated weight=         1.00000
+ proc = 111  # of atoms=   2  estimated weight=         2.00000
+ proc = 112  # of atoms=   1  estimated weight=         1.00000
+ proc = 113  # of atoms=   1  estimated weight=         1.00000
+ proc = 114  # of atoms=   1  estimated weight=         1.00000
+ proc = 115  # of atoms=   2  estimated weight=         2.00000
+ proc = 116  # of atoms=   1  estimated weight=         1.00000
+ proc = 117  # of atoms=   2  estimated weight=         2.00000
+ proc = 118  # of atoms=   1  estimated weight=         1.00000
+ proc = 119  # of atoms=   2  estimated weight=         2.00000
+ proc = 120  # of atoms=   1  estimated weight=         1.00000
+ proc = 121  # of atoms=   1  estimated weight=         1.00000
+ proc = 122  # of atoms=   1  estimated weight=         1.00000
+ proc = 123  # of atoms=   2  estimated weight=         2.00000
+ proc = 124  # of atoms=   1  estimated weight=         1.00000
+ proc = 125  # of atoms=   2  estimated weight=         2.00000
+ proc = 126  # of atoms=   1  estimated weight=         1.00000
+ proc = 127  # of atoms=   2  estimated weight=         2.00000
+ proc = 128  # of atoms=   1  estimated weight=         1.00000
+ proc = 129  # of atoms=   1  estimated weight=         1.00000
+ proc = 130  # of atoms=   1  estimated weight=         1.00000
+ proc = 131  # of atoms=   2  estimated weight=         2.00000
+ proc = 132  # of atoms=   1  estimated weight=         1.00000
+ proc = 133  # of atoms=   1  estimated weight=         1.00000
+ proc = 134  # of atoms=   1  estimated weight=         1.00000
+ proc = 135  # of atoms=   2  estimated weight=         2.00000
+ proc = 136  # of atoms=   1  estimated weight=         1.00000
+ proc = 137  # of atoms=   1  estimated weight=         1.00000
+ proc = 138  # of atoms=   1  estimated weight=         1.00000
+ proc = 139  # of atoms=   2  estimated weight=         2.00000
+ proc = 140  # of atoms=   1  estimated weight=         1.00000
+ proc = 141  # of atoms=   2  estimated weight=         2.00000
+ proc = 142  # of atoms=   1  estimated weight=         1.00000
+ proc = 143  # of atoms=   2  estimated weight=         2.00000
+ proc = 144  # of atoms=   1  estimated weight=         1.00000
+ proc = 145  # of atoms=   1  estimated weight=         1.00000
+ proc = 146  # of atoms=   1  estimated weight=         1.00000
+ proc = 147  # of atoms=   2  estimated weight=         2.00000
+ proc = 148  # of atoms=   1  estimated weight=         1.00000
+ proc = 149  # of atoms=   2  estimated weight=         2.00000
+ proc = 150  # of atoms=   1  estimated weight=         1.00000
+ proc = 151  # of atoms=   2  estimated weight=         2.00000
+ proc = 152  # of atoms=   1  estimated weight=         1.00000
+ proc = 153  # of atoms=   1  estimated weight=         1.00000
+ proc = 154  # of atoms=   1  estimated weight=         1.00000
+ proc = 155  # of atoms=   2  estimated weight=         2.00000
+ proc = 156  # of atoms=   1  estimated weight=         1.00000
+ proc = 157  # of atoms=   2  estimated weight=         2.00000
+ proc = 158  # of atoms=   1  estimated weight=         1.00000
+ proc = 159  # of atoms=   2  estimated weight=         2.00000
+ proc = 160  # of atoms=   1  estimated weight=         1.00000
+ proc = 161  # of atoms=   1  estimated weight=         1.00000
+ proc = 162  # of atoms=   1  estimated weight=         1.00000
+ proc = 163  # of atoms=   2  estimated weight=         2.00000
+ proc = 164  # of atoms=   1  estimated weight=         1.00000
+ proc = 165  # of atoms=   1  estimated weight=         1.00000
+ proc = 166  # of atoms=   1  estimated weight=         1.00000
+ proc = 167  # of atoms=   2  estimated weight=         2.00000
+ proc = 168  # of atoms=   1  estimated weight=         1.00000
+ proc = 169  # of atoms=   1  estimated weight=         1.00000
+ proc = 170  # of atoms=   1  estimated weight=         1.00000
+ proc = 171  # of atoms=   2  estimated weight=         2.00000
+ proc = 172  # of atoms=   1  estimated weight=         1.00000
+ proc = 173  # of atoms=   2  estimated weight=         2.00000
+ proc = 174  # of atoms=   1  estimated weight=         1.00000
+ proc = 175  # of atoms=   2  estimated weight=         2.00000
+ proc = 176  # of atoms=   1  estimated weight=         1.00000
+ proc = 177  # of atoms=   1  estimated weight=         1.00000
+ proc = 178  # of atoms=   1  estimated weight=         1.00000
+ proc = 179  # of atoms=   2  estimated weight=         2.00000
+ proc = 180  # of atoms=   1  estimated weight=         1.00000
+ proc = 181  # of atoms=   2  estimated weight=         2.00000
+ proc = 182  # of atoms=   1  estimated weight=         1.00000
+ proc = 183  # of atoms=   2  estimated weight=         2.00000
+ proc = 184  # of atoms=   1  estimated weight=         1.00000
+ proc = 185  # of atoms=   1  estimated weight=         1.00000
+ proc = 186  # of atoms=   1  estimated weight=         1.00000
+ proc = 187  # of atoms=   2  estimated weight=         2.00000
+ proc = 188  # of atoms=   1  estimated weight=         1.00000
+ proc = 189  # of atoms=   2  estimated weight=         2.00000
+ proc = 190  # of atoms=   1  estimated weight=         1.00000
+ proc = 191  # of atoms=   2  estimated weight=         2.00000
+ proc = 192  # of atoms=   1  estimated weight=         1.00000
+ proc = 193  # of atoms=   1  estimated weight=         1.00000
+ proc = 194  # of atoms=   1  estimated weight=         1.00000
+ proc = 195  # of atoms=   2  estimated weight=         2.00000
+ proc = 196  # of atoms=   1  estimated weight=         1.00000
+ proc = 197  # of atoms=   1  estimated weight=         1.00000
+ proc = 198  # of atoms=   1  estimated weight=         1.00000
+ proc = 199  # of atoms=   2  estimated weight=         2.00000
+ proc = 200  # of atoms=   1  estimated weight=         1.00000
+ proc = 201  # of atoms=   1  estimated weight=         1.00000
+ proc = 202  # of atoms=   1  estimated weight=         1.00000
+ proc = 203  # of atoms=   2  estimated weight=         2.00000
+ proc = 204  # of atoms=   1  estimated weight=         1.00000
+ proc = 205  # of atoms=   2  estimated weight=         2.00000
+ proc = 206  # of atoms=   1  estimated weight=         1.00000
+ proc = 207  # of atoms=   2  estimated weight=         2.00000
+ proc = 208  # of atoms=   1  estimated weight=         1.00000
+ proc = 209  # of atoms=   1  estimated weight=         1.00000
+ proc = 210  # of atoms=   1  estimated weight=         1.00000
+ proc = 211  # of atoms=   2  estimated weight=         2.00000
+ proc = 212  # of atoms=   1  estimated weight=         1.00000
+ proc = 213  # of atoms=   2  estimated weight=         2.00000
+ proc = 214  # of atoms=   1  estimated weight=         1.00000
+ proc = 215  # of atoms=   2  estimated weight=         2.00000
+ proc = 216  # of atoms=   1  estimated weight=         1.00000
+ proc = 217  # of atoms=   1  estimated weight=         1.00000
+ proc = 218  # of atoms=   1  estimated weight=         1.00000
+ proc = 219  # of atoms=   2  estimated weight=         2.00000
+ proc = 220  # of atoms=   1  estimated weight=         1.00000
+ proc = 221  # of atoms=   2  estimated weight=         2.00000
+ proc = 222  # of atoms=   1  estimated weight=         1.00000
+ proc = 223  # of atoms=   2  estimated weight=         2.00000
+ proc = 224  # of atoms=   1  estimated weight=         1.00000
+ proc = 225  # of atoms=   1  estimated weight=         1.00000
+ proc = 226  # of atoms=   1  estimated weight=         1.00000
+ proc = 227  # of atoms=   2  estimated weight=         2.00000
+ proc = 228  # of atoms=   1  estimated weight=         1.00000
+ proc = 229  # of atoms=   1  estimated weight=         1.00000
+ proc = 230  # of atoms=   1  estimated weight=         1.00000
+ proc = 231  # of atoms=   2  estimated weight=         2.00000
+ proc = 232  # of atoms=   1  estimated weight=         1.00000
+ proc = 233  # of atoms=   1  estimated weight=         1.00000
+ proc = 234  # of atoms=   1  estimated weight=         1.00000
+ proc = 235  # of atoms=   2  estimated weight=         2.00000
+ proc = 236  # of atoms=   1  estimated weight=         1.00000
+ proc = 237  # of atoms=   2  estimated weight=         2.00000
+ proc = 238  # of atoms=   1  estimated weight=         1.00000
+ proc = 239  # of atoms=   2  estimated weight=         2.00000
+ proc = 240  # of atoms=   1  estimated weight=         1.00000
+ proc = 241  # of atoms=   1  estimated weight=         1.00000
+ proc = 242  # of atoms=   1  estimated weight=         1.00000
+ proc = 243  # of atoms=   2  estimated weight=         2.00000
+ proc = 244  # of atoms=   1  estimated weight=         1.00000
+ proc = 245  # of atoms=   2  estimated weight=         2.00000
+ proc = 246  # of atoms=   1  estimated weight=         1.00000
+ proc = 247  # of atoms=   2  estimated weight=         2.00000
+ proc = 248  # of atoms=   1  estimated weight=         1.00000
+ proc = 249  # of atoms=   1  estimated weight=         1.00000
+ proc = 250  # of atoms=   1  estimated weight=         1.00000
+ proc = 251  # of atoms=   2  estimated weight=         2.00000
+ proc = 252  # of atoms=   1  estimated weight=         1.00000
+ proc = 253  # of atoms=   2  estimated weight=         2.00000
+ proc = 254  # of atoms=   1  estimated weight=         1.00000
+ proc = 255  # of atoms=   2  estimated weight=         2.00000
+
+
+
+
+*******************************************************
+        Analysis of neighbors and setting of grids        
+*******************************************************
+
+TFNAN=   29498   Average FNAN=  86.00000
+TSNAN=       0   Average SNAN=   0.00000
+<truncation> CpyCell= 1 ct_AN=   1 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   2 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   3 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   4 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   5 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   6 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   7 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   8 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=   9 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  10 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  11 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  12 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  13 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  14 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  15 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  16 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  17 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  18 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  19 FNAN SNAN  86   0
+<truncation> CpyCell= 1 ct_AN=  20 FNAN SNAN  86   0
+     ..........
+     ......
+
+TFNAN=   29498   Average FNAN=  86.00000
+TSNAN=       0   Average SNAN=   0.00000
+<truncation> CpyCell= 2 ct_AN=   1 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   2 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   3 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   4 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   5 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   6 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   7 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   8 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   9 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  10 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  11 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  12 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  13 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  14 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  15 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  16 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  17 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  18 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  19 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  20 FNAN SNAN  86   0
+     ..........
+     ......
+
+TFNAN=   29498   Average FNAN=  86.00000
+TSNAN=       0   Average SNAN=   0.00000
+<truncation> CpyCell= 2 ct_AN=   1 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   2 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   3 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   4 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   5 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   6 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   7 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   8 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=   9 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  10 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  11 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  12 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  13 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  14 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  15 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  16 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  17 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  18 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  19 FNAN SNAN  86   0
+<truncation> CpyCell= 2 ct_AN=  20 FNAN SNAN  86   0
+     ..........
+     ......
+
+<Check_System> The system is bulk.
+lattice vectors (bohr)
+A  =  0.000000000000, 23.645855749169, 23.645855749169
+B  = 23.645855749169,  0.000000000000, 23.645855749169
+C  = 23.645855749169, 23.645855749169,  0.000000000000
+reciprocal lattice vectors (bohr^-1)
+RA = -0.132860180106,  0.132860180106,  0.132860180106
+RB =  0.132860180106, -0.132860180106,  0.132860180106
+RC =  0.132860180106,  0.132860180106, -0.132860180106
+Grid_Origin -3.265380079647 -3.265380079647 -3.265380079647
+Cell_Volume =  26442.048850550826 (Bohr^3)
+GridVol     =      0.002855204497 (Bohr^3)
+Grid_Origin -3.265380079647 -3.265380079647 -3.265380079647
+Cell_Volume =  26442.048850550826 (Bohr^3)
+GridVol     =      0.002855204497 (Bohr^3)
+<UCell_Box> Info. of cutoff energy and num. of grids
+lattice vectors (bohr)
+A  =  0.000000000000, 23.645855749169, 23.645855749169
+B  = 23.645855749169,  0.000000000000, 23.645855749169
+C  = 23.645855749169, 23.645855749169,  0.000000000000
+reciprocal lattice vectors (bohr^-1)
+RA = -0.132860180106,  0.132860180106,  0.132860180106
+RB =  0.132860180106, -0.132860180106,  0.132860180106
+RC =  0.132860180106,  0.132860180106, -0.132860180106
+Required cutoff energy (Ryd) for 3D-grids = 600.0000
+    Used cutoff energy (Ryd) for 3D-grids = 583.8342, 583.8342, 583.8342
+Num. of grids of a-, b-, and c-axes = 210, 210, 210
+Grid_Origin -3.265380079647 -3.265380079647 -3.265380079647
+Cell_Volume =  26442.048850550826 (Bohr^3)
+GridVol     =      0.002855204497 (Bohr^3)
+Cell vectors (bohr) of the grid cell (gtv)
+  gtv_a =  0.000000000000,  0.112599313091,  0.112599313091
+  gtv_b =  0.112599313091,  0.000000000000,  0.112599313091
+  gtv_c =  0.112599313091,  0.112599313091,  0.000000000000
+  |gtv_a| =  0.159239475688
+  |gtv_b| =  0.159239475688
+  |gtv_c| =  0.159239475688
+Num. of grids overlapping with atom    1 = 316866
+Num. of grids overlapping with atom    2 = 316866
+Num. of grids overlapping with atom    3 = 316866
+Num. of grids overlapping with atom    4 = 316866
+Num. of grids overlapping with atom    5 = 316866
+Num. of grids overlapping with atom    6 = 316866
+Num. of grids overlapping with atom    7 = 316866
+Num. of grids overlapping with atom    8 = 316866
+Num. of grids overlapping with atom    9 = 316866
+Num. of grids overlapping with atom   10 = 316866
+Num. of grids overlapping with atom   11 = 316866
+Num. of grids overlapping with atom   12 = 316866
+Num. of grids overlapping with atom   13 = 316866
+Num. of grids overlapping with atom   14 = 316866
+Num. of grids overlapping with atom   15 = 316866
+Num. of grids overlapping with atom   16 = 316866
+Num. of grids overlapping with atom   17 = 316866
+Num. of grids overlapping with atom   18 = 316866
+Num. of grids overlapping with atom   19 = 316866
+Num. of grids overlapping with atom   20 = 316866
+     ..........
+     ......
+
+
+*******************************************************
+             SCF calculation at MD = 1                
+*******************************************************
+
+<MD= 1>  Calculation of the overlap matrix
+<MD= 1>  Calculation of the nonlocal matrix
+
+******************* MD= 1  SCF= 1 *******************
+<Restart>  Found restart files
+<Poisson>  Poisson's equation using FFT...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=67.386793
+<Band_DFT>  DM, time=0.000358
+    1   Ni  MulP   9.2943   8.6967 sum  17.9910 diff   0.5976
+    2   Ni  MulP   9.2945   8.6997 sum  17.9943 diff   0.5948
+    3   Ni  MulP   9.2982   8.7211 sum  18.0193 diff   0.5771
+    4   Ni  MulP   9.2978   8.7209 sum  18.0187 diff   0.5770
+    5   Ni  MulP   9.2973   8.7164 sum  18.0137 diff   0.5808
+    6   Ni  MulP   9.2964   8.7104 sum  18.0069 diff   0.5860
+    7   Ni  MulP   9.2960   8.7060 sum  18.0020 diff   0.5900
+    8   Ni  MulP   9.2958   8.7069 sum  18.0027 diff   0.5888
+    9   Ni  MulP   9.2982   8.7223 sum  18.0206 diff   0.5759
+   10   Ni  MulP   9.2979   8.7236 sum  18.0215 diff   0.5743
+   11   Ni  MulP   9.2983   8.7251 sum  18.0235 diff   0.5732
+   12   Ni  MulP   9.2978   8.7201 sum  18.0180 diff   0.5777
+   13   Ni  MulP   9.2958   8.7076 sum  18.0034 diff   0.5882
+   14   Ni  MulP   9.2949   8.7019 sum  17.9968 diff   0.5931
+   15   Ni  MulP   9.2980   8.7208 sum  18.0187 diff   0.5772
+   16   Ni  MulP   9.2987   8.7268 sum  18.0255 diff   0.5720
+   17   Ni  MulP   9.2974   8.7205 sum  18.0179 diff   0.5769
+   18   Ni  MulP   9.2979   8.7201 sum  18.0180 diff   0.5777
+   19   Ni  MulP   9.2958   8.7072 sum  18.0031 diff   0.5886
+   20   Ni  MulP   9.2946   8.6999 sum  17.9946 diff   0.5947
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33915 down          =  2985.66085
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.678307126820
+<DFT>  Mixing_weight= 0.010000000000
+<DFT>  Uele   =-9090.389137511374  dUele     =   1.000000000000
+<DFT>  NormRD =    1.000000000000  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 2 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.934435
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7038 sum  17.9992 diff   0.5916
+    2   Ni  MulP   9.2942   8.6964 sum  17.9906 diff   0.5977
+    3   Ni  MulP   9.2950   8.6993 sum  17.9942 diff   0.5957
+    4   Ni  MulP   9.2941   8.6948 sum  17.9889 diff   0.5993
+    5   Ni  MulP   9.2946   8.6982 sum  17.9929 diff   0.5964
+    6   Ni  MulP   9.2955   8.7044 sum  17.9999 diff   0.5911
+    7   Ni  MulP   9.2964   8.7096 sum  18.0060 diff   0.5868
+    8   Ni  MulP   9.2938   8.6931 sum  17.9869 diff   0.6008
+    9   Ni  MulP   9.2936   8.6904 sum  17.9840 diff   0.6032
+   10   Ni  MulP   9.2923   8.6841 sum  17.9765 diff   0.6082
+   11   Ni  MulP   9.2934   8.6904 sum  17.9838 diff   0.6030
+   12   Ni  MulP   9.2948   8.6993 sum  17.9941 diff   0.5955
+   13   Ni  MulP   9.2950   8.7013 sum  17.9962 diff   0.5937
+   14   Ni  MulP   9.2946   8.6989 sum  17.9935 diff   0.5957
+   15   Ni  MulP   9.2939   8.6930 sum  17.9869 diff   0.6010
+   16   Ni  MulP   9.2934   8.6893 sum  17.9826 diff   0.6041
+   17   Ni  MulP   9.2928   8.6877 sum  17.9805 diff   0.6051
+   18   Ni  MulP   9.2950   8.7000 sum  17.9950 diff   0.5949
+   19   Ni  MulP   9.2954   8.7037 sum  17.9990 diff   0.5917
+   20   Ni  MulP   9.2950   8.7019 sum  17.9970 diff   0.5931
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33923 down          =  2985.66077
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.678453449177
+<DFT>  Mixing_weight= 0.010981712773
+<DFT>  Uele   =-9090.388724370383  dUele     =   0.000413140991
+<DFT>  NormRD =    0.298990356215  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 3 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=94.611113
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2955   8.7049 sum  18.0004 diff   0.5905
+    2   Ni  MulP   9.2999   8.7368 sum  18.0366 diff   0.5631
+    3   Ni  MulP   9.3039   8.7663 sum  18.0702 diff   0.5376
+    4   Ni  MulP   9.3055   8.7767 sum  18.0822 diff   0.5289
+    5   Ni  MulP   9.3029   8.7573 sum  18.0602 diff   0.5456
+    6   Ni  MulP   9.2975   8.7193 sum  18.0167 diff   0.5782
+    7   Ni  MulP   9.2940   8.6950 sum  17.9890 diff   0.5990
+    8   Ni  MulP   9.3047   8.7690 sum  18.0737 diff   0.5357
+    9   Ni  MulP   9.3101   8.8097 sum  18.1199 diff   0.5004
+   10   Ni  MulP   9.3122   8.8245 sum  18.1367 diff   0.4877
+   11   Ni  MulP   9.3090   8.8010 sum  18.1101 diff   0.5080
+   12   Ni  MulP   9.3028   8.7558 sum  18.0586 diff   0.5470
+   13   Ni  MulP   9.2986   8.7246 sum  18.0232 diff   0.5739
+   14   Ni  MulP   9.2995   8.7310 sum  18.0305 diff   0.5686
+   15   Ni  MulP   9.3077   8.7909 sum  18.0986 diff   0.5168
+   16   Ni  MulP   9.3111   8.8157 sum  18.1268 diff   0.4954
+   17   Ni  MulP   9.3085   8.7978 sum  18.1063 diff   0.5107
+   18   Ni  MulP   9.3020   8.7510 sum  18.0531 diff   0.5510
+   19   Ni  MulP   9.2970   8.7132 sum  18.0102 diff   0.5837
+   20   Ni  MulP   9.2970   8.7117 sum  18.0087 diff   0.5852
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.39763 down          =  2985.60237
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.795251711499
+<DFT>  Mixing_weight= 0.044467911173
+<DFT>  Uele   =-9090.408352009461  dUele     =   0.019627639078
+<DFT>  NormRD =    0.259457804535  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 4 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.033048
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2955   8.7050 sum  18.0005 diff   0.5905
+    2   Ni  MulP   9.2991   8.7313 sum  18.0305 diff   0.5678
+    3   Ni  MulP   9.3024   8.7553 sum  18.0577 diff   0.5471
+    4   Ni  MulP   9.3038   8.7639 sum  18.0677 diff   0.5399
+    5   Ni  MulP   9.3016   8.7480 sum  18.0497 diff   0.5536
+    6   Ni  MulP   9.2970   8.7162 sum  18.0132 diff   0.5808
+    7   Ni  MulP   9.2941   8.6962 sum  17.9903 diff   0.5980
+    8   Ni  MulP   9.3031   8.7584 sum  18.0615 diff   0.5448
+    9   Ni  MulP   9.3076   8.7917 sum  18.0994 diff   0.5159
+   10   Ni  MulP   9.3093   8.8037 sum  18.1130 diff   0.5056
+   11   Ni  MulP   9.3067   8.7841 sum  18.0908 diff   0.5226
+   12   Ni  MulP   9.3014   8.7465 sum  18.0479 diff   0.5549
+   13   Ni  MulP   9.2980   8.7211 sum  18.0190 diff   0.5769
+   14   Ni  MulP   9.2988   8.7268 sum  18.0256 diff   0.5720
+   15   Ni  MulP   9.3056   8.7762 sum  18.0818 diff   0.5294
+   16   Ni  MulP   9.3085   8.7967 sum  18.1052 diff   0.5117
+   17   Ni  MulP   9.3063   8.7816 sum  18.0879 diff   0.5247
+   18   Ni  MulP   9.3008   8.7426 sum  18.0435 diff   0.5582
+   19   Ni  MulP   9.2966   8.7117 sum  18.0083 diff   0.5849
+   20   Ni  MulP   9.2967   8.7110 sum  18.0077 diff   0.5857
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.37804 down          =  2985.62196
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.756078493088
+<DFT>  Mixing_weight= 0.001012103420
+<DFT>  Uele   =-9090.401704734888  dUele     =   0.006647274573
+<DFT>  NormRD =    1.700114635804  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 5 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.991258
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2955   8.7053 sum  18.0008 diff   0.5902
+    2   Ni  MulP   9.2972   8.7172 sum  18.0144 diff   0.5800
+    3   Ni  MulP   9.2984   8.7263 sum  18.0248 diff   0.5721
+    4   Ni  MulP   9.2991   8.7302 sum  18.0293 diff   0.5689
+    5   Ni  MulP   9.2982   8.7236 sum  18.0218 diff   0.5746
+    6   Ni  MulP   9.2959   8.7084 sum  18.0043 diff   0.5876
+    7   Ni  MulP   9.2946   8.6995 sum  17.9941 diff   0.5951
+    8   Ni  MulP   9.2990   8.7299 sum  18.0289 diff   0.5691
+    9   Ni  MulP   9.3009   8.7438 sum  18.0448 diff   0.5571
+   10   Ni  MulP   9.3016   8.7484 sum  18.0501 diff   0.5532
+   11   Ni  MulP   9.3003   8.7391 sum  18.0395 diff   0.5612
+   12   Ni  MulP   9.2979   8.7218 sum  18.0197 diff   0.5760
+   13   Ni  MulP   9.2964   8.7113 sum  18.0077 diff   0.5851
+   14   Ni  MulP   9.2970   8.7153 sum  18.0123 diff   0.5817
+   15   Ni  MulP   9.3000   8.7371 sum  18.0371 diff   0.5629
+   16   Ni  MulP   9.3014   8.7463 sum  18.0476 diff   0.5551
+   17   Ni  MulP   9.3003   8.7386 sum  18.0389 diff   0.5616
+   18   Ni  MulP   9.2976   8.7203 sum  18.0180 diff   0.5773
+   19   Ni  MulP   9.2958   8.7073 sum  18.0032 diff   0.5885
+   20   Ni  MulP   9.2961   8.7086 sum  18.0047 diff   0.5875
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.34563 down          =  2985.65437
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.691258072885
+<DFT>  Mixing_weight= 0.003238849417
+<DFT>  Uele   =-9090.390025174551  dUele     =   0.011679560337
+<DFT>  NormRD =    1.409672305774  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 6 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.155059
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2956   8.7056 sum  18.0012 diff   0.5900
+    2   Ni  MulP   9.2961   8.7095 sum  18.0056 diff   0.5867
+    3   Ni  MulP   9.2962   8.7106 sum  18.0068 diff   0.5857
+    4   Ni  MulP   9.2965   8.7118 sum  18.0083 diff   0.5847
+    5   Ni  MulP   9.2963   8.7102 sum  18.0065 diff   0.5861
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    7   Ni  MulP   9.2950   8.7019 sum  17.9969 diff   0.5931
+    8   Ni  MulP   9.2967   8.7135 sum  18.0102 diff   0.5832
+    9   Ni  MulP   9.2972   8.7170 sum  18.0141 diff   0.5802
+   10   Ni  MulP   9.2973   8.7178 sum  18.0151 diff   0.5795
+   11   Ni  MulP   9.2968   8.7144 sum  18.0112 diff   0.5825
+   12   Ni  MulP   9.2960   8.7084 sum  18.0043 diff   0.5876
+   13   Ni  MulP   9.2956   8.7058 sum  18.0014 diff   0.5898
+   14   Ni  MulP   9.2960   8.7084 sum  18.0044 diff   0.5876
+   15   Ni  MulP   9.2968   8.7148 sum  18.0116 diff   0.5821
+   16   Ni  MulP   9.2974   8.7178 sum  18.0152 diff   0.5795
+   17   Ni  MulP   9.2969   8.7147 sum  18.0117 diff   0.5822
+   18   Ni  MulP   9.2959   8.7081 sum  18.0040 diff   0.5878
+   19   Ni  MulP   9.2955   8.7048 sum  18.0002 diff   0.5907
+   20   Ni  MulP   9.2958   8.7065 sum  18.0023 diff   0.5893
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33868 down          =  2985.66132
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.677367520696
+<DFT>  Mixing_weight= 0.004060962419
+<DFT>  Uele   =-9090.387310563679  dUele     =   0.002714610871
+<DFT>  NormRD =    0.634263092448  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 7 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.034566
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2956   8.7057 sum  18.0013 diff   0.5899
+    2   Ni  MulP   9.2957   8.7067 sum  18.0024 diff   0.5891
+    3   Ni  MulP   9.2955   8.7054 sum  18.0009 diff   0.5901
+    4   Ni  MulP   9.2956   8.7058 sum  18.0014 diff   0.5898
+    5   Ni  MulP   9.2957   8.7059 sum  18.0016 diff   0.5898
+    6   Ni  MulP   9.2953   8.7037 sum  17.9990 diff   0.5916
+    7   Ni  MulP   9.2952   8.7031 sum  17.9983 diff   0.5921
+    8   Ni  MulP   9.2959   8.7076 sum  18.0034 diff   0.5883
+    9   Ni  MulP   9.2958   8.7077 sum  18.0035 diff   0.5882
+   10   Ni  MulP   9.2959   8.7075 sum  18.0033 diff   0.5884
+   11   Ni  MulP   9.2957   8.7063 sum  18.0020 diff   0.5894
+   12   Ni  MulP   9.2954   8.7043 sum  17.9997 diff   0.5911
+   13   Ni  MulP   9.2954   8.7043 sum  17.9996 diff   0.5911
+   14   Ni  MulP   9.2956   8.7059 sum  18.0016 diff   0.5897
+   15   Ni  MulP   9.2957   8.7069 sum  18.0027 diff   0.5888
+   16   Ni  MulP   9.2960   8.7080 sum  18.0040 diff   0.5879
+   17   Ni  MulP   9.2958   8.7068 sum  18.0025 diff   0.5890
+   18   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   19   Ni  MulP   9.2954   8.7041 sum  17.9995 diff   0.5913
+   20   Ni  MulP   9.2956   8.7056 sum  18.0013 diff   0.5900
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33803 down          =  2985.66197
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.676058553079
+<DFT>  Mixing_weight= 0.004486536467
+<DFT>  Uele   =-9090.387005641584  dUele     =   0.000304922096
+<DFT>  NormRD =    0.195344598907  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 8 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.011175
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2956   8.7055 sum  18.0011 diff   0.5901
+    2   Ni  MulP   9.2956   8.7057 sum  18.0013 diff   0.5899
+    3   Ni  MulP   9.2953   8.7042 sum  17.9995 diff   0.5912
+    4   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+    5   Ni  MulP   9.2955   8.7049 sum  18.0004 diff   0.5906
+    6   Ni  MulP   9.2953   8.7038 sum  17.9991 diff   0.5915
+    7   Ni  MulP   9.2953   8.7036 sum  17.9989 diff   0.5916
+    8   Ni  MulP   9.2956   8.7058 sum  18.0014 diff   0.5898
+    9   Ni  MulP   9.2955   8.7052 sum  18.0007 diff   0.5903
+   10   Ni  MulP   9.2955   8.7050 sum  18.0004 diff   0.5905
+   11   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   12   Ni  MulP   9.2953   8.7037 sum  17.9990 diff   0.5916
+   13   Ni  MulP   9.2954   8.7041 sum  17.9995 diff   0.5913
+   14   Ni  MulP   9.2955   8.7052 sum  18.0008 diff   0.5903
+   15   Ni  MulP   9.2954   8.7049 sum  18.0003 diff   0.5906
+   16   Ni  MulP   9.2956   8.7055 sum  18.0011 diff   0.5901
+   17   Ni  MulP   9.2955   8.7048 sum  18.0003 diff   0.5907
+   18   Ni  MulP   9.2953   8.7038 sum  17.9991 diff   0.5916
+   19   Ni  MulP   9.2954   8.7042 sum  17.9995 diff   0.5912
+   20   Ni  MulP   9.2956   8.7053 sum  18.0009 diff   0.5902
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33799 down          =  2985.66201
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.675980919089
+<DFT>  Mixing_weight= 0.004757332406
+<DFT>  Uele   =-9090.386950498998  dUele     =   0.000055142586
+<DFT>  NormRD =    0.046605882140  Criterion =   0.000001000000
+
+******************* MD= 1  SCF= 9 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.558671
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2956   8.7053 sum  18.0008 diff   0.5903
+    2   Ni  MulP   9.2955   8.7053 sum  18.0008 diff   0.5903
+    3   Ni  MulP   9.2953   8.7040 sum  17.9994 diff   0.5913
+    4   Ni  MulP   9.2954   8.7043 sum  17.9997 diff   0.5911
+    5   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5907
+    6   Ni  MulP   9.2953   8.7040 sum  17.9993 diff   0.5914
+    7   Ni  MulP   9.2953   8.7039 sum  17.9992 diff   0.5914
+    8   Ni  MulP   9.2955   8.7052 sum  18.0008 diff   0.5903
+    9   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   10   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+   11   Ni  MulP   9.2954   8.7043 sum  17.9997 diff   0.5911
+   12   Ni  MulP   9.2953   8.7038 sum  17.9992 diff   0.5915
+   13   Ni  MulP   9.2954   8.7042 sum  17.9996 diff   0.5912
+   14   Ni  MulP   9.2955   8.7050 sum  18.0005 diff   0.5905
+   15   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   16   Ni  MulP   9.2955   8.7049 sum  18.0004 diff   0.5906
+   17   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2953   8.7039 sum  17.9992 diff   0.5915
+   19   Ni  MulP   9.2954   8.7043 sum  17.9997 diff   0.5911
+   20   Ni  MulP   9.2956   8.7052 sum  18.0008 diff   0.5904
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33798 down          =  2985.66202
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.675956849501
+<DFT>  Mixing_weight= 0.005021666244
+<DFT>  Uele   =-9090.386909135374  dUele     =   0.000041363624
+<DFT>  NormRD =    0.010692843026  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=10 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=56.826323
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2955   8.7050 sum  18.0005 diff   0.5905
+    2   Ni  MulP   9.2955   8.7050 sum  18.0005 diff   0.5905
+    3   Ni  MulP   9.2953   8.7041 sum  17.9994 diff   0.5913
+    4   Ni  MulP   9.2954   8.7043 sum  17.9998 diff   0.5911
+    5   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5908
+    6   Ni  MulP   9.2954   8.7042 sum  17.9995 diff   0.5912
+    7   Ni  MulP   9.2953   8.7041 sum  17.9994 diff   0.5913
+    8   Ni  MulP   9.2955   8.7049 sum  18.0004 diff   0.5906
+    9   Ni  MulP   9.2954   8.7044 sum  17.9999 diff   0.5910
+   10   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   11   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5911
+   12   Ni  MulP   9.2954   8.7041 sum  17.9995 diff   0.5913
+   13   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   14   Ni  MulP   9.2955   8.7048 sum  18.0003 diff   0.5907
+   15   Ni  MulP   9.2954   8.7043 sum  17.9997 diff   0.5911
+   16   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5908
+   17   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7041 sum  17.9995 diff   0.5913
+   19   Ni  MulP   9.2954   8.7044 sum  17.9999 diff   0.5910
+   20   Ni  MulP   9.2955   8.7050 sum  18.0006 diff   0.5905
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33796 down          =  2985.66204
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.675921506179
+<DFT>  Mixing_weight= 0.006137282662
+<DFT>  Uele   =-9090.386860523595  dUele     =   0.000048611779
+<DFT>  NormRD =    0.004558926358  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=11 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.119794
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5907
+    2   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5908
+    3   Ni  MulP   9.2954   8.7042 sum  17.9996 diff   0.5911
+    4   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+    5   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+    6   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5911
+    7   Ni  MulP   9.2954   8.7042 sum  17.9996 diff   0.5911
+    8   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+    9   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   10   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+   11   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   12   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   13   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   14   Ni  MulP   9.2955   8.7046 sum  18.0001 diff   0.5908
+   15   Ni  MulP   9.2954   8.7043 sum  17.9997 diff   0.5911
+   16   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   19   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2955   8.7048 sum  18.0003 diff   0.5907
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33793 down          =  2985.66207
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.675855309973
+<DFT>  Mixing_weight= 0.010143631897
+<DFT>  Uele   =-9090.386781936790  dUele     =   0.000078586805
+<DFT>  NormRD =    0.002865102995  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=12 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.943792
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+    4   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2955   8.7046 sum  18.0001 diff   0.5908
+    6   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+    7   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7044 sum  17.9999 diff   0.5910
+   10   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   13   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   16   Ni  MulP   9.2955   8.7046 sum  18.0001 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2955   8.7045 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33788 down          =  2985.66212
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.675765791409
+<DFT>  Mixing_weight= 0.013042280528
+<DFT>  Uele   =-9090.386683387738  dUele     =   0.000098549051
+<DFT>  NormRD =    0.001350707331  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=13 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=94.691809
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   10   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2955   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   16   Ni  MulP   9.2955   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2955   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2955   8.7046 sum  18.0001 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33783 down          =  2985.66217
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.675657793200
+<DFT>  Mixing_weight= 0.015644872130
+<DFT>  Uele   =-9090.386568287489  dUele     =   0.000115100249
+<DFT>  NormRD =    0.000550906961  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=14 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.023236
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2955   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33776 down          =  2985.66224
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.675525005678
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.386430241078  dUele     =   0.000138046411
+<DFT>  NormRD =    0.000240997429  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=15 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.028868
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+    2   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+    4   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+    7   Ni  MulP   9.2955   8.7048 sum  18.0002 diff   0.5907
+    8   Ni  MulP   9.2954   8.7044 sum  17.9997 diff   0.5910
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   10   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   11   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+   12   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   13   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7042 sum  17.9996 diff   0.5911
+   19   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+   20   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33430 down          =  2985.66570
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.668601406948
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.379867434352  dUele     =   0.006562806726
+<DFT>  NormRD =    0.000213315756  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=16 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.954181
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+    4   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+    6   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2955   8.7047 sum  18.0002 diff   0.5908
+    8   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   14   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   16   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7044 sum  17.9998 diff   0.5910
+   19   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+   20   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33427 down          =  2985.66573
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.668546954530
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.379961828665  dUele     =   0.000094394312
+<DFT>  NormRD =    0.000984410430  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=17 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.103077
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+    2   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    3   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    7   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    8   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5910
+    9   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   10   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   12   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   15   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   16   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   18   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   19   Ni  MulP   9.2955   8.7047 sum  18.0001 diff   0.5908
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33423 down          =  2985.66577
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.668462067643
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380027000325  dUele     =   0.000065171660
+<DFT>  NormRD =    0.000976490268  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=18 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.106236
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33419 down          =  2985.66581
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.668387990933
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380110359347  dUele     =   0.000083359022
+<DFT>  NormRD =    0.000807675467  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=19 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.614351
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33414 down          =  2985.66586
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.668275813798
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380257799425  dUele     =   0.000147440078
+<DFT>  NormRD =    0.000278539691  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=20 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.026801
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33410 down          =  2985.66590
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.668206687133
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380347217459  dUele     =   0.000089418034
+<DFT>  NormRD =    0.000258401165  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=21 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=94.373347
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33401 down          =  2985.66599
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.668012464500
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380593006175  dUele     =   0.000245788717
+<DFT>  NormRD =    0.000261011635  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=22 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.023670
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33372 down          =  2985.66628
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.667442686517
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381269978745  dUele     =   0.000676972570
+<DFT>  NormRD =    0.000201751650  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=23 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.986030
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33347 down          =  2985.66653
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.666947397953
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381816240690  dUele     =   0.000546261945
+<DFT>  NormRD =    0.000176237449  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=24 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.077740
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33317 down          =  2985.66683
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.666346063586
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.382424348831  dUele     =   0.000608108141
+<DFT>  NormRD =    0.000177340671  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=25 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.117941
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33311 down          =  2985.66689
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.666218735894
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.382512975168  dUele     =   0.000088626337
+<DFT>  NormRD =    0.000088807938  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=26 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.085152
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33300 down          =  2985.66700
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.665995962451
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.382580872669  dUele     =   0.000067897501
+<DFT>  NormRD =    0.000063243426  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=27 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.630571
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33291 down          =  2985.66709
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.665826570215
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.382456037845  dUele     =   0.000124834824
+<DFT>  NormRD =    0.000030594177  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=28 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.151485
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33267 down          =  2985.66733
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.665330130051
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.382185190207  dUele     =   0.000270847639
+<DFT>  NormRD =    0.000062784609  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=29 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.970720
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33203 down          =  2985.66797
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.664060386864
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381367372953  dUele     =   0.000817817254
+<DFT>  NormRD =    0.000040392433  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=30 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.050578
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33181 down          =  2985.66819
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663620980474
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381143796330  dUele     =   0.000223576622
+<DFT>  NormRD =    0.000058128136  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=31 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.517021
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33176 down          =  2985.66824
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663516356653
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381066392698  dUele     =   0.000077403633
+<DFT>  NormRD =    0.000070181813  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=32 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.028109
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33182 down          =  2985.66818
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663642850866
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381209854080  dUele     =   0.000143461382
+<DFT>  NormRD =    0.000043785604  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=33 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.929623
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33190 down          =  2985.66810
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663801428622
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381160240724  dUele     =   0.000049613356
+<DFT>  NormRD =    0.000036555061  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=34 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.133653
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33164 down          =  2985.66836
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663286108516
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381735636420  dUele     =   0.000575395696
+<DFT>  NormRD =    0.000042305909  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=35 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.658856
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33222 down          =  2985.66778
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.664437360662
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381542059138  dUele     =   0.000193577282
+<DFT>  NormRD =    0.000085209683  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=36 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.115162
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33189 down          =  2985.66811
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663783453171
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380884069342  dUele     =   0.000657989796
+<DFT>  NormRD =    0.000099314988  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=37 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.019352
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33183 down          =  2985.66817
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663661139681
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380821286348  dUele     =   0.000062782994
+<DFT>  NormRD =    0.000135550108  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=38 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=56.872651
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33168 down          =  2985.66832
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663352991807
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380964743161  dUele     =   0.000143456813
+<DFT>  NormRD =    0.000057219340  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=39 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.910853
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33161 down          =  2985.66839
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663225876218
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380974782865  dUele     =   0.000010039705
+<DFT>  NormRD =    0.000142518370  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=40 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.924431
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33175 down          =  2985.66825
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663490446140
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380960389399  dUele     =   0.000014393467
+<DFT>  NormRD =    0.000050368635  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=41 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.681632
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33175 down          =  2985.66825
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663505964305
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380925365163  dUele     =   0.000035024235
+<DFT>  NormRD =    0.000052782889  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=42 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.079590
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33173 down          =  2985.66827
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663450797068
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380941760004  dUele     =   0.000016394841
+<DFT>  NormRD =    0.000116565538  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=43 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.050235
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33172 down          =  2985.66828
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663446265264
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380943728038  dUele     =   0.000001968034
+<DFT>  NormRD =    0.000057952850  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=44 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.954249
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33171 down          =  2985.66829
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663429133654
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380936974949  dUele     =   0.000006753089
+<DFT>  NormRD =    0.000042215634  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=45 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.018811
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33170 down          =  2985.66830
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663407672968
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380938960760  dUele     =   0.000001985811
+<DFT>  NormRD =    0.000058458240  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=46 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.709206
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33156 down          =  2985.66844
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663118981446
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380984962449  dUele     =   0.000046001689
+<DFT>  NormRD =    0.000035768075  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=47 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.916350
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33134 down          =  2985.66866
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662672071161
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381022179801  dUele     =   0.000037217353
+<DFT>  NormRD =    0.000030478673  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=48 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.913771
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33148 down          =  2985.66852
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662951498528
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380977791650  dUele     =   0.000044388151
+<DFT>  NormRD =    0.000054269772  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=49 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.149389
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33144 down          =  2985.66856
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662870755281
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380992393231  dUele     =   0.000014601581
+<DFT>  NormRD =    0.000024356475  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=50 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.575711
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33171 down          =  2985.66829
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663428052180
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380929967350  dUele     =   0.000062425881
+<DFT>  NormRD =    0.000049368334  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=51 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=56.819599
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33170 down          =  2985.66830
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663409872607
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380935890364  dUele     =   0.000005923013
+<DFT>  NormRD =    0.000078912702  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=52 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.995694
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33173 down          =  2985.66827
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663458214388
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380932916431  dUele     =   0.000002973933
+<DFT>  NormRD =    0.000039726165  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=53 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.003669
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33167 down          =  2985.66833
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663345496251
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380958430811  dUele     =   0.000025514380
+<DFT>  NormRD =    0.000037524016  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=54 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.937556
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33167 down          =  2985.66833
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663337018878
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380967169087  dUele     =   0.000008738276
+<DFT>  NormRD =    0.000052612350  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=55 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.055858
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33165 down          =  2985.66835
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663309802750
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380975209775  dUele     =   0.000008040688
+<DFT>  NormRD =    0.000065609796  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=56 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=57.567723
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   11   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33164 down          =  2985.66836
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.663280166059
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380978408877  dUele     =   0.000003199102
+<DFT>  NormRD =    0.000073301888  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=57 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.037090
+<Band_DFT>  DM, time=0.000001
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    9   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   15   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   18   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   20   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33147 down          =  2985.66853
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662939980298
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381110019276  dUele     =   0.000131610399
+<DFT>  NormRD =    0.000199297224  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=58 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.924718
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33140 down          =  2985.66860
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662799430459
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381185067330  dUele     =   0.000075048054
+<DFT>  NormRD =    0.000395006789  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=59 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.985063
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33139 down          =  2985.66861
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662781322582
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381193005471  dUele     =   0.000007938141
+<DFT>  NormRD =    0.000253342827  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=60 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=20.041822
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33139 down          =  2985.66861
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662780362451
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381185675964  dUele     =   0.000007329507
+<DFT>  NormRD =    0.000082009642  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=61 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.913121
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    9   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   13   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   17   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33138 down          =  2985.66862
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662765449888
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381126833789  dUele     =   0.000058842175
+<DFT>  NormRD =    0.000016229809  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=62 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=94.349319
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33139 down          =  2985.66861
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662776833453
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.381151379199  dUele     =   0.000024545410
+<DFT>  NormRD =    0.000304754156  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=63 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.964839
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    3   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    4   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    5   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    8   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   10   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+   14   Ni  MulP   9.2954   8.7047 sum  18.0001 diff   0.5908
+   15   Ni  MulP   9.2954   8.7045 sum  17.9999 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33133 down          =  2985.66867
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662664447225
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380984062784  dUele     =   0.000167316415
+<DFT>  NormRD =    0.000046480597  Criterion =   0.000001000000
+
+******************* MD= 1  SCF=64 *******************
+<Poisson>  Poisson's equation using FFT...
+<Set_Hamiltonian>  Hamiltonian matrix for VNA+dVH+Vxc...
+<Band>  Solving the eigenvalue problem...
+ KGrids1:  -0.33333   0.00000   0.33333 
+ KGrids2:  -0.33333  -0.00000   0.33333 
+ KGrids3:  -0.33333   0.00000   0.33334 
+<Band_DFT>  Eigen, time=19.916105
+<Band_DFT>  DM, time=0.000000
+    1   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    2   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    3   Ni  MulP   9.2954   8.7045 sum  18.0000 diff   0.5909
+    4   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    5   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    6   Ni  MulP   9.2954   8.7046 sum  18.0001 diff   0.5908
+    7   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+    8   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+    9   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   10   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   11   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   12   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   13   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   14   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   15   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   16   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+   17   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   18   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   19   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5909
+   20   Ni  MulP   9.2954   8.7046 sum  18.0000 diff   0.5908
+     ..........
+     ......
+
+ Sum of MulP: up   =  3188.33130 down          =  2985.66870
+              total=  6174.00000 ideal(neutral)=  6174.00000
+<DFT>  Total Spin Moment (muB) = 202.662606662107
+<DFT>  Mixing_weight= 0.019347321685
+<DFT>  Uele   =-9090.380984001295  dUele     =   0.000000061489
+<DFT>  NormRD =    0.000465921964  Criterion =   0.000001000000
+<MD= 1>  Force calculation
+  Force calculation #1
+  Force calculation #2
+  Force calculation #3
+  Force calculation #4
+  Force calculation #5
+<MD= 1>  Total Energy
+  Force calculation #6
+  Force calculation #7
+
+*******************************************************
+                  Dipole moment (Debye)                 
+*******************************************************
+
+ Absolute D        0.05830764
+
+                      Dx                Dy                Dz
+ Total             -0.00217344       -0.04757646       -0.03363834
+ Core          318058.73027672   318058.73027672   318058.73027672
+ Electron     -318058.73245015  -318058.77785317  -318058.76391505
+ Back ground       -0.00000000       -0.00000000       -0.00000000
+
+*******************************************************
+                Total Energy (Hartree) at MD = 1        
+*******************************************************
+
+  Uele  =   -9090.380984001295
+
+  Ukin  =   28854.506976123525
+  UH0   = -632065.671911559533
+  UH1   =       1.340575591486
+  Una   =  -24406.852718231967
+  Unl   =   -6163.917851874983
+  Uxc0  =   -3332.495532869004
+  Uxc1  =   -3134.739973606162
+  Ucore =  582718.645066277822
+  Uhub  =       0.000000000000
+  Ucs   =       0.000000000000
+  Uzs   =       0.000000000000
+  Uzo   =       0.000000000000
+  Uef   =       0.000000000000
+  UvdW  =       0.000000000000
+  Uch   =       0.000000000000
+  Utot  =  -57529.185370148822
+
+  UpV   =       0.000000000000
+  Enpy  =  -57529.185370148822
+  Note:
+
+  Uele:   band energy
+  Ukin:   kinetic energy
+  UH0:    electric part of screened Coulomb energy
+  UH1:    difference electron-electron Coulomb energy
+  Una:    neutral atom potential energy
+  Unl:    non-local potential energy
+  Uxc0:   exchange-correlation energy for alpha spin
+  Uxc1:   exchange-correlation energy for beta spin
+  Ucore:  core-core Coulomb energy
+  Uhub:   LDA+U energy
+  Ucs:    constraint energy for spin orientation
+  Uzs:    Zeeman term for spin magnetic moment
+  Uzo:    Zeeman term for orbital magnetic moment
+  Uef:    electric energy by electric field
+  UvdW:   semi-empirical vdW energy 
+  Uch:    penalty term to create a core hole
+  UpV:    pressure times volume
+  Enpy:   Enthalpy = Utot + UpV
+  (see also PRB 72, 045121(2005) for the energy contributions)
+
+
+*******************************************************
+           Computational times (s) at MD = 1            
+*******************************************************
+
+  DFT in total      = 2293.25654
+
+  Set_OLP_Kin       =    0.66938
+  Set_Nonlocal      =    3.10887
+  Set_ProExpn_VNA   =    0.00000
+  Set_Hamiltonian   =   70.85501
+  Poisson           =    1.07413
+  diagonalization   = 2164.54295
+  Mixing_DM         =    4.92539
+  Force             =    2.83901
+  Total_Energy      =    1.21699
+  Set_Aden_Grid     =    0.94008
+  Set_Orbitals_Grid =    0.56403
+  Set_Density_Grid  =   40.11325
+  RestartFileDFT    =    1.26907
+  Mulliken_Charge   =    0.27497
+  FFT(2D)_Density   =    0.00000
+
+The SCF was achieved at MD=   1
+
+*******************************************************
+             MD or geometry opt. at MD = 1              
+*******************************************************
+
+
+outputting data on grids to files...
+
+Save the scfout file (.//openmx.scfout)
+
+***********************************************************
+***********************************************************
+               Computational Time (second)                 
+***********************************************************
+***********************************************************
+
+                               Min_ID   Min_Time       Max_ID   Max_Time
+   Total Computational Time =    14     2304.848          0     2306.186
+   readfile                 =   205        0.794          0        1.313
+   truncation               =   233        7.683         71        7.892
+   MD_pac                   =     0        0.033         75        0.039
+   OutData                  =   128        0.000          0        0.062
+   DFT                      =    71     2293.048        233     2293.257
+
+*** In DFT ***
+
+   Set_OLP_Kin              =    20        0.667        151        1.378
+   Set_Nonlocal             =   151        2.402         20        3.113
+   Set_ProExpn_VNA          =     0        0.000          0        0.000
+   Set_Hamiltonian          =   135       70.855         73       70.855
+   Poisson                  =    69        1.069        188        1.075
+   Diagonalization          =     0     2164.543        162     2164.590
+   Mixing_DM                =   199        4.925        129        4.927
+   Force                    =   204        2.839         80        2.839
+   Total_Energy             =   108        1.211          0        1.217
+   Set_Aden_Grid            =   239        0.876          6        0.945
+   Set_Orbitals_Grid        =   165        0.552         95        1.115
+   Set_Density_Grid         =    55       39.916         62       40.399
+   RestartFileDFT           =    47        0.633        252        1.324
+   Mulliken_Charge          =    74        0.275        130        0.275
+   FFT(2D)_Density          =     0        0.000          0        0.000
+   Others                   =    61        0.410        233        1.109
+
+The calculation was normally finished.

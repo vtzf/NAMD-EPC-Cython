@@ -1,0 +1,55 @@
+#!/bin/bash
+#SBATCH --partition       intel,intel_expr
+#SBATCH -J tyy
+#SBATCH --time            1:00:00
+#SBATCH --nodes           1
+#SBATCH --ntasks-per-node 64
+#SBATCH --cpus-per-task   1
+##SBATCH --ntasks-per-socket=16
+#SBATCH --error           epc.err
+#SBATCH --output          epc.log
+
+ulimit -s unlimited
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export LD_LIBRARY_PATH=/public/apps/HDF5/1.12.1_intel/lib/:$LD_LIBRARY_PATH
+#export I_MPI_PMI_LIBRARY=libpmi2.so
+
+#module purge
+#module load compiler/gcc/10.3.0
+#module load compiler/intel/intel-compiler-2017.5.239
+#module load mpi/intelmpi/mpi/2017.4.239
+
+echo "============================================================"
+module list
+env | grep "MKLROOT="
+echo "============================================================"
+echo "Job ID: $SLURM_JOB_NAME"
+echo "Job name: $SLURM_JOB_NAME"
+echo "Number of nodes: $SLURM_JOB_NUM_NODES"
+echo "Number of processors: $SLURM_NTASKS"
+echo "Task is running on the following nodes:"
+echo $SLURM_JOB_NODELIST
+echo "OMP_NUM_THREADS = $SLURM_CPUS_PER_TASK"
+echo "============================================================"
+echo
+
+#mpirun ./namd-epc
+mpirun python epcsparse.py
+mpirun python epc_nl.py
+#mpirun python file_add.py
+#mpirun python file_add.py
+#mpirun python file_add.py
+#mpirun python file_add.py
+#mpirun python file_add.py
+#srun --mpi=pmi2 namd-epc
+#srun --mpi=pmi2 python epc_all1.py
+#srun --mpi=pmi2 python epc_all2.py
+#srun --mpi=pmi2 python epc_all.py
+#srun --mpi=pmi2 python epc_all1.py
+#srun --mpi=pmi2 python epc_all2.py
+#srun --mpi=pmi2 python epc_all.py
+#srun --mpi=pmi2 python epc_all1.py
+#srun --mpi=pmi2 python epc_all2.py
+#srun --mpi=pmi2 python epc_all.py
+#srun --mpi=pmi2 python epc_all1.py
+#srun --mpi=pmi2 python epc_all2.py

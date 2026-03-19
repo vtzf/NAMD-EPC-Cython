@@ -1,0 +1,40 @@
+&NAMDPARA
+  BMIN       = 1
+  BMAX       = 2
+  EMIN       = -6.212316
+  EMAX       = -5.212316
+  NBANDS     = 2
+  NKPOINTS   = 1000
+  Np         = 1000
+
+  NSW        = 1000
+  POTIM      = 1.0
+  TEMP       = 300.0
+
+  NSAMPLE    = 1
+  NAMDTIME   = 1000.0
+  NELM       = 200
+  NTRAJ      = 10000
+  LHOLE      = .F.
+
+  LEPC       = .T.
+  LSORT      = .F.
+  EPCTYPE    = 1
+  SIGMA      = 0.02
+  LHDF5      = .F.
+  LEF        = .F.
+
+  EFTYPE     = 'const'
+  EFX        = 0.000000
+  EFY        = 0.000000
+  EFZ        = 0.000000
+  EFSTART    = 0
+  EFEND      = 1000000
+  EFTIME     = 1000000
+
+  BANDDEG    = 1
+  LEPCSHM    = .T.
+  LPHSHM     = .T.
+  LSPLIT     = .F.
+  NM_BLOCK   = 1
+/

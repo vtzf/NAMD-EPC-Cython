@@ -1642,47 +1642,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_GetAttrStr(PyObject* obj, PyObject
 /* GetBuiltinName.proto */
 static PyObject *__Pyx_GetBuiltinName(PyObject *name);
 
-/* PyThreadStateGet.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
-#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
-#define __Pyx_PyErr_Occurred()  __pyx_tstate->curexc_type
-#else
-#define __Pyx_PyThreadState_declare
-#define __Pyx_PyThreadState_assign
-#define __Pyx_PyErr_Occurred()  PyErr_Occurred()
-#endif
-
-/* PyErrFetchRestore.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
-#if CYTHON_COMPILING_IN_CPYTHON
-#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
-#else
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#endif
-#else
-#define __Pyx_PyErr_Clear() PyErr_Clear()
-#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
-#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
-#endif
-
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
-
 /* RaiseArgTupleInvalid.proto */
 static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
     Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
@@ -1726,6 +1685,47 @@ static CYTHON_INLINE void __Pyx_XDEC_MEMVIEW(__Pyx_memviewslice *, int, int);
     ((likely((Py_TYPE(obj) == type) | (none_allowed && (obj == Py_None)))) ? 1 :\
         __Pyx__ArgTypeTest(obj, type, name, exact))
 static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *name, int exact);
+
+/* PyThreadStateGet.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
+#define __Pyx_PyThreadState_assign  __pyx_tstate = __Pyx_PyThreadState_Current;
+#define __Pyx_PyErr_Occurred()  __pyx_tstate->curexc_type
+#else
+#define __Pyx_PyThreadState_declare
+#define __Pyx_PyThreadState_assign
+#define __Pyx_PyErr_Occurred()  PyErr_Occurred()
+#endif
+
+/* PyErrFetchRestore.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyErr_Clear() __Pyx_ErrRestore(NULL, NULL, NULL)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
+#if CYTHON_COMPILING_IN_CPYTHON
+#define __Pyx_PyErr_SetNone(exc) (Py_INCREF(exc), __Pyx_ErrRestore((exc), NULL, NULL))
+#else
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#endif
+#else
+#define __Pyx_PyErr_Clear() PyErr_Clear()
+#define __Pyx_PyErr_SetNone(exc) PyErr_SetNone(exc)
+#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestoreInState(tstate, type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchInState(tstate, type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
+#endif
+
+/* WriteUnraisableException.proto */
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
 
 /* PyObjectCall.proto */
 #if CYTHON_COMPILING_IN_CPYTHON
@@ -2249,10 +2249,10 @@ static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_int
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(PyObject *, int writable_flag);
 
 /* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_double(PyObject *, int writable_flag);
+static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(PyObject *, int writable_flag);
 
 /* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(PyObject *, int writable_flag);
+static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_double(PyObject *, int writable_flag);
 
 /* ObjectToMemviewSlice.proto */
 static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(PyObject *, int writable_flag);
@@ -2365,17 +2365,17 @@ static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
 static int __pyx_f_8readdrSH_Cmp(void *, void *); /*proto*/
-static herr_t __pyx_f_8readdrSH_readh5engine_key0(hid_t, char *, H5O_info_t *, void *); /*proto*/
+static herr_t __pyx_f_8readdrSH_readh5engine_key0(hid_t, char *, H5O_info1_t *, void *); /*proto*/
 static void __pyx_f_8readdrSH_readh5_key0(char *, int, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_8readdrSH_readscfout_key0(char *, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_8readdrSH_GetKeyInfo(int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
-static herr_t __pyx_f_8readdrSH_readh5engine_key1(hid_t, char *, H5O_info_t *, void *); /*proto*/
+static herr_t __pyx_f_8readdrSH_readh5engine_key1(hid_t, char *, H5O_info1_t *, void *); /*proto*/
 static void __pyx_f_8readdrSH_readh5_key1(char *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_8readdrSH_readscfout_key1(char *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_8readdrSH_copy_key1(int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_8readdrSH_readh5(MPI_Comm, int, int, char *, int, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double); /*proto*/
-static void __pyx_f_8readdrSH_readscfout(char *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double); /*proto*/
+static void __pyx_f_8readdrSH_readscfout(char *, int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double, double, double, int); /*proto*/
 static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice, __Pyx_memviewslice, int, int, int, int, int, double, double *); /*proto*/
 static void __pyx_f_8readdrSH_mat_tran(MPI_Comm, int, int, int, int *, int *, double *, double *); /*proto*/
 static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm, double *, int, int, int, int, int, int *, int *, __Pyx_memviewslice); /*proto*/
@@ -2480,6 +2480,7 @@ static const char __pyx_k_step[] = "step";
 static const char __pyx_k_stop[] = "stop";
 static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_ASCII[] = "ASCII";
+static const char __pyx_k_Ispin[] = "Ispin";
 static const char __pyx_k_N_mkl[] = "N_mkl";
 static const char __pyx_k_Nproc[] = "Nproc";
 static const char __pyx_k_class[] = "__class__";
@@ -2666,6 +2667,7 @@ static PyObject *__pyx_kp_s_Indirect_dimensions_not_supporte;
 static PyObject *__pyx_kp_s_Invalid_mode_expected_c_or_fortr;
 static PyObject *__pyx_kp_s_Invalid_shape_in_axis_d_d;
 static PyObject *__pyx_n_s_IsH5;
+static PyObject *__pyx_n_s_Ispin;
 static PyObject *__pyx_n_s_Mb;
 static PyObject *__pyx_n_s_MemoryError;
 static PyObject *__pyx_kp_s_MemoryView_of_r_at_0x_x;
@@ -2868,7 +2870,7 @@ static PyObject *__pyx_n_s_update;
 static PyObject *__pyx_n_s_xyz;
 static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_self, char *__pyx_v_inDir, char *__pyx_v_H5HamName, char *__pyx_v_H5OlpName, char *__pyx_v_H5DrName, int __pyx_v_nfileham, int __pyx_v_nfileolp, int __pyx_v_nfiledr, int __pyx_v_atomnum, __Pyx_memviewslice __pyx_v_key_num_h, __Pyx_memviewslice __pyx_v_key_num_o, __Pyx_memviewslice __pyx_v_key_num_dr, __Pyx_memviewslice __pyx_v_atom_idx_py, int __pyx_v_IsH5); /* proto */
 static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_self, char *__pyx_v_inDir, char *__pyx_v_H5HamName, char *__pyx_v_H5OlpName, char *__pyx_v_H5DrName, int __pyx_v_nfileham, int __pyx_v_nfileolp, int __pyx_v_nfiledr, int __pyx_v_atomnum, int __pyx_v_norbital, __Pyx_memviewslice __pyx_v_key_num_h, __Pyx_memviewslice __pyx_v_key_num_o, __Pyx_memviewslice __pyx_v_key_num_dr, __Pyx_memviewslice __pyx_v_pub_key_h, __Pyx_memviewslice __pyx_v_pub_key_o, __Pyx_memviewslice __pyx_v_pub_key_dr, __Pyx_memviewslice __pyx_v_keyinfo_h, __Pyx_memviewslice __pyx_v_keyinfo_o, __Pyx_memviewslice __pyx_v_keyinfo_dr, __Pyx_memviewslice __pyx_v_atom_idx_py, __Pyx_memviewslice __pyx_v_atom_idx_sum_py, int __pyx_v_IsH5); /* proto */
-static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_shm_comm_py, char *__pyx_v_inDir, char *__pyx_v_H5HamName, char *__pyx_v_H5OlpName, char *__pyx_v_H5DrName, int __pyx_v_nfileham, int __pyx_v_nfileolp, int __pyx_v_nfiledr, CYTHON_UNUSED int __pyx_v_atomnum, int __pyx_v_norb_m, __Pyx_memviewslice __pyx_v_key_num_h, __Pyx_memviewslice __pyx_v_key_num_o, __Pyx_memviewslice __pyx_v_key_num_dr, __Pyx_memviewslice __pyx_v_pub_key_h, __Pyx_memviewslice __pyx_v_pub_key_o, __Pyx_memviewslice __pyx_v_pub_key_dr, __Pyx_memviewslice __pyx_v_keyinfo_h, __Pyx_memviewslice __pyx_v_keyinfo_o, __Pyx_memviewslice __pyx_v_keyinfo_dr, __Pyx_memviewslice __pyx_v_data_h, __Pyx_memviewslice __pyx_v_data_o, __Pyx_memviewslice __pyx_v_data_dr, int __pyx_v_IsH5); /* proto */
+static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_shm_comm_py, char *__pyx_v_inDir, char *__pyx_v_H5HamName, char *__pyx_v_H5OlpName, char *__pyx_v_H5DrName, int __pyx_v_nfileham, int __pyx_v_nfileolp, int __pyx_v_nfiledr, CYTHON_UNUSED int __pyx_v_atomnum, int __pyx_v_norb_m, __Pyx_memviewslice __pyx_v_key_num_h, __Pyx_memviewslice __pyx_v_key_num_o, __Pyx_memviewslice __pyx_v_key_num_dr, __Pyx_memviewslice __pyx_v_pub_key_h, __Pyx_memviewslice __pyx_v_pub_key_o, __Pyx_memviewslice __pyx_v_pub_key_dr, __Pyx_memviewslice __pyx_v_keyinfo_h, __Pyx_memviewslice __pyx_v_keyinfo_o, __Pyx_memviewslice __pyx_v_keyinfo_dr, __Pyx_memviewslice __pyx_v_data_h, __Pyx_memviewslice __pyx_v_data_o, __Pyx_memviewslice __pyx_v_data_dr, int __pyx_v_Ispin, int __pyx_v_IsH5); /* proto */
 static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_self, int __pyx_v_N, int __pyx_v_Nsparse, __Pyx_memviewslice __pyx_v_coo_idx, __Pyx_memviewslice __pyx_v_csr_ridx, __Pyx_memviewslice __pyx_v_csr_cidx); /* proto */
 static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_comm, int __pyx_v_nprocs, int __pyx_v_myid, __Pyx_memviewslice __pyx_v_olp, __Pyx_memviewslice __pyx_v_olp_keyinfo, int __pyx_v_Nsparse_o, __Pyx_memviewslice __pyx_v_ham, __Pyx_memviewslice __pyx_v_ham_keyinfo, int __pyx_v_Nsparse_h, __Pyx_memviewslice __pyx_v_dr, __Pyx_memviewslice __pyx_v_dr_csr_ridx, __Pyx_memviewslice __pyx_v_dr_csr_cidx, int __pyx_v_Nsparse_dr, int __pyx_v_drp_min, int __pyx_v_N, int __pyx_v_Nsplit, MKL_INT __pyx_v_Mb, MKL_INT __pyx_v_Nb, __Pyx_memviewslice __pyx_v_drSH); /* proto */
 static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_comm, int __pyx_v_nprocs, int __pyx_v_myid, int __pyx_v_natom, int __pyx_v_N, int __pyx_v_Nsplit, __Pyx_memviewslice __pyx_v_norb_u, __Pyx_memviewslice __pyx_v_norb_u_num, __Pyx_memviewslice __pyx_v_drSH, __Pyx_memviewslice __pyx_v_dhamil); /* proto */
@@ -2920,7 +2922,6 @@ static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject 
 static PyObject *__pyx_tp_new__memoryviewslice(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
-static PyObject *__pyx_int_8;
 static PyObject *__pyx_int_112105877;
 static PyObject *__pyx_int_136983863;
 static PyObject *__pyx_int_184977713;
@@ -2965,7 +2966,7 @@ static PyObject *__pyx_codeobj__31;
 static PyObject *__pyx_codeobj__38;
 /* Late includes */
 
-/* "readdrSH.pyx":280
+/* "readdrSH.pyx":281
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef int Cmp(void * pa, void * pb) nogil:             # <<<<<<<<<<<<<<
@@ -2979,7 +2980,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   int __pyx_r;
   int __pyx_t_1;
 
-  /* "readdrSH.pyx":281
+  /* "readdrSH.pyx":282
  * @cython.wraparound(False)
  * cdef int Cmp(void * pa, void * pb) nogil:
  *     cdef long *pa1 = <long*>pa             # <<<<<<<<<<<<<<
@@ -2988,7 +2989,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   __pyx_v_pa1 = ((long *)__pyx_v_pa);
 
-  /* "readdrSH.pyx":282
+  /* "readdrSH.pyx":283
  * cdef int Cmp(void * pa, void * pb) nogil:
  *     cdef long *pa1 = <long*>pa
  *     cdef long *pb1 = <long*>pb             # <<<<<<<<<<<<<<
@@ -2997,7 +2998,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   __pyx_v_pb1 = ((long *)__pyx_v_pb);
 
-  /* "readdrSH.pyx":284
+  /* "readdrSH.pyx":285
  *     cdef long *pb1 = <long*>pb
  * 
  *     if pa1[0]>pb1[0]:             # <<<<<<<<<<<<<<
@@ -3007,7 +3008,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   __pyx_t_1 = (((__pyx_v_pa1[0]) > (__pyx_v_pb1[0])) != 0);
   if (__pyx_t_1) {
 
-    /* "readdrSH.pyx":285
+    /* "readdrSH.pyx":286
  * 
  *     if pa1[0]>pb1[0]:
  *         return 1             # <<<<<<<<<<<<<<
@@ -3017,7 +3018,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
     __pyx_r = 1;
     goto __pyx_L0;
 
-    /* "readdrSH.pyx":284
+    /* "readdrSH.pyx":285
  *     cdef long *pb1 = <long*>pb
  * 
  *     if pa1[0]>pb1[0]:             # <<<<<<<<<<<<<<
@@ -3026,7 +3027,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   }
 
-  /* "readdrSH.pyx":286
+  /* "readdrSH.pyx":287
  *     if pa1[0]>pb1[0]:
  *         return 1
  *     elif pa1[0]<pb1[0]:             # <<<<<<<<<<<<<<
@@ -3036,7 +3037,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   __pyx_t_1 = (((__pyx_v_pa1[0]) < (__pyx_v_pb1[0])) != 0);
   if (__pyx_t_1) {
 
-    /* "readdrSH.pyx":287
+    /* "readdrSH.pyx":288
  *         return 1
  *     elif pa1[0]<pb1[0]:
  *         return -1             # <<<<<<<<<<<<<<
@@ -3046,7 +3047,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
     __pyx_r = -1;
     goto __pyx_L0;
 
-    /* "readdrSH.pyx":286
+    /* "readdrSH.pyx":287
  *     if pa1[0]>pb1[0]:
  *         return 1
  *     elif pa1[0]<pb1[0]:             # <<<<<<<<<<<<<<
@@ -3055,7 +3056,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
  */
   }
 
-  /* "readdrSH.pyx":289
+  /* "readdrSH.pyx":290
  *         return -1
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -3067,7 +3068,7 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
     goto __pyx_L0;
   }
 
-  /* "readdrSH.pyx":280
+  /* "readdrSH.pyx":281
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef int Cmp(void * pa, void * pb) nogil:             # <<<<<<<<<<<<<<
@@ -3080,15 +3081,15 @@ static int __pyx_f_8readdrSH_Cmp(void *__pyx_v_pa, void *__pyx_v_pb) {
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":294
+/* "readdrSH.pyx":295
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key0(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* key_num
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* key_num
  * ):
  */
 
-static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info_t *__pyx_v_info, void *__pyx_v_key_num) {
+static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info1_t *__pyx_v_info, void *__pyx_v_key_num) {
   int __pyx_v_idx[5];
   herr_t __pyx_r;
   __Pyx_RefNannyDeclarations
@@ -3098,7 +3099,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
   long __pyx_t_4;
   __Pyx_RefNannySetupContext("readh5engine_key0", 0);
 
-  /* "readdrSH.pyx":301
+  /* "readdrSH.pyx":302
  *     cdef hid_t data_id
  * 
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\             # <<<<<<<<<<<<<<
@@ -3107,7 +3108,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
  */
   (void)(sscanf(__pyx_v_name, ((char const *)"[%d, %d, %d, %d, %d]"), (&(__pyx_v_idx[0])), (&(__pyx_v_idx[1])), (&(__pyx_v_idx[2])), (&(__pyx_v_idx[3])), (&(__pyx_v_idx[4]))));
 
-  /* "readdrSH.pyx":303
+  /* "readdrSH.pyx":304
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -3131,7 +3132,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "readdrSH.pyx":304
+    /* "readdrSH.pyx":305
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         (<int*>(key_num))[0] += 1             # <<<<<<<<<<<<<<
@@ -3142,7 +3143,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
     __pyx_t_4 = 0;
     (__pyx_t_3[__pyx_t_4]) = ((__pyx_t_3[__pyx_t_4]) + 1);
 
-    /* "readdrSH.pyx":305
+    /* "readdrSH.pyx":306
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         (<int*>(key_num))[0] += 1
  *         (<int*>(key_num))[1] += atom_idx[idx[3]-1]*atom_idx[idx[4]-1]             # <<<<<<<<<<<<<<
@@ -3153,7 +3154,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
     __pyx_t_4 = 1;
     (__pyx_t_3[__pyx_t_4]) = ((__pyx_t_3[__pyx_t_4]) + ((__pyx_v_8readdrSH_atom_idx[((__pyx_v_idx[3]) - 1)]) * (__pyx_v_8readdrSH_atom_idx[((__pyx_v_idx[4]) - 1)])));
 
-    /* "readdrSH.pyx":306
+    /* "readdrSH.pyx":307
  *         (<int*>(key_num))[0] += 1
  *         (<int*>(key_num))[1] += atom_idx[idx[3]-1]*atom_idx[idx[4]-1]
  *         return 0             # <<<<<<<<<<<<<<
@@ -3163,7 +3164,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "readdrSH.pyx":303
+    /* "readdrSH.pyx":304
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -3172,7 +3173,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
  */
   }
 
-  /* "readdrSH.pyx":308
+  /* "readdrSH.pyx":309
  *         return 0
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -3184,11 +3185,11 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
     goto __pyx_L0;
   }
 
-  /* "readdrSH.pyx":294
+  /* "readdrSH.pyx":295
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key0(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* key_num
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* key_num
  * ):
  */
 
@@ -3198,7 +3199,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key0(CYTHON_UNUSED hid_t __pyx_v_lo
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":313
+/* "readdrSH.pyx":314
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key0(char* h5_name, int nfile, int[:,::1] key_num):             # <<<<<<<<<<<<<<
@@ -3226,7 +3227,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
   Py_ssize_t __pyx_t_11;
   __Pyx_RefNannySetupContext("readh5_key0", 0);
 
-  /* "readdrSH.pyx":319
+  /* "readdrSH.pyx":320
  *     cdef char h5name[500]
  * 
  *     for i in range(nfile+1):             # <<<<<<<<<<<<<<
@@ -3238,7 +3239,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":320
+    /* "readdrSH.pyx":321
  * 
  *     for i in range(nfile+1):
  *         for j in range(4):             # <<<<<<<<<<<<<<
@@ -3248,7 +3249,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
     for (__pyx_t_4 = 0; __pyx_t_4 < 4; __pyx_t_4+=1) {
       __pyx_v_j = __pyx_t_4;
 
-      /* "readdrSH.pyx":321
+      /* "readdrSH.pyx":322
  *     for i in range(nfile+1):
  *         for j in range(4):
  *             key_num[i,j] = 0             # <<<<<<<<<<<<<<
@@ -3261,7 +3262,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
     }
   }
 
-  /* "readdrSH.pyx":323
+  /* "readdrSH.pyx":324
  *             key_num[i,j] = 0
  * 
  *     if nfile>1:             # <<<<<<<<<<<<<<
@@ -3271,7 +3272,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
   __pyx_t_7 = ((__pyx_v_nfile > 1) != 0);
   if (__pyx_t_7) {
 
-    /* "readdrSH.pyx":324
+    /* "readdrSH.pyx":325
  * 
  *     if nfile>1:
  *         for i in range(nfile):             # <<<<<<<<<<<<<<
@@ -3283,26 +3284,26 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_4; __pyx_t_8+=1) {
       __pyx_v_i = __pyx_t_8;
 
-      /* "readdrSH.pyx":325
+      /* "readdrSH.pyx":326
  *     if nfile>1:
  *         for i in range(nfile):
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)             # <<<<<<<<<<<<<<
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *             status = H5Ovisit(
+ *             status = H5Ovisit1(
  */
       (void)(sprintf(__pyx_v_h5name, ((char const *)"%s_%d.h5"), __pyx_v_h5_name, __pyx_v_i));
 
-      /* "readdrSH.pyx":326
+      /* "readdrSH.pyx":327
  *         for i in range(nfile):
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *             status = H5Ovisit(
+ *             status = H5Ovisit1(
  *                 f,H5_INDEX_NAME,H5_ITER_NATIVE,
  */
       __pyx_v_f = H5Fopen(__pyx_v_h5name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-      /* "readdrSH.pyx":329
- *             status = H5Ovisit(
+      /* "readdrSH.pyx":330
+ *             status = H5Ovisit1(
  *                 f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *                 readh5engine_key0,&key_num[i,0]             # <<<<<<<<<<<<<<
  *             )
@@ -3311,16 +3312,16 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
       __pyx_t_6 = __pyx_v_i;
       __pyx_t_5 = 0;
 
-      /* "readdrSH.pyx":327
+      /* "readdrSH.pyx":328
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *             status = H5Ovisit(             # <<<<<<<<<<<<<<
+ *             status = H5Ovisit1(             # <<<<<<<<<<<<<<
  *                 f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *                 readh5engine_key0,&key_num[i,0]
  */
-      __pyx_v_status = H5Ovisit(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key0, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_6 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) )))));
+      __pyx_v_status = H5Ovisit1(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key0, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_6 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) )))));
 
-      /* "readdrSH.pyx":331
+      /* "readdrSH.pyx":332
  *                 readh5engine_key0,&key_num[i,0]
  *             )
  *             status = H5Fclose(f)             # <<<<<<<<<<<<<<
@@ -3330,7 +3331,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
       __pyx_v_status = H5Fclose(__pyx_v_f);
     }
 
-    /* "readdrSH.pyx":323
+    /* "readdrSH.pyx":324
  *             key_num[i,j] = 0
  * 
  *     if nfile>1:             # <<<<<<<<<<<<<<
@@ -3340,27 +3341,27 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
     goto __pyx_L7;
   }
 
-  /* "readdrSH.pyx":333
+  /* "readdrSH.pyx":334
  *             status = H5Fclose(f)
  *     else:
  *         sprintf(h5name,"%s.h5",h5_name)             # <<<<<<<<<<<<<<
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *         status = H5Ovisit(
+ *         status = H5Ovisit1(
  */
   /*else*/ {
     (void)(sprintf(__pyx_v_h5name, ((char const *)"%s.h5"), __pyx_v_h5_name));
 
-    /* "readdrSH.pyx":334
+    /* "readdrSH.pyx":335
  *     else:
  *         sprintf(h5name,"%s.h5",h5_name)
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *         status = H5Ovisit(
+ *         status = H5Ovisit1(
  *             f,H5_INDEX_NAME,H5_ITER_NATIVE,
  */
     __pyx_v_f = H5Fopen(__pyx_v_h5name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-    /* "readdrSH.pyx":337
- *         status = H5Ovisit(
+    /* "readdrSH.pyx":338
+ *         status = H5Ovisit1(
  *             f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *             readh5engine_key0,&key_num[0,0]             # <<<<<<<<<<<<<<
  *         )
@@ -3369,16 +3370,16 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
     __pyx_t_5 = 0;
     __pyx_t_6 = 0;
 
-    /* "readdrSH.pyx":335
+    /* "readdrSH.pyx":336
  *         sprintf(h5name,"%s.h5",h5_name)
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *         status = H5Ovisit(             # <<<<<<<<<<<<<<
+ *         status = H5Ovisit1(             # <<<<<<<<<<<<<<
  *             f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *             readh5engine_key0,&key_num[0,0]
  */
-    __pyx_v_status = H5Ovisit(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key0, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_6)) )))));
+    __pyx_v_status = H5Ovisit1(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key0, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_6)) )))));
 
-    /* "readdrSH.pyx":339
+    /* "readdrSH.pyx":340
  *             readh5engine_key0,&key_num[0,0]
  *         )
  *         status = H5Fclose(f)             # <<<<<<<<<<<<<<
@@ -3389,7 +3390,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
   }
   __pyx_L7:;
 
-  /* "readdrSH.pyx":341
+  /* "readdrSH.pyx":342
  *         status = H5Fclose(f)
  * 
  *     for i in range(nfile):             # <<<<<<<<<<<<<<
@@ -3401,7 +3402,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_4; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "readdrSH.pyx":342
+    /* "readdrSH.pyx":343
  * 
  *     for i in range(nfile):
  *         for j in range(i+1,nfile+1):             # <<<<<<<<<<<<<<
@@ -3413,7 +3414,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
     for (__pyx_t_9 = (__pyx_v_i + 1); __pyx_t_9 < __pyx_t_2; __pyx_t_9+=1) {
       __pyx_v_j = __pyx_t_9;
 
-      /* "readdrSH.pyx":343
+      /* "readdrSH.pyx":344
  *     for i in range(nfile):
  *         for j in range(i+1,nfile+1):
  *             key_num[j,2] += key_num[i,0]             # <<<<<<<<<<<<<<
@@ -3426,7 +3427,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
       __pyx_t_11 = 2;
       *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_10 * __pyx_v_key_num.strides[0]) )) + __pyx_t_11)) )) += (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_6 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) )));
 
-      /* "readdrSH.pyx":344
+      /* "readdrSH.pyx":345
  *         for j in range(i+1,nfile+1):
  *             key_num[j,2] += key_num[i,0]
  *             key_num[j,3] += key_num[i,1]             # <<<<<<<<<<<<<<
@@ -3441,7 +3442,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
     }
   }
 
-  /* "readdrSH.pyx":313
+  /* "readdrSH.pyx":314
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key0(char* h5_name, int nfile, int[:,::1] key_num):             # <<<<<<<<<<<<<<
@@ -3453,7 +3454,7 @@ static void __pyx_f_8readdrSH_readh5_key0(char *__pyx_v_h5_name, int __pyx_v_nfi
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":349
+/* "readdrSH.pyx":350
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key0(char* name, int[:,::1] key_num):             # <<<<<<<<<<<<<<
@@ -3469,31 +3470,26 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   int __pyx_v_h_AN;
   int __pyx_v_Gh_AN;
   int __pyx_v_atomnum;
+  int __pyx_v_TNO1;
+  int __pyx_v_TNO2;
   int *__pyx_v_FNAN;
   int **__pyx_v_natn;
   int **__pyx_v_ncn;
-  PyObject *__pyx_v_TNO1 = NULL;
-  PyObject *__pyx_v_TNO2 = NULL;
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
   Py_ssize_t __pyx_t_2;
   long __pyx_t_3;
   long __pyx_t_4;
   int __pyx_t_5;
-  PyObject *__pyx_t_6 = NULL;
+  long __pyx_t_6;
   long __pyx_t_7;
-  long __pyx_t_8;
+  int __pyx_t_8;
   int __pyx_t_9;
-  int __pyx_t_10;
-  int __pyx_t_11;
-  Py_ssize_t __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
+  Py_ssize_t __pyx_t_10;
+  Py_ssize_t __pyx_t_11;
   __Pyx_RefNannySetupContext("readscfout_key0", 0);
 
-  /* "readdrSH.pyx":359
+  /* "readdrSH.pyx":361
  *     cdef int** ncn
  * 
  *     key_num[0,0] = 0             # <<<<<<<<<<<<<<
@@ -3504,7 +3500,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   __pyx_t_2 = 0;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )) = 0;
 
-  /* "readdrSH.pyx":360
+  /* "readdrSH.pyx":362
  * 
  *     key_num[0,0] = 0
  *     key_num[0,1] = 0             # <<<<<<<<<<<<<<
@@ -3515,7 +3511,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   __pyx_t_1 = 1;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )) = 0;
 
-  /* "readdrSH.pyx":361
+  /* "readdrSH.pyx":363
  *     key_num[0,0] = 0
  *     key_num[0,1] = 0
  *     key_num[0,2] = 0             # <<<<<<<<<<<<<<
@@ -3526,7 +3522,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   __pyx_t_2 = 2;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )) = 0;
 
-  /* "readdrSH.pyx":362
+  /* "readdrSH.pyx":364
  *     key_num[0,1] = 0
  *     key_num[0,2] = 0
  *     key_num[0,3] = 0             # <<<<<<<<<<<<<<
@@ -3537,7 +3533,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   __pyx_t_1 = 3;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )) = 0;
 
-  /* "readdrSH.pyx":364
+  /* "readdrSH.pyx":366
  *     key_num[0,3] = 0
  * 
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
@@ -3546,7 +3542,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readdrSH.pyx":365
+  /* "readdrSH.pyx":367
  * 
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
@@ -3555,7 +3551,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readdrSH.pyx":366
+  /* "readdrSH.pyx":368
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -3564,7 +3560,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readdrSH.pyx":367
+  /* "readdrSH.pyx":369
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -3573,7 +3569,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readdrSH.pyx":368
+  /* "readdrSH.pyx":370
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -3582,7 +3578,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readdrSH.pyx":369
+  /* "readdrSH.pyx":371
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3591,7 +3587,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readdrSH.pyx":370
+  /* "readdrSH.pyx":372
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  *     fseek(fp,atomnum*4,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3600,7 +3596,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (void)(fseek(__pyx_v_fp, (__pyx_v_atomnum * 4), SEEK_CUR));
 
-  /* "readdrSH.pyx":372
+  /* "readdrSH.pyx":374
  *     fseek(fp,atomnum*4,SEEK_CUR)
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -3609,7 +3605,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":373
+  /* "readdrSH.pyx":375
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -3618,7 +3614,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readdrSH.pyx":374
+  /* "readdrSH.pyx":376
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -3627,7 +3623,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readdrSH.pyx":376
+  /* "readdrSH.pyx":378
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -3636,7 +3632,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":377
+  /* "readdrSH.pyx":379
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3648,7 +3644,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readdrSH.pyx":378
+    /* "readdrSH.pyx":380
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -3657,7 +3653,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readdrSH.pyx":379
+    /* "readdrSH.pyx":381
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -3667,7 +3663,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readdrSH.pyx":380
+  /* "readdrSH.pyx":382
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));             # <<<<<<<<<<<<<<
@@ -3676,7 +3672,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":381
+  /* "readdrSH.pyx":383
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3688,7 +3684,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readdrSH.pyx":382
+    /* "readdrSH.pyx":384
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1));
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -3697,7 +3693,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readdrSH.pyx":383
+    /* "readdrSH.pyx":385
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -3707,7 +3703,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readdrSH.pyx":384
+  /* "readdrSH.pyx":386
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -3716,7 +3712,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readdrSH.pyx":386
+  /* "readdrSH.pyx":388
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3728,31 +3724,28 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readdrSH.pyx":387
+    /* "readdrSH.pyx":389
  * 
  *     for ct_AN in range(1,atomnum+1):
  *         TNO1 = atom_idx[ct_AN-1]             # <<<<<<<<<<<<<<
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  */
-    __pyx_t_6 = __Pyx_PyInt_From_int((__pyx_v_8readdrSH_atom_idx[(__pyx_v_ct_AN - 1)])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 387, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    __Pyx_XDECREF_SET(__pyx_v_TNO1, __pyx_t_6);
-    __pyx_t_6 = 0;
+    __pyx_v_TNO1 = (__pyx_v_8readdrSH_atom_idx[(__pyx_v_ct_AN - 1)]);
 
-    /* "readdrSH.pyx":388
+    /* "readdrSH.pyx":390
  *     for ct_AN in range(1,atomnum+1):
  *         TNO1 = atom_idx[ct_AN-1]
  *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = atom_idx[Gh_AN-1]
  */
-    __pyx_t_7 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
-    __pyx_t_8 = __pyx_t_7;
-    for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
-      __pyx_v_h_AN = __pyx_t_9;
+    __pyx_t_6 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
+    __pyx_t_7 = __pyx_t_6;
+    for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+      __pyx_v_h_AN = __pyx_t_8;
 
-      /* "readdrSH.pyx":389
+      /* "readdrSH.pyx":391
  *         TNO1 = atom_idx[ct_AN-1]
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -3761,29 +3754,26 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
       __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-      /* "readdrSH.pyx":390
+      /* "readdrSH.pyx":392
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = atom_idx[Gh_AN-1]             # <<<<<<<<<<<<<<
  *             if (ncn[ct_AN][h_AN]==0):
  *                 key_num[0,0] += 1
  */
-      __pyx_t_6 = __Pyx_PyInt_From_int((__pyx_v_8readdrSH_atom_idx[(__pyx_v_Gh_AN - 1)])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 390, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_XDECREF_SET(__pyx_v_TNO2, __pyx_t_6);
-      __pyx_t_6 = 0;
+      __pyx_v_TNO2 = (__pyx_v_8readdrSH_atom_idx[(__pyx_v_Gh_AN - 1)]);
 
-      /* "readdrSH.pyx":391
+      /* "readdrSH.pyx":393
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = atom_idx[Gh_AN-1]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
  *                 key_num[0,0] += 1
  *                 key_num[0,1] += TNO1*TNO2
  */
-      __pyx_t_10 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
-      if (__pyx_t_10) {
+      __pyx_t_9 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
+      if (__pyx_t_9) {
 
-        /* "readdrSH.pyx":392
+        /* "readdrSH.pyx":394
  *             TNO2 = atom_idx[Gh_AN-1]
  *             if (ncn[ct_AN][h_AN]==0):
  *                 key_num[0,0] += 1             # <<<<<<<<<<<<<<
@@ -3794,22 +3784,18 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
         __pyx_t_2 = 0;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )) += 1;
 
-        /* "readdrSH.pyx":393
+        /* "readdrSH.pyx":395
  *             if (ncn[ct_AN][h_AN]==0):
  *                 key_num[0,0] += 1
  *                 key_num[0,1] += TNO1*TNO2             # <<<<<<<<<<<<<<
  *     #        fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  */
-        __pyx_t_6 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 393, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_11 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_11 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __pyx_t_2 = 0;
         __pyx_t_1 = 1;
-        *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )) += __pyx_t_11;
+        *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )) += (__pyx_v_TNO1 * __pyx_v_TNO2);
 
-        /* "readdrSH.pyx":391
+        /* "readdrSH.pyx":393
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = atom_idx[Gh_AN-1]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -3820,7 +3806,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
     }
   }
 
-  /* "readdrSH.pyx":396
+  /* "readdrSH.pyx":398
  *     #        fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
@@ -3829,7 +3815,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readdrSH.pyx":397
+  /* "readdrSH.pyx":399
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -3841,7 +3827,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
   for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_ct_AN = __pyx_t_5;
 
-    /* "readdrSH.pyx":398
+    /* "readdrSH.pyx":400
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -3850,7 +3836,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readdrSH.pyx":399
+    /* "readdrSH.pyx":401
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -3860,7 +3846,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readdrSH.pyx":400
+  /* "readdrSH.pyx":402
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -3869,7 +3855,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   free(__pyx_v_natn);
 
-  /* "readdrSH.pyx":401
+  /* "readdrSH.pyx":403
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
@@ -3878,7 +3864,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   free(__pyx_v_ncn);
 
-  /* "readdrSH.pyx":402
+  /* "readdrSH.pyx":404
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
@@ -3887,7 +3873,7 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   free(__pyx_v_FNAN);
 
-  /* "readdrSH.pyx":404
+  /* "readdrSH.pyx":406
  *     free(FNAN)
  * 
  *     key_num[1,2] = key_num[0,0]             # <<<<<<<<<<<<<<
@@ -3896,11 +3882,11 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_t_1 = 0;
   __pyx_t_2 = 0;
-  __pyx_t_12 = 1;
-  __pyx_t_13 = 2;
-  *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_12 * __pyx_v_key_num.strides[0]) )) + __pyx_t_13)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
+  __pyx_t_10 = 1;
+  __pyx_t_11 = 2;
+  *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_10 * __pyx_v_key_num.strides[0]) )) + __pyx_t_11)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
 
-  /* "readdrSH.pyx":405
+  /* "readdrSH.pyx":407
  * 
  *     key_num[1,2] = key_num[0,0]
  *     key_num[1,3] = key_num[0,1]             # <<<<<<<<<<<<<<
@@ -3909,11 +3895,11 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
   __pyx_t_2 = 0;
   __pyx_t_1 = 1;
-  __pyx_t_13 = 1;
-  __pyx_t_12 = 3;
-  *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_13 * __pyx_v_key_num.strides[0]) )) + __pyx_t_12)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )));
+  __pyx_t_11 = 1;
+  __pyx_t_10 = 3;
+  *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_11 * __pyx_v_key_num.strides[0]) )) + __pyx_t_10)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )));
 
-  /* "readdrSH.pyx":349
+  /* "readdrSH.pyx":350
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key0(char* name, int[:,::1] key_num):             # <<<<<<<<<<<<<<
@@ -3922,17 +3908,10 @@ static void __pyx_f_8readdrSH_readscfout_key0(char *__pyx_v_name, __Pyx_memviews
  */
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_WriteUnraisable("readdrSH.readscfout_key0", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_TNO1);
-  __Pyx_XDECREF(__pyx_v_TNO2);
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":410
+/* "readdrSH.pyx":412
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void copy_key(int[:,::1] key_num_src, int[:,::1] key_num_dst):             # <<<<<<<<<<<<<<
@@ -3948,7 +3927,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   Py_ssize_t __pyx_t_4;
   __Pyx_RefNannySetupContext("copy_key", 0);
 
-  /* "readdrSH.pyx":411
+  /* "readdrSH.pyx":413
  * @cython.wraparound(False)
  * cdef void copy_key(int[:,::1] key_num_src, int[:,::1] key_num_dst):
  *     key_num_dst[0,0] = key_num_src[0,0]             # <<<<<<<<<<<<<<
@@ -3961,7 +3940,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   __pyx_t_4 = 0;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_3 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_4)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_src.data + __pyx_t_1 * __pyx_v_key_num_src.strides[0]) )) + __pyx_t_2)) )));
 
-  /* "readdrSH.pyx":412
+  /* "readdrSH.pyx":414
  * cdef void copy_key(int[:,::1] key_num_src, int[:,::1] key_num_dst):
  *     key_num_dst[0,0] = key_num_src[0,0]
  *     key_num_dst[0,1] = key_num_src[0,1]             # <<<<<<<<<<<<<<
@@ -3974,7 +3953,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   __pyx_t_3 = 1;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_4 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_3)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_src.data + __pyx_t_2 * __pyx_v_key_num_src.strides[0]) )) + __pyx_t_1)) )));
 
-  /* "readdrSH.pyx":413
+  /* "readdrSH.pyx":415
  *     key_num_dst[0,0] = key_num_src[0,0]
  *     key_num_dst[0,1] = key_num_src[0,1]
  *     key_num_dst[0,2] = 0             # <<<<<<<<<<<<<<
@@ -3985,7 +3964,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   __pyx_t_2 = 2;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_1 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_2)) )) = 0;
 
-  /* "readdrSH.pyx":414
+  /* "readdrSH.pyx":416
  *     key_num_dst[0,1] = key_num_src[0,1]
  *     key_num_dst[0,2] = 0
  *     key_num_dst[0,3] = 0             # <<<<<<<<<<<<<<
@@ -3996,7 +3975,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   __pyx_t_1 = 3;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_2 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_1)) )) = 0;
 
-  /* "readdrSH.pyx":415
+  /* "readdrSH.pyx":417
  *     key_num_dst[0,2] = 0
  *     key_num_dst[0,3] = 0
  *     key_num_dst[1,2] = key_num_dst[0,0]             # <<<<<<<<<<<<<<
@@ -4009,7 +3988,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   __pyx_t_4 = 2;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_3 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_4)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_1 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_2)) )));
 
-  /* "readdrSH.pyx":416
+  /* "readdrSH.pyx":418
  *     key_num_dst[0,3] = 0
  *     key_num_dst[1,2] = key_num_dst[0,0]
  *     key_num_dst[1,3] = key_num_dst[0,1]             # <<<<<<<<<<<<<<
@@ -4022,7 +4001,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   __pyx_t_3 = 3;
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_4 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_3)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num_dst.data + __pyx_t_2 * __pyx_v_key_num_dst.strides[0]) )) + __pyx_t_1)) )));
 
-  /* "readdrSH.pyx":410
+  /* "readdrSH.pyx":412
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void copy_key(int[:,::1] key_num_src, int[:,::1] key_num_dst):             # <<<<<<<<<<<<<<
@@ -4034,7 +4013,7 @@ static void __pyx_f_8readdrSH_copy_key(__Pyx_memviewslice __pyx_v_key_num_src, _
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":421
+/* "readdrSH.pyx":423
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
@@ -4110,77 +4089,77 @@ static PyObject *__pyx_pw_8readdrSH_1GetSparseNum(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5HamName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 1); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 1); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5OlpName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 2); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 2); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5DrName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 3); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 3); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfileham)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 4); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 4); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfileolp)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 5); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 5); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfiledr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 6); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 6); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atomnum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 7); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 7); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 8); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 8); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 9); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 9); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 10); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 10); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 11); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 11); __PYX_ERR(0, 423, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 12); __PYX_ERR(0, 421, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, 12); __PYX_ERR(0, 423, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseNum") < 0)) __PYX_ERR(0, 421, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseNum") < 0)) __PYX_ERR(0, 423, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 13) {
       goto __pyx_L5_argtuple_error;
@@ -4199,23 +4178,23 @@ static PyObject *__pyx_pw_8readdrSH_1GetSparseNum(PyObject *__pyx_self, PyObject
       values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
       values[12] = PyTuple_GET_ITEM(__pyx_args, 12);
     }
-    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 422, __pyx_L3_error)
-    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 422, __pyx_L3_error)
-    __pyx_v_H5OlpName = __Pyx_PyObject_AsWritableString(values[2]); if (unlikely((!__pyx_v_H5OlpName) && PyErr_Occurred())) __PYX_ERR(0, 422, __pyx_L3_error)
-    __pyx_v_H5DrName = __Pyx_PyObject_AsWritableString(values[3]); if (unlikely((!__pyx_v_H5DrName) && PyErr_Occurred())) __PYX_ERR(0, 422, __pyx_L3_error)
-    __pyx_v_nfileham = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_nfileham == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
-    __pyx_v_nfileolp = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nfileolp == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
-    __pyx_v_nfiledr = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_nfiledr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
-    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
-    __pyx_v_key_num_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_h.memview)) __PYX_ERR(0, 424, __pyx_L3_error)
-    __pyx_v_key_num_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_o.memview)) __PYX_ERR(0, 424, __pyx_L3_error)
-    __pyx_v_key_num_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_dr.memview)) __PYX_ERR(0, 424, __pyx_L3_error)
-    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 425, __pyx_L3_error)
-    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[12]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 425, __pyx_L3_error)
+    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 424, __pyx_L3_error)
+    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 424, __pyx_L3_error)
+    __pyx_v_H5OlpName = __Pyx_PyObject_AsWritableString(values[2]); if (unlikely((!__pyx_v_H5OlpName) && PyErr_Occurred())) __PYX_ERR(0, 424, __pyx_L3_error)
+    __pyx_v_H5DrName = __Pyx_PyObject_AsWritableString(values[3]); if (unlikely((!__pyx_v_H5DrName) && PyErr_Occurred())) __PYX_ERR(0, 424, __pyx_L3_error)
+    __pyx_v_nfileham = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_nfileham == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 425, __pyx_L3_error)
+    __pyx_v_nfileolp = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nfileolp == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 425, __pyx_L3_error)
+    __pyx_v_nfiledr = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_nfiledr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 425, __pyx_L3_error)
+    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 425, __pyx_L3_error)
+    __pyx_v_key_num_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_h.memview)) __PYX_ERR(0, 426, __pyx_L3_error)
+    __pyx_v_key_num_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_o.memview)) __PYX_ERR(0, 426, __pyx_L3_error)
+    __pyx_v_key_num_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_dr.memview)) __PYX_ERR(0, 426, __pyx_L3_error)
+    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 427, __pyx_L3_error)
+    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[12]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 427, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 421, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetSparseNum", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 423, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readdrSH.GetSparseNum", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4240,7 +4219,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("GetSparseNum", 0);
 
-  /* "readdrSH.pyx":431
+  /* "readdrSH.pyx":433
  *     global atom_idx
  * 
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))             # <<<<<<<<<<<<<<
@@ -4249,7 +4228,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
   __pyx_v_8readdrSH_atom_idx = ((int *)malloc((__pyx_v_atomnum * (sizeof(int)))));
 
-  /* "readdrSH.pyx":432
+  /* "readdrSH.pyx":434
  * 
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):             # <<<<<<<<<<<<<<
@@ -4261,7 +4240,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":433
+    /* "readdrSH.pyx":435
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]             # <<<<<<<<<<<<<<
@@ -4272,7 +4251,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
     (__pyx_v_8readdrSH_atom_idx[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_py.data) + __pyx_t_4)) )));
   }
 
-  /* "readdrSH.pyx":434
+  /* "readdrSH.pyx":436
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -4282,7 +4261,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
   __pyx_t_5 = (__pyx_v_IsH5 != 0);
   if (__pyx_t_5) {
 
-    /* "readdrSH.pyx":435
+    /* "readdrSH.pyx":437
  *         atom_idx[i] = atom_idx_py[i]
  *     if IsH5:
  *         readh5_key0(H5HamName,nfileham,key_num_h)             # <<<<<<<<<<<<<<
@@ -4291,7 +4270,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
     __pyx_f_8readdrSH_readh5_key0(__pyx_v_H5HamName, __pyx_v_nfileham, __pyx_v_key_num_h);
 
-    /* "readdrSH.pyx":436
+    /* "readdrSH.pyx":438
  *     if IsH5:
  *         readh5_key0(H5HamName,nfileham,key_num_h)
  *         readh5_key0(H5OlpName,nfileolp,key_num_o)             # <<<<<<<<<<<<<<
@@ -4300,7 +4279,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
     __pyx_f_8readdrSH_readh5_key0(__pyx_v_H5OlpName, __pyx_v_nfileolp, __pyx_v_key_num_o);
 
-    /* "readdrSH.pyx":437
+    /* "readdrSH.pyx":439
  *         readh5_key0(H5HamName,nfileham,key_num_h)
  *         readh5_key0(H5OlpName,nfileolp,key_num_o)
  *         sprintf(data_name,"%sx",H5DrName)             # <<<<<<<<<<<<<<
@@ -4309,7 +4288,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%sx"), __pyx_v_H5DrName));
 
-    /* "readdrSH.pyx":438
+    /* "readdrSH.pyx":440
  *         readh5_key0(H5OlpName,nfileolp,key_num_o)
  *         sprintf(data_name,"%sx",H5DrName)
  *         readh5_key0(data_name,nfiledr,key_num_dr)             # <<<<<<<<<<<<<<
@@ -4318,7 +4297,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
     __pyx_f_8readdrSH_readh5_key0(__pyx_v_data_name, __pyx_v_nfiledr, __pyx_v_key_num_dr);
 
-    /* "readdrSH.pyx":434
+    /* "readdrSH.pyx":436
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -4328,7 +4307,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
     goto __pyx_L5;
   }
 
-  /* "readdrSH.pyx":440
+  /* "readdrSH.pyx":442
  *         readh5_key0(data_name,nfiledr,key_num_dr)
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)             # <<<<<<<<<<<<<<
@@ -4338,7 +4317,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
   /*else*/ {
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/openmx.scfout"), __pyx_v_inDir));
 
-    /* "readdrSH.pyx":441
+    /* "readdrSH.pyx":443
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         readscfout_key0(data_name,key_num_h)             # <<<<<<<<<<<<<<
@@ -4347,7 +4326,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
     __pyx_f_8readdrSH_readscfout_key0(__pyx_v_data_name, __pyx_v_key_num_h);
 
-    /* "readdrSH.pyx":442
+    /* "readdrSH.pyx":444
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         readscfout_key0(data_name,key_num_h)
  *         copy_key(key_num_h,key_num_o)             # <<<<<<<<<<<<<<
@@ -4356,7 +4335,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
     __pyx_f_8readdrSH_copy_key(__pyx_v_key_num_h, __pyx_v_key_num_o);
 
-    /* "readdrSH.pyx":443
+    /* "readdrSH.pyx":445
  *         readscfout_key0(data_name,key_num_h)
  *         copy_key(key_num_h,key_num_o)
  *         copy_key(key_num_h,key_num_dr)             # <<<<<<<<<<<<<<
@@ -4367,7 +4346,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
   }
   __pyx_L5:;
 
-  /* "readdrSH.pyx":445
+  /* "readdrSH.pyx":447
  *         copy_key(key_num_h,key_num_dr)
  * 
  *     free(atom_idx)             # <<<<<<<<<<<<<<
@@ -4376,7 +4355,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
  */
   free(__pyx_v_8readdrSH_atom_idx);
 
-  /* "readdrSH.pyx":421
+  /* "readdrSH.pyx":423
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
@@ -4395,7 +4374,7 @@ static PyObject *__pyx_pf_8readdrSH_GetSparseNum(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":450
+/* "readdrSH.pyx":452
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void GetKeyInfo(             # <<<<<<<<<<<<<<
@@ -4408,7 +4387,6 @@ static void __pyx_f_8readdrSH_GetKeyInfo(int __pyx_v_nfile, __Pyx_memviewslice _
   int __pyx_v_i;
   int __pyx_v_j;
   int __pyx_v_k;
-  int __pyx_v_offset;
   long *__pyx_v_key_info_t;
   __Pyx_RefNannyDeclarations
   Py_ssize_t __pyx_t_1;
@@ -4419,39 +4397,32 @@ static void __pyx_f_8readdrSH_GetKeyInfo(int __pyx_v_nfile, __Pyx_memviewslice _
   int __pyx_t_6;
   int __pyx_t_7;
   int __pyx_t_8;
-  int __pyx_t_9;
-  int __pyx_t_10;
+  Py_ssize_t __pyx_t_9;
+  Py_ssize_t __pyx_t_10;
   int __pyx_t_11;
-  Py_ssize_t __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
+  int __pyx_t_12;
+  int __pyx_t_13;
+  Py_ssize_t __pyx_t_14;
+  Py_ssize_t __pyx_t_15;
   __Pyx_RefNannySetupContext("GetKeyInfo", 0);
 
-  /* "readdrSH.pyx":457
+  /* "readdrSH.pyx":459
  *     cdef long* key_info_t
  * 
  *     key_info_t = <long*>malloc(key_num[nfile,3]*2*sizeof(long))             # <<<<<<<<<<<<<<
  * 
- *     offset = 0
+ *     for h in range(key_num[nfile,2]):
  */
   __pyx_t_1 = __pyx_v_nfile;
   __pyx_t_2 = 3;
   __pyx_v_key_info_t = ((long *)malloc((((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) ))) * 2) * (sizeof(long)))));
 
-  /* "readdrSH.pyx":459
+  /* "readdrSH.pyx":461
  *     key_info_t = <long*>malloc(key_num[nfile,3]*2*sizeof(long))
  * 
- *     offset = 0             # <<<<<<<<<<<<<<
- *     for h in range(key_num[nfile,2]):
- *         for i in range(pub_key[h,2]):
- */
-  __pyx_v_offset = 0;
-
-  /* "readdrSH.pyx":460
- * 
- *     offset = 0
  *     for h in range(key_num[nfile,2]):             # <<<<<<<<<<<<<<
- *         for i in range(pub_key[h,2]):
- *             for j in range(pub_key[h,3]):
+ *         pub_key[h,5] = 0
+ *     for h in range(key_num[nfile,2]):
  */
   __pyx_t_2 = __pyx_v_nfile;
   __pyx_t_1 = 2;
@@ -4460,105 +4431,163 @@ static void __pyx_f_8readdrSH_GetKeyInfo(int __pyx_v_nfile, __Pyx_memviewslice _
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_h = __pyx_t_5;
 
-    /* "readdrSH.pyx":461
- *     offset = 0
+    /* "readdrSH.pyx":462
+ * 
+ *     for h in range(key_num[nfile,2]):
+ *         pub_key[h,5] = 0             # <<<<<<<<<<<<<<
+ *     for h in range(key_num[nfile,2]):
+ *         for i in range(h+1,key_num[nfile,2]):
+ */
+    __pyx_t_1 = __pyx_v_h;
+    __pyx_t_2 = 5;
+    *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )) = 0;
+  }
+
+  /* "readdrSH.pyx":463
+ *     for h in range(key_num[nfile,2]):
+ *         pub_key[h,5] = 0
+ *     for h in range(key_num[nfile,2]):             # <<<<<<<<<<<<<<
+ *         for i in range(h+1,key_num[nfile,2]):
+ *             pub_key[i,5] += pub_key[h,4]
+ */
+  __pyx_t_2 = __pyx_v_nfile;
+  __pyx_t_1 = 2;
+  __pyx_t_3 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )));
+  __pyx_t_4 = __pyx_t_3;
+  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+    __pyx_v_h = __pyx_t_5;
+
+    /* "readdrSH.pyx":464
+ *         pub_key[h,5] = 0
+ *     for h in range(key_num[nfile,2]):
+ *         for i in range(h+1,key_num[nfile,2]):             # <<<<<<<<<<<<<<
+ *             pub_key[i,5] += pub_key[h,4]
+ * 
+ */
+    __pyx_t_1 = __pyx_v_nfile;
+    __pyx_t_2 = 2;
+    __pyx_t_6 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
+    __pyx_t_7 = __pyx_t_6;
+    for (__pyx_t_8 = (__pyx_v_h + 1); __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
+      __pyx_v_i = __pyx_t_8;
+
+      /* "readdrSH.pyx":465
+ *     for h in range(key_num[nfile,2]):
+ *         for i in range(h+1,key_num[nfile,2]):
+ *             pub_key[i,5] += pub_key[h,4]             # <<<<<<<<<<<<<<
+ * 
+ *     for h in range(key_num[nfile,2]):
+ */
+      __pyx_t_2 = __pyx_v_h;
+      __pyx_t_1 = 4;
+      __pyx_t_9 = __pyx_v_i;
+      __pyx_t_10 = 5;
+      *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_9 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_10)) )) += (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )));
+    }
+  }
+
+  /* "readdrSH.pyx":467
+ *             pub_key[i,5] += pub_key[h,4]
+ * 
+ *     for h in range(key_num[nfile,2]):             # <<<<<<<<<<<<<<
+ *         for i in range(pub_key[h,2]):
+ *             for j in range(pub_key[h,3]):
+ */
+  __pyx_t_1 = __pyx_v_nfile;
+  __pyx_t_2 = 2;
+  __pyx_t_3 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_1 * __pyx_v_key_num.strides[0]) )) + __pyx_t_2)) )));
+  __pyx_t_4 = __pyx_t_3;
+  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+    __pyx_v_h = __pyx_t_5;
+
+    /* "readdrSH.pyx":468
+ * 
  *     for h in range(key_num[nfile,2]):
  *         for i in range(pub_key[h,2]):             # <<<<<<<<<<<<<<
  *             for j in range(pub_key[h,3]):
  *                 k = i*pub_key[h,3]+j
  */
-    __pyx_t_1 = __pyx_v_h;
-    __pyx_t_2 = 2;
-    __pyx_t_6 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )));
+    __pyx_t_2 = __pyx_v_h;
+    __pyx_t_1 = 2;
+    __pyx_t_6 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )));
     __pyx_t_7 = __pyx_t_6;
     for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_i = __pyx_t_8;
 
-      /* "readdrSH.pyx":462
+      /* "readdrSH.pyx":469
  *     for h in range(key_num[nfile,2]):
  *         for i in range(pub_key[h,2]):
  *             for j in range(pub_key[h,3]):             # <<<<<<<<<<<<<<
  *                 k = i*pub_key[h,3]+j
- *                 key_info_t[(k+offset)*2] \
+ *                 key_info_t[(k+pub_key[h,5])*2] \
  */
-      __pyx_t_2 = __pyx_v_h;
-      __pyx_t_1 = 3;
-      __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )));
-      __pyx_t_10 = __pyx_t_9;
-      for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-        __pyx_v_j = __pyx_t_11;
+      __pyx_t_1 = __pyx_v_h;
+      __pyx_t_2 = 3;
+      __pyx_t_11 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )));
+      __pyx_t_12 = __pyx_t_11;
+      for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+        __pyx_v_j = __pyx_t_13;
 
-        /* "readdrSH.pyx":463
+        /* "readdrSH.pyx":470
  *         for i in range(pub_key[h,2]):
  *             for j in range(pub_key[h,3]):
  *                 k = i*pub_key[h,3]+j             # <<<<<<<<<<<<<<
- *                 key_info_t[(k+offset)*2] \
+ *                 key_info_t[(k+pub_key[h,5])*2] \
  *                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \
- */
-        __pyx_t_1 = __pyx_v_h;
-        __pyx_t_2 = 3;
-        __pyx_v_k = ((__pyx_v_i * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )))) + __pyx_v_j);
-
-        /* "readdrSH.pyx":465
- *                 k = i*pub_key[h,3]+j
- *                 key_info_t[(k+offset)*2] \
- *                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \             # <<<<<<<<<<<<<<
- *                 + (atom_idx_sum[pub_key[h,1]]+j)
- *         offset += pub_key[h,2]*pub_key[h,3]
  */
         __pyx_t_2 = __pyx_v_h;
-        __pyx_t_1 = 0;
+        __pyx_t_1 = 3;
+        __pyx_v_k = ((__pyx_v_i * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )))) + __pyx_v_j);
 
-        /* "readdrSH.pyx":466
- *                 key_info_t[(k+offset)*2] \
- *                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \
- *                 + (atom_idx_sum[pub_key[h,1]]+j)             # <<<<<<<<<<<<<<
- *         offset += pub_key[h,2]*pub_key[h,3]
+        /* "readdrSH.pyx":472
+ *                 k = i*pub_key[h,3]+j
+ *                 key_info_t[(k+pub_key[h,5])*2] \
+ *                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \             # <<<<<<<<<<<<<<
+ *                 + (atom_idx_sum[pub_key[h,1]]+j)
  * 
  */
-        __pyx_t_12 = __pyx_v_h;
-        __pyx_t_13 = 1;
+        __pyx_t_1 = __pyx_v_h;
+        __pyx_t_2 = 0;
 
-        /* "readdrSH.pyx":464
- *             for j in range(pub_key[h,3]):
- *                 k = i*pub_key[h,3]+j
- *                 key_info_t[(k+offset)*2] \             # <<<<<<<<<<<<<<
+        /* "readdrSH.pyx":473
+ *                 key_info_t[(k+pub_key[h,5])*2] \
  *                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \
- *                 + (atom_idx_sum[pub_key[h,1]]+j)
- */
-        (__pyx_v_key_info_t[((__pyx_v_k + __pyx_v_offset) * 2)]) = ((((__pyx_v_8readdrSH_atom_idx_sum[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_2 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_1)) )))]) + __pyx_v_i) * __pyx_v_8readdrSH_norb) + ((__pyx_v_8readdrSH_atom_idx_sum[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_12 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_13)) )))]) + __pyx_v_j));
-      }
-    }
-
-    /* "readdrSH.pyx":467
- *                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \
- *                 + (atom_idx_sum[pub_key[h,1]]+j)
- *         offset += pub_key[h,2]*pub_key[h,3]             # <<<<<<<<<<<<<<
+ *                 + (atom_idx_sum[pub_key[h,1]]+j)             # <<<<<<<<<<<<<<
  * 
  *     for i in range(key_num[nfile,3]):
  */
-    __pyx_t_13 = __pyx_v_h;
-    __pyx_t_12 = 2;
-    __pyx_t_1 = __pyx_v_h;
-    __pyx_t_2 = 3;
-    __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_13 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_12)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )))));
+        __pyx_t_10 = __pyx_v_h;
+        __pyx_t_9 = 1;
+
+        /* "readdrSH.pyx":471
+ *             for j in range(pub_key[h,3]):
+ *                 k = i*pub_key[h,3]+j
+ *                 key_info_t[(k+pub_key[h,5])*2] \             # <<<<<<<<<<<<<<
+ *                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \
+ *                 + (atom_idx_sum[pub_key[h,1]]+j)
+ */
+        __pyx_t_14 = __pyx_v_h;
+        __pyx_t_15 = 5;
+        (__pyx_v_key_info_t[((__pyx_v_k + (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_14 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_15)) )))) * 2)]) = ((((__pyx_v_8readdrSH_atom_idx_sum[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_1 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_2)) )))]) + __pyx_v_i) * __pyx_v_8readdrSH_norb) + ((__pyx_v_8readdrSH_atom_idx_sum[(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_10 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_9)) )))]) + __pyx_v_j));
+      }
+    }
   }
 
-  /* "readdrSH.pyx":469
- *         offset += pub_key[h,2]*pub_key[h,3]
+  /* "readdrSH.pyx":475
+ *                 + (atom_idx_sum[pub_key[h,1]]+j)
  * 
  *     for i in range(key_num[nfile,3]):             # <<<<<<<<<<<<<<
  *         key_info_t[i*2+1] = i
  *         key_info[i,1] = i
  */
-  __pyx_t_2 = __pyx_v_nfile;
-  __pyx_t_1 = 3;
-  __pyx_t_3 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) )));
+  __pyx_t_9 = __pyx_v_nfile;
+  __pyx_t_10 = 3;
+  __pyx_t_3 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_9 * __pyx_v_key_num.strides[0]) )) + __pyx_t_10)) )));
   __pyx_t_4 = __pyx_t_3;
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "readdrSH.pyx":470
+    /* "readdrSH.pyx":476
  * 
  *     for i in range(key_num[nfile,3]):
  *         key_info_t[i*2+1] = i             # <<<<<<<<<<<<<<
@@ -4567,35 +4596,74 @@ static void __pyx_f_8readdrSH_GetKeyInfo(int __pyx_v_nfile, __Pyx_memviewslice _
  */
     (__pyx_v_key_info_t[((__pyx_v_i * 2) + 1)]) = __pyx_v_i;
 
-    /* "readdrSH.pyx":471
+    /* "readdrSH.pyx":477
  *     for i in range(key_num[nfile,3]):
  *         key_info_t[i*2+1] = i
  *         key_info[i,1] = i             # <<<<<<<<<<<<<<
  *     qsort(key_info_t,key_num[nfile,3],sizeof(long)*2,&Cmp)
  *     for i in range(key_num[nfile,3]):
  */
-    __pyx_t_1 = __pyx_v_i;
-    __pyx_t_2 = 1;
-    *((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_1 * __pyx_v_key_info.strides[0]) )) + __pyx_t_2)) )) = __pyx_v_i;
+    __pyx_t_10 = __pyx_v_i;
+    __pyx_t_9 = 1;
+    *((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_10 * __pyx_v_key_info.strides[0]) )) + __pyx_t_9)) )) = __pyx_v_i;
   }
 
-  /* "readdrSH.pyx":472
+  /* "readdrSH.pyx":478
  *         key_info_t[i*2+1] = i
  *         key_info[i,1] = i
  *     qsort(key_info_t,key_num[nfile,3],sizeof(long)*2,&Cmp)             # <<<<<<<<<<<<<<
  *     for i in range(key_num[nfile,3]):
  *         key_info[i,0] = key_info_t[i*2+1]
  */
-  __pyx_t_2 = __pyx_v_nfile;
-  __pyx_t_1 = 3;
-  qsort(__pyx_v_key_info_t, (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))), ((sizeof(long)) * 2), (&__pyx_f_8readdrSH_Cmp));
+  __pyx_t_9 = __pyx_v_nfile;
+  __pyx_t_10 = 3;
+  qsort(__pyx_v_key_info_t, (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_9 * __pyx_v_key_num.strides[0]) )) + __pyx_t_10)) ))), ((sizeof(long)) * 2), (&__pyx_f_8readdrSH_Cmp));
 
-  /* "readdrSH.pyx":473
+  /* "readdrSH.pyx":479
  *         key_info[i,1] = i
  *     qsort(key_info_t,key_num[nfile,3],sizeof(long)*2,&Cmp)
  *     for i in range(key_num[nfile,3]):             # <<<<<<<<<<<<<<
  *         key_info[i,0] = key_info_t[i*2+1]
  *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)
+ */
+  __pyx_t_10 = __pyx_v_nfile;
+  __pyx_t_9 = 3;
+  __pyx_t_3 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_10 * __pyx_v_key_num.strides[0]) )) + __pyx_t_9)) )));
+  __pyx_t_4 = __pyx_t_3;
+  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
+    __pyx_v_i = __pyx_t_5;
+
+    /* "readdrSH.pyx":480
+ *     qsort(key_info_t,key_num[nfile,3],sizeof(long)*2,&Cmp)
+ *     for i in range(key_num[nfile,3]):
+ *         key_info[i,0] = key_info_t[i*2+1]             # <<<<<<<<<<<<<<
+ *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)
+ *     for i in range(key_num[nfile,3]):
+ */
+    __pyx_t_9 = __pyx_v_i;
+    __pyx_t_10 = 0;
+    *((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_9 * __pyx_v_key_info.strides[0]) )) + __pyx_t_10)) )) = (__pyx_v_key_info_t[((__pyx_v_i * 2) + 1)]);
+  }
+
+  /* "readdrSH.pyx":481
+ *     for i in range(key_num[nfile,3]):
+ *         key_info[i,0] = key_info_t[i*2+1]
+ *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)             # <<<<<<<<<<<<<<
+ *     for i in range(key_num[nfile,3]):
+ *         key_info[i,0] = key_info_t[i*2]
+ */
+  __pyx_t_10 = 0;
+  __pyx_t_9 = 0;
+  __pyx_t_2 = __pyx_v_nfile;
+  __pyx_t_1 = 3;
+  qsort((&(*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_10 * __pyx_v_key_info.strides[0]) )) + __pyx_t_9)) )))), (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))), ((sizeof(long)) * 2), (&__pyx_f_8readdrSH_Cmp));
+
+  /* "readdrSH.pyx":482
+ *         key_info[i,0] = key_info_t[i*2+1]
+ *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)
+ *     for i in range(key_num[nfile,3]):             # <<<<<<<<<<<<<<
+ *         key_info[i,0] = key_info_t[i*2]
+ * 
  */
   __pyx_t_1 = __pyx_v_nfile;
   __pyx_t_2 = 3;
@@ -4604,58 +4672,19 @@ static void __pyx_f_8readdrSH_GetKeyInfo(int __pyx_v_nfile, __Pyx_memviewslice _
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "readdrSH.pyx":474
- *     qsort(key_info_t,key_num[nfile,3],sizeof(long)*2,&Cmp)
- *     for i in range(key_num[nfile,3]):
- *         key_info[i,0] = key_info_t[i*2+1]             # <<<<<<<<<<<<<<
- *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)
- *     for i in range(key_num[nfile,3]):
- */
-    __pyx_t_2 = __pyx_v_i;
-    __pyx_t_1 = 0;
-    *((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_2 * __pyx_v_key_info.strides[0]) )) + __pyx_t_1)) )) = (__pyx_v_key_info_t[((__pyx_v_i * 2) + 1)]);
-  }
-
-  /* "readdrSH.pyx":475
- *     for i in range(key_num[nfile,3]):
- *         key_info[i,0] = key_info_t[i*2+1]
- *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)             # <<<<<<<<<<<<<<
- *     for i in range(key_num[nfile,3]):
- *         key_info[i,0] = key_info_t[i*2]
- */
-  __pyx_t_1 = 0;
-  __pyx_t_2 = 0;
-  __pyx_t_12 = __pyx_v_nfile;
-  __pyx_t_13 = 3;
-  qsort((&(*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_1 * __pyx_v_key_info.strides[0]) )) + __pyx_t_2)) )))), (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_12 * __pyx_v_key_num.strides[0]) )) + __pyx_t_13)) ))), ((sizeof(long)) * 2), (&__pyx_f_8readdrSH_Cmp));
-
-  /* "readdrSH.pyx":476
- *         key_info[i,0] = key_info_t[i*2+1]
- *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)
- *     for i in range(key_num[nfile,3]):             # <<<<<<<<<<<<<<
- *         key_info[i,0] = key_info_t[i*2]
- * 
- */
-  __pyx_t_13 = __pyx_v_nfile;
-  __pyx_t_12 = 3;
-  __pyx_t_3 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_13 * __pyx_v_key_num.strides[0]) )) + __pyx_t_12)) )));
-  __pyx_t_4 = __pyx_t_3;
-  for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
-    __pyx_v_i = __pyx_t_5;
-
-    /* "readdrSH.pyx":477
+    /* "readdrSH.pyx":483
  *     qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)
  *     for i in range(key_num[nfile,3]):
  *         key_info[i,0] = key_info_t[i*2]             # <<<<<<<<<<<<<<
  * 
  *     free(key_info_t)
  */
-    __pyx_t_12 = __pyx_v_i;
-    __pyx_t_13 = 0;
-    *((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_12 * __pyx_v_key_info.strides[0]) )) + __pyx_t_13)) )) = (__pyx_v_key_info_t[(__pyx_v_i * 2)]);
+    __pyx_t_2 = __pyx_v_i;
+    __pyx_t_1 = 0;
+    *((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_2 * __pyx_v_key_info.strides[0]) )) + __pyx_t_1)) )) = (__pyx_v_key_info_t[(__pyx_v_i * 2)]);
   }
 
-  /* "readdrSH.pyx":479
+  /* "readdrSH.pyx":485
  *         key_info[i,0] = key_info_t[i*2]
  * 
  *     free(key_info_t)             # <<<<<<<<<<<<<<
@@ -4664,7 +4693,7 @@ static void __pyx_f_8readdrSH_GetKeyInfo(int __pyx_v_nfile, __Pyx_memviewslice _
  */
   free(__pyx_v_key_info_t);
 
-  /* "readdrSH.pyx":450
+  /* "readdrSH.pyx":452
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void GetKeyInfo(             # <<<<<<<<<<<<<<
@@ -4676,25 +4705,27 @@ static void __pyx_f_8readdrSH_GetKeyInfo(int __pyx_v_nfile, __Pyx_memviewslice _
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":484
+/* "readdrSH.pyx":490
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key1(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* pub_key
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* pub_key
  * ):
  */
 
-static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info_t *__pyx_v_info, void *__pyx_v_pub_key) {
+static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_loc_id, char *__pyx_v_name, CYTHON_UNUSED H5O_info1_t *__pyx_v_info, void *__pyx_v_pub_key) {
   int __pyx_v_idx[5];
   int __pyx_v_atomi;
   int __pyx_v_atomj;
+  int __pyx_v_TNOi;
+  int __pyx_v_TNOj;
   herr_t __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("readh5engine_key1", 0);
 
-  /* "readdrSH.pyx":493
+  /* "readdrSH.pyx":499
  *     global key_num_p
  * 
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\             # <<<<<<<<<<<<<<
@@ -4703,7 +4734,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_lo
  */
   (void)(sscanf(__pyx_v_name, ((char const *)"[%d, %d, %d, %d, %d]"), (&(__pyx_v_idx[0])), (&(__pyx_v_idx[1])), (&(__pyx_v_idx[2])), (&(__pyx_v_idx[3])), (&(__pyx_v_idx[4]))));
 
-  /* "readdrSH.pyx":495
+  /* "readdrSH.pyx":501
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -4727,71 +4758,98 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_lo
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "readdrSH.pyx":496
+    /* "readdrSH.pyx":502
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         atomi = idx[3]-1             # <<<<<<<<<<<<<<
  *         atomj = idx[4]-1
- *         (<int*>(pub_key))[key_num_p*4] = atomi
+ *         TNOi = atom_idx[atomi]
  */
     __pyx_v_atomi = ((__pyx_v_idx[3]) - 1);
 
-    /* "readdrSH.pyx":497
+    /* "readdrSH.pyx":503
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):
  *         atomi = idx[3]-1
  *         atomj = idx[4]-1             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_num_p*4] = atomi
- *         (<int*>(pub_key))[key_num_p*4+1] = atomj
+ *         TNOi = atom_idx[atomi]
+ *         TNOj = atom_idx[atomj]
  */
     __pyx_v_atomj = ((__pyx_v_idx[4]) - 1);
 
-    /* "readdrSH.pyx":498
+    /* "readdrSH.pyx":504
  *         atomi = idx[3]-1
  *         atomj = idx[4]-1
- *         (<int*>(pub_key))[key_num_p*4] = atomi             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_num_p*4+1] = atomj
- *         (<int*>(pub_key))[key_num_p*4+2] = atom_idx[atomi]
+ *         TNOi = atom_idx[atomi]             # <<<<<<<<<<<<<<
+ *         TNOj = atom_idx[atomj]
+ *         (<int*>(pub_key))[key_num_p*6] = atomi
  */
-    (((int *)__pyx_v_pub_key)[(__pyx_v_8readdrSH_key_num_p * 4)]) = __pyx_v_atomi;
+    __pyx_v_TNOi = (__pyx_v_8readdrSH_atom_idx[__pyx_v_atomi]);
 
-    /* "readdrSH.pyx":499
+    /* "readdrSH.pyx":505
  *         atomj = idx[4]-1
- *         (<int*>(pub_key))[key_num_p*4] = atomi
- *         (<int*>(pub_key))[key_num_p*4+1] = atomj             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_num_p*4+2] = atom_idx[atomi]
- *         (<int*>(pub_key))[key_num_p*4+3] = atom_idx[atomj]
+ *         TNOi = atom_idx[atomi]
+ *         TNOj = atom_idx[atomj]             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_num_p*6] = atomi
+ *         (<int*>(pub_key))[key_num_p*6+1] = atomj
  */
-    (((int *)__pyx_v_pub_key)[((__pyx_v_8readdrSH_key_num_p * 4) + 1)]) = __pyx_v_atomj;
+    __pyx_v_TNOj = (__pyx_v_8readdrSH_atom_idx[__pyx_v_atomj]);
 
-    /* "readdrSH.pyx":500
- *         (<int*>(pub_key))[key_num_p*4] = atomi
- *         (<int*>(pub_key))[key_num_p*4+1] = atomj
- *         (<int*>(pub_key))[key_num_p*4+2] = atom_idx[atomi]             # <<<<<<<<<<<<<<
- *         (<int*>(pub_key))[key_num_p*4+3] = atom_idx[atomj]
+    /* "readdrSH.pyx":506
+ *         TNOi = atom_idx[atomi]
+ *         TNOj = atom_idx[atomj]
+ *         (<int*>(pub_key))[key_num_p*6] = atomi             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_num_p*6+1] = atomj
+ *         (<int*>(pub_key))[key_num_p*6+2] = TNOi
+ */
+    (((int *)__pyx_v_pub_key)[(__pyx_v_8readdrSH_key_num_p * 6)]) = __pyx_v_atomi;
+
+    /* "readdrSH.pyx":507
+ *         TNOj = atom_idx[atomj]
+ *         (<int*>(pub_key))[key_num_p*6] = atomi
+ *         (<int*>(pub_key))[key_num_p*6+1] = atomj             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_num_p*6+2] = TNOi
+ *         (<int*>(pub_key))[key_num_p*6+3] = TNOj
+ */
+    (((int *)__pyx_v_pub_key)[((__pyx_v_8readdrSH_key_num_p * 6) + 1)]) = __pyx_v_atomj;
+
+    /* "readdrSH.pyx":508
+ *         (<int*>(pub_key))[key_num_p*6] = atomi
+ *         (<int*>(pub_key))[key_num_p*6+1] = atomj
+ *         (<int*>(pub_key))[key_num_p*6+2] = TNOi             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_num_p*6+3] = TNOj
+ *         (<int*>(pub_key))[key_num_p*6+4] = TNOi*TNOj
+ */
+    (((int *)__pyx_v_pub_key)[((__pyx_v_8readdrSH_key_num_p * 6) + 2)]) = __pyx_v_TNOi;
+
+    /* "readdrSH.pyx":509
+ *         (<int*>(pub_key))[key_num_p*6+1] = atomj
+ *         (<int*>(pub_key))[key_num_p*6+2] = TNOi
+ *         (<int*>(pub_key))[key_num_p*6+3] = TNOj             # <<<<<<<<<<<<<<
+ *         (<int*>(pub_key))[key_num_p*6+4] = TNOi*TNOj
  *         key_num_p += 1
  */
-    (((int *)__pyx_v_pub_key)[((__pyx_v_8readdrSH_key_num_p * 4) + 2)]) = (__pyx_v_8readdrSH_atom_idx[__pyx_v_atomi]);
+    (((int *)__pyx_v_pub_key)[((__pyx_v_8readdrSH_key_num_p * 6) + 3)]) = __pyx_v_TNOj;
 
-    /* "readdrSH.pyx":501
- *         (<int*>(pub_key))[key_num_p*4+1] = atomj
- *         (<int*>(pub_key))[key_num_p*4+2] = atom_idx[atomi]
- *         (<int*>(pub_key))[key_num_p*4+3] = atom_idx[atomj]             # <<<<<<<<<<<<<<
+    /* "readdrSH.pyx":510
+ *         (<int*>(pub_key))[key_num_p*6+2] = TNOi
+ *         (<int*>(pub_key))[key_num_p*6+3] = TNOj
+ *         (<int*>(pub_key))[key_num_p*6+4] = TNOi*TNOj             # <<<<<<<<<<<<<<
  *         key_num_p += 1
  *         return 0
  */
-    (((int *)__pyx_v_pub_key)[((__pyx_v_8readdrSH_key_num_p * 4) + 3)]) = (__pyx_v_8readdrSH_atom_idx[__pyx_v_atomj]);
+    (((int *)__pyx_v_pub_key)[((__pyx_v_8readdrSH_key_num_p * 6) + 4)]) = (__pyx_v_TNOi * __pyx_v_TNOj);
 
-    /* "readdrSH.pyx":502
- *         (<int*>(pub_key))[key_num_p*4+2] = atom_idx[atomi]
- *         (<int*>(pub_key))[key_num_p*4+3] = atom_idx[atomj]
+    /* "readdrSH.pyx":511
+ *         (<int*>(pub_key))[key_num_p*6+3] = TNOj
+ *         (<int*>(pub_key))[key_num_p*6+4] = TNOi*TNOj
  *         key_num_p += 1             # <<<<<<<<<<<<<<
  *         return 0
  *     else:
  */
     __pyx_v_8readdrSH_key_num_p = (__pyx_v_8readdrSH_key_num_p + 1);
 
-    /* "readdrSH.pyx":503
- *         (<int*>(pub_key))[key_num_p*4+3] = atom_idx[atomj]
+    /* "readdrSH.pyx":512
+ *         (<int*>(pub_key))[key_num_p*6+4] = TNOi*TNOj
  *         key_num_p += 1
  *         return 0             # <<<<<<<<<<<<<<
  *     else:
@@ -4800,7 +4858,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_lo
     __pyx_r = 0;
     goto __pyx_L0;
 
-    /* "readdrSH.pyx":495
+    /* "readdrSH.pyx":501
  *     sscanf(name,"[%d, %d, %d, %d, %d]",\
  *            &idx[0],&idx[1],&idx[2],&idx[3],&idx[4])
  *     if (idx[0]==0 and idx[1]==0 and idx[2]==0):             # <<<<<<<<<<<<<<
@@ -4809,7 +4867,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_lo
  */
   }
 
-  /* "readdrSH.pyx":505
+  /* "readdrSH.pyx":514
  *         return 0
  *     else:
  *         return 0             # <<<<<<<<<<<<<<
@@ -4821,11 +4879,11 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_lo
     goto __pyx_L0;
   }
 
-  /* "readdrSH.pyx":484
+  /* "readdrSH.pyx":490
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef herr_t readh5engine_key1(             # <<<<<<<<<<<<<<
- *     hid_t loc_id, char* name, H5O_info_t* info, void* pub_key
+ *     hid_t loc_id, char* name, H5O_info1_t* info, void* pub_key
  * ):
  */
 
@@ -4835,7 +4893,7 @@ static herr_t __pyx_f_8readdrSH_readh5engine_key1(CYTHON_UNUSED hid_t __pyx_v_lo
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":510
+/* "readdrSH.pyx":519
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key1(             # <<<<<<<<<<<<<<
@@ -4857,7 +4915,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("readh5_key1", 0);
 
-  /* "readdrSH.pyx":520
+  /* "readdrSH.pyx":529
  *     global key_num_p
  * 
  *     if nfile>1:             # <<<<<<<<<<<<<<
@@ -4867,7 +4925,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
   __pyx_t_1 = ((__pyx_v_nfile > 1) != 0);
   if (__pyx_t_1) {
 
-    /* "readdrSH.pyx":521
+    /* "readdrSH.pyx":530
  * 
  *     if nfile>1:
  *         for i in range(nfile):             # <<<<<<<<<<<<<<
@@ -4879,7 +4937,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "readdrSH.pyx":522
+      /* "readdrSH.pyx":531
  *     if nfile>1:
  *         for i in range(nfile):
  *             key_num_p = key_num[i,2]             # <<<<<<<<<<<<<<
@@ -4890,26 +4948,26 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
       __pyx_t_6 = 2;
       __pyx_v_8readdrSH_key_num_p = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_6)) )));
 
-      /* "readdrSH.pyx":523
+      /* "readdrSH.pyx":532
  *         for i in range(nfile):
  *             key_num_p = key_num[i,2]
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)             # <<<<<<<<<<<<<<
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *             status = H5Ovisit(
+ *             status = H5Ovisit1(
  */
       (void)(sprintf(__pyx_v_h5name, ((char const *)"%s_%d.h5"), __pyx_v_h5_name, __pyx_v_i));
 
-      /* "readdrSH.pyx":524
+      /* "readdrSH.pyx":533
  *             key_num_p = key_num[i,2]
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *             status = H5Ovisit(
+ *             status = H5Ovisit1(
  *                 f,H5_INDEX_NAME,H5_ITER_NATIVE,
  */
       __pyx_v_f = H5Fopen(__pyx_v_h5name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-      /* "readdrSH.pyx":527
- *             status = H5Ovisit(
+      /* "readdrSH.pyx":536
+ *             status = H5Ovisit1(
  *                 f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *                 readh5engine_key1,&pub_key[0,0]             # <<<<<<<<<<<<<<
  *             )
@@ -4918,16 +4976,16 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
       __pyx_t_6 = 0;
       __pyx_t_5 = 0;
 
-      /* "readdrSH.pyx":525
+      /* "readdrSH.pyx":534
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *             status = H5Ovisit(             # <<<<<<<<<<<<<<
+ *             status = H5Ovisit1(             # <<<<<<<<<<<<<<
  *                 f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *                 readh5engine_key1,&pub_key[0,0]
  */
-      __pyx_v_status = H5Ovisit(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key1, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) )))));
+      __pyx_v_status = H5Ovisit1(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key1, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) )))));
 
-      /* "readdrSH.pyx":529
+      /* "readdrSH.pyx":538
  *                 readh5engine_key1,&pub_key[0,0]
  *             )
  *             status = H5Fclose(f)             # <<<<<<<<<<<<<<
@@ -4937,7 +4995,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
       __pyx_v_status = H5Fclose(__pyx_v_f);
     }
 
-    /* "readdrSH.pyx":520
+    /* "readdrSH.pyx":529
  *     global key_num_p
  * 
  *     if nfile>1:             # <<<<<<<<<<<<<<
@@ -4947,7 +5005,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
     goto __pyx_L3;
   }
 
-  /* "readdrSH.pyx":531
+  /* "readdrSH.pyx":540
  *             status = H5Fclose(f)
  *     else:
  *         key_num_p = 0             # <<<<<<<<<<<<<<
@@ -4957,26 +5015,26 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
   /*else*/ {
     __pyx_v_8readdrSH_key_num_p = 0;
 
-    /* "readdrSH.pyx":532
+    /* "readdrSH.pyx":541
  *     else:
  *         key_num_p = 0
  *         sprintf(h5name,"%s.h5",h5_name)             # <<<<<<<<<<<<<<
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *         status = H5Ovisit(
+ *         status = H5Ovisit1(
  */
     (void)(sprintf(__pyx_v_h5name, ((char const *)"%s.h5"), __pyx_v_h5_name));
 
-    /* "readdrSH.pyx":533
+    /* "readdrSH.pyx":542
  *         key_num_p = 0
  *         sprintf(h5name,"%s.h5",h5_name)
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *         status = H5Ovisit(
+ *         status = H5Ovisit1(
  *             f,H5_INDEX_NAME,H5_ITER_NATIVE,
  */
     __pyx_v_f = H5Fopen(__pyx_v_h5name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-    /* "readdrSH.pyx":536
- *         status = H5Ovisit(
+    /* "readdrSH.pyx":545
+ *         status = H5Ovisit1(
  *             f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *             readh5engine_key1,&pub_key[0,0]             # <<<<<<<<<<<<<<
  *         )
@@ -4985,16 +5043,16 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
     __pyx_t_5 = 0;
     __pyx_t_6 = 0;
 
-    /* "readdrSH.pyx":534
+    /* "readdrSH.pyx":543
  *         sprintf(h5name,"%s.h5",h5_name)
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *         status = H5Ovisit(             # <<<<<<<<<<<<<<
+ *         status = H5Ovisit1(             # <<<<<<<<<<<<<<
  *             f,H5_INDEX_NAME,H5_ITER_NATIVE,
  *             readh5engine_key1,&pub_key[0,0]
  */
-    __pyx_v_status = H5Ovisit(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key1, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) )))));
+    __pyx_v_status = H5Ovisit1(__pyx_v_f, H5_INDEX_NAME, H5_ITER_NATIVE, __pyx_f_8readdrSH_readh5engine_key1, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) )))));
 
-    /* "readdrSH.pyx":538
+    /* "readdrSH.pyx":547
  *             readh5engine_key1,&pub_key[0,0]
  *         )
  *         status = H5Fclose(f)             # <<<<<<<<<<<<<<
@@ -5005,7 +5063,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
   }
   __pyx_L3:;
 
-  /* "readdrSH.pyx":540
+  /* "readdrSH.pyx":549
  *         status = H5Fclose(f)
  * 
  *     GetKeyInfo(nfile,key_num,pub_key,key_info)             # <<<<<<<<<<<<<<
@@ -5014,7 +5072,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
  */
   __pyx_f_8readdrSH_GetKeyInfo(__pyx_v_nfile, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info);
 
-  /* "readdrSH.pyx":510
+  /* "readdrSH.pyx":519
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5_key1(             # <<<<<<<<<<<<<<
@@ -5026,7 +5084,7 @@ static void __pyx_f_8readdrSH_readh5_key1(char *__pyx_v_h5_name, int __pyx_v_nfi
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":545
+/* "readdrSH.pyx":554
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key1(             # <<<<<<<<<<<<<<
@@ -5044,11 +5102,11 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
   int __pyx_v_atomi;
   int __pyx_v_atomj;
   int __pyx_v_atomnum;
+  int __pyx_v_TNO1;
+  int __pyx_v_TNO2;
   int *__pyx_v_FNAN;
   int **__pyx_v_natn;
   int **__pyx_v_ncn;
-  int __pyx_v_TNO1;
-  int __pyx_v_TNO2;
   __Pyx_RefNannyDeclarations
   long __pyx_t_1;
   long __pyx_t_2;
@@ -5061,7 +5119,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
   Py_ssize_t __pyx_t_9;
   __Pyx_RefNannySetupContext("readscfout_key1", 0);
 
-  /* "readdrSH.pyx":560
+  /* "readdrSH.pyx":569
  *     global key_num_p
  * 
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
@@ -5070,7 +5128,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readdrSH.pyx":561
+  /* "readdrSH.pyx":570
  * 
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
@@ -5079,7 +5137,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readdrSH.pyx":562
+  /* "readdrSH.pyx":571
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -5088,7 +5146,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readdrSH.pyx":563
+  /* "readdrSH.pyx":572
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -5097,7 +5155,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readdrSH.pyx":564
+  /* "readdrSH.pyx":573
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -5106,7 +5164,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readdrSH.pyx":565
+  /* "readdrSH.pyx":574
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -5115,7 +5173,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readdrSH.pyx":566
+  /* "readdrSH.pyx":575
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  *     fseek(fp,atomnum*4,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -5124,7 +5182,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (void)(fseek(__pyx_v_fp, (__pyx_v_atomnum * 4), SEEK_CUR));
 
-  /* "readdrSH.pyx":568
+  /* "readdrSH.pyx":577
  *     fseek(fp,atomnum*4,SEEK_CUR)
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -5133,7 +5191,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":569
+  /* "readdrSH.pyx":578
  * 
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -5142,7 +5200,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readdrSH.pyx":570
+  /* "readdrSH.pyx":579
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -5151,7 +5209,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readdrSH.pyx":572
+  /* "readdrSH.pyx":581
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -5160,7 +5218,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":573
+  /* "readdrSH.pyx":582
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -5172,7 +5230,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":574
+    /* "readdrSH.pyx":583
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -5181,7 +5239,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readdrSH.pyx":575
+    /* "readdrSH.pyx":584
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -5191,7 +5249,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readdrSH.pyx":576
+  /* "readdrSH.pyx":585
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -5200,7 +5258,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":577
+  /* "readdrSH.pyx":586
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -5212,7 +5270,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":578
+    /* "readdrSH.pyx":587
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -5221,7 +5279,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readdrSH.pyx":579
+    /* "readdrSH.pyx":588
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -5231,7 +5289,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readdrSH.pyx":580
+  /* "readdrSH.pyx":589
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -5240,7 +5298,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readdrSH.pyx":582
+  /* "readdrSH.pyx":591
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
  *     key_num_p = 0             # <<<<<<<<<<<<<<
@@ -5249,7 +5307,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_v_8readdrSH_key_num_p = 0;
 
-  /* "readdrSH.pyx":583
+  /* "readdrSH.pyx":592
  * 
  *     key_num_p = 0
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -5261,7 +5319,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":584
+    /* "readdrSH.pyx":593
  *     key_num_p = 0
  *     for ct_AN in range(1,atomnum+1):
  *         atomi = ct_AN-1             # <<<<<<<<<<<<<<
@@ -5270,7 +5328,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
     __pyx_v_atomi = (__pyx_v_ct_AN - 1);
 
-    /* "readdrSH.pyx":585
+    /* "readdrSH.pyx":594
  *     for ct_AN in range(1,atomnum+1):
  *         atomi = ct_AN-1
  *         TNO1 = atom_idx[atomi]             # <<<<<<<<<<<<<<
@@ -5279,7 +5337,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
     __pyx_v_TNO1 = (__pyx_v_8readdrSH_atom_idx[__pyx_v_atomi]);
 
-    /* "readdrSH.pyx":586
+    /* "readdrSH.pyx":595
  *         atomi = ct_AN-1
  *         TNO1 = atom_idx[atomi]
  *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
@@ -5291,7 +5349,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_h_AN = __pyx_t_6;
 
-      /* "readdrSH.pyx":587
+      /* "readdrSH.pyx":596
  *         TNO1 = atom_idx[atomi]
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -5300,7 +5358,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
       __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-      /* "readdrSH.pyx":588
+      /* "readdrSH.pyx":597
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  *             atomj = Gh_AN-1             # <<<<<<<<<<<<<<
@@ -5309,7 +5367,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
       __pyx_v_atomj = (__pyx_v_Gh_AN - 1);
 
-      /* "readdrSH.pyx":589
+      /* "readdrSH.pyx":598
  *             Gh_AN = natn[ct_AN][h_AN]
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]             # <<<<<<<<<<<<<<
@@ -5318,7 +5376,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
       __pyx_v_TNO2 = (__pyx_v_8readdrSH_atom_idx[__pyx_v_atomj]);
 
-      /* "readdrSH.pyx":590
+      /* "readdrSH.pyx":599
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -5328,7 +5386,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
       __pyx_t_7 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
       if (__pyx_t_7) {
 
-        /* "readdrSH.pyx":591
+        /* "readdrSH.pyx":600
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):
  *                 pub_key[key_num_p,0] = atomi             # <<<<<<<<<<<<<<
@@ -5339,7 +5397,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
         __pyx_t_9 = 0;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_9)) )) = __pyx_v_atomi;
 
-        /* "readdrSH.pyx":592
+        /* "readdrSH.pyx":601
  *             if (ncn[ct_AN][h_AN]==0):
  *                 pub_key[key_num_p,0] = atomi
  *                 pub_key[key_num_p,1] = atomj             # <<<<<<<<<<<<<<
@@ -5350,38 +5408,49 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
         __pyx_t_8 = 1;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_9 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )) = __pyx_v_atomj;
 
-        /* "readdrSH.pyx":593
+        /* "readdrSH.pyx":602
  *                 pub_key[key_num_p,0] = atomi
  *                 pub_key[key_num_p,1] = atomj
  *                 pub_key[key_num_p,2] = TNO1             # <<<<<<<<<<<<<<
  *                 pub_key[key_num_p,3] = TNO2
- *                 key_num_p += 1
+ *                 pub_key[key_num_p,4] = TNO1*TNO2
  */
         __pyx_t_8 = __pyx_v_8readdrSH_key_num_p;
         __pyx_t_9 = 2;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_9)) )) = __pyx_v_TNO1;
 
-        /* "readdrSH.pyx":594
+        /* "readdrSH.pyx":603
  *                 pub_key[key_num_p,1] = atomj
  *                 pub_key[key_num_p,2] = TNO1
  *                 pub_key[key_num_p,3] = TNO2             # <<<<<<<<<<<<<<
+ *                 pub_key[key_num_p,4] = TNO1*TNO2
  *                 key_num_p += 1
- *     #        fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  */
         __pyx_t_9 = __pyx_v_8readdrSH_key_num_p;
         __pyx_t_8 = 3;
         *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_9 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )) = __pyx_v_TNO2;
 
-        /* "readdrSH.pyx":595
+        /* "readdrSH.pyx":604
  *                 pub_key[key_num_p,2] = TNO1
  *                 pub_key[key_num_p,3] = TNO2
- *                 key_num_p += 1             # <<<<<<<<<<<<<<
- *     #        fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+ *                 pub_key[key_num_p,4] = TNO1*TNO2             # <<<<<<<<<<<<<<
+ *                 key_num_p += 1
  * 
+ */
+        __pyx_t_8 = __pyx_v_8readdrSH_key_num_p;
+        __pyx_t_9 = 4;
+        *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_9)) )) = (__pyx_v_TNO1 * __pyx_v_TNO2);
+
+        /* "readdrSH.pyx":605
+ *                 pub_key[key_num_p,3] = TNO2
+ *                 pub_key[key_num_p,4] = TNO1*TNO2
+ *                 key_num_p += 1             # <<<<<<<<<<<<<<
+ * 
+ *     fclose(fp)
  */
         __pyx_v_8readdrSH_key_num_p = (__pyx_v_8readdrSH_key_num_p + 1);
 
-        /* "readdrSH.pyx":590
+        /* "readdrSH.pyx":599
  *             atomj = Gh_AN-1
  *             TNO2 = atom_idx[atomj]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
@@ -5392,8 +5461,8 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
     }
   }
 
-  /* "readdrSH.pyx":598
- *     #        fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+  /* "readdrSH.pyx":607
+ *                 key_num_p += 1
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
  *     for ct_AN in range(1,atomnum+1):
@@ -5401,7 +5470,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readdrSH.pyx":599
+  /* "readdrSH.pyx":608
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -5413,7 +5482,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":600
+    /* "readdrSH.pyx":609
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -5422,7 +5491,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readdrSH.pyx":601
+    /* "readdrSH.pyx":610
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -5432,7 +5501,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readdrSH.pyx":602
+  /* "readdrSH.pyx":611
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -5441,7 +5510,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   free(__pyx_v_natn);
 
-  /* "readdrSH.pyx":603
+  /* "readdrSH.pyx":612
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
@@ -5450,7 +5519,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   free(__pyx_v_ncn);
 
-  /* "readdrSH.pyx":604
+  /* "readdrSH.pyx":613
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
@@ -5459,7 +5528,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   free(__pyx_v_FNAN);
 
-  /* "readdrSH.pyx":606
+  /* "readdrSH.pyx":615
  *     free(FNAN)
  * 
  *     GetKeyInfo(nfile,key_num,pub_key,key_info)             # <<<<<<<<<<<<<<
@@ -5468,7 +5537,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
  */
   __pyx_f_8readdrSH_GetKeyInfo(__pyx_v_nfile, __pyx_v_key_num, __pyx_v_pub_key, __pyx_v_key_info);
 
-  /* "readdrSH.pyx":545
+  /* "readdrSH.pyx":554
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout_key1(             # <<<<<<<<<<<<<<
@@ -5480,7 +5549,7 @@ static void __pyx_f_8readdrSH_readscfout_key1(char *__pyx_v_name, int __pyx_v_nf
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":611
+/* "readdrSH.pyx":620
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void copy_key1(             # <<<<<<<<<<<<<<
@@ -5498,11 +5567,11 @@ static void __pyx_f_8readdrSH_copy_key1(int __pyx_v_nfile, __Pyx_memviewslice __
   Py_ssize_t __pyx_t_6;
   __Pyx_RefNannySetupContext("copy_key1", 0);
 
-  /* "readdrSH.pyx":617
+  /* "readdrSH.pyx":626
  * ):
  *     memcpy(
  *         &pub_key_dst[0,0],&pub_key_src[0,0],             # <<<<<<<<<<<<<<
- *         key_num[nfile,2]*4*sizeof(int)
+ *         key_num[nfile,2]*6*sizeof(int)
  *     )
  */
   __pyx_t_1 = 0;
@@ -5510,26 +5579,26 @@ static void __pyx_f_8readdrSH_copy_key1(int __pyx_v_nfile, __Pyx_memviewslice __
   __pyx_t_3 = 0;
   __pyx_t_4 = 0;
 
-  /* "readdrSH.pyx":618
+  /* "readdrSH.pyx":627
  *     memcpy(
  *         &pub_key_dst[0,0],&pub_key_src[0,0],
- *         key_num[nfile,2]*4*sizeof(int)             # <<<<<<<<<<<<<<
+ *         key_num[nfile,2]*6*sizeof(int)             # <<<<<<<<<<<<<<
  *     )
  *     memcpy(
  */
   __pyx_t_5 = __pyx_v_nfile;
   __pyx_t_6 = 2;
 
-  /* "readdrSH.pyx":616
+  /* "readdrSH.pyx":625
  *     long[:,::1] key_info_src, long[:,::1] key_info_dst
  * ):
  *     memcpy(             # <<<<<<<<<<<<<<
  *         &pub_key_dst[0,0],&pub_key_src[0,0],
- *         key_num[nfile,2]*4*sizeof(int)
+ *         key_num[nfile,2]*6*sizeof(int)
  */
-  (void)(memcpy((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key_dst.data + __pyx_t_1 * __pyx_v_pub_key_dst.strides[0]) )) + __pyx_t_2)) )))), (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key_src.data + __pyx_t_3 * __pyx_v_pub_key_src.strides[0]) )) + __pyx_t_4)) )))), (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_6)) ))) * 4) * (sizeof(int)))));
+  (void)(memcpy((&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key_dst.data + __pyx_t_1 * __pyx_v_pub_key_dst.strides[0]) )) + __pyx_t_2)) )))), (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key_src.data + __pyx_t_3 * __pyx_v_pub_key_src.strides[0]) )) + __pyx_t_4)) )))), (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_6)) ))) * 6) * (sizeof(int)))));
 
-  /* "readdrSH.pyx":621
+  /* "readdrSH.pyx":630
  *     )
  *     memcpy(
  *         &key_info_dst[0,0],&key_info_src[0,0],             # <<<<<<<<<<<<<<
@@ -5541,7 +5610,7 @@ static void __pyx_f_8readdrSH_copy_key1(int __pyx_v_nfile, __Pyx_memviewslice __
   __pyx_t_4 = 0;
   __pyx_t_3 = 0;
 
-  /* "readdrSH.pyx":622
+  /* "readdrSH.pyx":631
  *     memcpy(
  *         &key_info_dst[0,0],&key_info_src[0,0],
  *         key_num[nfile,3]*2*sizeof(long)             # <<<<<<<<<<<<<<
@@ -5551,8 +5620,8 @@ static void __pyx_f_8readdrSH_copy_key1(int __pyx_v_nfile, __Pyx_memviewslice __
   __pyx_t_2 = __pyx_v_nfile;
   __pyx_t_1 = 3;
 
-  /* "readdrSH.pyx":620
- *         key_num[nfile,2]*4*sizeof(int)
+  /* "readdrSH.pyx":629
+ *         key_num[nfile,2]*6*sizeof(int)
  *     )
  *     memcpy(             # <<<<<<<<<<<<<<
  *         &key_info_dst[0,0],&key_info_src[0,0],
@@ -5560,7 +5629,7 @@ static void __pyx_f_8readdrSH_copy_key1(int __pyx_v_nfile, __Pyx_memviewslice __
  */
   (void)(memcpy((&(*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info_dst.data + __pyx_t_6 * __pyx_v_key_info_dst.strides[0]) )) + __pyx_t_5)) )))), (&(*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info_src.data + __pyx_t_4 * __pyx_v_key_info_src.strides[0]) )) + __pyx_t_3)) )))), (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_2 * __pyx_v_key_num.strides[0]) )) + __pyx_t_1)) ))) * 2) * (sizeof(long)))));
 
-  /* "readdrSH.pyx":611
+  /* "readdrSH.pyx":620
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void copy_key1(             # <<<<<<<<<<<<<<
@@ -5572,7 +5641,7 @@ static void __pyx_f_8readdrSH_copy_key1(int __pyx_v_nfile, __Pyx_memviewslice __
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":628
+/* "readdrSH.pyx":637
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
@@ -5672,125 +5741,125 @@ static PyObject *__pyx_pw_8readdrSH_3GetSparseIdx(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5HamName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 1); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 1); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5OlpName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 2); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 2); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5DrName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 3); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 3); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfileham)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 4); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 4); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfileolp)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 5); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 5); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfiledr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 6); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 6); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atomnum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 7); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 7); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norbital)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 8); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 8); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 9); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 9); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 10); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 10); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 11); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 11); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 12); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 12); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 13); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 13); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 14); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 14); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_keyinfo_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 15); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 15); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_keyinfo_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 16); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 16); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_keyinfo_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 17); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 17); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 18); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 18); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atom_idx_sum_py)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 19); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 19); __PYX_ERR(0, 637, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 20); __PYX_ERR(0, 628, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, 20); __PYX_ERR(0, 637, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseIdx") < 0)) __PYX_ERR(0, 628, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseIdx") < 0)) __PYX_ERR(0, 637, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 21) {
       goto __pyx_L5_argtuple_error;
@@ -5817,31 +5886,31 @@ static PyObject *__pyx_pw_8readdrSH_3GetSparseIdx(PyObject *__pyx_self, PyObject
       values[19] = PyTuple_GET_ITEM(__pyx_args, 19);
       values[20] = PyTuple_GET_ITEM(__pyx_args, 20);
     }
-    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 629, __pyx_L3_error)
-    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 629, __pyx_L3_error)
-    __pyx_v_H5OlpName = __Pyx_PyObject_AsWritableString(values[2]); if (unlikely((!__pyx_v_H5OlpName) && PyErr_Occurred())) __PYX_ERR(0, 629, __pyx_L3_error)
-    __pyx_v_H5DrName = __Pyx_PyObject_AsWritableString(values[3]); if (unlikely((!__pyx_v_H5DrName) && PyErr_Occurred())) __PYX_ERR(0, 629, __pyx_L3_error)
-    __pyx_v_nfileham = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_nfileham == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
-    __pyx_v_nfileolp = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nfileolp == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
-    __pyx_v_nfiledr = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_nfiledr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
-    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
-    __pyx_v_norbital = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 630, __pyx_L3_error)
-    __pyx_v_key_num_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_h.memview)) __PYX_ERR(0, 631, __pyx_L3_error)
-    __pyx_v_key_num_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_o.memview)) __PYX_ERR(0, 631, __pyx_L3_error)
-    __pyx_v_key_num_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_dr.memview)) __PYX_ERR(0, 631, __pyx_L3_error)
-    __pyx_v_pub_key_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_h.memview)) __PYX_ERR(0, 632, __pyx_L3_error)
-    __pyx_v_pub_key_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_o.memview)) __PYX_ERR(0, 632, __pyx_L3_error)
-    __pyx_v_pub_key_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_dr.memview)) __PYX_ERR(0, 632, __pyx_L3_error)
-    __pyx_v_keyinfo_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_h.memview)) __PYX_ERR(0, 633, __pyx_L3_error)
-    __pyx_v_keyinfo_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_o.memview)) __PYX_ERR(0, 633, __pyx_L3_error)
-    __pyx_v_keyinfo_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_dr.memview)) __PYX_ERR(0, 633, __pyx_L3_error)
-    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 634, __pyx_L3_error)
-    __pyx_v_atom_idx_sum_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_sum_py.memview)) __PYX_ERR(0, 634, __pyx_L3_error)
-    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[20]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 634, __pyx_L3_error)
+    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[0]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 638, __pyx_L3_error)
+    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 638, __pyx_L3_error)
+    __pyx_v_H5OlpName = __Pyx_PyObject_AsWritableString(values[2]); if (unlikely((!__pyx_v_H5OlpName) && PyErr_Occurred())) __PYX_ERR(0, 638, __pyx_L3_error)
+    __pyx_v_H5DrName = __Pyx_PyObject_AsWritableString(values[3]); if (unlikely((!__pyx_v_H5DrName) && PyErr_Occurred())) __PYX_ERR(0, 638, __pyx_L3_error)
+    __pyx_v_nfileham = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_nfileham == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 639, __pyx_L3_error)
+    __pyx_v_nfileolp = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nfileolp == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 639, __pyx_L3_error)
+    __pyx_v_nfiledr = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_nfiledr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 639, __pyx_L3_error)
+    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 639, __pyx_L3_error)
+    __pyx_v_norbital = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_norbital == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 639, __pyx_L3_error)
+    __pyx_v_key_num_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_h.memview)) __PYX_ERR(0, 640, __pyx_L3_error)
+    __pyx_v_key_num_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_o.memview)) __PYX_ERR(0, 640, __pyx_L3_error)
+    __pyx_v_key_num_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_dr.memview)) __PYX_ERR(0, 640, __pyx_L3_error)
+    __pyx_v_pub_key_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_h.memview)) __PYX_ERR(0, 641, __pyx_L3_error)
+    __pyx_v_pub_key_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_o.memview)) __PYX_ERR(0, 641, __pyx_L3_error)
+    __pyx_v_pub_key_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_dr.memview)) __PYX_ERR(0, 641, __pyx_L3_error)
+    __pyx_v_keyinfo_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_h.memview)) __PYX_ERR(0, 642, __pyx_L3_error)
+    __pyx_v_keyinfo_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_o.memview)) __PYX_ERR(0, 642, __pyx_L3_error)
+    __pyx_v_keyinfo_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_dr.memview)) __PYX_ERR(0, 642, __pyx_L3_error)
+    __pyx_v_atom_idx_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_py.memview)) __PYX_ERR(0, 643, __pyx_L3_error)
+    __pyx_v_atom_idx_sum_py = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_atom_idx_sum_py.memview)) __PYX_ERR(0, 643, __pyx_L3_error)
+    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[20]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 643, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 628, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetSparseIdx", 1, 21, 21, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 637, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readdrSH.GetSparseIdx", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5868,7 +5937,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_t_7;
   __Pyx_RefNannySetupContext("GetSparseIdx", 0);
 
-  /* "readdrSH.pyx":642
+  /* "readdrSH.pyx":651
  *     global norb
  * 
  *     norb = norbital             # <<<<<<<<<<<<<<
@@ -5877,7 +5946,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_8readdrSH_norb = __pyx_v_norbital;
 
-  /* "readdrSH.pyx":643
+  /* "readdrSH.pyx":652
  * 
  *     norb = norbital
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))             # <<<<<<<<<<<<<<
@@ -5886,7 +5955,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_8readdrSH_atom_idx = ((int *)malloc((__pyx_v_atomnum * (sizeof(int)))));
 
-  /* "readdrSH.pyx":644
+  /* "readdrSH.pyx":653
  *     norb = norbital
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):             # <<<<<<<<<<<<<<
@@ -5898,7 +5967,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":645
+    /* "readdrSH.pyx":654
  *     atom_idx = <int*>malloc(atomnum*sizeof(int))
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]             # <<<<<<<<<<<<<<
@@ -5909,7 +5978,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
     (__pyx_v_8readdrSH_atom_idx[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_py.data) + __pyx_t_4)) )));
   }
 
-  /* "readdrSH.pyx":646
+  /* "readdrSH.pyx":655
  *     for i in range(atomnum):
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_sum = <int*>malloc((atomnum+1)*sizeof(int))             # <<<<<<<<<<<<<<
@@ -5918,7 +5987,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_8readdrSH_atom_idx_sum = ((int *)malloc(((__pyx_v_atomnum + 1) * (sizeof(int)))));
 
-  /* "readdrSH.pyx":647
+  /* "readdrSH.pyx":656
  *         atom_idx[i] = atom_idx_py[i]
  *     atom_idx_sum = <int*>malloc((atomnum+1)*sizeof(int))
  *     for i in range(atomnum+1):             # <<<<<<<<<<<<<<
@@ -5930,7 +5999,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
   for (__pyx_t_1 = 0; __pyx_t_1 < __pyx_t_6; __pyx_t_1+=1) {
     __pyx_v_i = __pyx_t_1;
 
-    /* "readdrSH.pyx":648
+    /* "readdrSH.pyx":657
  *     atom_idx_sum = <int*>malloc((atomnum+1)*sizeof(int))
  *     for i in range(atomnum+1):
  *         atom_idx_sum[i] = atom_idx_sum_py[i]             # <<<<<<<<<<<<<<
@@ -5941,7 +6010,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
     (__pyx_v_8readdrSH_atom_idx_sum[__pyx_v_i]) = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_atom_idx_sum_py.data) + __pyx_t_4)) )));
   }
 
-  /* "readdrSH.pyx":650
+  /* "readdrSH.pyx":659
  *         atom_idx_sum[i] = atom_idx_sum_py[i]
  * 
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -5951,7 +6020,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
   __pyx_t_7 = (__pyx_v_IsH5 != 0);
   if (__pyx_t_7) {
 
-    /* "readdrSH.pyx":651
+    /* "readdrSH.pyx":660
  * 
  *     if IsH5:
  *         readh5_key1(H5HamName,nfileham,key_num_h,pub_key_h,keyinfo_h)             # <<<<<<<<<<<<<<
@@ -5960,7 +6029,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_f_8readdrSH_readh5_key1(__pyx_v_H5HamName, __pyx_v_nfileham, __pyx_v_key_num_h, __pyx_v_pub_key_h, __pyx_v_keyinfo_h);
 
-    /* "readdrSH.pyx":652
+    /* "readdrSH.pyx":661
  *     if IsH5:
  *         readh5_key1(H5HamName,nfileham,key_num_h,pub_key_h,keyinfo_h)
  *         readh5_key1(H5OlpName,nfileolp,key_num_o,pub_key_o,keyinfo_o)             # <<<<<<<<<<<<<<
@@ -5969,7 +6038,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_f_8readdrSH_readh5_key1(__pyx_v_H5OlpName, __pyx_v_nfileolp, __pyx_v_key_num_o, __pyx_v_pub_key_o, __pyx_v_keyinfo_o);
 
-    /* "readdrSH.pyx":653
+    /* "readdrSH.pyx":662
  *         readh5_key1(H5HamName,nfileham,key_num_h,pub_key_h,keyinfo_h)
  *         readh5_key1(H5OlpName,nfileolp,key_num_o,pub_key_o,keyinfo_o)
  *         sprintf(data_name,"%sx",H5DrName)             # <<<<<<<<<<<<<<
@@ -5978,7 +6047,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%sx"), __pyx_v_H5DrName));
 
-    /* "readdrSH.pyx":654
+    /* "readdrSH.pyx":663
  *         readh5_key1(H5OlpName,nfileolp,key_num_o,pub_key_o,keyinfo_o)
  *         sprintf(data_name,"%sx",H5DrName)
  *         readh5_key1(data_name,nfiledr,key_num_dr,pub_key_dr,keyinfo_dr)             # <<<<<<<<<<<<<<
@@ -5987,7 +6056,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_f_8readdrSH_readh5_key1(__pyx_v_data_name, __pyx_v_nfiledr, __pyx_v_key_num_dr, __pyx_v_pub_key_dr, __pyx_v_keyinfo_dr);
 
-    /* "readdrSH.pyx":650
+    /* "readdrSH.pyx":659
  *         atom_idx_sum[i] = atom_idx_sum_py[i]
  * 
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -5997,7 +6066,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
     goto __pyx_L7;
   }
 
-  /* "readdrSH.pyx":656
+  /* "readdrSH.pyx":665
  *         readh5_key1(data_name,nfiledr,key_num_dr,pub_key_dr,keyinfo_dr)
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)             # <<<<<<<<<<<<<<
@@ -6007,7 +6076,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
   /*else*/ {
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/openmx.scfout"), __pyx_v_inDir));
 
-    /* "readdrSH.pyx":657
+    /* "readdrSH.pyx":666
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         readscfout_key1(data_name,nfileham,key_num_h,pub_key_h,keyinfo_h)             # <<<<<<<<<<<<<<
@@ -6016,7 +6085,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_f_8readdrSH_readscfout_key1(__pyx_v_data_name, __pyx_v_nfileham, __pyx_v_key_num_h, __pyx_v_pub_key_h, __pyx_v_keyinfo_h);
 
-    /* "readdrSH.pyx":658
+    /* "readdrSH.pyx":667
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         readscfout_key1(data_name,nfileham,key_num_h,pub_key_h,keyinfo_h)
  *         copy_key1(1,key_num_h,pub_key_h,pub_key_o,keyinfo_h,keyinfo_o)             # <<<<<<<<<<<<<<
@@ -6025,7 +6094,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_f_8readdrSH_copy_key1(1, __pyx_v_key_num_h, __pyx_v_pub_key_h, __pyx_v_pub_key_o, __pyx_v_keyinfo_h, __pyx_v_keyinfo_o);
 
-    /* "readdrSH.pyx":659
+    /* "readdrSH.pyx":668
  *         readscfout_key1(data_name,nfileham,key_num_h,pub_key_h,keyinfo_h)
  *         copy_key1(1,key_num_h,pub_key_h,pub_key_o,keyinfo_h,keyinfo_o)
  *         copy_key1(1,key_num_h,pub_key_h,pub_key_dr,keyinfo_h,keyinfo_dr)             # <<<<<<<<<<<<<<
@@ -6036,7 +6105,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
   }
   __pyx_L7:;
 
-  /* "readdrSH.pyx":661
+  /* "readdrSH.pyx":670
  *         copy_key1(1,key_num_h,pub_key_h,pub_key_dr,keyinfo_h,keyinfo_dr)
  * 
  *     free(atom_idx)             # <<<<<<<<<<<<<<
@@ -6045,7 +6114,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
   free(__pyx_v_8readdrSH_atom_idx);
 
-  /* "readdrSH.pyx":662
+  /* "readdrSH.pyx":671
  * 
  *     free(atom_idx)
  *     free(atom_idx_sum)             # <<<<<<<<<<<<<<
@@ -6054,7 +6123,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
  */
   free(__pyx_v_8readdrSH_atom_idx_sum);
 
-  /* "readdrSH.pyx":628
+  /* "readdrSH.pyx":637
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
@@ -6080,7 +6149,7 @@ static PyObject *__pyx_pf_8readdrSH_2GetSparseIdx(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":667
+/* "readdrSH.pyx":676
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5(             # <<<<<<<<<<<<<<
@@ -6118,7 +6187,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
   int __pyx_t_14;
   __Pyx_RefNannySetupContext("readh5", 0);
 
-  /* "readdrSH.pyx":677
+  /* "readdrSH.pyx":686
  *     cdef char h5name[500]
  *     cdef char key_t[100]
  *     cdef double* data_buf = <double*>malloc(norb_m*norb_m*sizeof(double))             # <<<<<<<<<<<<<<
@@ -6127,7 +6196,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
   __pyx_v_data_buf = ((double *)malloc(((__pyx_v_norb_m * __pyx_v_norb_m) * (sizeof(double)))));
 
-  /* "readdrSH.pyx":679
+  /* "readdrSH.pyx":688
  *     cdef double* data_buf = <double*>malloc(norb_m*norb_m*sizeof(double))
  * 
  *     if nfile>1:             # <<<<<<<<<<<<<<
@@ -6137,7 +6206,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
   __pyx_t_1 = ((__pyx_v_nfile > 1) != 0);
   if (__pyx_t_1) {
 
-    /* "readdrSH.pyx":680
+    /* "readdrSH.pyx":689
  * 
  *     if nfile>1:
  *         for i in range(nfile):             # <<<<<<<<<<<<<<
@@ -6149,7 +6218,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
     for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "readdrSH.pyx":681
+      /* "readdrSH.pyx":690
  *     if nfile>1:
  *         for i in range(nfile):
  *             mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -6158,12 +6227,12 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
       (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-      /* "readdrSH.pyx":682
+      /* "readdrSH.pyx":691
  *         for i in range(nfile):
  *             mpi.MPI_Barrier(shm_comm)
  *             key_min = key_num[i,2]+(key_num[i,0]*shm_id)/shm_nprocs             # <<<<<<<<<<<<<<
  *             key_max = key_num[i,2]+(key_num[i,0]*(shm_id+1))/shm_nprocs
- *             offset = 0
+ *             sprintf(h5name,"%s_%d.h5",h5_name,i)
  */
       __pyx_t_5 = __pyx_v_i;
       __pyx_t_6 = 2;
@@ -6171,12 +6240,12 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
       __pyx_t_8 = 0;
       __pyx_v_key_min = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_6)) ))) + (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_7 * __pyx_v_key_num.strides[0]) )) + __pyx_t_8)) ))) * __pyx_v_shm_id) / __pyx_v_shm_nprocs));
 
-      /* "readdrSH.pyx":683
+      /* "readdrSH.pyx":692
  *             mpi.MPI_Barrier(shm_comm)
  *             key_min = key_num[i,2]+(key_num[i,0]*shm_id)/shm_nprocs
  *             key_max = key_num[i,2]+(key_num[i,0]*(shm_id+1))/shm_nprocs             # <<<<<<<<<<<<<<
- *             offset = 0
- *             for j in range(key_min):
+ *             sprintf(h5name,"%s_%d.h5",h5_name,i)
+ *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
  */
       __pyx_t_8 = __pyx_v_i;
       __pyx_t_7 = 2;
@@ -6184,52 +6253,17 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
       __pyx_t_5 = 0;
       __pyx_v_key_max = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_8 * __pyx_v_key_num.strides[0]) )) + __pyx_t_7)) ))) + (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_6 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) ))) * (__pyx_v_shm_id + 1)) / ((long)__pyx_v_shm_nprocs)));
 
-      /* "readdrSH.pyx":684
+      /* "readdrSH.pyx":693
  *             key_min = key_num[i,2]+(key_num[i,0]*shm_id)/shm_nprocs
  *             key_max = key_num[i,2]+(key_num[i,0]*(shm_id+1))/shm_nprocs
- *             offset = 0             # <<<<<<<<<<<<<<
- *             for j in range(key_min):
- *                 offset += pub_key[j,2]*pub_key[j,3]
- */
-      __pyx_v_offset = 0;
-
-      /* "readdrSH.pyx":685
- *             key_max = key_num[i,2]+(key_num[i,0]*(shm_id+1))/shm_nprocs
- *             offset = 0
- *             for j in range(key_min):             # <<<<<<<<<<<<<<
- *                 offset += pub_key[j,2]*pub_key[j,3]
- *             sprintf(h5name,"%s_%d.h5",h5_name,i)
- */
-      __pyx_t_9 = __pyx_v_key_min;
-      __pyx_t_10 = __pyx_t_9;
-      for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-        __pyx_v_j = __pyx_t_11;
-
-        /* "readdrSH.pyx":686
- *             offset = 0
- *             for j in range(key_min):
- *                 offset += pub_key[j,2]*pub_key[j,3]             # <<<<<<<<<<<<<<
- *             sprintf(h5name,"%s_%d.h5",h5_name,i)
- *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- */
-        __pyx_t_5 = __pyx_v_j;
-        __pyx_t_6 = 2;
-        __pyx_t_7 = __pyx_v_j;
-        __pyx_t_8 = 3;
-        __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )))));
-      }
-
-      /* "readdrSH.pyx":687
- *             for j in range(key_min):
- *                 offset += pub_key[j,2]*pub_key[j,3]
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)             # <<<<<<<<<<<<<<
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *             for j in range(key_min,key_max):
  */
       (void)(sprintf(__pyx_v_h5name, ((char const *)"%s_%d.h5"), __pyx_v_h5_name, __pyx_v_i));
 
-      /* "readdrSH.pyx":688
- *                 offset += pub_key[j,2]*pub_key[j,3]
+      /* "readdrSH.pyx":694
+ *             key_max = key_num[i,2]+(key_num[i,0]*(shm_id+1))/shm_nprocs
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
  *             for j in range(key_min,key_max):
@@ -6237,7 +6271,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
       __pyx_v_f = H5Fopen(__pyx_v_h5name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-      /* "readdrSH.pyx":689
+      /* "readdrSH.pyx":695
  *             sprintf(h5name,"%s_%d.h5",h5_name,i)
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *             for j in range(key_min,key_max):             # <<<<<<<<<<<<<<
@@ -6249,20 +6283,20 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
       for (__pyx_t_11 = __pyx_v_key_min; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
         __pyx_v_j = __pyx_t_11;
 
-        /* "readdrSH.pyx":690
+        /* "readdrSH.pyx":696
  *             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *             for j in range(key_min,key_max):
  *                 sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)             # <<<<<<<<<<<<<<
  *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)
  *                 status = H5Dread(
  */
-        __pyx_t_8 = __pyx_v_j;
-        __pyx_t_7 = 0;
-        __pyx_t_6 = __pyx_v_j;
-        __pyx_t_5 = 1;
-        (void)(sprintf(__pyx_v_key_t, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) ))) + 1)));
+        __pyx_t_5 = __pyx_v_j;
+        __pyx_t_6 = 0;
+        __pyx_t_7 = __pyx_v_j;
+        __pyx_t_8 = 1;
+        (void)(sprintf(__pyx_v_key_t, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) ))) + 1)));
 
-        /* "readdrSH.pyx":691
+        /* "readdrSH.pyx":697
  *             for j in range(key_min,key_max):
  *                 sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
  *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)             # <<<<<<<<<<<<<<
@@ -6271,7 +6305,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
         __pyx_v_data_id = H5Dopen(__pyx_v_f, __pyx_v_key_t, H5P_DEFAULT);
 
-        /* "readdrSH.pyx":692
+        /* "readdrSH.pyx":698
  *                 sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
  *                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)
  *                 status = H5Dread(             # <<<<<<<<<<<<<<
@@ -6280,28 +6314,37 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
         __pyx_v_status = H5Dread(__pyx_v_data_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, __pyx_v_data_buf);
 
-        /* "readdrSH.pyx":696
+        /* "readdrSH.pyx":702
  *                     H5S_ALL,H5P_DEFAULT,data_buf
  *                 )
- *                 for k in range(pub_key[j,2]*pub_key[j,3]):             # <<<<<<<<<<<<<<
+ *                 offset = pub_key[j,5]             # <<<<<<<<<<<<<<
+ *                 for k in range(pub_key[j,4]):
+ *                     data[key_info[k+offset,1]] = data_buf[k]*factor
+ */
+        __pyx_t_8 = __pyx_v_j;
+        __pyx_t_7 = 5;
+        __pyx_v_offset = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) )));
+
+        /* "readdrSH.pyx":703
+ *                 )
+ *                 offset = pub_key[j,5]
+ *                 for k in range(pub_key[j,4]):             # <<<<<<<<<<<<<<
  *                     data[key_info[k+offset,1]] = data_buf[k]*factor
  *                 status = H5Dclose(data_id)
  */
-        __pyx_t_5 = __pyx_v_j;
-        __pyx_t_6 = 2;
         __pyx_t_7 = __pyx_v_j;
-        __pyx_t_8 = 3;
-        __pyx_t_12 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) ))));
+        __pyx_t_8 = 4;
+        __pyx_t_12 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) )));
         __pyx_t_13 = __pyx_t_12;
         for (__pyx_t_14 = 0; __pyx_t_14 < __pyx_t_13; __pyx_t_14+=1) {
           __pyx_v_k = __pyx_t_14;
 
-          /* "readdrSH.pyx":697
- *                 )
- *                 for k in range(pub_key[j,2]*pub_key[j,3]):
+          /* "readdrSH.pyx":704
+ *                 offset = pub_key[j,5]
+ *                 for k in range(pub_key[j,4]):
  *                     data[key_info[k+offset,1]] = data_buf[k]*factor             # <<<<<<<<<<<<<<
  *                 status = H5Dclose(data_id)
- *                 offset += pub_key[j,2]*pub_key[j,3]
+ *             status = H5Fclose(f)
  */
           __pyx_t_8 = (__pyx_v_k + __pyx_v_offset);
           __pyx_t_7 = 1;
@@ -6309,32 +6352,19 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
           *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_data.data) + __pyx_t_6)) )) = ((__pyx_v_data_buf[__pyx_v_k]) * __pyx_v_factor);
         }
 
-        /* "readdrSH.pyx":698
- *                 for k in range(pub_key[j,2]*pub_key[j,3]):
+        /* "readdrSH.pyx":705
+ *                 for k in range(pub_key[j,4]):
  *                     data[key_info[k+offset,1]] = data_buf[k]*factor
  *                 status = H5Dclose(data_id)             # <<<<<<<<<<<<<<
- *                 offset += pub_key[j,2]*pub_key[j,3]
- *             status = H5Fclose(f)
- */
-        __pyx_v_status = H5Dclose(__pyx_v_data_id);
-
-        /* "readdrSH.pyx":699
- *                     data[key_info[k+offset,1]] = data_buf[k]*factor
- *                 status = H5Dclose(data_id)
- *                 offset += pub_key[j,2]*pub_key[j,3]             # <<<<<<<<<<<<<<
  *             status = H5Fclose(f)
  *     else:
  */
-        __pyx_t_7 = __pyx_v_j;
-        __pyx_t_8 = 2;
-        __pyx_t_6 = __pyx_v_j;
-        __pyx_t_5 = 3;
-        __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) )))));
+        __pyx_v_status = H5Dclose(__pyx_v_data_id);
       }
 
-      /* "readdrSH.pyx":700
+      /* "readdrSH.pyx":706
+ *                     data[key_info[k+offset,1]] = data_buf[k]*factor
  *                 status = H5Dclose(data_id)
- *                 offset += pub_key[j,2]*pub_key[j,3]
  *             status = H5Fclose(f)             # <<<<<<<<<<<<<<
  *     else:
  *         mpi.MPI_Barrier(shm_comm)
@@ -6342,7 +6372,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
       __pyx_v_status = H5Fclose(__pyx_v_f);
     }
 
-    /* "readdrSH.pyx":679
+    /* "readdrSH.pyx":688
  *     cdef double* data_buf = <double*>malloc(norb_m*norb_m*sizeof(double))
  * 
  *     if nfile>1:             # <<<<<<<<<<<<<<
@@ -6352,7 +6382,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
     goto __pyx_L3;
   }
 
-  /* "readdrSH.pyx":702
+  /* "readdrSH.pyx":708
  *             status = H5Fclose(f)
  *     else:
  *         mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
@@ -6362,84 +6392,49 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
   /*else*/ {
     (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-    /* "readdrSH.pyx":703
+    /* "readdrSH.pyx":709
  *     else:
  *         mpi.MPI_Barrier(shm_comm)
  *         key_min = (key_num[0,0]*shm_id)/shm_nprocs             # <<<<<<<<<<<<<<
  *         key_max = (key_num[0,0]*(shm_id+1))/shm_nprocs
  *         sprintf(h5name,"%s.h5",h5_name)
  */
-    __pyx_t_5 = 0;
-    __pyx_t_6 = 0;
-    __pyx_v_key_min = (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_5 * __pyx_v_key_num.strides[0]) )) + __pyx_t_6)) ))) * __pyx_v_shm_id) / __pyx_v_shm_nprocs);
+    __pyx_t_7 = 0;
+    __pyx_t_8 = 0;
+    __pyx_v_key_min = (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_7 * __pyx_v_key_num.strides[0]) )) + __pyx_t_8)) ))) * __pyx_v_shm_id) / __pyx_v_shm_nprocs);
 
-    /* "readdrSH.pyx":704
+    /* "readdrSH.pyx":710
  *         mpi.MPI_Barrier(shm_comm)
  *         key_min = (key_num[0,0]*shm_id)/shm_nprocs
  *         key_max = (key_num[0,0]*(shm_id+1))/shm_nprocs             # <<<<<<<<<<<<<<
  *         sprintf(h5name,"%s.h5",h5_name)
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
  */
-    __pyx_t_6 = 0;
-    __pyx_t_5 = 0;
-    __pyx_v_key_max = (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_6 * __pyx_v_key_num.strides[0]) )) + __pyx_t_5)) ))) * (__pyx_v_shm_id + 1)) / ((long)__pyx_v_shm_nprocs));
+    __pyx_t_8 = 0;
+    __pyx_t_7 = 0;
+    __pyx_v_key_max = (((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_key_num.data + __pyx_t_8 * __pyx_v_key_num.strides[0]) )) + __pyx_t_7)) ))) * (__pyx_v_shm_id + 1)) / ((long)__pyx_v_shm_nprocs));
 
-    /* "readdrSH.pyx":705
+    /* "readdrSH.pyx":711
  *         key_min = (key_num[0,0]*shm_id)/shm_nprocs
  *         key_max = (key_num[0,0]*(shm_id+1))/shm_nprocs
  *         sprintf(h5name,"%s.h5",h5_name)             # <<<<<<<<<<<<<<
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *         offset = 0
+ *         for j in range(key_min,key_max):
  */
     (void)(sprintf(__pyx_v_h5name, ((char const *)"%s.h5"), __pyx_v_h5_name));
 
-    /* "readdrSH.pyx":706
+    /* "readdrSH.pyx":712
  *         key_max = (key_num[0,0]*(shm_id+1))/shm_nprocs
  *         sprintf(h5name,"%s.h5",h5_name)
  *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)             # <<<<<<<<<<<<<<
- *         offset = 0
- *         for j in range(key_min):
- */
-    __pyx_v_f = H5Fopen(__pyx_v_h5name, H5F_ACC_RDONLY, H5P_DEFAULT);
-
-    /* "readdrSH.pyx":707
- *         sprintf(h5name,"%s.h5",h5_name)
- *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *         offset = 0             # <<<<<<<<<<<<<<
- *         for j in range(key_min):
- *             offset += pub_key[j,2]*pub_key[j,3]
- */
-    __pyx_v_offset = 0;
-
-    /* "readdrSH.pyx":708
- *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
- *         offset = 0
- *         for j in range(key_min):             # <<<<<<<<<<<<<<
- *             offset += pub_key[j,2]*pub_key[j,3]
- *         for j in range(key_min,key_max):
- */
-    __pyx_t_2 = __pyx_v_key_min;
-    __pyx_t_3 = __pyx_t_2;
-    for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
-      __pyx_v_j = __pyx_t_4;
-
-      /* "readdrSH.pyx":709
- *         offset = 0
- *         for j in range(key_min):
- *             offset += pub_key[j,2]*pub_key[j,3]             # <<<<<<<<<<<<<<
  *         for j in range(key_min,key_max):
  *             sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
  */
-      __pyx_t_5 = __pyx_v_j;
-      __pyx_t_6 = 2;
-      __pyx_t_8 = __pyx_v_j;
-      __pyx_t_7 = 3;
-      __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) )))));
-    }
+    __pyx_v_f = H5Fopen(__pyx_v_h5name, H5F_ACC_RDONLY, H5P_DEFAULT);
 
-    /* "readdrSH.pyx":710
- *         for j in range(key_min):
- *             offset += pub_key[j,2]*pub_key[j,3]
+    /* "readdrSH.pyx":713
+ *         sprintf(h5name,"%s.h5",h5_name)
+ *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *         for j in range(key_min,key_max):             # <<<<<<<<<<<<<<
  *             sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
  *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
@@ -6449,8 +6444,8 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
     for (__pyx_t_4 = __pyx_v_key_min; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_j = __pyx_t_4;
 
-      /* "readdrSH.pyx":711
- *             offset += pub_key[j,2]*pub_key[j,3]
+      /* "readdrSH.pyx":714
+ *         f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
  *         for j in range(key_min,key_max):
  *             sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)             # <<<<<<<<<<<<<<
  *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
@@ -6462,7 +6457,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
       __pyx_t_5 = 1;
       (void)(sprintf(__pyx_v_key_t, ((char const *)"[0, 0, 0, %d, %d]"), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_7 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_8)) ))) + 1), ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) ))) + 1)));
 
-      /* "readdrSH.pyx":712
+      /* "readdrSH.pyx":715
  *         for j in range(key_min,key_max):
  *             sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
  *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)             # <<<<<<<<<<<<<<
@@ -6471,7 +6466,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
       __pyx_v_data_id = H5Dopen(__pyx_v_f, __pyx_v_key_t, H5P_DEFAULT);
 
-      /* "readdrSH.pyx":713
+      /* "readdrSH.pyx":716
  *             sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
  *             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
  *             status = H5Dread(             # <<<<<<<<<<<<<<
@@ -6480,61 +6475,57 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
       __pyx_v_status = H5Dread(__pyx_v_data_id, H5T_NATIVE_DOUBLE, H5S_ALL, H5S_ALL, H5P_DEFAULT, __pyx_v_data_buf);
 
-      /* "readdrSH.pyx":717
+      /* "readdrSH.pyx":720
  *                 H5S_ALL,H5P_DEFAULT,data_buf
  *             )
- *             for k in range(pub_key[j,2]*pub_key[j,3]):             # <<<<<<<<<<<<<<
+ *             offset = pub_key[j,5]             # <<<<<<<<<<<<<<
+ *             for k in range(pub_key[j,4]):
+ *                 data[key_info[k+offset,1]] = data_buf[k]*factor
+ */
+      __pyx_t_5 = __pyx_v_j;
+      __pyx_t_6 = 5;
+      __pyx_v_offset = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) )));
+
+      /* "readdrSH.pyx":721
+ *             )
+ *             offset = pub_key[j,5]
+ *             for k in range(pub_key[j,4]):             # <<<<<<<<<<<<<<
  *                 data[key_info[k+offset,1]] = data_buf[k]*factor
  *             status = H5Dclose(data_id)
  */
-      __pyx_t_5 = __pyx_v_j;
-      __pyx_t_6 = 2;
-      __pyx_t_8 = __pyx_v_j;
-      __pyx_t_7 = 3;
-      __pyx_t_9 = ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_5 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_6)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))));
+      __pyx_t_6 = __pyx_v_j;
+      __pyx_t_5 = 4;
+      __pyx_t_9 = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) )));
       __pyx_t_10 = __pyx_t_9;
       for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
         __pyx_v_k = __pyx_t_11;
 
-        /* "readdrSH.pyx":718
- *             )
- *             for k in range(pub_key[j,2]*pub_key[j,3]):
+        /* "readdrSH.pyx":722
+ *             offset = pub_key[j,5]
+ *             for k in range(pub_key[j,4]):
  *                 data[key_info[k+offset,1]] = data_buf[k]*factor             # <<<<<<<<<<<<<<
  *             status = H5Dclose(data_id)
- *             offset += pub_key[j,2]*pub_key[j,3]
- */
-        __pyx_t_7 = (__pyx_v_k + __pyx_v_offset);
-        __pyx_t_8 = 1;
-        __pyx_t_6 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_7 * __pyx_v_key_info.strides[0]) )) + __pyx_t_8)) )));
-        *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_data.data) + __pyx_t_6)) )) = ((__pyx_v_data_buf[__pyx_v_k]) * __pyx_v_factor);
-      }
-
-      /* "readdrSH.pyx":719
- *             for k in range(pub_key[j,2]*pub_key[j,3]):
- *                 data[key_info[k+offset,1]] = data_buf[k]*factor
- *             status = H5Dclose(data_id)             # <<<<<<<<<<<<<<
- *             offset += pub_key[j,2]*pub_key[j,3]
  *         status = H5Fclose(f)
  */
-      __pyx_v_status = H5Dclose(__pyx_v_data_id);
+        __pyx_t_5 = (__pyx_v_k + __pyx_v_offset);
+        __pyx_t_6 = 1;
+        __pyx_t_8 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_5 * __pyx_v_key_info.strides[0]) )) + __pyx_t_6)) )));
+        *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_data.data) + __pyx_t_8)) )) = ((__pyx_v_data_buf[__pyx_v_k]) * __pyx_v_factor);
+      }
 
-      /* "readdrSH.pyx":720
+      /* "readdrSH.pyx":723
+ *             for k in range(pub_key[j,4]):
  *                 data[key_info[k+offset,1]] = data_buf[k]*factor
- *             status = H5Dclose(data_id)
- *             offset += pub_key[j,2]*pub_key[j,3]             # <<<<<<<<<<<<<<
+ *             status = H5Dclose(data_id)             # <<<<<<<<<<<<<<
  *         status = H5Fclose(f)
  * 
  */
-      __pyx_t_8 = __pyx_v_j;
-      __pyx_t_7 = 2;
-      __pyx_t_6 = __pyx_v_j;
-      __pyx_t_5 = 3;
-      __pyx_v_offset = (__pyx_v_offset + ((*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_8 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_7)) ))) * (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_pub_key.data + __pyx_t_6 * __pyx_v_pub_key.strides[0]) )) + __pyx_t_5)) )))));
+      __pyx_v_status = H5Dclose(__pyx_v_data_id);
     }
 
-    /* "readdrSH.pyx":721
+    /* "readdrSH.pyx":724
+ *                 data[key_info[k+offset,1]] = data_buf[k]*factor
  *             status = H5Dclose(data_id)
- *             offset += pub_key[j,2]*pub_key[j,3]
  *         status = H5Fclose(f)             # <<<<<<<<<<<<<<
  * 
  *     free(data_buf)
@@ -6543,7 +6534,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
   }
   __pyx_L3:;
 
-  /* "readdrSH.pyx":723
+  /* "readdrSH.pyx":726
  *         status = H5Fclose(f)
  * 
  *     free(data_buf)             # <<<<<<<<<<<<<<
@@ -6552,7 +6543,7 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
  */
   free(__pyx_v_data_buf);
 
-  /* "readdrSH.pyx":667
+  /* "readdrSH.pyx":676
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readh5(             # <<<<<<<<<<<<<<
@@ -6564,15 +6555,15 @@ static void __pyx_f_8readdrSH_readh5(MPI_Comm __pyx_v_shm_comm, int __pyx_v_shm_
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":728
+/* "readdrSH.pyx":731
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout(             # <<<<<<<<<<<<<<
  *     char* name, int norb_m, long[:,::1] key_info,
- *     double[::1] data_h, double[::1] data_o, double[:,::1] data_dr,
+ *     double[:,::1] data_h, double[::1] data_o, double[:,::1] data_dr,
  */
 
-static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m, __Pyx_memviewslice __pyx_v_key_info, __Pyx_memviewslice __pyx_v_data_h, __Pyx_memviewslice __pyx_v_data_o, __Pyx_memviewslice __pyx_v_data_dr, double __pyx_v_factor_h, double __pyx_v_factor_o, double __pyx_v_factor_dr) {
+static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m, __Pyx_memviewslice __pyx_v_key_info, __Pyx_memviewslice __pyx_v_data_h, __Pyx_memviewslice __pyx_v_data_o, __Pyx_memviewslice __pyx_v_data_dr, double __pyx_v_factor_h, double __pyx_v_factor_o, double __pyx_v_factor_dr, int __pyx_v_Ispin) {
   FILE *__pyx_v_fp;
   int __pyx_v_i_vec[6];
   int __pyx_v_TCpyCell;
@@ -6583,39 +6574,35 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
   int __pyx_v_Gh_AN;
   int __pyx_v_atomnum;
   int __pyx_v_offset;
+  int __pyx_v_TNO1;
+  int __pyx_v_TNO2;
+  int __pyx_v_spin;
   int *__pyx_v_FNAN;
   int **__pyx_v_natn;
   int **__pyx_v_ncn;
   double *__pyx_v_data_buf;
   int *__pyx_v_Total_NumOrbs;
-  PyObject *__pyx_v_TNO1 = NULL;
-  PyObject *__pyx_v_TNO2 = NULL;
   __Pyx_RefNannyDeclarations
   long __pyx_t_1;
   long __pyx_t_2;
   int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  long __pyx_t_4;
   long __pyx_t_5;
-  long __pyx_t_6;
-  int __pyx_t_7;
-  int __pyx_t_8;
-  size_t __pyx_t_9;
-  long __pyx_t_10;
-  long __pyx_t_11;
+  int __pyx_t_6;
+  long __pyx_t_7;
+  long __pyx_t_8;
+  int __pyx_t_9;
+  int __pyx_t_10;
+  int __pyx_t_11;
   int __pyx_t_12;
-  Py_ssize_t __pyx_t_13;
+  int __pyx_t_13;
   Py_ssize_t __pyx_t_14;
   Py_ssize_t __pyx_t_15;
-  PyObject *__pyx_t_16 = NULL;
-  PyObject *__pyx_t_17 = NULL;
-  int __pyx_t_18;
-  Py_ssize_t __pyx_t_19;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
+  Py_ssize_t __pyx_t_16;
+  Py_ssize_t __pyx_t_17;
   __Pyx_RefNannySetupContext("readscfout", 0);
 
-  /* "readdrSH.pyx":743
+  /* "readdrSH.pyx":746
  *     cdef int** ncn
  * 
  *     cdef double* data_buf = <double*>malloc(norb_m*norb_m*sizeof(double))             # <<<<<<<<<<<<<<
@@ -6624,7 +6611,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_data_buf = ((double *)malloc(((__pyx_v_norb_m * __pyx_v_norb_m) * (sizeof(double)))));
 
-  /* "readdrSH.pyx":745
+  /* "readdrSH.pyx":748
  *     cdef double* data_buf = <double*>malloc(norb_m*norb_m*sizeof(double))
  * 
  *     fp = fopen(name,'rb')             # <<<<<<<<<<<<<<
@@ -6633,7 +6620,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_fp = fopen(__pyx_v_name, ((char const *)"rb"));
 
-  /* "readdrSH.pyx":746
+  /* "readdrSH.pyx":749
  * 
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)             # <<<<<<<<<<<<<<
@@ -6642,7 +6629,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (void)(fseek(__pyx_v_fp, 0, SEEK_SET));
 
-  /* "readdrSH.pyx":747
+  /* "readdrSH.pyx":750
  *     fp = fopen(name,'rb')
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)             # <<<<<<<<<<<<<<
@@ -6651,7 +6638,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (void)(fread(__pyx_v_i_vec, (sizeof(int)), 6, __pyx_v_fp));
 
-  /* "readdrSH.pyx":748
+  /* "readdrSH.pyx":751
  *     fseek(fp,0,SEEK_SET)
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]             # <<<<<<<<<<<<<<
@@ -6660,7 +6647,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_atomnum = (__pyx_v_i_vec[0]);
 
-  /* "readdrSH.pyx":749
+  /* "readdrSH.pyx":752
  *     fread(i_vec,sizeof(int),6,fp)
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]             # <<<<<<<<<<<<<<
@@ -6669,7 +6656,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_TCpyCell = (__pyx_v_i_vec[5]);
 
-  /* "readdrSH.pyx":750
+  /* "readdrSH.pyx":753
  *     atomnum = i_vec[0]
  *     TCpyCell = i_vec[5]
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -6678,7 +6665,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (void)(fseek(__pyx_v_fp, (4 + (((__pyx_v_TCpyCell + 1) * 4) * 12)), SEEK_CUR));
 
-  /* "readdrSH.pyx":752
+  /* "readdrSH.pyx":755
  *     fseek(fp,4+(TCpyCell+1)*4*(8+4),SEEK_CUR)
  * 
  *     Total_NumOrbs = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -6687,7 +6674,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_Total_NumOrbs = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":753
+  /* "readdrSH.pyx":756
  * 
  *     Total_NumOrbs = <int*>malloc(sizeof(int)*(atomnum+1))
  *     Total_NumOrbs[0] = 1             # <<<<<<<<<<<<<<
@@ -6696,7 +6683,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (__pyx_v_Total_NumOrbs[0]) = 1;
 
-  /* "readdrSH.pyx":754
+  /* "readdrSH.pyx":757
  *     Total_NumOrbs = <int*>malloc(sizeof(int)*(atomnum+1))
  *     Total_NumOrbs[0] = 1
  *     fread(&(Total_NumOrbs[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -6705,7 +6692,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (void)(fread((&(__pyx_v_Total_NumOrbs[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readdrSH.pyx":755
+  /* "readdrSH.pyx":758
  *     Total_NumOrbs[0] = 1
  *     fread(&(Total_NumOrbs[1]),sizeof(int),atomnum,fp)
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -6714,7 +6701,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_FNAN = ((int *)malloc(((sizeof(int)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":756
+  /* "readdrSH.pyx":759
  *     fread(&(Total_NumOrbs[1]),sizeof(int),atomnum,fp)
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0             # <<<<<<<<<<<<<<
@@ -6723,7 +6710,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (__pyx_v_FNAN[0]) = 0;
 
-  /* "readdrSH.pyx":757
+  /* "readdrSH.pyx":760
  *     FNAN = <int*>malloc(sizeof(int)*(atomnum+1))
  *     FNAN[0] = 0
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)             # <<<<<<<<<<<<<<
@@ -6732,7 +6719,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (void)(fread((&(__pyx_v_FNAN[1])), (sizeof(int)), __pyx_v_atomnum, __pyx_v_fp));
 
-  /* "readdrSH.pyx":759
+  /* "readdrSH.pyx":762
  *     fread(&(FNAN[1]),sizeof(int),atomnum,fp)
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -6741,7 +6728,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_natn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":760
+  /* "readdrSH.pyx":763
  * 
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -6753,7 +6740,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":761
+    /* "readdrSH.pyx":764
  *     natn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -6762,7 +6749,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
     (__pyx_v_natn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readdrSH.pyx":762
+    /* "readdrSH.pyx":765
  *     for ct_AN in range(1,atomnum+1):
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -6772,7 +6759,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
     (void)(fread((__pyx_v_natn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readdrSH.pyx":763
+  /* "readdrSH.pyx":766
  *         natn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))             # <<<<<<<<<<<<<<
@@ -6781,7 +6768,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_ncn = ((int **)malloc(((sizeof(int *)) * (__pyx_v_atomnum + 1))));
 
-  /* "readdrSH.pyx":764
+  /* "readdrSH.pyx":767
  *         fread(natn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -6793,7 +6780,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":765
+    /* "readdrSH.pyx":768
  *     ncn = <int**>malloc(sizeof(int*)*(atomnum+1))
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))             # <<<<<<<<<<<<<<
@@ -6802,7 +6789,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
     (__pyx_v_ncn[__pyx_v_ct_AN]) = ((int *)malloc(((sizeof(int)) * ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1))));
 
-    /* "readdrSH.pyx":766
+    /* "readdrSH.pyx":769
  *     for ct_AN in range(1,atomnum+1):
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)             # <<<<<<<<<<<<<<
@@ -6812,184 +6799,168 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
     (void)(fread((__pyx_v_ncn[__pyx_v_ct_AN]), (sizeof(int)), ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1), __pyx_v_fp));
   }
 
-  /* "readdrSH.pyx":767
+  /* "readdrSH.pyx":770
  *         ncn[ct_AN] = <int*>malloc(sizeof(int)*(FNAN[ct_AN]+1))
  *         fread(ncn[ct_AN],sizeof(int),FNAN[ct_AN]+1,fp)
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
- *     offset = 0
+ *     for spin in range(Ispin+1):
  */
   (void)(fseek(__pyx_v_fp, (((6 + __pyx_v_atomnum) * 4) * 8), SEEK_CUR));
 
-  /* "readdrSH.pyx":769
+  /* "readdrSH.pyx":772
  *     fseek(fp,(3+3+atomnum)*4*8,SEEK_CUR)
  * 
- *     offset = 0             # <<<<<<<<<<<<<<
- *     for ct_AN in range(1,atomnum+1):
- *         TNO1 = Total_NumOrbs[ct_AN]
+ *     for spin in range(Ispin+1):             # <<<<<<<<<<<<<<
+ *         offset = 0
+ *         for ct_AN in range(1,atomnum+1):
  */
-  __pyx_v_offset = 0;
-
-  /* "readdrSH.pyx":770
- * 
- *     offset = 0
- *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
- *         TNO1 = Total_NumOrbs[ct_AN]
- *         for h_AN in range(FNAN[ct_AN]+1):
- */
-  __pyx_t_1 = (__pyx_v_atomnum + 1);
+  __pyx_t_1 = (__pyx_v_Ispin + 1);
   __pyx_t_2 = __pyx_t_1;
-  for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
-    __pyx_v_ct_AN = __pyx_t_3;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_spin = __pyx_t_3;
 
-    /* "readdrSH.pyx":771
- *     offset = 0
- *     for ct_AN in range(1,atomnum+1):
- *         TNO1 = Total_NumOrbs[ct_AN]             # <<<<<<<<<<<<<<
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]
+    /* "readdrSH.pyx":773
+ * 
+ *     for spin in range(Ispin+1):
+ *         offset = 0             # <<<<<<<<<<<<<<
+ *         for ct_AN in range(1,atomnum+1):
+ *             TNO1 = Total_NumOrbs[ct_AN]
  */
-    __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_ct_AN])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 771, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_XDECREF_SET(__pyx_v_TNO1, __pyx_t_4);
-    __pyx_t_4 = 0;
+    __pyx_v_offset = 0;
 
-    /* "readdrSH.pyx":772
- *     for ct_AN in range(1,atomnum+1):
- *         TNO1 = Total_NumOrbs[ct_AN]
- *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = Total_NumOrbs[Gh_AN]
+    /* "readdrSH.pyx":774
+ *     for spin in range(Ispin+1):
+ *         offset = 0
+ *         for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
+ *             TNO1 = Total_NumOrbs[ct_AN]
+ *             for h_AN in range(FNAN[ct_AN]+1):
  */
-    __pyx_t_5 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_h_AN = __pyx_t_7;
-
-      /* "readdrSH.pyx":773
- *         TNO1 = Total_NumOrbs[ct_AN]
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
- *             TNO2 = Total_NumOrbs[Gh_AN]
- *             if (ncn[ct_AN][h_AN]==0):
- */
-      __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
-
-      /* "readdrSH.pyx":774
- *         for h_AN in range(FNAN[ct_AN]+1):
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = Total_NumOrbs[Gh_AN]             # <<<<<<<<<<<<<<
- *             if (ncn[ct_AN][h_AN]==0):
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- */
-      __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 774, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_XDECREF_SET(__pyx_v_TNO2, __pyx_t_4);
-      __pyx_t_4 = 0;
+    __pyx_t_4 = (__pyx_v_atomnum + 1);
+    __pyx_t_5 = __pyx_t_4;
+    for (__pyx_t_6 = 1; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+      __pyx_v_ct_AN = __pyx_t_6;
 
       /* "readdrSH.pyx":775
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = Total_NumOrbs[Gh_AN]
- *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                 for i in range(TNO1*TNO2):
+ *         offset = 0
+ *         for ct_AN in range(1,atomnum+1):
+ *             TNO1 = Total_NumOrbs[ct_AN]             # <<<<<<<<<<<<<<
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]
  */
-      __pyx_t_8 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
-      if (__pyx_t_8) {
+      __pyx_v_TNO1 = (__pyx_v_Total_NumOrbs[__pyx_v_ct_AN]);
 
-        /* "readdrSH.pyx":776
- *             TNO2 = Total_NumOrbs[Gh_AN]
- *             if (ncn[ct_AN][h_AN]==0):
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
- *                 for i in range(TNO1*TNO2):
- *                     data_h[key_info[i+offset,1]] \
+      /* "readdrSH.pyx":776
+ *         for ct_AN in range(1,atomnum+1):
+ *             TNO1 = Total_NumOrbs[ct_AN]
+ *             for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = Total_NumOrbs[Gh_AN]
  */
-        __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 776, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_9 = __Pyx_PyInt_As_size_t(__pyx_t_4); if (unlikely((__pyx_t_9 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 776, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        (void)(fread(__pyx_v_data_buf, (sizeof(double)), __pyx_t_9, __pyx_v_fp));
+      __pyx_t_7 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
+      __pyx_t_8 = __pyx_t_7;
+      for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
+        __pyx_v_h_AN = __pyx_t_9;
 
         /* "readdrSH.pyx":777
- *             if (ncn[ct_AN][h_AN]==0):
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                 for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
- *                     data_h[key_info[i+offset,1]] \
- *                     = data_buf[i]*factor_h
+ *             TNO1 = Total_NumOrbs[ct_AN]
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
+ *                 TNO2 = Total_NumOrbs[Gh_AN]
+ *                 if (ncn[ct_AN][h_AN]==0):
  */
-        __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 777, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 777, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_11 = __pyx_t_10;
-        for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
-          __pyx_v_i = __pyx_t_12;
+        __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-          /* "readdrSH.pyx":778
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                 for i in range(TNO1*TNO2):
- *                     data_h[key_info[i+offset,1]] \             # <<<<<<<<<<<<<<
- *                     = data_buf[i]*factor_h
- *                 offset += TNO1*TNO2
+        /* "readdrSH.pyx":778
+ *             for h_AN in range(FNAN[ct_AN]+1):
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = Total_NumOrbs[Gh_AN]             # <<<<<<<<<<<<<<
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  */
-          __pyx_t_13 = (__pyx_v_i + __pyx_v_offset);
-          __pyx_t_14 = 1;
-          __pyx_t_15 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_13 * __pyx_v_key_info.strides[0]) )) + __pyx_t_14)) )));
-          *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_data_h.data) + __pyx_t_15)) )) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_factor_h);
+        __pyx_v_TNO2 = (__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN]);
+
+        /* "readdrSH.pyx":779
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = Total_NumOrbs[Gh_AN]
+ *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                     for i in range(TNO1*TNO2):
+ */
+        __pyx_t_10 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
+        if (__pyx_t_10) {
+
+          /* "readdrSH.pyx":780
+ *                 TNO2 = Total_NumOrbs[Gh_AN]
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
+ *                     for i in range(TNO1*TNO2):
+ *                         data_h[spin,key_info[i+offset,1]] \
+ */
+          (void)(fread(__pyx_v_data_buf, (sizeof(double)), (__pyx_v_TNO1 * __pyx_v_TNO2), __pyx_v_fp));
+
+          /* "readdrSH.pyx":781
+ *                 if (ncn[ct_AN][h_AN]==0):
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                     for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
+ *                         data_h[spin,key_info[i+offset,1]] \
+ *                         = data_buf[i]*factor_h
+ */
+          __pyx_t_11 = (__pyx_v_TNO1 * __pyx_v_TNO2);
+          __pyx_t_12 = __pyx_t_11;
+          for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+            __pyx_v_i = __pyx_t_13;
+
+            /* "readdrSH.pyx":782
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                     for i in range(TNO1*TNO2):
+ *                         data_h[spin,key_info[i+offset,1]] \             # <<<<<<<<<<<<<<
+ *                         = data_buf[i]*factor_h
+ *                     offset += TNO1*TNO2
+ */
+            __pyx_t_14 = (__pyx_v_i + __pyx_v_offset);
+            __pyx_t_15 = 1;
+            __pyx_t_16 = __pyx_v_spin;
+            __pyx_t_17 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_14 * __pyx_v_key_info.strides[0]) )) + __pyx_t_15)) )));
+            *((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_data_h.data + __pyx_t_16 * __pyx_v_data_h.strides[0]) )) + __pyx_t_17)) )) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_factor_h);
+          }
+
+          /* "readdrSH.pyx":784
+ *                         data_h[spin,key_info[i+offset,1]] \
+ *                         = data_buf[i]*factor_h
+ *                     offset += TNO1*TNO2             # <<<<<<<<<<<<<<
+ *                 else:
+ *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+ */
+          __pyx_v_offset = (__pyx_v_offset + (__pyx_v_TNO1 * __pyx_v_TNO2));
+
+          /* "readdrSH.pyx":779
+ *                 Gh_AN = natn[ct_AN][h_AN]
+ *                 TNO2 = Total_NumOrbs[Gh_AN]
+ *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
+ *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
+ *                     for i in range(TNO1*TNO2):
+ */
+          goto __pyx_L13;
         }
 
-        /* "readdrSH.pyx":780
- *                     data_h[key_info[i+offset,1]] \
- *                     = data_buf[i]*factor_h
- *                 offset += TNO1*TNO2             # <<<<<<<<<<<<<<
- *             else:
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
- */
-        __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_offset); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 780, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_16 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 780, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_17 = PyNumber_InPlaceAdd(__pyx_t_4, __pyx_t_16); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 780, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_t_17); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 780, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-        __pyx_v_offset = __pyx_t_12;
-
-        /* "readdrSH.pyx":775
- *             Gh_AN = natn[ct_AN][h_AN]
- *             TNO2 = Total_NumOrbs[Gh_AN]
- *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
- *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
- *                 for i in range(TNO1*TNO2):
- */
-        goto __pyx_L11;
-      }
-
-      /* "readdrSH.pyx":782
- *                 offset += TNO1*TNO2
- *             else:
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
+        /* "readdrSH.pyx":786
+ *                     offset += TNO1*TNO2
+ *                 else:
+ *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
  *     offset = 0
  */
-      /*else*/ {
-        __pyx_t_17 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 782, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __pyx_t_16 = PyNumber_Multiply(__pyx_t_17, __pyx_int_8); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 782, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-        __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_t_16); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 782, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        (void)(fseek(__pyx_v_fp, __pyx_t_10, SEEK_CUR));
+        /*else*/ {
+          (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
+        }
+        __pyx_L13:;
       }
-      __pyx_L11:;
     }
   }
 
-  /* "readdrSH.pyx":784
- *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
+  /* "readdrSH.pyx":788
+ *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     offset = 0             # <<<<<<<<<<<<<<
  *     for ct_AN in range(1,atomnum+1):
@@ -6997,7 +6968,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   __pyx_v_offset = 0;
 
-  /* "readdrSH.pyx":785
+  /* "readdrSH.pyx":789
  * 
  *     offset = 0
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7009,31 +6980,28 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":786
+    /* "readdrSH.pyx":790
  *     offset = 0
  *     for ct_AN in range(1,atomnum+1):
  *         TNO1 = Total_NumOrbs[ct_AN]             # <<<<<<<<<<<<<<
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  */
-    __pyx_t_16 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_ct_AN])); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 786, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_16);
-    __Pyx_XDECREF_SET(__pyx_v_TNO1, __pyx_t_16);
-    __pyx_t_16 = 0;
+    __pyx_v_TNO1 = (__pyx_v_Total_NumOrbs[__pyx_v_ct_AN]);
 
-    /* "readdrSH.pyx":787
+    /* "readdrSH.pyx":791
  *     for ct_AN in range(1,atomnum+1):
  *         TNO1 = Total_NumOrbs[ct_AN]
  *         for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = Total_NumOrbs[Gh_AN]
  */
-    __pyx_t_5 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_h_AN = __pyx_t_7;
+    __pyx_t_4 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
+    __pyx_t_5 = __pyx_t_4;
+    for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+      __pyx_v_h_AN = __pyx_t_6;
 
-      /* "readdrSH.pyx":788
+      /* "readdrSH.pyx":792
  *         TNO1 = Total_NumOrbs[ct_AN]
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -7042,99 +7010,79 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
       __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-      /* "readdrSH.pyx":789
+      /* "readdrSH.pyx":793
  *         for h_AN in range(FNAN[ct_AN]+1):
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = Total_NumOrbs[Gh_AN]             # <<<<<<<<<<<<<<
  *             if (ncn[ct_AN][h_AN]==0):
  *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  */
-      __pyx_t_16 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN])); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 789, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_16);
-      __Pyx_XDECREF_SET(__pyx_v_TNO2, __pyx_t_16);
-      __pyx_t_16 = 0;
+      __pyx_v_TNO2 = (__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN]);
 
-      /* "readdrSH.pyx":790
+      /* "readdrSH.pyx":794
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = Total_NumOrbs[Gh_AN]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
  *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                 for i in range(TNO1*TNO2):
  */
-      __pyx_t_8 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
-      if (__pyx_t_8) {
+      __pyx_t_10 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
+      if (__pyx_t_10) {
 
-        /* "readdrSH.pyx":791
+        /* "readdrSH.pyx":795
  *             TNO2 = Total_NumOrbs[Gh_AN]
  *             if (ncn[ct_AN][h_AN]==0):
  *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
  *                 for i in range(TNO1*TNO2):
  *                     data_o[key_info[i+offset,1]] \
  */
-        __pyx_t_16 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 791, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_9 = __Pyx_PyInt_As_size_t(__pyx_t_16); if (unlikely((__pyx_t_9 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 791, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        (void)(fread(__pyx_v_data_buf, (sizeof(double)), __pyx_t_9, __pyx_v_fp));
+        (void)(fread(__pyx_v_data_buf, (sizeof(double)), (__pyx_v_TNO1 * __pyx_v_TNO2), __pyx_v_fp));
 
-        /* "readdrSH.pyx":792
+        /* "readdrSH.pyx":796
  *             if (ncn[ct_AN][h_AN]==0):
  *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                 for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
  *                     data_o[key_info[i+offset,1]] \
  *                     = data_buf[i]*factor_o
  */
-        __pyx_t_16 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 792, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_t_16); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 792, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __pyx_t_11 = __pyx_t_10;
+        __pyx_t_9 = (__pyx_v_TNO1 * __pyx_v_TNO2);
+        __pyx_t_11 = __pyx_t_9;
         for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_11; __pyx_t_12+=1) {
           __pyx_v_i = __pyx_t_12;
 
-          /* "readdrSH.pyx":793
+          /* "readdrSH.pyx":797
  *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                 for i in range(TNO1*TNO2):
  *                     data_o[key_info[i+offset,1]] \             # <<<<<<<<<<<<<<
  *                     = data_buf[i]*factor_o
  *                 offset += TNO1*TNO2
  */
-          __pyx_t_14 = (__pyx_v_i + __pyx_v_offset);
-          __pyx_t_13 = 1;
-          __pyx_t_15 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_14 * __pyx_v_key_info.strides[0]) )) + __pyx_t_13)) )));
-          *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_data_o.data) + __pyx_t_15)) )) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_factor_o);
+          __pyx_t_15 = (__pyx_v_i + __pyx_v_offset);
+          __pyx_t_14 = 1;
+          __pyx_t_17 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_15 * __pyx_v_key_info.strides[0]) )) + __pyx_t_14)) )));
+          *((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_data_o.data) + __pyx_t_17)) )) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_factor_o);
         }
 
-        /* "readdrSH.pyx":795
+        /* "readdrSH.pyx":799
  *                     data_o[key_info[i+offset,1]] \
  *                     = data_buf[i]*factor_o
  *                 offset += TNO1*TNO2             # <<<<<<<<<<<<<<
  *             else:
  *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  */
-        __pyx_t_16 = __Pyx_PyInt_From_int(__pyx_v_offset); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 795, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_16);
-        __pyx_t_17 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 795, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __pyx_t_4 = PyNumber_InPlaceAdd(__pyx_t_16, __pyx_t_17); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 795, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-        __pyx_t_12 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_12 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 795, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_v_offset = __pyx_t_12;
+        __pyx_v_offset = (__pyx_v_offset + (__pyx_v_TNO1 * __pyx_v_TNO2));
 
-        /* "readdrSH.pyx":790
+        /* "readdrSH.pyx":794
  *             Gh_AN = natn[ct_AN][h_AN]
  *             TNO2 = Total_NumOrbs[Gh_AN]
  *             if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
  *                 fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                 for i in range(TNO1*TNO2):
  */
-        goto __pyx_L18;
+        goto __pyx_L20;
       }
 
-      /* "readdrSH.pyx":797
+      /* "readdrSH.pyx":801
  *                 offset += TNO1*TNO2
  *             else:
  *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7142,20 +7090,13 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  *     # pass olpr
  */
       /*else*/ {
-        __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 797, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_17 = PyNumber_Multiply(__pyx_t_4, __pyx_int_8); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 797, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_t_17); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 797, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-        (void)(fseek(__pyx_v_fp, __pyx_t_10, SEEK_CUR));
+        (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
       }
-      __pyx_L18:;
+      __pyx_L20:;
     }
   }
 
-  /* "readdrSH.pyx":800
+  /* "readdrSH.pyx":804
  * 
  *     # pass olpr
  *     for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -7165,7 +7106,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
   for (__pyx_t_3 = 0; __pyx_t_3 < 3; __pyx_t_3+=1) {
     __pyx_v_xyz = __pyx_t_3;
 
-    /* "readdrSH.pyx":801
+    /* "readdrSH.pyx":805
  *     # pass olpr
  *     for xyz in range(3):
  *         for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7174,34 +7115,31 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
     __pyx_t_1 = (__pyx_v_atomnum + 1);
     __pyx_t_2 = __pyx_t_1;
-    for (__pyx_t_7 = 1; __pyx_t_7 < __pyx_t_2; __pyx_t_7+=1) {
-      __pyx_v_ct_AN = __pyx_t_7;
+    for (__pyx_t_6 = 1; __pyx_t_6 < __pyx_t_2; __pyx_t_6+=1) {
+      __pyx_v_ct_AN = __pyx_t_6;
 
-      /* "readdrSH.pyx":802
+      /* "readdrSH.pyx":806
  *     for xyz in range(3):
  *         for ct_AN in range(1,atomnum+1):
  *             TNO1 = Total_NumOrbs[ct_AN]             # <<<<<<<<<<<<<<
  *             for h_AN in range(FNAN[ct_AN]+1):
  *                 Gh_AN = natn[ct_AN][h_AN]
  */
-      __pyx_t_17 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_ct_AN])); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 802, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_17);
-      __Pyx_XDECREF_SET(__pyx_v_TNO1, __pyx_t_17);
-      __pyx_t_17 = 0;
+      __pyx_v_TNO1 = (__pyx_v_Total_NumOrbs[__pyx_v_ct_AN]);
 
-      /* "readdrSH.pyx":803
+      /* "readdrSH.pyx":807
  *         for ct_AN in range(1,atomnum+1):
  *             TNO1 = Total_NumOrbs[ct_AN]
  *             for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
  *                 Gh_AN = natn[ct_AN][h_AN]
  *                 TNO2 = Total_NumOrbs[Gh_AN]
  */
-      __pyx_t_5 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
-      __pyx_t_6 = __pyx_t_5;
-      for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_6; __pyx_t_12+=1) {
-        __pyx_v_h_AN = __pyx_t_12;
+      __pyx_t_4 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
+      __pyx_t_5 = __pyx_t_4;
+      for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_5; __pyx_t_9+=1) {
+        __pyx_v_h_AN = __pyx_t_9;
 
-        /* "readdrSH.pyx":804
+        /* "readdrSH.pyx":808
  *             TNO1 = Total_NumOrbs[ct_AN]
  *             for h_AN in range(FNAN[ct_AN]+1):
  *                 Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -7210,38 +7148,28 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
         __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-        /* "readdrSH.pyx":805
+        /* "readdrSH.pyx":809
  *             for h_AN in range(FNAN[ct_AN]+1):
  *                 Gh_AN = natn[ct_AN][h_AN]
  *                 TNO2 = Total_NumOrbs[Gh_AN]             # <<<<<<<<<<<<<<
  *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  */
-        __pyx_t_17 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN])); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 805, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __Pyx_XDECREF_SET(__pyx_v_TNO2, __pyx_t_17);
-        __pyx_t_17 = 0;
+        __pyx_v_TNO2 = (__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN]);
 
-        /* "readdrSH.pyx":806
+        /* "readdrSH.pyx":810
  *                 Gh_AN = natn[ct_AN][h_AN]
  *                 TNO2 = Total_NumOrbs[Gh_AN]
  *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
  * 
  *     for xyz in range(3):
  */
-        __pyx_t_17 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 806, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_17);
-        __pyx_t_4 = PyNumber_Multiply(__pyx_t_17, __pyx_int_8); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 806, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-        __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 806, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        (void)(fseek(__pyx_v_fp, __pyx_t_10, SEEK_CUR));
+        (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
       }
     }
   }
 
-  /* "readdrSH.pyx":808
+  /* "readdrSH.pyx":812
  *                 fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -7251,7 +7179,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
   for (__pyx_t_3 = 0; __pyx_t_3 < 3; __pyx_t_3+=1) {
     __pyx_v_xyz = __pyx_t_3;
 
-    /* "readdrSH.pyx":809
+    /* "readdrSH.pyx":813
  * 
  *     for xyz in range(3):
  *         offset = 0             # <<<<<<<<<<<<<<
@@ -7260,7 +7188,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
     __pyx_v_offset = 0;
 
-    /* "readdrSH.pyx":810
+    /* "readdrSH.pyx":814
  *     for xyz in range(3):
  *         offset = 0
  *         for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7269,34 +7197,31 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
     __pyx_t_1 = (__pyx_v_atomnum + 1);
     __pyx_t_2 = __pyx_t_1;
-    for (__pyx_t_7 = 1; __pyx_t_7 < __pyx_t_2; __pyx_t_7+=1) {
-      __pyx_v_ct_AN = __pyx_t_7;
+    for (__pyx_t_6 = 1; __pyx_t_6 < __pyx_t_2; __pyx_t_6+=1) {
+      __pyx_v_ct_AN = __pyx_t_6;
 
-      /* "readdrSH.pyx":811
+      /* "readdrSH.pyx":815
  *         offset = 0
  *         for ct_AN in range(1,atomnum+1):
  *             TNO1 = Total_NumOrbs[ct_AN]             # <<<<<<<<<<<<<<
  *             for h_AN in range(FNAN[ct_AN]+1):
  *                 Gh_AN = natn[ct_AN][h_AN]
  */
-      __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_ct_AN])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 811, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_XDECREF_SET(__pyx_v_TNO1, __pyx_t_4);
-      __pyx_t_4 = 0;
+      __pyx_v_TNO1 = (__pyx_v_Total_NumOrbs[__pyx_v_ct_AN]);
 
-      /* "readdrSH.pyx":812
+      /* "readdrSH.pyx":816
  *         for ct_AN in range(1,atomnum+1):
  *             TNO1 = Total_NumOrbs[ct_AN]
  *             for h_AN in range(FNAN[ct_AN]+1):             # <<<<<<<<<<<<<<
  *                 Gh_AN = natn[ct_AN][h_AN]
  *                 TNO2 = Total_NumOrbs[Gh_AN]
  */
-      __pyx_t_5 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
-      __pyx_t_6 = __pyx_t_5;
-      for (__pyx_t_12 = 0; __pyx_t_12 < __pyx_t_6; __pyx_t_12+=1) {
-        __pyx_v_h_AN = __pyx_t_12;
+      __pyx_t_4 = ((__pyx_v_FNAN[__pyx_v_ct_AN]) + 1);
+      __pyx_t_5 = __pyx_t_4;
+      for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_5; __pyx_t_9+=1) {
+        __pyx_v_h_AN = __pyx_t_9;
 
-        /* "readdrSH.pyx":813
+        /* "readdrSH.pyx":817
  *             TNO1 = Total_NumOrbs[ct_AN]
  *             for h_AN in range(FNAN[ct_AN]+1):
  *                 Gh_AN = natn[ct_AN][h_AN]             # <<<<<<<<<<<<<<
@@ -7305,100 +7230,80 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
         __pyx_v_Gh_AN = ((__pyx_v_natn[__pyx_v_ct_AN])[__pyx_v_h_AN]);
 
-        /* "readdrSH.pyx":814
+        /* "readdrSH.pyx":818
  *             for h_AN in range(FNAN[ct_AN]+1):
  *                 Gh_AN = natn[ct_AN][h_AN]
  *                 TNO2 = Total_NumOrbs[Gh_AN]             # <<<<<<<<<<<<<<
  *                 if (ncn[ct_AN][h_AN]==0):
  *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  */
-        __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 814, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __Pyx_XDECREF_SET(__pyx_v_TNO2, __pyx_t_4);
-        __pyx_t_4 = 0;
+        __pyx_v_TNO2 = (__pyx_v_Total_NumOrbs[__pyx_v_Gh_AN]);
 
-        /* "readdrSH.pyx":815
+        /* "readdrSH.pyx":819
  *                 Gh_AN = natn[ct_AN][h_AN]
  *                 TNO2 = Total_NumOrbs[Gh_AN]
  *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
  *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                     for i in range(TNO1*TNO2):
  */
-        __pyx_t_8 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
-        if (__pyx_t_8) {
+        __pyx_t_10 = ((((__pyx_v_ncn[__pyx_v_ct_AN])[__pyx_v_h_AN]) == 0) != 0);
+        if (__pyx_t_10) {
 
-          /* "readdrSH.pyx":816
+          /* "readdrSH.pyx":820
  *                 TNO2 = Total_NumOrbs[Gh_AN]
  *                 if (ncn[ct_AN][h_AN]==0):
  *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)             # <<<<<<<<<<<<<<
  *                     for i in range(TNO1*TNO2):
  *                         data_dr[xyz,key_info[i+offset,1]] \
  */
-          __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 816, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_9 = __Pyx_PyInt_As_size_t(__pyx_t_4); if (unlikely((__pyx_t_9 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 816, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          (void)(fread(__pyx_v_data_buf, (sizeof(double)), __pyx_t_9, __pyx_v_fp));
+          (void)(fread(__pyx_v_data_buf, (sizeof(double)), (__pyx_v_TNO1 * __pyx_v_TNO2), __pyx_v_fp));
 
-          /* "readdrSH.pyx":817
+          /* "readdrSH.pyx":821
  *                 if (ncn[ct_AN][h_AN]==0):
  *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                     for i in range(TNO1*TNO2):             # <<<<<<<<<<<<<<
  *                         data_dr[xyz,key_info[i+offset,1]] \
  *                         = data_buf[i]*factor_dr
  */
-          __pyx_t_4 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 817, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_t_4); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 817, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __pyx_t_11 = __pyx_t_10;
-          for (__pyx_t_18 = 0; __pyx_t_18 < __pyx_t_11; __pyx_t_18+=1) {
-            __pyx_v_i = __pyx_t_18;
+          __pyx_t_11 = (__pyx_v_TNO1 * __pyx_v_TNO2);
+          __pyx_t_12 = __pyx_t_11;
+          for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
+            __pyx_v_i = __pyx_t_13;
 
-            /* "readdrSH.pyx":818
+            /* "readdrSH.pyx":822
  *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                     for i in range(TNO1*TNO2):
  *                         data_dr[xyz,key_info[i+offset,1]] \             # <<<<<<<<<<<<<<
  *                         = data_buf[i]*factor_dr
  *                     offset += TNO1*TNO2
  */
-            __pyx_t_13 = (__pyx_v_i + __pyx_v_offset);
-            __pyx_t_14 = 1;
-            __pyx_t_15 = __pyx_v_xyz;
-            __pyx_t_19 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_13 * __pyx_v_key_info.strides[0]) )) + __pyx_t_14)) )));
-            *((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_data_dr.data + __pyx_t_15 * __pyx_v_data_dr.strides[0]) )) + __pyx_t_19)) )) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_factor_dr);
+            __pyx_t_14 = (__pyx_v_i + __pyx_v_offset);
+            __pyx_t_15 = 1;
+            __pyx_t_17 = __pyx_v_xyz;
+            __pyx_t_16 = (*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_key_info.data + __pyx_t_14 * __pyx_v_key_info.strides[0]) )) + __pyx_t_15)) )));
+            *((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_data_dr.data + __pyx_t_17 * __pyx_v_data_dr.strides[0]) )) + __pyx_t_16)) )) = ((__pyx_v_data_buf[__pyx_v_i]) * __pyx_v_factor_dr);
           }
 
-          /* "readdrSH.pyx":820
+          /* "readdrSH.pyx":824
  *                         data_dr[xyz,key_info[i+offset,1]] \
  *                         = data_buf[i]*factor_dr
  *                     offset += TNO1*TNO2             # <<<<<<<<<<<<<<
  *                 else:
  *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  */
-          __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_offset); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 820, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_17 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 820, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_17);
-          __pyx_t_16 = PyNumber_InPlaceAdd(__pyx_t_4, __pyx_t_17); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 820, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_16);
-          __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-          __pyx_t_18 = __Pyx_PyInt_As_int(__pyx_t_16); if (unlikely((__pyx_t_18 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 820, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_v_offset = __pyx_t_18;
+          __pyx_v_offset = (__pyx_v_offset + (__pyx_v_TNO1 * __pyx_v_TNO2));
 
-          /* "readdrSH.pyx":815
+          /* "readdrSH.pyx":819
  *                 Gh_AN = natn[ct_AN][h_AN]
  *                 TNO2 = Total_NumOrbs[Gh_AN]
  *                 if (ncn[ct_AN][h_AN]==0):             # <<<<<<<<<<<<<<
  *                     fread(data_buf,sizeof(double),TNO1*TNO2,fp)
  *                     for i in range(TNO1*TNO2):
  */
-          goto __pyx_L33;
+          goto __pyx_L35;
         }
 
-        /* "readdrSH.pyx":822
+        /* "readdrSH.pyx":826
  *                     offset += TNO1*TNO2
  *                 else:
  *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)             # <<<<<<<<<<<<<<
@@ -7406,21 +7311,14 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  *     fclose(fp)
  */
         /*else*/ {
-          __pyx_t_16 = PyNumber_Multiply(__pyx_v_TNO1, __pyx_v_TNO2); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 822, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_16);
-          __pyx_t_17 = PyNumber_Multiply(__pyx_t_16, __pyx_int_8); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 822, __pyx_L1_error)
-          __Pyx_GOTREF(__pyx_t_17);
-          __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
-          __pyx_t_10 = __Pyx_PyInt_As_long(__pyx_t_17); if (unlikely((__pyx_t_10 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 822, __pyx_L1_error)
-          __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-          (void)(fseek(__pyx_v_fp, __pyx_t_10, SEEK_CUR));
+          (void)(fseek(__pyx_v_fp, ((__pyx_v_TNO1 * __pyx_v_TNO2) * 8), SEEK_CUR));
         }
-        __pyx_L33:;
+        __pyx_L35:;
       }
     }
   }
 
-  /* "readdrSH.pyx":824
+  /* "readdrSH.pyx":828
  *                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
  * 
  *     fclose(fp)             # <<<<<<<<<<<<<<
@@ -7429,7 +7327,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   (void)(fclose(__pyx_v_fp));
 
-  /* "readdrSH.pyx":825
+  /* "readdrSH.pyx":829
  * 
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):             # <<<<<<<<<<<<<<
@@ -7441,7 +7339,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_ct_AN = __pyx_t_3;
 
-    /* "readdrSH.pyx":826
+    /* "readdrSH.pyx":830
  *     fclose(fp)
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])             # <<<<<<<<<<<<<<
@@ -7450,7 +7348,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
     free((__pyx_v_natn[__pyx_v_ct_AN]));
 
-    /* "readdrSH.pyx":827
+    /* "readdrSH.pyx":831
  *     for ct_AN in range(1,atomnum+1):
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])             # <<<<<<<<<<<<<<
@@ -7460,7 +7358,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
     free((__pyx_v_ncn[__pyx_v_ct_AN]));
   }
 
-  /* "readdrSH.pyx":828
+  /* "readdrSH.pyx":832
  *         free(natn[ct_AN])
  *         free(ncn[ct_AN])
  *     free(natn)             # <<<<<<<<<<<<<<
@@ -7469,7 +7367,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   free(__pyx_v_natn);
 
-  /* "readdrSH.pyx":829
+  /* "readdrSH.pyx":833
  *         free(ncn[ct_AN])
  *     free(natn)
  *     free(ncn)             # <<<<<<<<<<<<<<
@@ -7478,7 +7376,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   free(__pyx_v_ncn);
 
-  /* "readdrSH.pyx":830
+  /* "readdrSH.pyx":834
  *     free(natn)
  *     free(ncn)
  *     free(FNAN)             # <<<<<<<<<<<<<<
@@ -7487,7 +7385,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   free(__pyx_v_FNAN);
 
-  /* "readdrSH.pyx":831
+  /* "readdrSH.pyx":835
  *     free(ncn)
  *     free(FNAN)
  *     free(Total_NumOrbs)             # <<<<<<<<<<<<<<
@@ -7496,7 +7394,7 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   free(__pyx_v_Total_NumOrbs);
 
-  /* "readdrSH.pyx":832
+  /* "readdrSH.pyx":836
  *     free(FNAN)
  *     free(Total_NumOrbs)
  *     free(data_buf)             # <<<<<<<<<<<<<<
@@ -7505,28 +7403,19 @@ static void __pyx_f_8readdrSH_readscfout(char *__pyx_v_name, int __pyx_v_norb_m,
  */
   free(__pyx_v_data_buf);
 
-  /* "readdrSH.pyx":728
+  /* "readdrSH.pyx":731
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void readscfout(             # <<<<<<<<<<<<<<
  *     char* name, int norb_m, long[:,::1] key_info,
- *     double[::1] data_h, double[::1] data_o, double[:,::1] data_dr,
+ *     double[:,::1] data_h, double[::1] data_o, double[:,::1] data_dr,
  */
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_16);
-  __Pyx_XDECREF(__pyx_t_17);
-  __Pyx_WriteUnraisable("readdrSH.readscfout", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_TNO1);
-  __Pyx_XDECREF(__pyx_v_TNO2);
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":837
+/* "readdrSH.pyx":841
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseData(             # <<<<<<<<<<<<<<
@@ -7560,6 +7449,7 @@ static PyObject *__pyx_pw_8readdrSH_5GetSparseData(PyObject *__pyx_self, PyObjec
   __Pyx_memviewslice __pyx_v_data_h = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_data_o = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_data_dr = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_v_Ispin;
   int __pyx_v_IsH5;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
@@ -7568,12 +7458,14 @@ static PyObject *__pyx_pw_8readdrSH_5GetSparseData(PyObject *__pyx_self, PyObjec
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("GetSparseData (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_shm_comm_py,&__pyx_n_s_inDir,&__pyx_n_s_H5HamName,&__pyx_n_s_H5OlpName,&__pyx_n_s_H5DrName,&__pyx_n_s_nfileham,&__pyx_n_s_nfileolp,&__pyx_n_s_nfiledr,&__pyx_n_s_atomnum,&__pyx_n_s_norb_m,&__pyx_n_s_key_num_h,&__pyx_n_s_key_num_o,&__pyx_n_s_key_num_dr,&__pyx_n_s_pub_key_h,&__pyx_n_s_pub_key_o,&__pyx_n_s_pub_key_dr,&__pyx_n_s_keyinfo_h,&__pyx_n_s_keyinfo_o,&__pyx_n_s_keyinfo_dr,&__pyx_n_s_data_h,&__pyx_n_s_data_o,&__pyx_n_s_data_dr,&__pyx_n_s_IsH5,0};
-    PyObject* values[23] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_shm_comm_py,&__pyx_n_s_inDir,&__pyx_n_s_H5HamName,&__pyx_n_s_H5OlpName,&__pyx_n_s_H5DrName,&__pyx_n_s_nfileham,&__pyx_n_s_nfileolp,&__pyx_n_s_nfiledr,&__pyx_n_s_atomnum,&__pyx_n_s_norb_m,&__pyx_n_s_key_num_h,&__pyx_n_s_key_num_o,&__pyx_n_s_key_num_dr,&__pyx_n_s_pub_key_h,&__pyx_n_s_pub_key_o,&__pyx_n_s_pub_key_dr,&__pyx_n_s_keyinfo_h,&__pyx_n_s_keyinfo_o,&__pyx_n_s_keyinfo_dr,&__pyx_n_s_data_h,&__pyx_n_s_data_o,&__pyx_n_s_data_dr,&__pyx_n_s_Ispin,&__pyx_n_s_IsH5,0};
+    PyObject* values[24] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case 24: values[23] = PyTuple_GET_ITEM(__pyx_args, 23);
+        CYTHON_FALLTHROUGH;
         case 23: values[22] = PyTuple_GET_ITEM(__pyx_args, 22);
         CYTHON_FALLTHROUGH;
         case 22: values[21] = PyTuple_GET_ITEM(__pyx_args, 21);
@@ -7632,139 +7524,145 @@ static PyObject *__pyx_pw_8readdrSH_5GetSparseData(PyObject *__pyx_self, PyObjec
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_inDir)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 1); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 1); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5HamName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 2); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 2); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5OlpName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 3); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 3); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_H5DrName)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 4); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 4); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfileham)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 5); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 5); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfileolp)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 6); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 6); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nfiledr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 7); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 7); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_atomnum)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 8); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 8); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_m)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 9); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 9); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 10); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 10); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 11); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 11); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_key_num_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 12); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 12); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 13); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 13); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 14); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 14); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_pub_key_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 15); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 15); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_keyinfo_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 16); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 16); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_keyinfo_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 17); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 17); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_keyinfo_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 18); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 18); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 19:
         if (likely((values[19] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_data_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 19); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 19); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 20:
         if (likely((values[20] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_data_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 20); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 20); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 21:
         if (likely((values[21] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_data_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 21); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 21); __PYX_ERR(0, 841, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 22:
-        if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
+        if (likely((values[22] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Ispin)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, 22); __PYX_ERR(0, 837, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 22); __PYX_ERR(0, 841, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case 23:
+        if (likely((values[23] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_IsH5)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, 23); __PYX_ERR(0, 841, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseData") < 0)) __PYX_ERR(0, 837, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "GetSparseData") < 0)) __PYX_ERR(0, 841, __pyx_L3_error)
       }
-    } else if (PyTuple_GET_SIZE(__pyx_args) != 23) {
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 24) {
       goto __pyx_L5_argtuple_error;
     } else {
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
@@ -7790,41 +7688,43 @@ static PyObject *__pyx_pw_8readdrSH_5GetSparseData(PyObject *__pyx_self, PyObjec
       values[20] = PyTuple_GET_ITEM(__pyx_args, 20);
       values[21] = PyTuple_GET_ITEM(__pyx_args, 21);
       values[22] = PyTuple_GET_ITEM(__pyx_args, 22);
+      values[23] = PyTuple_GET_ITEM(__pyx_args, 23);
     }
     __pyx_v_shm_comm_py = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 839, __pyx_L3_error)
-    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[2]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 839, __pyx_L3_error)
-    __pyx_v_H5OlpName = __Pyx_PyObject_AsWritableString(values[3]); if (unlikely((!__pyx_v_H5OlpName) && PyErr_Occurred())) __PYX_ERR(0, 839, __pyx_L3_error)
-    __pyx_v_H5DrName = __Pyx_PyObject_AsWritableString(values[4]); if (unlikely((!__pyx_v_H5DrName) && PyErr_Occurred())) __PYX_ERR(0, 839, __pyx_L3_error)
-    __pyx_v_nfileham = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nfileham == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 840, __pyx_L3_error)
-    __pyx_v_nfileolp = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_nfileolp == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 840, __pyx_L3_error)
-    __pyx_v_nfiledr = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_nfiledr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 840, __pyx_L3_error)
-    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 840, __pyx_L3_error)
-    __pyx_v_norb_m = __Pyx_PyInt_As_int(values[9]); if (unlikely((__pyx_v_norb_m == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 840, __pyx_L3_error)
-    __pyx_v_key_num_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_h.memview)) __PYX_ERR(0, 841, __pyx_L3_error)
-    __pyx_v_key_num_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_o.memview)) __PYX_ERR(0, 841, __pyx_L3_error)
-    __pyx_v_key_num_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_dr.memview)) __PYX_ERR(0, 841, __pyx_L3_error)
-    __pyx_v_pub_key_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_h.memview)) __PYX_ERR(0, 842, __pyx_L3_error)
-    __pyx_v_pub_key_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_o.memview)) __PYX_ERR(0, 842, __pyx_L3_error)
-    __pyx_v_pub_key_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_dr.memview)) __PYX_ERR(0, 842, __pyx_L3_error)
-    __pyx_v_keyinfo_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_h.memview)) __PYX_ERR(0, 843, __pyx_L3_error)
-    __pyx_v_keyinfo_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_o.memview)) __PYX_ERR(0, 843, __pyx_L3_error)
-    __pyx_v_keyinfo_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_dr.memview)) __PYX_ERR(0, 843, __pyx_L3_error)
-    __pyx_v_data_h = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_data_h.memview)) __PYX_ERR(0, 844, __pyx_L3_error)
-    __pyx_v_data_o = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_data_o.memview)) __PYX_ERR(0, 844, __pyx_L3_error)
-    __pyx_v_data_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_data_dr.memview)) __PYX_ERR(0, 844, __pyx_L3_error)
-    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[22]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L3_error)
+    __pyx_v_inDir = __Pyx_PyObject_AsWritableString(values[1]); if (unlikely((!__pyx_v_inDir) && PyErr_Occurred())) __PYX_ERR(0, 843, __pyx_L3_error)
+    __pyx_v_H5HamName = __Pyx_PyObject_AsWritableString(values[2]); if (unlikely((!__pyx_v_H5HamName) && PyErr_Occurred())) __PYX_ERR(0, 843, __pyx_L3_error)
+    __pyx_v_H5OlpName = __Pyx_PyObject_AsWritableString(values[3]); if (unlikely((!__pyx_v_H5OlpName) && PyErr_Occurred())) __PYX_ERR(0, 843, __pyx_L3_error)
+    __pyx_v_H5DrName = __Pyx_PyObject_AsWritableString(values[4]); if (unlikely((!__pyx_v_H5DrName) && PyErr_Occurred())) __PYX_ERR(0, 843, __pyx_L3_error)
+    __pyx_v_nfileham = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_nfileham == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L3_error)
+    __pyx_v_nfileolp = __Pyx_PyInt_As_int(values[6]); if (unlikely((__pyx_v_nfileolp == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L3_error)
+    __pyx_v_nfiledr = __Pyx_PyInt_As_int(values[7]); if (unlikely((__pyx_v_nfiledr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L3_error)
+    __pyx_v_atomnum = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_atomnum == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L3_error)
+    __pyx_v_norb_m = __Pyx_PyInt_As_int(values[9]); if (unlikely((__pyx_v_norb_m == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 844, __pyx_L3_error)
+    __pyx_v_key_num_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_h.memview)) __PYX_ERR(0, 845, __pyx_L3_error)
+    __pyx_v_key_num_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_o.memview)) __PYX_ERR(0, 845, __pyx_L3_error)
+    __pyx_v_key_num_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[12], PyBUF_WRITABLE); if (unlikely(!__pyx_v_key_num_dr.memview)) __PYX_ERR(0, 845, __pyx_L3_error)
+    __pyx_v_pub_key_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[13], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_h.memview)) __PYX_ERR(0, 846, __pyx_L3_error)
+    __pyx_v_pub_key_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[14], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_o.memview)) __PYX_ERR(0, 846, __pyx_L3_error)
+    __pyx_v_pub_key_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[15], PyBUF_WRITABLE); if (unlikely(!__pyx_v_pub_key_dr.memview)) __PYX_ERR(0, 846, __pyx_L3_error)
+    __pyx_v_keyinfo_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[16], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_h.memview)) __PYX_ERR(0, 847, __pyx_L3_error)
+    __pyx_v_keyinfo_o = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[17], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_o.memview)) __PYX_ERR(0, 847, __pyx_L3_error)
+    __pyx_v_keyinfo_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_keyinfo_dr.memview)) __PYX_ERR(0, 847, __pyx_L3_error)
+    __pyx_v_data_h = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[19], PyBUF_WRITABLE); if (unlikely(!__pyx_v_data_h.memview)) __PYX_ERR(0, 848, __pyx_L3_error)
+    __pyx_v_data_o = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[20], PyBUF_WRITABLE); if (unlikely(!__pyx_v_data_o.memview)) __PYX_ERR(0, 848, __pyx_L3_error)
+    __pyx_v_data_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[21], PyBUF_WRITABLE); if (unlikely(!__pyx_v_data_dr.memview)) __PYX_ERR(0, 848, __pyx_L3_error)
+    __pyx_v_Ispin = __Pyx_PyInt_As_int(values[22]); if (unlikely((__pyx_v_Ispin == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 849, __pyx_L3_error)
+    __pyx_v_IsH5 = __Pyx_PyObject_IsTrue(values[23]); if (unlikely((__pyx_v_IsH5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 849, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 23, 23, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 837, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetSparseData", 1, 24, 24, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 841, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readdrSH.GetSparseData", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_shm_comm_py), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "shm_comm_py", 0))) __PYX_ERR(0, 838, __pyx_L1_error)
-  __pyx_r = __pyx_pf_8readdrSH_4GetSparseData(__pyx_self, __pyx_v_shm_comm_py, __pyx_v_inDir, __pyx_v_H5HamName, __pyx_v_H5OlpName, __pyx_v_H5DrName, __pyx_v_nfileham, __pyx_v_nfileolp, __pyx_v_nfiledr, __pyx_v_atomnum, __pyx_v_norb_m, __pyx_v_key_num_h, __pyx_v_key_num_o, __pyx_v_key_num_dr, __pyx_v_pub_key_h, __pyx_v_pub_key_o, __pyx_v_pub_key_dr, __pyx_v_keyinfo_h, __pyx_v_keyinfo_o, __pyx_v_keyinfo_dr, __pyx_v_data_h, __pyx_v_data_o, __pyx_v_data_dr, __pyx_v_IsH5);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_shm_comm_py), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "shm_comm_py", 0))) __PYX_ERR(0, 842, __pyx_L1_error)
+  __pyx_r = __pyx_pf_8readdrSH_4GetSparseData(__pyx_self, __pyx_v_shm_comm_py, __pyx_v_inDir, __pyx_v_H5HamName, __pyx_v_H5OlpName, __pyx_v_H5DrName, __pyx_v_nfileham, __pyx_v_nfileolp, __pyx_v_nfiledr, __pyx_v_atomnum, __pyx_v_norb_m, __pyx_v_key_num_h, __pyx_v_key_num_o, __pyx_v_key_num_dr, __pyx_v_pub_key_h, __pyx_v_pub_key_o, __pyx_v_pub_key_dr, __pyx_v_keyinfo_h, __pyx_v_keyinfo_o, __pyx_v_keyinfo_dr, __pyx_v_data_h, __pyx_v_data_o, __pyx_v_data_dr, __pyx_v_Ispin, __pyx_v_IsH5);
 
   /* function exit code */
   goto __pyx_L0;
@@ -7835,7 +7735,7 @@ static PyObject *__pyx_pw_8readdrSH_5GetSparseData(PyObject *__pyx_self, PyObjec
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_shm_comm_py, char *__pyx_v_inDir, char *__pyx_v_H5HamName, char *__pyx_v_H5OlpName, char *__pyx_v_H5DrName, int __pyx_v_nfileham, int __pyx_v_nfileolp, int __pyx_v_nfiledr, CYTHON_UNUSED int __pyx_v_atomnum, int __pyx_v_norb_m, __Pyx_memviewslice __pyx_v_key_num_h, __Pyx_memviewslice __pyx_v_key_num_o, __Pyx_memviewslice __pyx_v_key_num_dr, __Pyx_memviewslice __pyx_v_pub_key_h, __Pyx_memviewslice __pyx_v_pub_key_o, __Pyx_memviewslice __pyx_v_pub_key_dr, __Pyx_memviewslice __pyx_v_keyinfo_h, __Pyx_memviewslice __pyx_v_keyinfo_o, __Pyx_memviewslice __pyx_v_keyinfo_dr, __Pyx_memviewslice __pyx_v_data_h, __Pyx_memviewslice __pyx_v_data_o, __Pyx_memviewslice __pyx_v_data_dr, int __pyx_v_IsH5) {
+static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx_self, struct PyMPICommObject *__pyx_v_shm_comm_py, char *__pyx_v_inDir, char *__pyx_v_H5HamName, char *__pyx_v_H5OlpName, char *__pyx_v_H5DrName, int __pyx_v_nfileham, int __pyx_v_nfileolp, int __pyx_v_nfiledr, CYTHON_UNUSED int __pyx_v_atomnum, int __pyx_v_norb_m, __Pyx_memviewslice __pyx_v_key_num_h, __Pyx_memviewslice __pyx_v_key_num_o, __Pyx_memviewslice __pyx_v_key_num_dr, __Pyx_memviewslice __pyx_v_pub_key_h, __Pyx_memviewslice __pyx_v_pub_key_o, __Pyx_memviewslice __pyx_v_pub_key_dr, __Pyx_memviewslice __pyx_v_keyinfo_h, __Pyx_memviewslice __pyx_v_keyinfo_o, __Pyx_memviewslice __pyx_v_keyinfo_dr, __Pyx_memviewslice __pyx_v_data_h, __Pyx_memviewslice __pyx_v_data_o, __Pyx_memviewslice __pyx_v_data_dr, int __pyx_v_Ispin, int __pyx_v_IsH5) {
   int __pyx_v_shm_nprocs;
   int __pyx_v_shm_id;
   CYTHON_UNUSED int __pyx_v_ierr;
@@ -7849,7 +7749,7 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
   __Pyx_memviewslice __pyx_t_3 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_RefNannySetupContext("GetSparseData", 0);
 
-  /* "readdrSH.pyx":848
+  /* "readdrSH.pyx":853
  *     cdef int shm_nprocs, shm_id, ierr
  *     cdef char data_name[500]
  *     cdef double f_dr = 1.0/Bohr2Ang             # <<<<<<<<<<<<<<
@@ -7858,7 +7758,7 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_f_dr = (1.0 / __pyx_v_8readdrSH_Bohr2Ang);
 
-  /* "readdrSH.pyx":850
+  /* "readdrSH.pyx":855
  *     cdef double f_dr = 1.0/Bohr2Ang
  * 
  *     cdef mpi.MPI_Comm shm_comm = shm_comm_py.ob_mpi             # <<<<<<<<<<<<<<
@@ -7868,7 +7768,7 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_1 = __pyx_v_shm_comm_py->ob_mpi;
   __pyx_v_shm_comm = __pyx_t_1;
 
-  /* "readdrSH.pyx":851
+  /* "readdrSH.pyx":856
  * 
  *     cdef mpi.MPI_Comm shm_comm = shm_comm_py.ob_mpi
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)             # <<<<<<<<<<<<<<
@@ -7877,7 +7777,7 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_ierr = MPI_Comm_size(__pyx_v_shm_comm, (&__pyx_v_shm_nprocs));
 
-  /* "readdrSH.pyx":852
+  /* "readdrSH.pyx":857
  *     cdef mpi.MPI_Comm shm_comm = shm_comm_py.ob_mpi
  *     ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)             # <<<<<<<<<<<<<<
@@ -7886,7 +7786,7 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
  */
   __pyx_v_ierr = MPI_Comm_rank(__pyx_v_shm_comm, (&__pyx_v_shm_id));
 
-  /* "readdrSH.pyx":854
+  /* "readdrSH.pyx":859
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
  * 
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -7896,17 +7796,41 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
   __pyx_t_2 = (__pyx_v_IsH5 != 0);
   if (__pyx_t_2) {
 
-    /* "readdrSH.pyx":855
+    /* "readdrSH.pyx":862
+ *         readh5(
+ *             shm_comm,shm_nprocs,shm_id,H5HamName,nfileham,
+ *             norb_m,key_num_h,pub_key_h,keyinfo_h,data_h[0],1.0             # <<<<<<<<<<<<<<
+ *         )
+ *         readh5(
+ */
+    __pyx_t_3.data = __pyx_v_data_h.data;
+    __pyx_t_3.memview = __pyx_v_data_h.memview;
+    __PYX_INC_MEMVIEW(&__pyx_t_3, 0);
+    {
+    Py_ssize_t __pyx_tmp_idx = 0;
+    Py_ssize_t __pyx_tmp_stride = __pyx_v_data_h.strides[0];
+        __pyx_t_3.data += __pyx_tmp_idx * __pyx_tmp_stride;
+}
+
+__pyx_t_3.shape[0] = __pyx_v_data_h.shape[1];
+__pyx_t_3.strides[0] = __pyx_v_data_h.strides[1];
+    __pyx_t_3.suboffsets[0] = -1;
+
+__pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, __pyx_v_H5HamName, __pyx_v_nfileham, __pyx_v_norb_m, __pyx_v_key_num_h, __pyx_v_pub_key_h, __pyx_v_keyinfo_h, __pyx_t_3, 1.0);
+
+    /* "readdrSH.pyx":860
  * 
  *     if IsH5:
  *         readh5(             # <<<<<<<<<<<<<<
  *             shm_comm,shm_nprocs,shm_id,H5HamName,nfileham,
- *             norb_m,key_num_h,pub_key_h,keyinfo_h,data_h,1.0
+ *             norb_m,key_num_h,pub_key_h,keyinfo_h,data_h[0],1.0
  */
-    __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, __pyx_v_H5HamName, __pyx_v_nfileham, __pyx_v_norb_m, __pyx_v_key_num_h, __pyx_v_pub_key_h, __pyx_v_keyinfo_h, __pyx_v_data_h, 1.0);
+    __PYX_XDEC_MEMVIEW(&__pyx_t_3, 1);
+    __pyx_t_3.memview = NULL;
+    __pyx_t_3.data = NULL;
 
-    /* "readdrSH.pyx":859
- *             norb_m,key_num_h,pub_key_h,keyinfo_h,data_h,1.0
+    /* "readdrSH.pyx":864
+ *             norb_m,key_num_h,pub_key_h,keyinfo_h,data_h[0],1.0
  *         )
  *         readh5(             # <<<<<<<<<<<<<<
  *             shm_comm,shm_nprocs,shm_id,H5OlpName,nfileolp,
@@ -7914,7 +7838,7 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
  */
     __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, __pyx_v_H5OlpName, __pyx_v_nfileolp, __pyx_v_norb_m, __pyx_v_key_num_o, __pyx_v_pub_key_o, __pyx_v_keyinfo_o, __pyx_v_data_o, 1.0);
 
-    /* "readdrSH.pyx":863
+    /* "readdrSH.pyx":868
  *             norb_m,key_num_o,pub_key_o,keyinfo_o,data_o,1.0
  *         )
  *         sprintf(data_name,"%sx",H5DrName)             # <<<<<<<<<<<<<<
@@ -7923,7 +7847,7 @@ static PyObject *__pyx_pf_8readdrSH_4GetSparseData(CYTHON_UNUSED PyObject *__pyx
  */
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%sx"), __pyx_v_H5DrName));
 
-    /* "readdrSH.pyx":866
+    /* "readdrSH.pyx":871
  *         readh5(
  *             shm_comm,shm_nprocs,shm_id,data_name,nfiledr,
  *             norb_m,key_num_dr,pub_key_dr,keyinfo_dr,data_dr[0],1.0             # <<<<<<<<<<<<<<
@@ -7945,7 +7869,7 @@ __pyx_t_3.strides[0] = __pyx_v_data_dr.strides[1];
 
 __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, __pyx_v_data_name, __pyx_v_nfiledr, __pyx_v_norb_m, __pyx_v_key_num_dr, __pyx_v_pub_key_dr, __pyx_v_keyinfo_dr, __pyx_t_3, 1.0);
 
-    /* "readdrSH.pyx":864
+    /* "readdrSH.pyx":869
  *         )
  *         sprintf(data_name,"%sx",H5DrName)
  *         readh5(             # <<<<<<<<<<<<<<
@@ -7956,7 +7880,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
     __pyx_t_3.memview = NULL;
     __pyx_t_3.data = NULL;
 
-    /* "readdrSH.pyx":868
+    /* "readdrSH.pyx":873
  *             norb_m,key_num_dr,pub_key_dr,keyinfo_dr,data_dr[0],1.0
  *         )
  *         sprintf(data_name,"%sy",H5DrName)             # <<<<<<<<<<<<<<
@@ -7965,7 +7889,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
  */
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%sy"), __pyx_v_H5DrName));
 
-    /* "readdrSH.pyx":871
+    /* "readdrSH.pyx":876
  *         readh5(
  *             shm_comm,shm_nprocs,shm_id,data_name,nfiledr,
  *             norb_m,key_num_dr,pub_key_dr,keyinfo_dr,data_dr[1],1.0             # <<<<<<<<<<<<<<
@@ -7987,7 +7911,7 @@ __pyx_t_3.strides[0] = __pyx_v_data_dr.strides[1];
 
 __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, __pyx_v_data_name, __pyx_v_nfiledr, __pyx_v_norb_m, __pyx_v_key_num_dr, __pyx_v_pub_key_dr, __pyx_v_keyinfo_dr, __pyx_t_3, 1.0);
 
-    /* "readdrSH.pyx":869
+    /* "readdrSH.pyx":874
  *         )
  *         sprintf(data_name,"%sy",H5DrName)
  *         readh5(             # <<<<<<<<<<<<<<
@@ -7998,7 +7922,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
     __pyx_t_3.memview = NULL;
     __pyx_t_3.data = NULL;
 
-    /* "readdrSH.pyx":873
+    /* "readdrSH.pyx":878
  *             norb_m,key_num_dr,pub_key_dr,keyinfo_dr,data_dr[1],1.0
  *         )
  *         sprintf(data_name,"%sz",H5DrName)             # <<<<<<<<<<<<<<
@@ -8007,7 +7931,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
  */
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%sz"), __pyx_v_H5DrName));
 
-    /* "readdrSH.pyx":876
+    /* "readdrSH.pyx":881
  *         readh5(
  *             shm_comm,shm_nprocs,shm_id,data_name,nfiledr,
  *             norb_m,key_num_dr,pub_key_dr,keyinfo_dr,data_dr[2],1.0             # <<<<<<<<<<<<<<
@@ -8029,7 +7953,7 @@ __pyx_t_3.strides[0] = __pyx_v_data_dr.strides[1];
 
 __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, __pyx_v_data_name, __pyx_v_nfiledr, __pyx_v_norb_m, __pyx_v_key_num_dr, __pyx_v_pub_key_dr, __pyx_v_keyinfo_dr, __pyx_t_3, 1.0);
 
-    /* "readdrSH.pyx":874
+    /* "readdrSH.pyx":879
  *         )
  *         sprintf(data_name,"%sz",H5DrName)
  *         readh5(             # <<<<<<<<<<<<<<
@@ -8040,7 +7964,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
     __pyx_t_3.memview = NULL;
     __pyx_t_3.data = NULL;
 
-    /* "readdrSH.pyx":854
+    /* "readdrSH.pyx":859
  *     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
  * 
  *     if IsH5:             # <<<<<<<<<<<<<<
@@ -8050,7 +7974,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
     goto __pyx_L3;
   }
 
-  /* "readdrSH.pyx":879
+  /* "readdrSH.pyx":884
  *         )
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)             # <<<<<<<<<<<<<<
@@ -8060,7 +7984,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
   /*else*/ {
     (void)(sprintf(__pyx_v_data_name, ((char const *)"%s/openmx.scfout"), __pyx_v_inDir));
 
-    /* "readdrSH.pyx":880
+    /* "readdrSH.pyx":885
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         if (shm_id==0):             # <<<<<<<<<<<<<<
@@ -8070,16 +7994,16 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
     __pyx_t_2 = ((__pyx_v_shm_id == 0) != 0);
     if (__pyx_t_2) {
 
-      /* "readdrSH.pyx":881
+      /* "readdrSH.pyx":886
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         if (shm_id==0):
  *             readscfout(             # <<<<<<<<<<<<<<
  *                 data_name,norb_m,keyinfo_h,data_h,
- *                 data_o,data_dr,Hartree2eV,1.0,f_dr
+ *                 data_o,data_dr,Hartree2eV,1.0,f_dr,Ispin
  */
-      __pyx_f_8readdrSH_readscfout(__pyx_v_data_name, __pyx_v_norb_m, __pyx_v_keyinfo_h, __pyx_v_data_h, __pyx_v_data_o, __pyx_v_data_dr, __pyx_v_8readdrSH_Hartree2eV, 1.0, __pyx_v_f_dr);
+      __pyx_f_8readdrSH_readscfout(__pyx_v_data_name, __pyx_v_norb_m, __pyx_v_keyinfo_h, __pyx_v_data_h, __pyx_v_data_o, __pyx_v_data_dr, __pyx_v_8readdrSH_Hartree2eV, 1.0, __pyx_v_f_dr, __pyx_v_Ispin);
 
-      /* "readdrSH.pyx":880
+      /* "readdrSH.pyx":885
  *     else:
  *         sprintf(data_name,"%s/openmx.scfout",inDir)
  *         if (shm_id==0):             # <<<<<<<<<<<<<<
@@ -8090,8 +8014,8 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
   }
   __pyx_L3:;
 
-  /* "readdrSH.pyx":885
- *                 data_o,data_dr,Hartree2eV,1.0,f_dr
+  /* "readdrSH.pyx":890
+ *                 data_o,data_dr,Hartree2eV,1.0,f_dr,Ispin
  *             )
  *     mpi.MPI_Barrier(shm_comm)             # <<<<<<<<<<<<<<
  * 
@@ -8099,7 +8023,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
  */
   (void)(MPI_Barrier(__pyx_v_shm_comm));
 
-  /* "readdrSH.pyx":837
+  /* "readdrSH.pyx":841
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseData(             # <<<<<<<<<<<<<<
@@ -8126,7 +8050,7 @@ __pyx_f_8readdrSH_readh5(__pyx_v_shm_comm, __pyx_v_shm_nprocs, __pyx_v_shm_id, _
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":890
+/* "readdrSH.pyx":895
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void sparse2dense_coo(             # <<<<<<<<<<<<<<
@@ -8148,7 +8072,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
   int __pyx_t_7;
   __Pyx_RefNannySetupContext("sparse2dense_coo", 0);
 
-  /* "readdrSH.pyx":898
+  /* "readdrSH.pyx":903
  *     cdef int irow, icol
  * 
  *     memset(olp_f,0,sizeof(double)*N*Nproc_len)             # <<<<<<<<<<<<<<
@@ -8157,7 +8081,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
  */
   (void)(memset(__pyx_v_olp_f, 0, (((sizeof(double)) * __pyx_v_N) * __pyx_v_Nproc_len)));
 
-  /* "readdrSH.pyx":899
+  /* "readdrSH.pyx":904
  * 
  *     memset(olp_f,0,sizeof(double)*N*Nproc_len)
  *     for i in range(Nsparse):             # <<<<<<<<<<<<<<
@@ -8169,7 +8093,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":900
+    /* "readdrSH.pyx":905
  *     memset(olp_f,0,sizeof(double)*N*Nproc_len)
  *     for i in range(Nsparse):
  *         icol = keyinfo[1,i]             # <<<<<<<<<<<<<<
@@ -8180,7 +8104,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
     __pyx_t_5 = __pyx_v_i;
     __pyx_v_icol = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_keyinfo.data + __pyx_t_4 * __pyx_v_keyinfo.strides[0]) )) + __pyx_t_5)) )));
 
-    /* "readdrSH.pyx":901
+    /* "readdrSH.pyx":906
  *     for i in range(Nsparse):
  *         icol = keyinfo[1,i]
  *         if icol<Nproc_min or icol>=Nproc_max:             # <<<<<<<<<<<<<<
@@ -8198,7 +8122,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_6) {
 
-      /* "readdrSH.pyx":902
+      /* "readdrSH.pyx":907
  *         icol = keyinfo[1,i]
  *         if icol<Nproc_min or icol>=Nproc_max:
  *             continue             # <<<<<<<<<<<<<<
@@ -8207,7 +8131,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
  */
       goto __pyx_L3_continue;
 
-      /* "readdrSH.pyx":901
+      /* "readdrSH.pyx":906
  *     for i in range(Nsparse):
  *         icol = keyinfo[1,i]
  *         if icol<Nproc_min or icol>=Nproc_max:             # <<<<<<<<<<<<<<
@@ -8216,7 +8140,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
  */
     }
 
-    /* "readdrSH.pyx":904
+    /* "readdrSH.pyx":909
  *             continue
  *         else:
  *             irow = keyinfo[0,i]             # <<<<<<<<<<<<<<
@@ -8228,7 +8152,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
       __pyx_t_4 = __pyx_v_i;
       __pyx_v_irow = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_keyinfo.data + __pyx_t_5 * __pyx_v_keyinfo.strides[0]) )) + __pyx_t_4)) )));
 
-      /* "readdrSH.pyx":905
+      /* "readdrSH.pyx":910
  *         else:
  *             irow = keyinfo[0,i]
  *             olp_f[irow*Nproc_len+icol-Nproc_min] = olp[i]*factor             # <<<<<<<<<<<<<<
@@ -8241,7 +8165,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
     __pyx_L3_continue:;
   }
 
-  /* "readdrSH.pyx":890
+  /* "readdrSH.pyx":895
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void sparse2dense_coo(             # <<<<<<<<<<<<<<
@@ -8253,7 +8177,7 @@ static void __pyx_f_8readdrSH_sparse2dense_coo(__Pyx_memviewslice __pyx_v_olp, _
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":910
+/* "readdrSH.pyx":915
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def coo2csridx(             # <<<<<<<<<<<<<<
@@ -8305,29 +8229,29 @@ static PyObject *__pyx_pw_8readdrSH_7coo2csridx(PyObject *__pyx_self, PyObject *
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Nsparse)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 1); __PYX_ERR(0, 910, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 1); __PYX_ERR(0, 915, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_coo_idx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 2); __PYX_ERR(0, 910, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 2); __PYX_ERR(0, 915, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_csr_ridx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 3); __PYX_ERR(0, 910, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 3); __PYX_ERR(0, 915, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_csr_cidx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 4); __PYX_ERR(0, 910, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, 4); __PYX_ERR(0, 915, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "coo2csridx") < 0)) __PYX_ERR(0, 910, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "coo2csridx") < 0)) __PYX_ERR(0, 915, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -8338,15 +8262,15 @@ static PyObject *__pyx_pw_8readdrSH_7coo2csridx(PyObject *__pyx_self, PyObject *
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
     }
-    __pyx_v_N = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_N == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 911, __pyx_L3_error)
-    __pyx_v_Nsparse = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_Nsparse == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 911, __pyx_L3_error)
-    __pyx_v_coo_idx = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_coo_idx.memview)) __PYX_ERR(0, 911, __pyx_L3_error)
-    __pyx_v_csr_ridx = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_csr_ridx.memview)) __PYX_ERR(0, 912, __pyx_L3_error)
-    __pyx_v_csr_cidx = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_csr_cidx.memview)) __PYX_ERR(0, 912, __pyx_L3_error)
+    __pyx_v_N = __Pyx_PyInt_As_int(values[0]); if (unlikely((__pyx_v_N == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 916, __pyx_L3_error)
+    __pyx_v_Nsparse = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_Nsparse == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 916, __pyx_L3_error)
+    __pyx_v_coo_idx = __Pyx_PyObject_to_MemoryviewSlice_d_dc_long(values[2], PyBUF_WRITABLE); if (unlikely(!__pyx_v_coo_idx.memview)) __PYX_ERR(0, 916, __pyx_L3_error)
+    __pyx_v_csr_ridx = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_csr_ridx.memview)) __PYX_ERR(0, 917, __pyx_L3_error)
+    __pyx_v_csr_cidx = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_csr_cidx.memview)) __PYX_ERR(0, 917, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 910, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("coo2csridx", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 915, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readdrSH.coo2csridx", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -8380,7 +8304,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
   Py_ssize_t __pyx_t_10;
   __Pyx_RefNannySetupContext("coo2csridx", 0);
 
-  /* "readdrSH.pyx":915
+  /* "readdrSH.pyx":920
  * ):
  *     cdef int i, idx, ridx
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -8389,7 +8313,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "readdrSH.pyx":916
+  /* "readdrSH.pyx":921
  *     cdef int i, idx, ridx
  *     cdef int s_int = sizeof(int)
  *     cdef int * coo_ridx = <int*>malloc(s_int*Nsparse)             # <<<<<<<<<<<<<<
@@ -8398,7 +8322,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
   __pyx_v_coo_ridx = ((int *)malloc((__pyx_v_s_int * __pyx_v_Nsparse)));
 
-  /* "readdrSH.pyx":917
+  /* "readdrSH.pyx":922
  *     cdef int s_int = sizeof(int)
  *     cdef int * coo_ridx = <int*>malloc(s_int*Nsparse)
  *     cdef int * coo_cidx = <int*>malloc(s_int*Nsparse)             # <<<<<<<<<<<<<<
@@ -8407,7 +8331,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
   __pyx_v_coo_cidx = ((int *)malloc((__pyx_v_s_int * __pyx_v_Nsparse)));
 
-  /* "readdrSH.pyx":919
+  /* "readdrSH.pyx":924
  *     cdef int * coo_cidx = <int*>malloc(s_int*Nsparse)
  * 
  *     for i in range(Nsparse):             # <<<<<<<<<<<<<<
@@ -8419,7 +8343,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":920
+    /* "readdrSH.pyx":925
  * 
  *     for i in range(Nsparse):
  *         coo_ridx[i] = <int>(coo_idx[i,0]/N)             # <<<<<<<<<<<<<<
@@ -8430,7 +8354,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
     __pyx_t_5 = 0;
     (__pyx_v_coo_ridx[__pyx_v_i]) = ((int)((*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_coo_idx.data + __pyx_t_4 * __pyx_v_coo_idx.strides[0]) )) + __pyx_t_5)) ))) / ((long)__pyx_v_N)));
 
-    /* "readdrSH.pyx":921
+    /* "readdrSH.pyx":926
  *     for i in range(Nsparse):
  *         coo_ridx[i] = <int>(coo_idx[i,0]/N)
  *         coo_cidx[i] = <int>(coo_idx[i,0]%N)             # <<<<<<<<<<<<<<
@@ -8442,7 +8366,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
     (__pyx_v_coo_cidx[__pyx_v_i]) = ((int)((*((long *) ( /* dim=1 */ ((char *) (((long *) ( /* dim=0 */ (__pyx_v_coo_idx.data + __pyx_t_5 * __pyx_v_coo_idx.strides[0]) )) + __pyx_t_4)) ))) % __pyx_v_N));
   }
 
-  /* "readdrSH.pyx":923
+  /* "readdrSH.pyx":928
  *         coo_cidx[i] = <int>(coo_idx[i,0]%N)
  * 
  *     idx = -1             # <<<<<<<<<<<<<<
@@ -8451,7 +8375,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
   __pyx_v_idx = -1;
 
-  /* "readdrSH.pyx":924
+  /* "readdrSH.pyx":929
  * 
  *     idx = -1
  *     for i in range(Nsparse):             # <<<<<<<<<<<<<<
@@ -8463,7 +8387,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":925
+    /* "readdrSH.pyx":930
  *     idx = -1
  *     for i in range(Nsparse):
  *         ridx = coo_ridx[i]             # <<<<<<<<<<<<<<
@@ -8472,7 +8396,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
     __pyx_v_ridx = (__pyx_v_coo_ridx[__pyx_v_i]);
 
-    /* "readdrSH.pyx":926
+    /* "readdrSH.pyx":931
  *     for i in range(Nsparse):
  *         ridx = coo_ridx[i]
  *         if idx<ridx:             # <<<<<<<<<<<<<<
@@ -8482,7 +8406,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
     __pyx_t_6 = ((__pyx_v_idx < __pyx_v_ridx) != 0);
     if (__pyx_t_6) {
 
-      /* "readdrSH.pyx":927
+      /* "readdrSH.pyx":932
  *         ridx = coo_ridx[i]
  *         if idx<ridx:
  *             csr_ridx[0,ridx] = i             # <<<<<<<<<<<<<<
@@ -8493,7 +8417,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
       __pyx_t_5 = __pyx_v_ridx;
       *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_csr_ridx.data + __pyx_t_4 * __pyx_v_csr_ridx.strides[0]) )) + __pyx_t_5)) )) = __pyx_v_i;
 
-      /* "readdrSH.pyx":928
+      /* "readdrSH.pyx":933
  *         if idx<ridx:
  *             csr_ridx[0,ridx] = i
  *             idx = ridx             # <<<<<<<<<<<<<<
@@ -8502,7 +8426,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
       __pyx_v_idx = __pyx_v_ridx;
 
-      /* "readdrSH.pyx":926
+      /* "readdrSH.pyx":931
  *     for i in range(Nsparse):
  *         ridx = coo_ridx[i]
  *         if idx<ridx:             # <<<<<<<<<<<<<<
@@ -8511,7 +8435,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
     }
 
-    /* "readdrSH.pyx":929
+    /* "readdrSH.pyx":934
  *             csr_ridx[0,ridx] = i
  *             idx = ridx
  *         csr_cidx[i] = coo_cidx[i]             # <<<<<<<<<<<<<<
@@ -8522,7 +8446,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
     *((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_csr_cidx.data) + __pyx_t_5)) )) = (__pyx_v_coo_cidx[__pyx_v_i]);
   }
 
-  /* "readdrSH.pyx":930
+  /* "readdrSH.pyx":935
  *             idx = ridx
  *         csr_cidx[i] = coo_cidx[i]
  *     for i in range(N-1):             # <<<<<<<<<<<<<<
@@ -8534,7 +8458,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
   for (__pyx_t_1 = 0; __pyx_t_1 < __pyx_t_8; __pyx_t_1+=1) {
     __pyx_v_i = __pyx_t_1;
 
-    /* "readdrSH.pyx":931
+    /* "readdrSH.pyx":936
  *         csr_cidx[i] = coo_cidx[i]
  *     for i in range(N-1):
  *         csr_ridx[1,i] = csr_ridx[0,i+1]             # <<<<<<<<<<<<<<
@@ -8548,7 +8472,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
     *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_csr_ridx.data + __pyx_t_9 * __pyx_v_csr_ridx.strides[0]) )) + __pyx_t_10)) )) = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_csr_ridx.data + __pyx_t_5 * __pyx_v_csr_ridx.strides[0]) )) + __pyx_t_4)) )));
   }
 
-  /* "readdrSH.pyx":932
+  /* "readdrSH.pyx":937
  *     for i in range(N-1):
  *         csr_ridx[1,i] = csr_ridx[0,i+1]
  *     csr_ridx[1,N-1] = Nsparse             # <<<<<<<<<<<<<<
@@ -8559,7 +8483,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_t_5 = (__pyx_v_N - 1);
   *((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_csr_ridx.data + __pyx_t_4 * __pyx_v_csr_ridx.strides[0]) )) + __pyx_t_5)) )) = __pyx_v_Nsparse;
 
-  /* "readdrSH.pyx":934
+  /* "readdrSH.pyx":939
  *     csr_ridx[1,N-1] = Nsparse
  * 
  *     free(coo_ridx)             # <<<<<<<<<<<<<<
@@ -8568,7 +8492,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
   free(__pyx_v_coo_ridx);
 
-  /* "readdrSH.pyx":935
+  /* "readdrSH.pyx":940
  * 
  *     free(coo_ridx)
  *     free(coo_cidx)             # <<<<<<<<<<<<<<
@@ -8577,7 +8501,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
  */
   free(__pyx_v_coo_cidx);
 
-  /* "readdrSH.pyx":910
+  /* "readdrSH.pyx":915
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def coo2csridx(             # <<<<<<<<<<<<<<
@@ -8595,7 +8519,7 @@ static PyObject *__pyx_pf_8readdrSH_6coo2csridx(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":940
+/* "readdrSH.pyx":945
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void sparse2dense_csr(             # <<<<<<<<<<<<<<
@@ -8621,7 +8545,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
   Py_ssize_t __pyx_t_10;
   __Pyx_RefNannySetupContext("sparse2dense_csr", 0);
 
-  /* "readdrSH.pyx":948
+  /* "readdrSH.pyx":953
  *     cdef int irow, icol
  * 
  *     memset(olp_f,0,sizeof(double)*N*Nproc_len)             # <<<<<<<<<<<<<<
@@ -8630,7 +8554,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
  */
   (void)(memset(__pyx_v_olp_f, 0, (((sizeof(double)) * __pyx_v_N) * __pyx_v_Nproc_len)));
 
-  /* "readdrSH.pyx":949
+  /* "readdrSH.pyx":954
  * 
  *     memset(olp_f,0,sizeof(double)*N*Nproc_len)
  *     for i in range(Nsparse):             # <<<<<<<<<<<<<<
@@ -8642,7 +8566,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":950
+    /* "readdrSH.pyx":955
  *     memset(olp_f,0,sizeof(double)*N*Nproc_len)
  *     for i in range(Nsparse):
  *         icol = csr_cidx[i]             # <<<<<<<<<<<<<<
@@ -8652,7 +8576,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
     __pyx_t_4 = __pyx_v_i;
     __pyx_v_icol = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_csr_cidx.data) + __pyx_t_4)) )));
 
-    /* "readdrSH.pyx":951
+    /* "readdrSH.pyx":956
  *     for i in range(Nsparse):
  *         icol = csr_cidx[i]
  *         if icol<Nproc_min or icol>=Nproc_max:             # <<<<<<<<<<<<<<
@@ -8670,7 +8594,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_5) {
 
-      /* "readdrSH.pyx":952
+      /* "readdrSH.pyx":957
  *         icol = csr_cidx[i]
  *         if icol<Nproc_min or icol>=Nproc_max:
  *             continue             # <<<<<<<<<<<<<<
@@ -8679,7 +8603,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
  */
       goto __pyx_L3_continue;
 
-      /* "readdrSH.pyx":951
+      /* "readdrSH.pyx":956
  *     for i in range(Nsparse):
  *         icol = csr_cidx[i]
  *         if icol<Nproc_min or icol>=Nproc_max:             # <<<<<<<<<<<<<<
@@ -8688,7 +8612,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
  */
     }
 
-    /* "readdrSH.pyx":954
+    /* "readdrSH.pyx":959
  *             continue
  *         else:
  *             for j in range(N):             # <<<<<<<<<<<<<<
@@ -8701,7 +8625,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
       for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
         __pyx_v_j = __pyx_t_9;
 
-        /* "readdrSH.pyx":955
+        /* "readdrSH.pyx":960
  *         else:
  *             for j in range(N):
  *                 if(i>=csr_ridx[0,j] and i<csr_ridx[1,j]):             # <<<<<<<<<<<<<<
@@ -8723,7 +8647,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
         __pyx_L11_bool_binop_done:;
         if (__pyx_t_5) {
 
-          /* "readdrSH.pyx":956
+          /* "readdrSH.pyx":961
  *             for j in range(N):
  *                 if(i>=csr_ridx[0,j] and i<csr_ridx[1,j]):
  *                     irow = j             # <<<<<<<<<<<<<<
@@ -8732,7 +8656,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
  */
           __pyx_v_irow = __pyx_v_j;
 
-          /* "readdrSH.pyx":957
+          /* "readdrSH.pyx":962
  *                 if(i>=csr_ridx[0,j] and i<csr_ridx[1,j]):
  *                     irow = j
  *                     break             # <<<<<<<<<<<<<<
@@ -8741,7 +8665,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
  */
           goto __pyx_L9_break;
 
-          /* "readdrSH.pyx":955
+          /* "readdrSH.pyx":960
  *         else:
  *             for j in range(N):
  *                 if(i>=csr_ridx[0,j] and i<csr_ridx[1,j]):             # <<<<<<<<<<<<<<
@@ -8752,7 +8676,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
       }
       __pyx_L9_break:;
 
-      /* "readdrSH.pyx":958
+      /* "readdrSH.pyx":963
  *                     irow = j
  *                     break
  *             olp_f[irow*Nproc_len+icol-Nproc_min] = olp[i]*factor             # <<<<<<<<<<<<<<
@@ -8765,7 +8689,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
     __pyx_L3_continue:;
   }
 
-  /* "readdrSH.pyx":940
+  /* "readdrSH.pyx":945
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void sparse2dense_csr(             # <<<<<<<<<<<<<<
@@ -8777,7 +8701,7 @@ static void __pyx_f_8readdrSH_sparse2dense_csr(__Pyx_memviewslice __pyx_v_olp, _
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":963
+/* "readdrSH.pyx":968
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef double sparse1norm(             # <<<<<<<<<<<<<<
@@ -8802,7 +8726,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
   int __pyx_t_6;
   __Pyx_RefNannySetupContext("sparse1norm", 0);
 
-  /* "readdrSH.pyx":970
+  /* "readdrSH.pyx":975
  *     cdef double coldata, colsum, colsum_max
  * 
  *     irow = -1             # <<<<<<<<<<<<<<
@@ -8811,7 +8735,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
  */
   __pyx_v_irow = -1;
 
-  /* "readdrSH.pyx":971
+  /* "readdrSH.pyx":976
  * 
  *     irow = -1
  *     colsum = 0.0             # <<<<<<<<<<<<<<
@@ -8820,7 +8744,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
  */
   __pyx_v_colsum = 0.0;
 
-  /* "readdrSH.pyx":972
+  /* "readdrSH.pyx":977
  *     irow = -1
  *     colsum = 0.0
  *     colsum_max = 0.0             # <<<<<<<<<<<<<<
@@ -8829,7 +8753,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
  */
   __pyx_v_colsum_max = 0.0;
 
-  /* "readdrSH.pyx":973
+  /* "readdrSH.pyx":978
  *     colsum = 0.0
  *     colsum_max = 0.0
  *     for i in range(Nsparse):             # <<<<<<<<<<<<<<
@@ -8841,7 +8765,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":974
+    /* "readdrSH.pyx":979
  *     colsum_max = 0.0
  *     for i in range(Nsparse):
  *         colidx = keyinfo[0,i]             # <<<<<<<<<<<<<<
@@ -8852,7 +8776,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
     __pyx_t_5 = __pyx_v_i;
     __pyx_v_colidx = (*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_keyinfo.data + __pyx_t_4 * __pyx_v_keyinfo.strides[0]) )) + __pyx_t_5)) )));
 
-    /* "readdrSH.pyx":975
+    /* "readdrSH.pyx":980
  *     for i in range(Nsparse):
  *         colidx = keyinfo[0,i]
  *         coldata = fabs(olp[i])             # <<<<<<<<<<<<<<
@@ -8862,7 +8786,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
     __pyx_t_5 = __pyx_v_i;
     __pyx_v_coldata = fabs((*((double *) ( /* dim=0 */ ((char *) (((double *) __pyx_v_olp.data) + __pyx_t_5)) ))));
 
-    /* "readdrSH.pyx":976
+    /* "readdrSH.pyx":981
  *         colidx = keyinfo[0,i]
  *         coldata = fabs(olp[i])
  *         if irow<colidx:             # <<<<<<<<<<<<<<
@@ -8872,7 +8796,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
     __pyx_t_6 = ((__pyx_v_irow < __pyx_v_colidx) != 0);
     if (__pyx_t_6) {
 
-      /* "readdrSH.pyx":977
+      /* "readdrSH.pyx":982
  *         coldata = fabs(olp[i])
  *         if irow<colidx:
  *             if colsum>colsum_max:             # <<<<<<<<<<<<<<
@@ -8882,7 +8806,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
       __pyx_t_6 = ((__pyx_v_colsum > __pyx_v_colsum_max) != 0);
       if (__pyx_t_6) {
 
-        /* "readdrSH.pyx":978
+        /* "readdrSH.pyx":983
  *         if irow<colidx:
  *             if colsum>colsum_max:
  *                 colsum_max = colsum             # <<<<<<<<<<<<<<
@@ -8891,7 +8815,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
  */
         __pyx_v_colsum_max = __pyx_v_colsum;
 
-        /* "readdrSH.pyx":977
+        /* "readdrSH.pyx":982
  *         coldata = fabs(olp[i])
  *         if irow<colidx:
  *             if colsum>colsum_max:             # <<<<<<<<<<<<<<
@@ -8900,7 +8824,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
  */
       }
 
-      /* "readdrSH.pyx":979
+      /* "readdrSH.pyx":984
  *             if colsum>colsum_max:
  *                 colsum_max = colsum
  *             colsum = coldata             # <<<<<<<<<<<<<<
@@ -8909,7 +8833,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
  */
       __pyx_v_colsum = __pyx_v_coldata;
 
-      /* "readdrSH.pyx":980
+      /* "readdrSH.pyx":985
  *                 colsum_max = colsum
  *             colsum = coldata
  *             irow = colidx             # <<<<<<<<<<<<<<
@@ -8918,7 +8842,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
  */
       __pyx_v_irow = __pyx_v_colidx;
 
-      /* "readdrSH.pyx":976
+      /* "readdrSH.pyx":981
  *         colidx = keyinfo[0,i]
  *         coldata = fabs(olp[i])
  *         if irow<colidx:             # <<<<<<<<<<<<<<
@@ -8928,7 +8852,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
       goto __pyx_L5;
     }
 
-    /* "readdrSH.pyx":982
+    /* "readdrSH.pyx":987
  *             irow = colidx
  *         else:
  *             colsum += coldata             # <<<<<<<<<<<<<<
@@ -8941,7 +8865,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
     __pyx_L5:;
   }
 
-  /* "readdrSH.pyx":984
+  /* "readdrSH.pyx":989
  *             colsum += coldata
  * 
  *     return colsum_max             # <<<<<<<<<<<<<<
@@ -8951,7 +8875,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
   __pyx_r = __pyx_v_colsum_max;
   goto __pyx_L0;
 
-  /* "readdrSH.pyx":963
+  /* "readdrSH.pyx":968
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef double sparse1norm(             # <<<<<<<<<<<<<<
@@ -8965,7 +8889,7 @@ static double __pyx_f_8readdrSH_sparse1norm(__Pyx_memviewslice __pyx_v_olp, __Py
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":989
+/* "readdrSH.pyx":994
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void mat_tran(             # <<<<<<<<<<<<<<
@@ -8979,39 +8903,32 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
   int __pyx_v_k;
   int __pyx_v_N1;
   int __pyx_v_N2;
+  int __pyx_v_offset;
   int *__pyx_v_count;
   int *__pyx_v_displ;
-  PyObject *__pyx_v_offset = NULL;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
   int __pyx_t_2;
   int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_4;
   int __pyx_t_5;
   int __pyx_t_6;
   int __pyx_t_7;
   int __pyx_t_8;
   int __pyx_t_9;
-  int __pyx_t_10;
-  PyObject *__pyx_t_11 = NULL;
-  PyObject *__pyx_t_12 = NULL;
-  Py_ssize_t __pyx_t_13;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("mat_tran", 0);
 
-  /* "readdrSH.pyx":994
+  /* "readdrSH.pyx":999
  * ):
- *     cdef int i, j, k, N1, N2
+ *     cdef int i, j, k, N1, N2, offset
  *     cdef int * count = <int*>malloc(nprocs*sizeof(int))             # <<<<<<<<<<<<<<
  *     cdef int * displ = <int*>malloc(nprocs*sizeof(int))
  * 
  */
   __pyx_v_count = ((int *)malloc((__pyx_v_nprocs * (sizeof(int)))));
 
-  /* "readdrSH.pyx":995
- *     cdef int i, j, k, N1, N2
+  /* "readdrSH.pyx":1000
+ *     cdef int i, j, k, N1, N2, offset
  *     cdef int * count = <int*>malloc(nprocs*sizeof(int))
  *     cdef int * displ = <int*>malloc(nprocs*sizeof(int))             # <<<<<<<<<<<<<<
  * 
@@ -9019,7 +8936,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
   __pyx_v_displ = ((int *)malloc((__pyx_v_nprocs * (sizeof(int)))));
 
-  /* "readdrSH.pyx":997
+  /* "readdrSH.pyx":1002
  *     cdef int * displ = <int*>malloc(nprocs*sizeof(int))
  * 
  *     for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -9031,7 +8948,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":998
+    /* "readdrSH.pyx":1003
  * 
  *     for i in range(nprocs):
  *         count[i] = Nproc_len*Nproc_num[i]             # <<<<<<<<<<<<<<
@@ -9040,7 +8957,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
     (__pyx_v_count[__pyx_v_i]) = (__pyx_v_Nproc_len * (__pyx_v_Nproc_num[__pyx_v_i]));
 
-    /* "readdrSH.pyx":999
+    /* "readdrSH.pyx":1004
  *     for i in range(nprocs):
  *         count[i] = Nproc_len*Nproc_num[i]
  *         displ[i] = Nproc_len*Nproc[i]             # <<<<<<<<<<<<<<
@@ -9050,7 +8967,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
     (__pyx_v_displ[__pyx_v_i]) = (__pyx_v_Nproc_len * (__pyx_v_Nproc[__pyx_v_i]));
   }
 
-  /* "readdrSH.pyx":1000
+  /* "readdrSH.pyx":1005
  *         count[i] = Nproc_len*Nproc_num[i]
  *         displ[i] = Nproc_len*Nproc[i]
  *     mpi.MPI_Alltoallv(             # <<<<<<<<<<<<<<
@@ -9059,7 +8976,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
   (void)(MPI_Alltoallv(__pyx_v_matbuf, __pyx_v_count, __pyx_v_displ, MPI_DOUBLE, __pyx_v_recvbuf, __pyx_v_count, __pyx_v_displ, MPI_DOUBLE, __pyx_v_comm));
 
-  /* "readdrSH.pyx":1004
+  /* "readdrSH.pyx":1009
  *         recvbuf,count,displ,mpi.MPI_DOUBLE,comm
  *     )
  *     for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -9071,7 +8988,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":1005
+    /* "readdrSH.pyx":1010
  *     )
  *     for i in range(nprocs):
  *         N1 = Nproc[i]             # <<<<<<<<<<<<<<
@@ -9080,7 +8997,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
     __pyx_v_N1 = (__pyx_v_Nproc[__pyx_v_i]);
 
-    /* "readdrSH.pyx":1006
+    /* "readdrSH.pyx":1011
  *     for i in range(nprocs):
  *         N1 = Nproc[i]
  *         N2 = Nproc_num[i]             # <<<<<<<<<<<<<<
@@ -9089,68 +9006,52 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
     __pyx_v_N2 = (__pyx_v_Nproc_num[__pyx_v_i]);
 
-    /* "readdrSH.pyx":1007
+    /* "readdrSH.pyx":1012
  *         N1 = Nproc[i]
  *         N2 = Nproc_num[i]
  *         offset = displ[i]             # <<<<<<<<<<<<<<
  *         for j in range(Nproc_len):
  *             for k in range(N2):
  */
-    __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_displ[__pyx_v_i])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1007, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_XDECREF_SET(__pyx_v_offset, __pyx_t_4);
-    __pyx_t_4 = 0;
+    __pyx_v_offset = (__pyx_v_displ[__pyx_v_i]);
 
-    /* "readdrSH.pyx":1008
+    /* "readdrSH.pyx":1013
  *         N2 = Nproc_num[i]
  *         offset = displ[i]
  *         for j in range(Nproc_len):             # <<<<<<<<<<<<<<
  *             for k in range(N2):
  *                 matbuf[(k+N1)*Nproc_len+j] = recvbuf[offset+j*N2+k]
  */
-    __pyx_t_5 = __pyx_v_Nproc_len;
-    __pyx_t_6 = __pyx_t_5;
-    for (__pyx_t_7 = 0; __pyx_t_7 < __pyx_t_6; __pyx_t_7+=1) {
-      __pyx_v_j = __pyx_t_7;
+    __pyx_t_4 = __pyx_v_Nproc_len;
+    __pyx_t_5 = __pyx_t_4;
+    for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
+      __pyx_v_j = __pyx_t_6;
 
-      /* "readdrSH.pyx":1009
+      /* "readdrSH.pyx":1014
  *         offset = displ[i]
  *         for j in range(Nproc_len):
  *             for k in range(N2):             # <<<<<<<<<<<<<<
  *                 matbuf[(k+N1)*Nproc_len+j] = recvbuf[offset+j*N2+k]
  *     free(count)
  */
-      __pyx_t_8 = __pyx_v_N2;
-      __pyx_t_9 = __pyx_t_8;
-      for (__pyx_t_10 = 0; __pyx_t_10 < __pyx_t_9; __pyx_t_10+=1) {
-        __pyx_v_k = __pyx_t_10;
+      __pyx_t_7 = __pyx_v_N2;
+      __pyx_t_8 = __pyx_t_7;
+      for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
+        __pyx_v_k = __pyx_t_9;
 
-        /* "readdrSH.pyx":1010
+        /* "readdrSH.pyx":1015
  *         for j in range(Nproc_len):
  *             for k in range(N2):
  *                 matbuf[(k+N1)*Nproc_len+j] = recvbuf[offset+j*N2+k]             # <<<<<<<<<<<<<<
  *     free(count)
  *     free(displ)
  */
-        __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_j * __pyx_v_N2)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1010, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_11 = PyNumber_Add(__pyx_v_offset, __pyx_t_4); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 1010, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_11);
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_k); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1010, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_12 = PyNumber_Add(__pyx_t_11, __pyx_t_4); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 1010, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_12);
-        __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
-        __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_13 = __Pyx_PyIndex_AsSsize_t(__pyx_t_12); if (unlikely((__pyx_t_13 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1010, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
-        (__pyx_v_matbuf[(((__pyx_v_k + __pyx_v_N1) * __pyx_v_Nproc_len) + __pyx_v_j)]) = (__pyx_v_recvbuf[__pyx_t_13]);
+        (__pyx_v_matbuf[(((__pyx_v_k + __pyx_v_N1) * __pyx_v_Nproc_len) + __pyx_v_j)]) = (__pyx_v_recvbuf[((__pyx_v_offset + (__pyx_v_j * __pyx_v_N2)) + __pyx_v_k)]);
       }
     }
   }
 
-  /* "readdrSH.pyx":1011
+  /* "readdrSH.pyx":1016
  *             for k in range(N2):
  *                 matbuf[(k+N1)*Nproc_len+j] = recvbuf[offset+j*N2+k]
  *     free(count)             # <<<<<<<<<<<<<<
@@ -9159,7 +9060,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
   free(__pyx_v_count);
 
-  /* "readdrSH.pyx":1012
+  /* "readdrSH.pyx":1017
  *                 matbuf[(k+N1)*Nproc_len+j] = recvbuf[offset+j*N2+k]
  *     free(count)
  *     free(displ)             # <<<<<<<<<<<<<<
@@ -9168,7 +9069,7 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
   free(__pyx_v_displ);
 
-  /* "readdrSH.pyx":989
+  /* "readdrSH.pyx":994
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void mat_tran(             # <<<<<<<<<<<<<<
@@ -9177,18 +9078,10 @@ static void __pyx_f_8readdrSH_mat_tran(MPI_Comm __pyx_v_comm, int __pyx_v_nprocs
  */
 
   /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_XDECREF(__pyx_t_12);
-  __Pyx_WriteUnraisable("readdrSH.mat_tran", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_offset);
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":1017
+/* "readdrSH.pyx":1022
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void mat_reshape(             # <<<<<<<<<<<<<<
@@ -9240,7 +9133,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("mat_reshape", 0);
 
-  /* "readdrSH.pyx":1023
+  /* "readdrSH.pyx":1028
  * ):
  *     cdef int i, j, k, l, m, n, offset, N1, N2
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -9249,7 +9142,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "readdrSH.pyx":1024
+  /* "readdrSH.pyx":1029
  *     cdef int i, j, k, l, m, n, offset, N1, N2
  *     cdef int s_int = sizeof(int)
  *     cdef int s_d = sizeof(double)             # <<<<<<<<<<<<<<
@@ -9258,7 +9151,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_s_d = (sizeof(double));
 
-  /* "readdrSH.pyx":1025
+  /* "readdrSH.pyx":1030
  *     cdef int s_int = sizeof(int)
  *     cdef int s_d = sizeof(double)
  *     cdef int Np = N/Nsplit             # <<<<<<<<<<<<<<
@@ -9267,7 +9160,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_Np = (__pyx_v_N / __pyx_v_Nsplit);
 
-  /* "readdrSH.pyx":1027
+  /* "readdrSH.pyx":1032
  *     cdef int Np = N/Nsplit
  * 
  *     cdef int * Npproc = <int*>calloc(s_int,nprocs+1)             # <<<<<<<<<<<<<<
@@ -9276,7 +9169,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_Npproc = ((int *)calloc(__pyx_v_s_int, (__pyx_v_nprocs + 1)));
 
-  /* "readdrSH.pyx":1028
+  /* "readdrSH.pyx":1033
  * 
  *     cdef int * Npproc = <int*>calloc(s_int,nprocs+1)
  *     cdef int * Npproc_num = <int*>calloc(s_int,nprocs)             # <<<<<<<<<<<<<<
@@ -9285,7 +9178,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_Npproc_num = ((int *)calloc(__pyx_v_s_int, __pyx_v_nprocs));
 
-  /* "readdrSH.pyx":1029
+  /* "readdrSH.pyx":1034
  *     cdef int * Npproc = <int*>calloc(s_int,nprocs+1)
  *     cdef int * Npproc_num = <int*>calloc(s_int,nprocs)
  *     cdef int * scount = <int*>malloc(nprocs*sizeof(int))             # <<<<<<<<<<<<<<
@@ -9294,7 +9187,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_scount = ((int *)malloc((__pyx_v_nprocs * (sizeof(int)))));
 
-  /* "readdrSH.pyx":1030
+  /* "readdrSH.pyx":1035
  *     cdef int * Npproc_num = <int*>calloc(s_int,nprocs)
  *     cdef int * scount = <int*>malloc(nprocs*sizeof(int))
  *     cdef int * sdispl = <int*>malloc(nprocs*sizeof(int))             # <<<<<<<<<<<<<<
@@ -9303,7 +9196,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_sdispl = ((int *)malloc((__pyx_v_nprocs * (sizeof(int)))));
 
-  /* "readdrSH.pyx":1031
+  /* "readdrSH.pyx":1036
  *     cdef int * scount = <int*>malloc(nprocs*sizeof(int))
  *     cdef int * sdispl = <int*>malloc(nprocs*sizeof(int))
  *     cdef int * rcount = <int*>malloc(nprocs*sizeof(int))             # <<<<<<<<<<<<<<
@@ -9312,7 +9205,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_rcount = ((int *)malloc((__pyx_v_nprocs * (sizeof(int)))));
 
-  /* "readdrSH.pyx":1032
+  /* "readdrSH.pyx":1037
  *     cdef int * sdispl = <int*>malloc(nprocs*sizeof(int))
  *     cdef int * rcount = <int*>malloc(nprocs*sizeof(int))
  *     cdef int * rdispl = <int*>malloc(nprocs*sizeof(int))             # <<<<<<<<<<<<<<
@@ -9321,7 +9214,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_rdispl = ((int *)malloc((__pyx_v_nprocs * (sizeof(int)))));
 
-  /* "readdrSH.pyx":1035
+  /* "readdrSH.pyx":1040
  *     cdef double * olp_rbuf
  * 
  *     for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -9333,67 +9226,67 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":1036
+    /* "readdrSH.pyx":1041
  * 
  *     for i in range(nprocs):
  *         Np_min = (Np*i)/nprocs             # <<<<<<<<<<<<<<
  *         Np_max = (Np*(i+1))/nprocs
  *         Npproc_num[i] = Np_max-Np_min
  */
-    __pyx_t_4 = __Pyx_PyInt_From_int(((__pyx_v_Np * __pyx_v_i) / __pyx_v_nprocs)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1036, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(((__pyx_v_Np * __pyx_v_i) / __pyx_v_nprocs)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1041, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_XDECREF_SET(__pyx_v_Np_min, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "readdrSH.pyx":1037
+    /* "readdrSH.pyx":1042
  *     for i in range(nprocs):
  *         Np_min = (Np*i)/nprocs
  *         Np_max = (Np*(i+1))/nprocs             # <<<<<<<<<<<<<<
  *         Npproc_num[i] = Np_max-Np_min
  *         Npproc[i+1] = Np_max
  */
-    __pyx_t_4 = __Pyx_PyInt_From_long(((__pyx_v_Np * (__pyx_v_i + 1)) / ((long)__pyx_v_nprocs))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1037, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_long(((__pyx_v_Np * (__pyx_v_i + 1)) / ((long)__pyx_v_nprocs))); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1042, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_XDECREF_SET(__pyx_v_Np_max, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "readdrSH.pyx":1038
+    /* "readdrSH.pyx":1043
  *         Np_min = (Np*i)/nprocs
  *         Np_max = (Np*(i+1))/nprocs
  *         Npproc_num[i] = Np_max-Np_min             # <<<<<<<<<<<<<<
  *         Npproc[i+1] = Np_max
  *     Np_num = Npproc_num[myid]
  */
-    __pyx_t_4 = PyNumber_Subtract(__pyx_v_Np_max, __pyx_v_Np_min); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1038, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Subtract(__pyx_v_Np_max, __pyx_v_Np_min); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1043, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1038, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1043, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     (__pyx_v_Npproc_num[__pyx_v_i]) = __pyx_t_5;
 
-    /* "readdrSH.pyx":1039
+    /* "readdrSH.pyx":1044
  *         Np_max = (Np*(i+1))/nprocs
  *         Npproc_num[i] = Np_max-Np_min
  *         Npproc[i+1] = Np_max             # <<<<<<<<<<<<<<
  *     Np_num = Npproc_num[myid]
  * 
  */
-    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_Np_max); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1039, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_v_Np_max); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1044, __pyx_L1_error)
     (__pyx_v_Npproc[(__pyx_v_i + 1)]) = __pyx_t_5;
   }
 
-  /* "readdrSH.pyx":1040
+  /* "readdrSH.pyx":1045
  *         Npproc_num[i] = Np_max-Np_min
  *         Npproc[i+1] = Np_max
  *     Np_num = Npproc_num[myid]             # <<<<<<<<<<<<<<
  * 
  *     for i in range(nprocs):
  */
-  __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Npproc_num[__pyx_v_myid])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1040, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Npproc_num[__pyx_v_myid])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1045, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_v_Np_num = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "readdrSH.pyx":1042
+  /* "readdrSH.pyx":1047
  *     Np_num = Npproc_num[myid]
  * 
  *     for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -9405,7 +9298,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":1043
+    /* "readdrSH.pyx":1048
  * 
  *     for i in range(nprocs):
  *         scount[i] = Nproc_len*Npproc_num[i]             # <<<<<<<<<<<<<<
@@ -9414,23 +9307,23 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
     (__pyx_v_scount[__pyx_v_i]) = (__pyx_v_Nproc_len * (__pyx_v_Npproc_num[__pyx_v_i]));
 
-    /* "readdrSH.pyx":1044
+    /* "readdrSH.pyx":1049
  *     for i in range(nprocs):
  *         scount[i] = Nproc_len*Npproc_num[i]
  *         rcount[i] = Np_num*Nproc_num[i]             # <<<<<<<<<<<<<<
  *         sdispl[i] = Nproc_len*Npproc[i]
  *         rdispl[i] = Np_num*Nproc[i]
  */
-    __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Nproc_num[__pyx_v_i])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1044, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int((__pyx_v_Nproc_num[__pyx_v_i])); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1049, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = PyNumber_Multiply(__pyx_v_Np_num, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 1044, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_Multiply(__pyx_v_Np_num, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 1049, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1044, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1049, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     (__pyx_v_rcount[__pyx_v_i]) = __pyx_t_5;
 
-    /* "readdrSH.pyx":1045
+    /* "readdrSH.pyx":1050
  *         scount[i] = Nproc_len*Npproc_num[i]
  *         rcount[i] = Np_num*Nproc_num[i]
  *         sdispl[i] = Nproc_len*Npproc[i]             # <<<<<<<<<<<<<<
@@ -9439,46 +9332,46 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
     (__pyx_v_sdispl[__pyx_v_i]) = (__pyx_v_Nproc_len * (__pyx_v_Npproc[__pyx_v_i]));
 
-    /* "readdrSH.pyx":1046
+    /* "readdrSH.pyx":1051
  *         rcount[i] = Np_num*Nproc_num[i]
  *         sdispl[i] = Nproc_len*Npproc[i]
  *         rdispl[i] = Np_num*Nproc[i]             # <<<<<<<<<<<<<<
  * 
  *     olp_rbuf = <double*>malloc(s_d*Np_num*N)
  */
-    __pyx_t_6 = __Pyx_PyInt_From_int((__pyx_v_Nproc[__pyx_v_i])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 1046, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_From_int((__pyx_v_Nproc[__pyx_v_i])); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 1051, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_4 = PyNumber_Multiply(__pyx_v_Np_num, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1046, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Multiply(__pyx_v_Np_num, __pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1051, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1046, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_As_int(__pyx_t_4); if (unlikely((__pyx_t_5 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1051, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     (__pyx_v_rdispl[__pyx_v_i]) = __pyx_t_5;
   }
 
-  /* "readdrSH.pyx":1048
+  /* "readdrSH.pyx":1053
  *         rdispl[i] = Np_num*Nproc[i]
  * 
  *     olp_rbuf = <double*>malloc(s_d*Np_num*N)             # <<<<<<<<<<<<<<
  *     mpi.MPI_Alltoallv(
  *         olp,scount,sdispl,mpi.MPI_DOUBLE,
  */
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_s_d); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1048, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_s_d); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1053, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = PyNumber_Multiply(__pyx_t_4, __pyx_v_Np_num); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 1048, __pyx_L1_error)
+  __pyx_t_6 = PyNumber_Multiply(__pyx_t_4, __pyx_v_Np_num); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 1053, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1048, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_N); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1053, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 1048, __pyx_L1_error)
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_6, __pyx_t_4); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 1053, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_8 = __Pyx_PyInt_As_size_t(__pyx_t_7); if (unlikely((__pyx_t_8 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1048, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyInt_As_size_t(__pyx_t_7); if (unlikely((__pyx_t_8 == (size_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 1053, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_v_olp_rbuf = ((double *)malloc(__pyx_t_8));
 
-  /* "readdrSH.pyx":1049
+  /* "readdrSH.pyx":1054
  * 
  *     olp_rbuf = <double*>malloc(s_d*Np_num*N)
  *     mpi.MPI_Alltoallv(             # <<<<<<<<<<<<<<
@@ -9487,7 +9380,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   (void)(MPI_Alltoallv(__pyx_v_olp, __pyx_v_scount, __pyx_v_sdispl, MPI_DOUBLE, __pyx_v_olp_rbuf, __pyx_v_rcount, __pyx_v_rdispl, MPI_DOUBLE, __pyx_v_comm));
 
-  /* "readdrSH.pyx":1053
+  /* "readdrSH.pyx":1058
  *         olp_rbuf,rcount,rdispl,mpi.MPI_DOUBLE,comm
  *     )
  *     offset = 0             # <<<<<<<<<<<<<<
@@ -9496,7 +9389,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   __pyx_v_offset = 0;
 
-  /* "readdrSH.pyx":1054
+  /* "readdrSH.pyx":1059
  *     )
  *     offset = 0
  *     for j in range(nprocs):             # <<<<<<<<<<<<<<
@@ -9508,7 +9401,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_j = __pyx_t_3;
 
-    /* "readdrSH.pyx":1055
+    /* "readdrSH.pyx":1060
  *     offset = 0
  *     for j in range(nprocs):
  *         N1 = Nproc[j]             # <<<<<<<<<<<<<<
@@ -9517,7 +9410,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
     __pyx_v_N1 = (__pyx_v_Nproc[__pyx_v_j]);
 
-    /* "readdrSH.pyx":1056
+    /* "readdrSH.pyx":1061
  *     for j in range(nprocs):
  *         N1 = Nproc[j]
  *         N2 = Nproc_num[j]             # <<<<<<<<<<<<<<
@@ -9526,7 +9419,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
     __pyx_v_N2 = (__pyx_v_Nproc_num[__pyx_v_j]);
 
-    /* "readdrSH.pyx":1057
+    /* "readdrSH.pyx":1062
  *         N1 = Nproc[j]
  *         N2 = Nproc_num[j]
  *         offset = rdispl[j]             # <<<<<<<<<<<<<<
@@ -9535,19 +9428,19 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
     __pyx_v_offset = (__pyx_v_rdispl[__pyx_v_j]);
 
-    /* "readdrSH.pyx":1058
+    /* "readdrSH.pyx":1063
  *         N2 = Nproc_num[j]
  *         offset = rdispl[j]
  *         for k in range(Np_num):             # <<<<<<<<<<<<<<
  *             for l in range(N2):
  *                 m = (l+N1)/Np
  */
-    __pyx_t_9 = __Pyx_PyInt_As_long(__pyx_v_Np_num); if (unlikely((__pyx_t_9 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1058, __pyx_L1_error)
+    __pyx_t_9 = __Pyx_PyInt_As_long(__pyx_v_Np_num); if (unlikely((__pyx_t_9 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 1063, __pyx_L1_error)
     __pyx_t_10 = __pyx_t_9;
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_10; __pyx_t_5+=1) {
       __pyx_v_k = __pyx_t_5;
 
-      /* "readdrSH.pyx":1059
+      /* "readdrSH.pyx":1064
  *         offset = rdispl[j]
  *         for k in range(Np_num):
  *             for l in range(N2):             # <<<<<<<<<<<<<<
@@ -9559,7 +9452,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
       for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
         __pyx_v_l = __pyx_t_13;
 
-        /* "readdrSH.pyx":1060
+        /* "readdrSH.pyx":1065
  *         for k in range(Np_num):
  *             for l in range(N2):
  *                 m = (l+N1)/Np             # <<<<<<<<<<<<<<
@@ -9568,7 +9461,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
         __pyx_v_m = ((__pyx_v_l + __pyx_v_N1) / __pyx_v_Np);
 
-        /* "readdrSH.pyx":1061
+        /* "readdrSH.pyx":1066
  *             for l in range(N2):
  *                 m = (l+N1)/Np
  *                 n = (l+N1)%Np             # <<<<<<<<<<<<<<
@@ -9577,7 +9470,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
         __pyx_v_n = ((__pyx_v_l + __pyx_v_N1) % __pyx_v_Np);
 
-        /* "readdrSH.pyx":1062
+        /* "readdrSH.pyx":1067
  *                 m = (l+N1)/Np
  *                 n = (l+N1)%Np
  *                 olp_r[m,k*Np+n] = olp_rbuf[offset+k*N2+l]             # <<<<<<<<<<<<<<
@@ -9591,7 +9484,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
     }
   }
 
-  /* "readdrSH.pyx":1064
+  /* "readdrSH.pyx":1069
  *                 olp_r[m,k*Np+n] = olp_rbuf[offset+k*N2+l]
  * 
  *     free(Npproc)             # <<<<<<<<<<<<<<
@@ -9600,7 +9493,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   free(__pyx_v_Npproc);
 
-  /* "readdrSH.pyx":1065
+  /* "readdrSH.pyx":1070
  * 
  *     free(Npproc)
  *     free(Npproc_num)             # <<<<<<<<<<<<<<
@@ -9609,7 +9502,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   free(__pyx_v_Npproc_num);
 
-  /* "readdrSH.pyx":1066
+  /* "readdrSH.pyx":1071
  *     free(Npproc)
  *     free(Npproc_num)
  *     free(scount)             # <<<<<<<<<<<<<<
@@ -9618,7 +9511,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   free(__pyx_v_scount);
 
-  /* "readdrSH.pyx":1067
+  /* "readdrSH.pyx":1072
  *     free(Npproc_num)
  *     free(scount)
  *     free(sdispl)             # <<<<<<<<<<<<<<
@@ -9627,7 +9520,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   free(__pyx_v_sdispl);
 
-  /* "readdrSH.pyx":1068
+  /* "readdrSH.pyx":1073
  *     free(scount)
  *     free(sdispl)
  *     free(rcount)             # <<<<<<<<<<<<<<
@@ -9636,7 +9529,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   free(__pyx_v_rcount);
 
-  /* "readdrSH.pyx":1069
+  /* "readdrSH.pyx":1074
  *     free(sdispl)
  *     free(rcount)
  *     free(rdispl)             # <<<<<<<<<<<<<<
@@ -9645,7 +9538,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   free(__pyx_v_rdispl);
 
-  /* "readdrSH.pyx":1070
+  /* "readdrSH.pyx":1075
  *     free(rcount)
  *     free(rdispl)
  *     free(olp_rbuf)             # <<<<<<<<<<<<<<
@@ -9654,7 +9547,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
  */
   free(__pyx_v_olp_rbuf);
 
-  /* "readdrSH.pyx":1017
+  /* "readdrSH.pyx":1022
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef void mat_reshape(             # <<<<<<<<<<<<<<
@@ -9676,7 +9569,7 @@ static void __pyx_f_8readdrSH_mat_reshape(MPI_Comm __pyx_v_comm, double *__pyx_v
   __Pyx_RefNannyFinishContext();
 }
 
-/* "readdrSH.pyx":1075
+/* "readdrSH.pyx":1080
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def olp_inv(             # <<<<<<<<<<<<<<
@@ -9770,113 +9663,113 @@ static PyObject *__pyx_pw_8readdrSH_9olp_inv(PyObject *__pyx_self, PyObject *__p
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nprocs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 1); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 1); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_myid)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 2); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 2); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_olp)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 3); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 3); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_olp_keyinfo)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 4); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 4); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Nsparse_o)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 5); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 5); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ham)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 6); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 6); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_ham_keyinfo)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 7); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 7); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Nsparse_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 8); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 8); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 9); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 9); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 10:
         if (likely((values[10] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dr_csr_ridx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 10); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 10); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 11:
         if (likely((values[11] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dr_csr_cidx)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 11); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 11); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 12:
         if (likely((values[12] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Nsparse_dr)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 12); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 12); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 13:
         if (likely((values[13] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drp_min)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 13); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 13); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 14:
         if (likely((values[14] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 14); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 14); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 15:
         if (likely((values[15] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Nsplit)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 15); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 15); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 16:
         if (likely((values[16] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Mb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 16); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 16); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 17:
         if (likely((values[17] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Nb)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 17); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 17); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case 18:
         if (likely((values[18] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drSH)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 18); __PYX_ERR(0, 1075, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, 18); __PYX_ERR(0, 1080, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "olp_inv") < 0)) __PYX_ERR(0, 1075, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "olp_inv") < 0)) __PYX_ERR(0, 1080, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 19) {
       goto __pyx_L5_argtuple_error;
@@ -9902,34 +9795,34 @@ static PyObject *__pyx_pw_8readdrSH_9olp_inv(PyObject *__pyx_self, PyObject *__p
       values[18] = PyTuple_GET_ITEM(__pyx_args, 18);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nprocs = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nprocs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1076, __pyx_L3_error)
-    __pyx_v_myid = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_myid == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1076, __pyx_L3_error)
-    __pyx_v_olp = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_olp.memview)) __PYX_ERR(0, 1077, __pyx_L3_error)
-    __pyx_v_olp_keyinfo = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_olp_keyinfo.memview)) __PYX_ERR(0, 1077, __pyx_L3_error)
-    __pyx_v_Nsparse_o = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_Nsparse_o == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1077, __pyx_L3_error)
-    __pyx_v_ham = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ham.memview)) __PYX_ERR(0, 1078, __pyx_L3_error)
-    __pyx_v_ham_keyinfo = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ham_keyinfo.memview)) __PYX_ERR(0, 1078, __pyx_L3_error)
-    __pyx_v_Nsparse_h = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_Nsparse_h == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1078, __pyx_L3_error)
-    __pyx_v_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dr.memview)) __PYX_ERR(0, 1079, __pyx_L3_error)
-    __pyx_v_dr_csr_ridx = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dr_csr_ridx.memview)) __PYX_ERR(0, 1079, __pyx_L3_error)
-    __pyx_v_dr_csr_cidx = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dr_csr_cidx.memview)) __PYX_ERR(0, 1079, __pyx_L3_error)
-    __pyx_v_Nsparse_dr = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_Nsparse_dr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1080, __pyx_L3_error)
-    __pyx_v_drp_min = __Pyx_PyInt_As_int(values[13]); if (unlikely((__pyx_v_drp_min == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1080, __pyx_L3_error)
-    __pyx_v_N = __Pyx_PyInt_As_int(values[14]); if (unlikely((__pyx_v_N == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1080, __pyx_L3_error)
-    __pyx_v_Nsplit = __Pyx_PyInt_As_int(values[15]); if (unlikely((__pyx_v_Nsplit == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1080, __pyx_L3_error)
-    __pyx_v_Mb = __Pyx_PyInt_As_MKL_INT(values[16]); if (unlikely((__pyx_v_Mb == ((MKL_INT)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
-    __pyx_v_Nb = __Pyx_PyInt_As_MKL_INT(values[17]); if (unlikely((__pyx_v_Nb == ((MKL_INT)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
-    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1081, __pyx_L3_error)
+    __pyx_v_nprocs = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nprocs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
+    __pyx_v_myid = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_myid == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1081, __pyx_L3_error)
+    __pyx_v_olp = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[3], PyBUF_WRITABLE); if (unlikely(!__pyx_v_olp.memview)) __PYX_ERR(0, 1082, __pyx_L3_error)
+    __pyx_v_olp_keyinfo = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[4], PyBUF_WRITABLE); if (unlikely(!__pyx_v_olp_keyinfo.memview)) __PYX_ERR(0, 1082, __pyx_L3_error)
+    __pyx_v_Nsparse_o = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_Nsparse_o == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1082, __pyx_L3_error)
+    __pyx_v_ham = __Pyx_PyObject_to_MemoryviewSlice_dc_double(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ham.memview)) __PYX_ERR(0, 1083, __pyx_L3_error)
+    __pyx_v_ham_keyinfo = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_ham_keyinfo.memview)) __PYX_ERR(0, 1083, __pyx_L3_error)
+    __pyx_v_Nsparse_h = __Pyx_PyInt_As_int(values[8]); if (unlikely((__pyx_v_Nsparse_h == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1083, __pyx_L3_error)
+    __pyx_v_dr = __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dr.memview)) __PYX_ERR(0, 1084, __pyx_L3_error)
+    __pyx_v_dr_csr_ridx = __Pyx_PyObject_to_MemoryviewSlice_d_dc_int(values[10], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dr_csr_ridx.memview)) __PYX_ERR(0, 1084, __pyx_L3_error)
+    __pyx_v_dr_csr_cidx = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[11], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dr_csr_cidx.memview)) __PYX_ERR(0, 1084, __pyx_L3_error)
+    __pyx_v_Nsparse_dr = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_Nsparse_dr == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1085, __pyx_L3_error)
+    __pyx_v_drp_min = __Pyx_PyInt_As_int(values[13]); if (unlikely((__pyx_v_drp_min == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1085, __pyx_L3_error)
+    __pyx_v_N = __Pyx_PyInt_As_int(values[14]); if (unlikely((__pyx_v_N == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1085, __pyx_L3_error)
+    __pyx_v_Nsplit = __Pyx_PyInt_As_int(values[15]); if (unlikely((__pyx_v_Nsplit == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1085, __pyx_L3_error)
+    __pyx_v_Mb = __Pyx_PyInt_As_MKL_INT(values[16]); if (unlikely((__pyx_v_Mb == ((MKL_INT)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1086, __pyx_L3_error)
+    __pyx_v_Nb = __Pyx_PyInt_As_MKL_INT(values[17]); if (unlikely((__pyx_v_Nb == ((MKL_INT)-1)) && PyErr_Occurred())) __PYX_ERR(0, 1086, __pyx_L3_error)
+    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[18], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1086, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1075, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("olp_inv", 1, 19, 19, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1080, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readdrSH.olp_inv", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1076, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1081, __pyx_L1_error)
   __pyx_r = __pyx_pf_8readdrSH_8olp_inv(__pyx_self, __pyx_v_comm, __pyx_v_nprocs, __pyx_v_myid, __pyx_v_olp, __pyx_v_olp_keyinfo, __pyx_v_Nsparse_o, __pyx_v_ham, __pyx_v_ham_keyinfo, __pyx_v_Nsparse_h, __pyx_v_dr, __pyx_v_dr_csr_ridx, __pyx_v_dr_csr_cidx, __pyx_v_Nsparse_dr, __pyx_v_drp_min, __pyx_v_N, __pyx_v_Nsplit, __pyx_v_Mb, __pyx_v_Nb, __pyx_v_drSH);
 
   /* function exit code */
@@ -10007,7 +9900,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   __Pyx_memviewslice __pyx_t_17 = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_RefNannySetupContext("olp_inv", 0);
 
-  /* "readdrSH.pyx":1083
+  /* "readdrSH.pyx":1088
  *     MKL_INT Mb, MKL_INT Nb, double[:,:,::1] drSH
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -10017,7 +9910,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "readdrSH.pyx":1085
+  /* "readdrSH.pyx":1090
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
  *     cdef int i, j, k, Nproc_min, Nproc_max, Nproc_len
  *     cdef MKL_INT i1 = 1             # <<<<<<<<<<<<<<
@@ -10026,7 +9919,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_i1 = 1;
 
-  /* "readdrSH.pyx":1086
+  /* "readdrSH.pyx":1091
  *     cdef int i, j, k, Nproc_min, Nproc_max, Nproc_len
  *     cdef MKL_INT i1 = 1
  *     cdef MKL_INT i0 = 0             # <<<<<<<<<<<<<<
@@ -10035,7 +9928,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_i0 = 0;
 
-  /* "readdrSH.pyx":1093
+  /* "readdrSH.pyx":1098
  *     cdef MKL_INT descSp[9]
  *     cdef MKL_INT descS[9]
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -10044,7 +9937,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "readdrSH.pyx":1094
+  /* "readdrSH.pyx":1099
  *     cdef MKL_INT descS[9]
  *     cdef int s_int = sizeof(int)
  *     cdef int s_d = sizeof(double)             # <<<<<<<<<<<<<<
@@ -10053,7 +9946,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_s_d = (sizeof(double));
 
-  /* "readdrSH.pyx":1101
+  /* "readdrSH.pyx":1106
  *     cdef double* olpbuf_pb
  *     cdef double* hambuf_pb
  *     cdef double f0 = 0.0             # <<<<<<<<<<<<<<
@@ -10062,7 +9955,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_f0 = 0.0;
 
-  /* "readdrSH.pyx":1102
+  /* "readdrSH.pyx":1107
  *     cdef double* hambuf_pb
  *     cdef double f0 = 0.0
  *     cdef double f1 = 1.0             # <<<<<<<<<<<<<<
@@ -10071,7 +9964,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_f1 = 1.0;
 
-  /* "readdrSH.pyx":1107
+  /* "readdrSH.pyx":1112
  *     cdef sparse_matrix_t csrdr
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -10080,7 +9973,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "readdrSH.pyx":1109
+  /* "readdrSH.pyx":1114
  *     starttime = mpi.MPI_Wtime()
  *     # split N
  *     Nproc_num = <int*>calloc(s_int,nprocs)             # <<<<<<<<<<<<<<
@@ -10089,7 +9982,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Nproc_num = ((int *)calloc(__pyx_v_s_int, __pyx_v_nprocs));
 
-  /* "readdrSH.pyx":1110
+  /* "readdrSH.pyx":1115
  *     # split N
  *     Nproc_num = <int*>calloc(s_int,nprocs)
  *     Nproc = <int*>calloc(s_int,(nprocs+1))             # <<<<<<<<<<<<<<
@@ -10098,7 +9991,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Nproc = ((int *)calloc(__pyx_v_s_int, (__pyx_v_nprocs + 1)));
 
-  /* "readdrSH.pyx":1111
+  /* "readdrSH.pyx":1116
  *     Nproc_num = <int*>calloc(s_int,nprocs)
  *     Nproc = <int*>calloc(s_int,(nprocs+1))
  *     if (N%nprocs==0):             # <<<<<<<<<<<<<<
@@ -10108,7 +10001,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_2 = (((__pyx_v_N % __pyx_v_nprocs) == 0) != 0);
   if (__pyx_t_2) {
 
-    /* "readdrSH.pyx":1112
+    /* "readdrSH.pyx":1117
  *     Nproc = <int*>calloc(s_int,(nprocs+1))
  *     if (N%nprocs==0):
  *         j = N/nprocs             # <<<<<<<<<<<<<<
@@ -10117,7 +10010,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_j = (__pyx_v_N / __pyx_v_nprocs);
 
-    /* "readdrSH.pyx":1113
+    /* "readdrSH.pyx":1118
  *     if (N%nprocs==0):
  *         j = N/nprocs
  *         for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -10129,7 +10022,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "readdrSH.pyx":1114
+      /* "readdrSH.pyx":1119
  *         j = N/nprocs
  *         for i in range(nprocs):
  *             Nproc_num[i] = j             # <<<<<<<<<<<<<<
@@ -10139,7 +10032,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
       (__pyx_v_Nproc_num[__pyx_v_i]) = __pyx_v_j;
     }
 
-    /* "readdrSH.pyx":1111
+    /* "readdrSH.pyx":1116
  *     Nproc_num = <int*>calloc(s_int,nprocs)
  *     Nproc = <int*>calloc(s_int,(nprocs+1))
  *     if (N%nprocs==0):             # <<<<<<<<<<<<<<
@@ -10149,7 +10042,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     goto __pyx_L3;
   }
 
-  /* "readdrSH.pyx":1116
+  /* "readdrSH.pyx":1121
  *             Nproc_num[i] = j
  *     else:
  *         j = N/nprocs+1             # <<<<<<<<<<<<<<
@@ -10159,7 +10052,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   /*else*/ {
     __pyx_v_j = ((__pyx_v_N / __pyx_v_nprocs) + 1);
 
-    /* "readdrSH.pyx":1117
+    /* "readdrSH.pyx":1122
  *     else:
  *         j = N/nprocs+1
  *         k = N/j             # <<<<<<<<<<<<<<
@@ -10168,7 +10061,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
     __pyx_v_k = (__pyx_v_N / __pyx_v_j);
 
-    /* "readdrSH.pyx":1118
+    /* "readdrSH.pyx":1123
  *         j = N/nprocs+1
  *         k = N/j
  *         for i in range(k):             # <<<<<<<<<<<<<<
@@ -10180,7 +10073,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_i = __pyx_t_5;
 
-      /* "readdrSH.pyx":1119
+      /* "readdrSH.pyx":1124
  *         k = N/j
  *         for i in range(k):
  *             Nproc_num[i] = j             # <<<<<<<<<<<<<<
@@ -10190,7 +10083,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
       (__pyx_v_Nproc_num[__pyx_v_i]) = __pyx_v_j;
     }
 
-    /* "readdrSH.pyx":1120
+    /* "readdrSH.pyx":1125
  *         for i in range(k):
  *             Nproc_num[i] = j
  *         Nproc_num[k] = N-j*k             # <<<<<<<<<<<<<<
@@ -10201,7 +10094,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   }
   __pyx_L3:;
 
-  /* "readdrSH.pyx":1121
+  /* "readdrSH.pyx":1126
  *             Nproc_num[i] = j
  *         Nproc_num[k] = N-j*k
  *     for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -10213,7 +10106,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   for (__pyx_t_5 = 0; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
     __pyx_v_i = __pyx_t_5;
 
-    /* "readdrSH.pyx":1122
+    /* "readdrSH.pyx":1127
  *         Nproc_num[k] = N-j*k
  *     for i in range(nprocs):
  *         for j in range(i+1,nprocs+1):             # <<<<<<<<<<<<<<
@@ -10225,7 +10118,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     for (__pyx_t_8 = (__pyx_v_i + 1); __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
       __pyx_v_j = __pyx_t_8;
 
-      /* "readdrSH.pyx":1123
+      /* "readdrSH.pyx":1128
  *     for i in range(nprocs):
  *         for j in range(i+1,nprocs+1):
  *             Nproc[j] += Nproc_num[i]             # <<<<<<<<<<<<<<
@@ -10237,7 +10130,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     }
   }
 
-  /* "readdrSH.pyx":1124
+  /* "readdrSH.pyx":1129
  *         for j in range(i+1,nprocs+1):
  *             Nproc[j] += Nproc_num[i]
  *     Nproc_min = Nproc[myid]             # <<<<<<<<<<<<<<
@@ -10246,7 +10139,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Nproc_min = (__pyx_v_Nproc[__pyx_v_myid]);
 
-  /* "readdrSH.pyx":1125
+  /* "readdrSH.pyx":1130
  *             Nproc[j] += Nproc_num[i]
  *     Nproc_min = Nproc[myid]
  *     Nproc_max = Nproc[myid+1]             # <<<<<<<<<<<<<<
@@ -10255,7 +10148,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Nproc_max = (__pyx_v_Nproc[(__pyx_v_myid + 1)]);
 
-  /* "readdrSH.pyx":1126
+  /* "readdrSH.pyx":1131
  *     Nproc_min = Nproc[myid]
  *     Nproc_max = Nproc[myid+1]
  *     Nproc_len = Nproc_num[myid]             # <<<<<<<<<<<<<<
@@ -10264,7 +10157,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Nproc_len = (__pyx_v_Nproc_num[__pyx_v_myid]);
 
-  /* "readdrSH.pyx":1127
+  /* "readdrSH.pyx":1132
  *     Nproc_max = Nproc[myid+1]
  *     Nproc_len = Nproc_num[myid]
  *     N_mkl = N             # <<<<<<<<<<<<<<
@@ -10273,7 +10166,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_N_mkl = __pyx_v_N;
 
-  /* "readdrSH.pyx":1128
+  /* "readdrSH.pyx":1133
  *     Nproc_len = Nproc_num[myid]
  *     N_mkl = N
  *     Nsparse_mkl = Nsparse_dr             # <<<<<<<<<<<<<<
@@ -10282,7 +10175,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Nsparse_mkl = __pyx_v_Nsparse_dr;
 
-  /* "readdrSH.pyx":1129
+  /* "readdrSH.pyx":1134
  *     N_mkl = N
  *     Nsparse_mkl = Nsparse_dr
  *     Nproc_mkl = Nproc_num[0]             # <<<<<<<<<<<<<<
@@ -10291,7 +10184,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Nproc_mkl = (__pyx_v_Nproc_num[0]);
 
-  /* "readdrSH.pyx":1130
+  /* "readdrSH.pyx":1135
  *     Nsparse_mkl = Nsparse_dr
  *     Nproc_mkl = Nproc_num[0]
  *     Np_mkl = N/Nsplit             # <<<<<<<<<<<<<<
@@ -10300,7 +10193,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_Np_mkl = (__pyx_v_N / __pyx_v_Nsplit);
 
-  /* "readdrSH.pyx":1132
+  /* "readdrSH.pyx":1137
  *     Np_mkl = N/Nsplit
  * 
  *     matbuf = <double*>malloc(s_d*N*Nproc_len)             # <<<<<<<<<<<<<<
@@ -10309,7 +10202,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_matbuf = ((double *)malloc(((__pyx_v_s_d * __pyx_v_N) * __pyx_v_Nproc_len)));
 
-  /* "readdrSH.pyx":1134
+  /* "readdrSH.pyx":1139
  *     matbuf = <double*>malloc(s_d*N*Nproc_len)
  *     # get scalapack info
  *     blacs_get(&i0,&i0,&ictxt)             # <<<<<<<<<<<<<<
@@ -10318,7 +10211,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   blacs_get((&__pyx_v_i0), (&__pyx_v_i0), (&__pyx_v_ictxt));
 
-  /* "readdrSH.pyx":1135
+  /* "readdrSH.pyx":1140
  *     # get scalapack info
  *     blacs_get(&i0,&i0,&ictxt)
  *     blacs_get(&i0,&i0,&ictxt1)             # <<<<<<<<<<<<<<
@@ -10327,7 +10220,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   blacs_get((&__pyx_v_i0), (&__pyx_v_i0), (&__pyx_v_ictxt1));
 
-  /* "readdrSH.pyx":1136
+  /* "readdrSH.pyx":1141
  *     blacs_get(&i0,&i0,&ictxt)
  *     blacs_get(&i0,&i0,&ictxt1)
  *     nprow = 1             # <<<<<<<<<<<<<<
@@ -10336,7 +10229,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_nprow = 1;
 
-  /* "readdrSH.pyx":1137
+  /* "readdrSH.pyx":1142
  *     blacs_get(&i0,&i0,&ictxt1)
  *     nprow = 1
  *     npcol = nprocs             # <<<<<<<<<<<<<<
@@ -10345,7 +10238,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_npcol = __pyx_v_nprocs;
 
-  /* "readdrSH.pyx":1138
+  /* "readdrSH.pyx":1143
  *     nprow = 1
  *     npcol = nprocs
  *     for i in range(1,<int>(sqrt(nprocs))+1):             # <<<<<<<<<<<<<<
@@ -10357,7 +10250,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   for (__pyx_t_3 = 1; __pyx_t_3 < __pyx_t_7; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":1139
+    /* "readdrSH.pyx":1144
  *     npcol = nprocs
  *     for i in range(1,<int>(sqrt(nprocs))+1):
  *         if (nprocs%i==0):             # <<<<<<<<<<<<<<
@@ -10367,7 +10260,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_2 = (((__pyx_v_nprocs % __pyx_v_i) == 0) != 0);
     if (__pyx_t_2) {
 
-      /* "readdrSH.pyx":1140
+      /* "readdrSH.pyx":1145
  *     for i in range(1,<int>(sqrt(nprocs))+1):
  *         if (nprocs%i==0):
  *             nprow = i             # <<<<<<<<<<<<<<
@@ -10376,7 +10269,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_nprow = __pyx_v_i;
 
-      /* "readdrSH.pyx":1141
+      /* "readdrSH.pyx":1146
  *         if (nprocs%i==0):
  *             nprow = i
  *             npcol = nprocs/i             # <<<<<<<<<<<<<<
@@ -10385,7 +10278,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
       __pyx_v_npcol = (__pyx_v_nprocs / __pyx_v_i);
 
-      /* "readdrSH.pyx":1139
+      /* "readdrSH.pyx":1144
  *     npcol = nprocs
  *     for i in range(1,<int>(sqrt(nprocs))+1):
  *         if (nprocs%i==0):             # <<<<<<<<<<<<<<
@@ -10395,7 +10288,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     }
   }
 
-  /* "readdrSH.pyx":1142
+  /* "readdrSH.pyx":1147
  *             nprow = i
  *             npcol = nprocs/i
  *     nprow1 = nprocs             # <<<<<<<<<<<<<<
@@ -10404,7 +10297,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_nprow1 = __pyx_v_nprocs;
 
-  /* "readdrSH.pyx":1143
+  /* "readdrSH.pyx":1148
  *             npcol = nprocs/i
  *     nprow1 = nprocs
  *     npcol1 = 1             # <<<<<<<<<<<<<<
@@ -10413,7 +10306,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_npcol1 = 1;
 
-  /* "readdrSH.pyx":1145
+  /* "readdrSH.pyx":1150
  *     npcol1 = 1
  * 
  *     blacs_gridinit(&ictxt,"Row",&nprow,&npcol)             # <<<<<<<<<<<<<<
@@ -10422,7 +10315,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   blacs_gridinit((&__pyx_v_ictxt), ((char *)"Row"), (&__pyx_v_nprow), (&__pyx_v_npcol));
 
-  /* "readdrSH.pyx":1146
+  /* "readdrSH.pyx":1151
  * 
  *     blacs_gridinit(&ictxt,"Row",&nprow,&npcol)
  *     blacs_gridinit(&ictxt1,"Row",&nprow1,&npcol1)             # <<<<<<<<<<<<<<
@@ -10431,7 +10324,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   blacs_gridinit((&__pyx_v_ictxt1), ((char *)"Row"), (&__pyx_v_nprow1), (&__pyx_v_npcol1));
 
-  /* "readdrSH.pyx":1147
+  /* "readdrSH.pyx":1152
  *     blacs_gridinit(&ictxt,"Row",&nprow,&npcol)
  *     blacs_gridinit(&ictxt1,"Row",&nprow1,&npcol1)
  *     blacs_gridinfo(&ictxt,&nprow,&npcol,&myrow,&mycol)             # <<<<<<<<<<<<<<
@@ -10440,7 +10333,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   blacs_gridinfo((&__pyx_v_ictxt), (&__pyx_v_nprow), (&__pyx_v_npcol), (&__pyx_v_myrow), (&__pyx_v_mycol));
 
-  /* "readdrSH.pyx":1148
+  /* "readdrSH.pyx":1153
  *     blacs_gridinit(&ictxt1,"Row",&nprow1,&npcol1)
  *     blacs_gridinfo(&ictxt,&nprow,&npcol,&myrow,&mycol)
  *     blacs_gridinfo(&ictxt1,&nprow1,&npcol1,&myrow1,&mycol1)             # <<<<<<<<<<<<<<
@@ -10449,7 +10342,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   blacs_gridinfo((&__pyx_v_ictxt1), (&__pyx_v_nprow1), (&__pyx_v_npcol1), (&__pyx_v_myrow1), (&__pyx_v_mycol1));
 
-  /* "readdrSH.pyx":1149
+  /* "readdrSH.pyx":1154
  *     blacs_gridinfo(&ictxt,&nprow,&npcol,&myrow,&mycol)
  *     blacs_gridinfo(&ictxt1,&nprow1,&npcol1,&myrow1,&mycol1)
  *     mb = numroc(&N_mkl,&Mb,&myrow,&i0,&nprow)             # <<<<<<<<<<<<<<
@@ -10458,7 +10351,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_mb = numroc((&__pyx_v_N_mkl), (&__pyx_v_Mb), (&__pyx_v_myrow), (&__pyx_v_i0), (&__pyx_v_nprow));
 
-  /* "readdrSH.pyx":1150
+  /* "readdrSH.pyx":1155
  *     blacs_gridinfo(&ictxt1,&nprow1,&npcol1,&myrow1,&mycol1)
  *     mb = numroc(&N_mkl,&Mb,&myrow,&i0,&nprow)
  *     nb = numroc(&N_mkl,&Nb,&mycol,&i0,&npcol)             # <<<<<<<<<<<<<<
@@ -10467,7 +10360,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_nb = numroc((&__pyx_v_N_mkl), (&__pyx_v_Nb), (&__pyx_v_mycol), (&__pyx_v_i0), (&__pyx_v_npcol));
 
-  /* "readdrSH.pyx":1152
+  /* "readdrSH.pyx":1157
  *     nb = numroc(&N_mkl,&Nb,&mycol,&i0,&npcol)
  * 
  *     lldSp = Nproc_len             # <<<<<<<<<<<<<<
@@ -10476,44 +10369,68 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_lldSp = __pyx_v_Nproc_len;
 
-  /* "readdrSH.pyx":1153
+  /* "readdrSH.pyx":1158
  * 
  *     lldSp = Nproc_len
  *     lldS = <MKL_INT>fmax(mb,1)             # <<<<<<<<<<<<<<
  *     descinit(descS,&N_mkl,&N_mkl,&Mb,&Nb,&i0,&i0,&ictxt,&lldS,&info)
- *     descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)
+ *     #descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)
  */
   __pyx_v_lldS = ((MKL_INT)fmax(__pyx_v_mb, 1.0));
 
-  /* "readdrSH.pyx":1154
+  /* "readdrSH.pyx":1159
  *     lldSp = Nproc_len
  *     lldS = <MKL_INT>fmax(mb,1)
  *     descinit(descS,&N_mkl,&N_mkl,&Mb,&Nb,&i0,&i0,&ictxt,&lldS,&info)             # <<<<<<<<<<<<<<
- *     descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)
- *     olpbuf_pb = <double*>malloc(s_d*mb*nb)
+ *     #descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)
+ *     # In some spacial case,
  */
   descinit(__pyx_v_descS, (&__pyx_v_N_mkl), (&__pyx_v_N_mkl), (&__pyx_v_Mb), (&__pyx_v_Nb), (&__pyx_v_i0), (&__pyx_v_i0), (&__pyx_v_ictxt), (&__pyx_v_lldS), (&__pyx_v_info));
 
-  /* "readdrSH.pyx":1155
- *     lldS = <MKL_INT>fmax(mb,1)
- *     descinit(descS,&N_mkl,&N_mkl,&Mb,&Nb,&i0,&i0,&ictxt,&lldS,&info)
- *     descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)             # <<<<<<<<<<<<<<
- *     olpbuf_pb = <double*>malloc(s_d*mb*nb)
- *     hambuf_pb = <double*>malloc(s_d*mb*nb)
+  /* "readdrSH.pyx":1166
+ *     # lldSp = 0 has no influence on data redistribution of pdgemr2d.
+ *     # Here we manually assign descSp to avoid using descinit.
+ *     descSp[0] = i1;    descSp[1] = ictxt1;    descSp[2] = N_mkl             # <<<<<<<<<<<<<<
+ *     descSp[3] = N_mkl; descSp[4] = Nproc_mkl; descSp[5] = N_mkl
+ *     descSp[6] = i0;    descSp[7] = i0;        descSp[8] = lldSp
  */
-  descinit(__pyx_v_descSp, (&__pyx_v_N_mkl), (&__pyx_v_N_mkl), (&__pyx_v_Nproc_mkl), (&__pyx_v_N_mkl), (&__pyx_v_i0), (&__pyx_v_i0), (&__pyx_v_ictxt1), (&__pyx_v_lldSp), (&__pyx_v_info));
+  (__pyx_v_descSp[0]) = __pyx_v_i1;
+  (__pyx_v_descSp[1]) = __pyx_v_ictxt1;
+  (__pyx_v_descSp[2]) = __pyx_v_N_mkl;
 
-  /* "readdrSH.pyx":1156
- *     descinit(descS,&N_mkl,&N_mkl,&Mb,&Nb,&i0,&i0,&ictxt,&lldS,&info)
- *     descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)
+  /* "readdrSH.pyx":1167
+ *     # Here we manually assign descSp to avoid using descinit.
+ *     descSp[0] = i1;    descSp[1] = ictxt1;    descSp[2] = N_mkl
+ *     descSp[3] = N_mkl; descSp[4] = Nproc_mkl; descSp[5] = N_mkl             # <<<<<<<<<<<<<<
+ *     descSp[6] = i0;    descSp[7] = i0;        descSp[8] = lldSp
+ * 
+ */
+  (__pyx_v_descSp[3]) = __pyx_v_N_mkl;
+  (__pyx_v_descSp[4]) = __pyx_v_Nproc_mkl;
+  (__pyx_v_descSp[5]) = __pyx_v_N_mkl;
+
+  /* "readdrSH.pyx":1168
+ *     descSp[0] = i1;    descSp[1] = ictxt1;    descSp[2] = N_mkl
+ *     descSp[3] = N_mkl; descSp[4] = Nproc_mkl; descSp[5] = N_mkl
+ *     descSp[6] = i0;    descSp[7] = i0;        descSp[8] = lldSp             # <<<<<<<<<<<<<<
+ * 
+ *     olpbuf_pb = <double*>malloc(s_d*mb*nb)
+ */
+  (__pyx_v_descSp[6]) = __pyx_v_i0;
+  (__pyx_v_descSp[7]) = __pyx_v_i0;
+  (__pyx_v_descSp[8]) = __pyx_v_lldSp;
+
+  /* "readdrSH.pyx":1170
+ *     descSp[6] = i0;    descSp[7] = i0;        descSp[8] = lldSp
+ * 
  *     olpbuf_pb = <double*>malloc(s_d*mb*nb)             # <<<<<<<<<<<<<<
  *     hambuf_pb = <double*>malloc(s_d*mb*nb)
  * 
  */
   __pyx_v_olpbuf_pb = ((double *)malloc(((__pyx_v_s_d * __pyx_v_mb) * __pyx_v_nb)));
 
-  /* "readdrSH.pyx":1157
- *     descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)
+  /* "readdrSH.pyx":1171
+ * 
  *     olpbuf_pb = <double*>malloc(s_d*mb*nb)
  *     hambuf_pb = <double*>malloc(s_d*mb*nb)             # <<<<<<<<<<<<<<
  * 
@@ -10521,7 +10438,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_hambuf_pb = ((double *)malloc(((__pyx_v_s_d * __pyx_v_mb) * __pyx_v_nb)));
 
-  /* "readdrSH.pyx":1160
+  /* "readdrSH.pyx":1174
  * 
  *     # init ham_pb,olp_pb
  *     sparse2dense_coo(             # <<<<<<<<<<<<<<
@@ -10530,7 +10447,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_f_8readdrSH_sparse2dense_coo(__pyx_v_olp, __pyx_v_olp_keyinfo, __pyx_v_N, __pyx_v_Nsparse_o, __pyx_v_Nproc_min, __pyx_v_Nproc_max, __pyx_v_Nproc_len, 1.0, __pyx_v_matbuf);
 
-  /* "readdrSH.pyx":1164
+  /* "readdrSH.pyx":1178
  *         Nproc_max,Nproc_len,1.0,matbuf
  *     )
  *     pdgemr2d(             # <<<<<<<<<<<<<<
@@ -10539,7 +10456,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   pdgemr2d((&__pyx_v_N_mkl), (&__pyx_v_N_mkl), __pyx_v_matbuf, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descSp, __pyx_v_olpbuf_pb, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descS, (&__pyx_v_ictxt));
 
-  /* "readdrSH.pyx":1168
+  /* "readdrSH.pyx":1182
  *         olpbuf_pb,&i1,&i1,descS,&ictxt
  *     )
  *     sparse2dense_coo(             # <<<<<<<<<<<<<<
@@ -10548,7 +10465,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_f_8readdrSH_sparse2dense_coo(__pyx_v_ham, __pyx_v_ham_keyinfo, __pyx_v_N, __pyx_v_Nsparse_h, __pyx_v_Nproc_min, __pyx_v_Nproc_max, __pyx_v_Nproc_len, 1.0, __pyx_v_matbuf);
 
-  /* "readdrSH.pyx":1172
+  /* "readdrSH.pyx":1186
  *         Nproc_max,Nproc_len,1.0,matbuf
  *     )
  *     pdgemr2d(             # <<<<<<<<<<<<<<
@@ -10557,7 +10474,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   pdgemr2d((&__pyx_v_N_mkl), (&__pyx_v_N_mkl), __pyx_v_matbuf, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descSp, __pyx_v_hambuf_pb, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descS, (&__pyx_v_ictxt));
 
-  /* "readdrSH.pyx":1177
+  /* "readdrSH.pyx":1191
  *     )
  *     # calculate S^-1*H
  *     pdposv(             # <<<<<<<<<<<<<<
@@ -10566,7 +10483,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   pdposv(((char *)"U"), (&__pyx_v_N_mkl), (&__pyx_v_N_mkl), __pyx_v_olpbuf_pb, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descS, __pyx_v_hambuf_pb, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descS, (&__pyx_v_info));
 
-  /* "readdrSH.pyx":1181
+  /* "readdrSH.pyx":1195
  *         descS,hambuf_pb,&i1,&i1,descS,&info
  *     )
  *     free(olpbuf_pb)             # <<<<<<<<<<<<<<
@@ -10575,7 +10492,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   free(__pyx_v_olpbuf_pb);
 
-  /* "readdrSH.pyx":1182
+  /* "readdrSH.pyx":1196
  *     )
  *     free(olpbuf_pb)
  *     olpinvham = <double*>malloc(s_d*N*Nproc_len)             # <<<<<<<<<<<<<<
@@ -10584,7 +10501,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_v_olpinvham = ((double *)malloc(((__pyx_v_s_d * __pyx_v_N) * __pyx_v_Nproc_len)));
 
-  /* "readdrSH.pyx":1183
+  /* "readdrSH.pyx":1197
  *     free(olpbuf_pb)
  *     olpinvham = <double*>malloc(s_d*N*Nproc_len)
  *     pdgemr2d(             # <<<<<<<<<<<<<<
@@ -10593,7 +10510,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   pdgemr2d((&__pyx_v_N_mkl), (&__pyx_v_N_mkl), __pyx_v_hambuf_pb, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descS, __pyx_v_olpinvham, (&__pyx_v_i1), (&__pyx_v_i1), __pyx_v_descSp, (&__pyx_v_ictxt1));
 
-  /* "readdrSH.pyx":1187
+  /* "readdrSH.pyx":1201
  *         olpinvham,&i1,&i1,descSp,&ictxt1
  *     )
  *     free(hambuf_pb)             # <<<<<<<<<<<<<<
@@ -10602,7 +10519,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   free(__pyx_v_hambuf_pb);
 
-  /* "readdrSH.pyx":1189
+  /* "readdrSH.pyx":1203
  *     free(hambuf_pb)
  *     # transpose S^-1*H from fortran to C order
  *     mat_tran(             # <<<<<<<<<<<<<<
@@ -10611,17 +10528,17 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
   __pyx_f_8readdrSH_mat_tran(__pyx_v_c_comm, __pyx_v_nprocs, __pyx_v_N, __pyx_v_Nproc_len, __pyx_v_Nproc, __pyx_v_Nproc_num, __pyx_v_olpinvham, __pyx_v_matbuf);
 
-  /* "readdrSH.pyx":1198
- * #        fwrite(olpinvham,s_d,N*Nproc_len,fp)
- * #        fclose(fp)
+  /* "readdrSH.pyx":1207
+ *         Nproc_num,olpinvham,matbuf
+ *     )
  *     descrdr.type = SPARSE_MATRIX_TYPE_GENERAL             # <<<<<<<<<<<<<<
  *     for i in range(3):
  *         mkl_sparse_d_create_csr(
  */
   __pyx_v_descrdr.type = SPARSE_MATRIX_TYPE_GENERAL;
 
-  /* "readdrSH.pyx":1199
- * #        fclose(fp)
+  /* "readdrSH.pyx":1208
+ *     )
  *     descrdr.type = SPARSE_MATRIX_TYPE_GENERAL
  *     for i in range(3):             # <<<<<<<<<<<<<<
  *         mkl_sparse_d_create_csr(
@@ -10630,7 +10547,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
   for (__pyx_t_3 = 0; __pyx_t_3 < 3; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "readdrSH.pyx":1202
+    /* "readdrSH.pyx":1211
  *         mkl_sparse_d_create_csr(
  *             &csrdr,SPARSE_INDEX_BASE_ZERO,Np_mkl,N_mkl,
  *             &dr_csr_ridx[0,0],&dr_csr_ridx[1,0],             # <<<<<<<<<<<<<<
@@ -10642,7 +10559,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_12 = 1;
     __pyx_t_13 = 0;
 
-    /* "readdrSH.pyx":1203
+    /* "readdrSH.pyx":1212
  *             &csrdr,SPARSE_INDEX_BASE_ZERO,Np_mkl,N_mkl,
  *             &dr_csr_ridx[0,0],&dr_csr_ridx[1,0],
  *             &dr_csr_cidx[drp_min],&dr[i,drp_min]             # <<<<<<<<<<<<<<
@@ -10653,7 +10570,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
     __pyx_t_15 = __pyx_v_i;
     __pyx_t_16 = __pyx_v_drp_min;
 
-    /* "readdrSH.pyx":1200
+    /* "readdrSH.pyx":1209
  *     descrdr.type = SPARSE_MATRIX_TYPE_GENERAL
  *     for i in range(3):
  *         mkl_sparse_d_create_csr(             # <<<<<<<<<<<<<<
@@ -10662,7 +10579,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
     (void)(mkl_sparse_d_create_csr((&__pyx_v_csrdr), SPARSE_INDEX_BASE_ZERO, __pyx_v_Np_mkl, __pyx_v_N_mkl, (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_dr_csr_ridx.data + __pyx_t_10 * __pyx_v_dr_csr_ridx.strides[0]) )) + __pyx_t_11)) )))), (&(*((int *) ( /* dim=1 */ ((char *) (((int *) ( /* dim=0 */ (__pyx_v_dr_csr_ridx.data + __pyx_t_12 * __pyx_v_dr_csr_ridx.strides[0]) )) + __pyx_t_13)) )))), (&(*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_dr_csr_cidx.data) + __pyx_t_14)) )))), (&(*((double *) ( /* dim=1 */ ((char *) (((double *) ( /* dim=0 */ (__pyx_v_dr.data + __pyx_t_15 * __pyx_v_dr.strides[0]) )) + __pyx_t_16)) ))))));
 
-    /* "readdrSH.pyx":1205
+    /* "readdrSH.pyx":1214
  *             &dr_csr_cidx[drp_min],&dr[i,drp_min]
  *         )
  *         mkl_sparse_optimize(csrdr)             # <<<<<<<<<<<<<<
@@ -10671,7 +10588,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
     (void)(mkl_sparse_optimize(__pyx_v_csrdr));
 
-    /* "readdrSH.pyx":1207
+    /* "readdrSH.pyx":1216
  *         mkl_sparse_optimize(csrdr)
  *         # dot(dr,S^-1*H) [Np,N]*[N,Nproc_len]
  *         mkl_sparse_d_mm(             # <<<<<<<<<<<<<<
@@ -10680,7 +10597,7 @@ static PyObject *__pyx_pf_8readdrSH_8olp_inv(CYTHON_UNUSED PyObject *__pyx_self,
  */
     (void)(mkl_sparse_d_mm(SPARSE_OPERATION_NON_TRANSPOSE, 1.0, __pyx_v_csrdr, __pyx_v_descrdr, SPARSE_LAYOUT_ROW_MAJOR, __pyx_v_olpinvham, __pyx_v_lldSp, __pyx_v_lldSp, 0.0, __pyx_v_matbuf, __pyx_v_lldSp));
 
-    /* "readdrSH.pyx":1215
+    /* "readdrSH.pyx":1224
  *         mat_reshape(
  *             c_comm,matbuf,nprocs,myid,N,Nproc_len,
  *             Nsplit,Nproc,Nproc_num,drSH[i]             # <<<<<<<<<<<<<<
@@ -10706,7 +10623,7 @@ __pyx_t_17.strides[1] = __pyx_v_drSH.strides[2];
 
 __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __pyx_v_myid, __pyx_v_N, __pyx_v_Nproc_len, __pyx_v_Nsplit, __pyx_v_Nproc, __pyx_v_Nproc_num, __pyx_t_17);
 
-    /* "readdrSH.pyx":1213
+    /* "readdrSH.pyx":1222
  *         )
  *         # reshape dr*S^-1*H [Np,N]->[nR,(Np)_p,Np]
  *         mat_reshape(             # <<<<<<<<<<<<<<
@@ -10717,7 +10634,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
     __pyx_t_17.memview = NULL;
     __pyx_t_17.data = NULL;
 
-    /* "readdrSH.pyx":1217
+    /* "readdrSH.pyx":1226
  *             Nsplit,Nproc,Nproc_num,drSH[i]
  *         )
  *         mkl_sparse_destroy(csrdr)             # <<<<<<<<<<<<<<
@@ -10727,7 +10644,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
     (void)(mkl_sparse_destroy(__pyx_v_csrdr));
   }
 
-  /* "readdrSH.pyx":1219
+  /* "readdrSH.pyx":1228
  *         mkl_sparse_destroy(csrdr)
  * 
  *     free(Nproc)             # <<<<<<<<<<<<<<
@@ -10736,7 +10653,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   free(__pyx_v_Nproc);
 
-  /* "readdrSH.pyx":1220
+  /* "readdrSH.pyx":1229
  * 
  *     free(Nproc)
  *     free(Nproc_num)             # <<<<<<<<<<<<<<
@@ -10745,7 +10662,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   free(__pyx_v_Nproc_num);
 
-  /* "readdrSH.pyx":1221
+  /* "readdrSH.pyx":1230
  *     free(Nproc)
  *     free(Nproc_num)
  *     free(olpinvham)             # <<<<<<<<<<<<<<
@@ -10754,7 +10671,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   free(__pyx_v_olpinvham);
 
-  /* "readdrSH.pyx":1222
+  /* "readdrSH.pyx":1231
  *     free(Nproc_num)
  *     free(olpinvham)
  *     free(matbuf)             # <<<<<<<<<<<<<<
@@ -10763,7 +10680,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   free(__pyx_v_matbuf);
 
-  /* "readdrSH.pyx":1224
+  /* "readdrSH.pyx":1233
  *     free(matbuf)
  * 
  *     blacs_gridexit(&ictxt)             # <<<<<<<<<<<<<<
@@ -10772,7 +10689,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   blacs_gridexit((&__pyx_v_ictxt));
 
-  /* "readdrSH.pyx":1225
+  /* "readdrSH.pyx":1234
  * 
  *     blacs_gridexit(&ictxt)
  *     blacs_gridexit(&ictxt1)             # <<<<<<<<<<<<<<
@@ -10781,7 +10698,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   blacs_gridexit((&__pyx_v_ictxt1));
 
-  /* "readdrSH.pyx":1227
+  /* "readdrSH.pyx":1236
  *     blacs_gridexit(&ictxt1)
  * 
  *     endtime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -10790,7 +10707,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   __pyx_v_endtime = MPI_Wtime();
 
-  /* "readdrSH.pyx":1228
+  /* "readdrSH.pyx":1237
  * 
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -10800,7 +10717,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
   __pyx_t_2 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_2) {
 
-    /* "readdrSH.pyx":1229
+    /* "readdrSH.pyx":1238
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:
  *         printf("olpinv time: %.5fs.\n",endtime-starttime)             # <<<<<<<<<<<<<<
@@ -10809,7 +10726,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
     (void)(printf(((char const *)"olpinv time: %.5fs.\n"), (__pyx_v_endtime - __pyx_v_starttime)));
 
-    /* "readdrSH.pyx":1228
+    /* "readdrSH.pyx":1237
  * 
  *     endtime = mpi.MPI_Wtime()
  *     if myid == 0:             # <<<<<<<<<<<<<<
@@ -10818,7 +10735,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
  */
   }
 
-  /* "readdrSH.pyx":1075
+  /* "readdrSH.pyx":1080
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def olp_inv(             # <<<<<<<<<<<<<<
@@ -10841,7 +10758,7 @@ __pyx_f_8readdrSH_mat_reshape(__pyx_v_c_comm, __pyx_v_matbuf, __pyx_v_nprocs, __
   return __pyx_r;
 }
 
-/* "readdrSH.pyx":1234
+/* "readdrSH.pyx":1243
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def drSH2dhamil(             # <<<<<<<<<<<<<<
@@ -10908,59 +10825,59 @@ static PyObject *__pyx_pw_8readdrSH_11drSH2dhamil(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_nprocs)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 1); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 1); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_myid)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 2); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 2); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_natom)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 3); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 3); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_N)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 4); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 4); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (likely((values[5] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_Nsplit)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 5); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 5); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  6:
         if (likely((values[6] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 6); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 6); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  7:
         if (likely((values[7] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_norb_u_num)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 7); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 7); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  8:
         if (likely((values[8] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_drSH)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 8); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 8); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  9:
         if (likely((values[9] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_dhamil)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 9); __PYX_ERR(0, 1234, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, 9); __PYX_ERR(0, 1243, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "drSH2dhamil") < 0)) __PYX_ERR(0, 1234, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "drSH2dhamil") < 0)) __PYX_ERR(0, 1243, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 10) {
       goto __pyx_L5_argtuple_error;
@@ -10977,25 +10894,25 @@ static PyObject *__pyx_pw_8readdrSH_11drSH2dhamil(PyObject *__pyx_self, PyObject
       values[9] = PyTuple_GET_ITEM(__pyx_args, 9);
     }
     __pyx_v_comm = ((struct PyMPICommObject *)values[0]);
-    __pyx_v_nprocs = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nprocs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1235, __pyx_L3_error)
-    __pyx_v_myid = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_myid == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1235, __pyx_L3_error)
-    __pyx_v_natom = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1235, __pyx_L3_error)
-    __pyx_v_N = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_N == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1236, __pyx_L3_error)
-    __pyx_v_Nsplit = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_Nsplit == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1236, __pyx_L3_error)
-    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 1236, __pyx_L3_error)
-    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 1236, __pyx_L3_error)
-    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1237, __pyx_L3_error)
-    __pyx_v_dhamil = __Pyx_PyObject_to_MemoryviewSlice_d_d_d_d_dc_double(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dhamil.memview)) __PYX_ERR(0, 1237, __pyx_L3_error)
+    __pyx_v_nprocs = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_nprocs == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1244, __pyx_L3_error)
+    __pyx_v_myid = __Pyx_PyInt_As_int(values[2]); if (unlikely((__pyx_v_myid == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1244, __pyx_L3_error)
+    __pyx_v_natom = __Pyx_PyInt_As_int(values[3]); if (unlikely((__pyx_v_natom == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1244, __pyx_L3_error)
+    __pyx_v_N = __Pyx_PyInt_As_int(values[4]); if (unlikely((__pyx_v_N == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1245, __pyx_L3_error)
+    __pyx_v_Nsplit = __Pyx_PyInt_As_int(values[5]); if (unlikely((__pyx_v_Nsplit == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1245, __pyx_L3_error)
+    __pyx_v_norb_u = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[6], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u.memview)) __PYX_ERR(0, 1245, __pyx_L3_error)
+    __pyx_v_norb_u_num = __Pyx_PyObject_to_MemoryviewSlice_dc_int(values[7], PyBUF_WRITABLE); if (unlikely(!__pyx_v_norb_u_num.memview)) __PYX_ERR(0, 1245, __pyx_L3_error)
+    __pyx_v_drSH = __Pyx_PyObject_to_MemoryviewSlice_d_d_dc_double(values[8], PyBUF_WRITABLE); if (unlikely(!__pyx_v_drSH.memview)) __PYX_ERR(0, 1246, __pyx_L3_error)
+    __pyx_v_dhamil = __Pyx_PyObject_to_MemoryviewSlice_d_d_d_d_dc_double(values[9], PyBUF_WRITABLE); if (unlikely(!__pyx_v_dhamil.memview)) __PYX_ERR(0, 1246, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1234, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("drSH2dhamil", 1, 10, 10, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 1243, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("readdrSH.drSH2dhamil", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1235, __pyx_L1_error)
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_comm), __pyx_ptype_6mpi4py_3MPI_Comm, 1, "comm", 0))) __PYX_ERR(0, 1244, __pyx_L1_error)
   __pyx_r = __pyx_pf_8readdrSH_10drSH2dhamil(__pyx_self, __pyx_v_comm, __pyx_v_nprocs, __pyx_v_myid, __pyx_v_natom, __pyx_v_N, __pyx_v_Nsplit, __pyx_v_norb_u, __pyx_v_norb_u_num, __pyx_v_drSH, __pyx_v_dhamil);
 
   /* function exit code */
@@ -11057,7 +10974,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("drSH2dhamil", 0);
 
-  /* "readdrSH.pyx":1239
+  /* "readdrSH.pyx":1248
  *     double[:,:,::1] drSH, double[:,:,:,:,::1] dhamil
  * ):
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi             # <<<<<<<<<<<<<<
@@ -11067,7 +10984,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
   __pyx_t_1 = __pyx_v_comm->ob_mpi;
   __pyx_v_c_comm = __pyx_t_1;
 
-  /* "readdrSH.pyx":1241
+  /* "readdrSH.pyx":1250
  *     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
  *     cdef int i, j, k, l, m, n, xyz, Np_num
  *     cdef int s_int = sizeof(int)             # <<<<<<<<<<<<<<
@@ -11076,7 +10993,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_s_int = (sizeof(int));
 
-  /* "readdrSH.pyx":1242
+  /* "readdrSH.pyx":1251
  *     cdef int i, j, k, l, m, n, xyz, Np_num
  *     cdef int s_int = sizeof(int)
  *     cdef int s_d = sizeof(double)             # <<<<<<<<<<<<<<
@@ -11085,7 +11002,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_s_d = (sizeof(double));
 
-  /* "readdrSH.pyx":1243
+  /* "readdrSH.pyx":1252
  *     cdef int s_int = sizeof(int)
  *     cdef int s_d = sizeof(double)
  *     cdef int Np = N/Nsplit             # <<<<<<<<<<<<<<
@@ -11094,7 +11011,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_Np = (__pyx_v_N / __pyx_v_Nsplit);
 
-  /* "readdrSH.pyx":1244
+  /* "readdrSH.pyx":1253
  *     cdef int s_d = sizeof(double)
  *     cdef int Np = N/Nsplit
  *     cdef int icell = Nsplit/2             # <<<<<<<<<<<<<<
@@ -11103,7 +11020,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_icell = (((long)__pyx_v_Nsplit) / 2);
 
-  /* "readdrSH.pyx":1246
+  /* "readdrSH.pyx":1255
  *     cdef int icell = Nsplit/2
  *     cdef double * dh_buf
  *     cdef int * count = <int*>malloc(nprocs*s_int)             # <<<<<<<<<<<<<<
@@ -11112,7 +11029,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_count = ((int *)malloc((__pyx_v_nprocs * __pyx_v_s_int)));
 
-  /* "readdrSH.pyx":1247
+  /* "readdrSH.pyx":1256
  *     cdef double * dh_buf
  *     cdef int * count = <int*>malloc(nprocs*s_int)
  *     cdef int * displ = <int*>malloc(nprocs*s_int)             # <<<<<<<<<<<<<<
@@ -11121,7 +11038,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_displ = ((int *)malloc((__pyx_v_nprocs * __pyx_v_s_int)));
 
-  /* "readdrSH.pyx":1248
+  /* "readdrSH.pyx":1257
  *     cdef int * count = <int*>malloc(nprocs*s_int)
  *     cdef int * displ = <int*>malloc(nprocs*s_int)
  *     cdef int * Npproc = <int*>calloc(s_int,nprocs+1)             # <<<<<<<<<<<<<<
@@ -11130,7 +11047,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_Npproc = ((int *)calloc(__pyx_v_s_int, (__pyx_v_nprocs + 1)));
 
-  /* "readdrSH.pyx":1249
+  /* "readdrSH.pyx":1258
  *     cdef int * displ = <int*>malloc(nprocs*s_int)
  *     cdef int * Npproc = <int*>calloc(s_int,nprocs+1)
  *     cdef int * Npproc_num = <int*>calloc(s_int,nprocs)             # <<<<<<<<<<<<<<
@@ -11139,7 +11056,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_Npproc_num = ((int *)calloc(__pyx_v_s_int, __pyx_v_nprocs));
 
-  /* "readdrSH.pyx":1252
+  /* "readdrSH.pyx":1261
  *     cdef double dh, starttime, endtime
  * 
  *     starttime = mpi.MPI_Wtime()             # <<<<<<<<<<<<<<
@@ -11148,7 +11065,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_starttime = MPI_Wtime();
 
-  /* "readdrSH.pyx":1253
+  /* "readdrSH.pyx":1262
  * 
  *     starttime = mpi.MPI_Wtime()
  *     for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -11160,55 +11077,55 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "readdrSH.pyx":1254
+    /* "readdrSH.pyx":1263
  *     starttime = mpi.MPI_Wtime()
  *     for i in range(nprocs):
  *         Np_min = (Np*i)/nprocs             # <<<<<<<<<<<<<<
  *         Np_max = (Np*(i+1))/nprocs
  *         Npproc_num[i] = Np_max-Np_min
  */
-    __pyx_t_5 = __Pyx_PyInt_From_int(((__pyx_v_Np * __pyx_v_i) / __pyx_v_nprocs)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1254, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(((__pyx_v_Np * __pyx_v_i) / __pyx_v_nprocs)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1263, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_XDECREF_SET(__pyx_v_Np_min, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "readdrSH.pyx":1255
+    /* "readdrSH.pyx":1264
  *     for i in range(nprocs):
  *         Np_min = (Np*i)/nprocs
  *         Np_max = (Np*(i+1))/nprocs             # <<<<<<<<<<<<<<
  *         Npproc_num[i] = Np_max-Np_min
  *         Npproc[i+1] = Np_max
  */
-    __pyx_t_5 = __Pyx_PyInt_From_long(((__pyx_v_Np * (__pyx_v_i + 1)) / ((long)__pyx_v_nprocs))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1255, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_long(((__pyx_v_Np * (__pyx_v_i + 1)) / ((long)__pyx_v_nprocs))); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1264, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_XDECREF_SET(__pyx_v_Np_max, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "readdrSH.pyx":1256
+    /* "readdrSH.pyx":1265
  *         Np_min = (Np*i)/nprocs
  *         Np_max = (Np*(i+1))/nprocs
  *         Npproc_num[i] = Np_max-Np_min             # <<<<<<<<<<<<<<
  *         Npproc[i+1] = Np_max
  *     Np_num = Npproc_num[myid]
  */
-    __pyx_t_5 = PyNumber_Subtract(__pyx_v_Np_max, __pyx_v_Np_min); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1256, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Subtract(__pyx_v_Np_max, __pyx_v_Np_min); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1265, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_t_5); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1256, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_t_5); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1265, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     (__pyx_v_Npproc_num[__pyx_v_i]) = __pyx_t_6;
 
-    /* "readdrSH.pyx":1257
+    /* "readdrSH.pyx":1266
  *         Np_max = (Np*(i+1))/nprocs
  *         Npproc_num[i] = Np_max-Np_min
  *         Npproc[i+1] = Np_max             # <<<<<<<<<<<<<<
  *     Np_num = Npproc_num[myid]
  * 
  */
-    __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_v_Np_max); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1257, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_As_int(__pyx_v_Np_max); if (unlikely((__pyx_t_6 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 1266, __pyx_L1_error)
     (__pyx_v_Npproc[(__pyx_v_i + 1)]) = __pyx_t_6;
   }
 
-  /* "readdrSH.pyx":1258
+  /* "readdrSH.pyx":1267
  *         Npproc_num[i] = Np_max-Np_min
  *         Npproc[i+1] = Np_max
  *     Np_num = Npproc_num[myid]             # <<<<<<<<<<<<<<
@@ -11217,7 +11134,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   __pyx_v_Np_num = (__pyx_v_Npproc_num[__pyx_v_myid]);
 
-  /* "readdrSH.pyx":1260
+  /* "readdrSH.pyx":1269
  *     Np_num = Npproc_num[myid]
  * 
  *     for i in range(nprocs):             # <<<<<<<<<<<<<<
@@ -11229,7 +11146,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
   for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_i = __pyx_t_4;
 
-    /* "readdrSH.pyx":1261
+    /* "readdrSH.pyx":1270
  * 
  *     for i in range(nprocs):
  *         count[i] = Np*Npproc_num[i]             # <<<<<<<<<<<<<<
@@ -11238,7 +11155,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
     (__pyx_v_count[__pyx_v_i]) = (__pyx_v_Np * (__pyx_v_Npproc_num[__pyx_v_i]));
 
-    /* "readdrSH.pyx":1262
+    /* "readdrSH.pyx":1271
  *     for i in range(nprocs):
  *         count[i] = Np*Npproc_num[i]
  *         displ[i] = Np*Npproc[i]             # <<<<<<<<<<<<<<
@@ -11248,7 +11165,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
     (__pyx_v_displ[__pyx_v_i]) = (__pyx_v_Np * (__pyx_v_Npproc[__pyx_v_i]));
   }
 
-  /* "readdrSH.pyx":1264
+  /* "readdrSH.pyx":1273
  *         displ[i] = Np*Npproc[i]
  * 
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -11258,7 +11175,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
   __pyx_t_7 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_7) {
 
-    /* "readdrSH.pyx":1265
+    /* "readdrSH.pyx":1274
  * 
  *     if (myid==0):
  *         dh_buf = <double*>malloc(s_d*Np*Np)             # <<<<<<<<<<<<<<
@@ -11267,7 +11184,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
     __pyx_v_dh_buf = ((double *)malloc(((__pyx_v_s_d * __pyx_v_Np) * __pyx_v_Np)));
 
-    /* "readdrSH.pyx":1264
+    /* "readdrSH.pyx":1273
  *         displ[i] = Np*Npproc[i]
  * 
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -11276,7 +11193,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   }
 
-  /* "readdrSH.pyx":1266
+  /* "readdrSH.pyx":1275
  *     if (myid==0):
  *         dh_buf = <double*>malloc(s_d*Np*Np)
  *     mpi.MPI_Barrier(c_comm)             # <<<<<<<<<<<<<<
@@ -11285,7 +11202,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   (void)(MPI_Barrier(__pyx_v_c_comm));
 
-  /* "readdrSH.pyx":1268
+  /* "readdrSH.pyx":1277
  *     mpi.MPI_Barrier(c_comm)
  * 
  *     for xyz in range(3):             # <<<<<<<<<<<<<<
@@ -11295,7 +11212,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
   for (__pyx_t_2 = 0; __pyx_t_2 < 3; __pyx_t_2+=1) {
     __pyx_v_xyz = __pyx_t_2;
 
-    /* "readdrSH.pyx":1269
+    /* "readdrSH.pyx":1278
  * 
  *     for xyz in range(3):
  *         for i in range(Nsplit):             # <<<<<<<<<<<<<<
@@ -11307,7 +11224,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_4; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "readdrSH.pyx":1271
+      /* "readdrSH.pyx":1280
  *         for i in range(Nsplit):
  *             mpi.MPI_Gatherv(
  *                 &drSH[xyz,i,0],count[myid],mpi.MPI_DOUBLE,             # <<<<<<<<<<<<<<
@@ -11318,7 +11235,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
       __pyx_t_9 = __pyx_v_i;
       __pyx_t_10 = 0;
 
-      /* "readdrSH.pyx":1270
+      /* "readdrSH.pyx":1279
  *     for xyz in range(3):
  *         for i in range(Nsplit):
  *             mpi.MPI_Gatherv(             # <<<<<<<<<<<<<<
@@ -11327,7 +11244,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
       (void)(MPI_Gatherv((&(*((double *) ( /* dim=2 */ ((char *) (((double *) ( /* dim=1 */ (( /* dim=0 */ (__pyx_v_drSH.data + __pyx_t_8 * __pyx_v_drSH.strides[0]) ) + __pyx_t_9 * __pyx_v_drSH.strides[1]) )) + __pyx_t_10)) )))), (__pyx_v_count[__pyx_v_myid]), MPI_DOUBLE, __pyx_v_dh_buf, __pyx_v_count, __pyx_v_displ, MPI_DOUBLE, 0, __pyx_v_c_comm));
 
-      /* "readdrSH.pyx":1274
+      /* "readdrSH.pyx":1283
  *                 dh_buf,count,displ,mpi.MPI_DOUBLE,0,c_comm
  *             )
  *             if (myid==0):             # <<<<<<<<<<<<<<
@@ -11337,7 +11254,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
       __pyx_t_7 = ((__pyx_v_myid == 0) != 0);
       if (__pyx_t_7) {
 
-        /* "readdrSH.pyx":1275
+        /* "readdrSH.pyx":1284
  *             )
  *             if (myid==0):
  *                 for k in range(natom):             # <<<<<<<<<<<<<<
@@ -11349,7 +11266,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
         for (__pyx_t_13 = 0; __pyx_t_13 < __pyx_t_12; __pyx_t_13+=1) {
           __pyx_v_k = __pyx_t_13;
 
-          /* "readdrSH.pyx":1276
+          /* "readdrSH.pyx":1285
  *             if (myid==0):
  *                 for k in range(natom):
  *                     for l in range(norb_u_num[k]):             # <<<<<<<<<<<<<<
@@ -11362,7 +11279,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
           for (__pyx_t_16 = 0; __pyx_t_16 < __pyx_t_15; __pyx_t_16+=1) {
             __pyx_v_l = __pyx_t_16;
 
-            /* "readdrSH.pyx":1277
+            /* "readdrSH.pyx":1286
  *                 for k in range(natom):
  *                     for l in range(norb_u_num[k]):
  *                         n = l+norb_u[k]             # <<<<<<<<<<<<<<
@@ -11372,7 +11289,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
             __pyx_t_10 = __pyx_v_k;
             __pyx_v_n = (__pyx_v_l + (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_norb_u.data) + __pyx_t_10)) ))));
 
-            /* "readdrSH.pyx":1278
+            /* "readdrSH.pyx":1287
  *                     for l in range(norb_u_num[k]):
  *                         n = l+norb_u[k]
  *                         for m in range(Np):             # <<<<<<<<<<<<<<
@@ -11384,7 +11301,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
             for (__pyx_t_19 = 0; __pyx_t_19 < __pyx_t_18; __pyx_t_19+=1) {
               __pyx_v_m = __pyx_t_19;
 
-              /* "readdrSH.pyx":1279
+              /* "readdrSH.pyx":1288
  *                         n = l+norb_u[k]
  *                         for m in range(Np):
  *                             dh = dh_buf[n*Np+m]             # <<<<<<<<<<<<<<
@@ -11393,7 +11310,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
               __pyx_v_dh = (__pyx_v_dh_buf[((__pyx_v_n * __pyx_v_Np) + __pyx_v_m)]);
 
-              /* "readdrSH.pyx":1280
+              /* "readdrSH.pyx":1289
  *                         for m in range(Np):
  *                             dh = dh_buf[n*Np+m]
  *                             dhamil[k*3+xyz,icell,i,n,m] += dh             # <<<<<<<<<<<<<<
@@ -11407,7 +11324,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
               __pyx_t_21 = __pyx_v_m;
               *((double *) ( /* dim=4 */ ((char *) (((double *) ( /* dim=3 */ (( /* dim=2 */ (( /* dim=1 */ (( /* dim=0 */ (__pyx_v_dhamil.data + __pyx_t_10 * __pyx_v_dhamil.strides[0]) ) + __pyx_t_9 * __pyx_v_dhamil.strides[1]) ) + __pyx_t_8 * __pyx_v_dhamil.strides[2]) ) + __pyx_t_20 * __pyx_v_dhamil.strides[3]) )) + __pyx_t_21)) )) += __pyx_v_dh;
 
-              /* "readdrSH.pyx":1281
+              /* "readdrSH.pyx":1290
  *                             dh = dh_buf[n*Np+m]
  *                             dhamil[k*3+xyz,icell,i,n,m] += dh
  *                             dhamil[k*3+xyz,i,icell,m,n] += dh             # <<<<<<<<<<<<<<
@@ -11424,7 +11341,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
           }
         }
 
-        /* "readdrSH.pyx":1274
+        /* "readdrSH.pyx":1283
  *                 dh_buf,count,displ,mpi.MPI_DOUBLE,0,c_comm
  *             )
  *             if (myid==0):             # <<<<<<<<<<<<<<
@@ -11435,7 +11352,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
     }
   }
 
-  /* "readdrSH.pyx":1283
+  /* "readdrSH.pyx":1292
  *                             dhamil[k*3+xyz,i,icell,m,n] += dh
  * 
  *     free(Npproc)             # <<<<<<<<<<<<<<
@@ -11444,7 +11361,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   free(__pyx_v_Npproc);
 
-  /* "readdrSH.pyx":1284
+  /* "readdrSH.pyx":1293
  * 
  *     free(Npproc)
  *     free(Npproc_num)             # <<<<<<<<<<<<<<
@@ -11453,7 +11370,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   free(__pyx_v_Npproc_num);
 
-  /* "readdrSH.pyx":1285
+  /* "readdrSH.pyx":1294
  *     free(Npproc)
  *     free(Npproc_num)
  *     free(count)             # <<<<<<<<<<<<<<
@@ -11462,7 +11379,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   free(__pyx_v_count);
 
-  /* "readdrSH.pyx":1286
+  /* "readdrSH.pyx":1295
  *     free(Npproc_num)
  *     free(count)
  *     free(displ)             # <<<<<<<<<<<<<<
@@ -11471,7 +11388,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   free(__pyx_v_displ);
 
-  /* "readdrSH.pyx":1287
+  /* "readdrSH.pyx":1296
  *     free(count)
  *     free(displ)
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -11480,14 +11397,14 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
   __pyx_t_7 = ((__pyx_v_myid == 0) != 0);
   if (__pyx_t_7) {
 
-    /* "readdrSH.pyx":1288
+    /* "readdrSH.pyx":1297
  *     free(displ)
  *     if (myid==0):
  *         free(dh_buf)             # <<<<<<<<<<<<<<
  */
     free(__pyx_v_dh_buf);
 
-    /* "readdrSH.pyx":1287
+    /* "readdrSH.pyx":1296
  *     free(count)
  *     free(displ)
  *     if (myid==0):             # <<<<<<<<<<<<<<
@@ -11495,7 +11412,7 @@ static PyObject *__pyx_pf_8readdrSH_10drSH2dhamil(CYTHON_UNUSED PyObject *__pyx_
  */
   }
 
-  /* "readdrSH.pyx":1234
+  /* "readdrSH.pyx":1243
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def drSH2dhamil(             # <<<<<<<<<<<<<<
@@ -25356,6 +25273,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_Invalid_mode_expected_c_or_fortr, __pyx_k_Invalid_mode_expected_c_or_fortr, sizeof(__pyx_k_Invalid_mode_expected_c_or_fortr), 0, 0, 1, 0},
   {&__pyx_kp_s_Invalid_shape_in_axis_d_d, __pyx_k_Invalid_shape_in_axis_d_d, sizeof(__pyx_k_Invalid_shape_in_axis_d_d), 0, 0, 1, 0},
   {&__pyx_n_s_IsH5, __pyx_k_IsH5, sizeof(__pyx_k_IsH5), 0, 0, 1, 1},
+  {&__pyx_n_s_Ispin, __pyx_k_Ispin, sizeof(__pyx_k_Ispin), 0, 0, 1, 1},
   {&__pyx_n_s_Mb, __pyx_k_Mb, sizeof(__pyx_k_Mb), 0, 0, 1, 1},
   {&__pyx_n_s_MemoryError, __pyx_k_MemoryError, sizeof(__pyx_k_MemoryError), 0, 0, 1, 1},
   {&__pyx_kp_s_MemoryView_of_r_at_0x_x, __pyx_k_MemoryView_of_r_at_0x_x, sizeof(__pyx_k_MemoryView_of_r_at_0x_x), 0, 0, 1, 0},
@@ -25559,7 +25477,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 319, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 320, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 134, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 149, __pyx_L1_error)
   __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(1, 152, __pyx_L1_error)
@@ -25771,77 +25689,77 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
 
-  /* "readdrSH.pyx":421
+  /* "readdrSH.pyx":423
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
  *     int nfileham, int nfileolp, int nfiledr, int atomnum,
  */
-  __pyx_tuple__20 = PyTuple_Pack(16, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_H5OlpName, __pyx_n_s_H5DrName, __pyx_n_s_nfileham, __pyx_n_s_nfileolp, __pyx_n_s_nfiledr, __pyx_n_s_atomnum, __pyx_n_s_key_num_h, __pyx_n_s_key_num_o, __pyx_n_s_key_num_dr, __pyx_n_s_atom_idx_py, __pyx_n_s_IsH5, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 421, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(16, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_H5OlpName, __pyx_n_s_H5DrName, __pyx_n_s_nfileham, __pyx_n_s_nfileolp, __pyx_n_s_nfiledr, __pyx_n_s_atomnum, __pyx_n_s_key_num_h, __pyx_n_s_key_num_o, __pyx_n_s_key_num_dr, __pyx_n_s_atom_idx_py, __pyx_n_s_IsH5, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(13, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_GetSparseNum, 421, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 421, __pyx_L1_error)
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(13, 0, 16, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_GetSparseNum, 423, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 423, __pyx_L1_error)
 
-  /* "readdrSH.pyx":628
+  /* "readdrSH.pyx":637
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
  *     int nfileham, int nfileolp, int nfiledr, int atomnum, int norbital,
  */
-  __pyx_tuple__22 = PyTuple_Pack(26, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_H5OlpName, __pyx_n_s_H5DrName, __pyx_n_s_nfileham, __pyx_n_s_nfileolp, __pyx_n_s_nfiledr, __pyx_n_s_atomnum, __pyx_n_s_norbital, __pyx_n_s_key_num_h, __pyx_n_s_key_num_o, __pyx_n_s_key_num_dr, __pyx_n_s_pub_key_h, __pyx_n_s_pub_key_o, __pyx_n_s_pub_key_dr, __pyx_n_s_keyinfo_h, __pyx_n_s_keyinfo_o, __pyx_n_s_keyinfo_dr, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_sum_py, __pyx_n_s_IsH5, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_offset, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 628, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(26, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_H5OlpName, __pyx_n_s_H5DrName, __pyx_n_s_nfileham, __pyx_n_s_nfileolp, __pyx_n_s_nfiledr, __pyx_n_s_atomnum, __pyx_n_s_norbital, __pyx_n_s_key_num_h, __pyx_n_s_key_num_o, __pyx_n_s_key_num_dr, __pyx_n_s_pub_key_h, __pyx_n_s_pub_key_o, __pyx_n_s_pub_key_dr, __pyx_n_s_keyinfo_h, __pyx_n_s_keyinfo_o, __pyx_n_s_keyinfo_dr, __pyx_n_s_atom_idx_py, __pyx_n_s_atom_idx_sum_py, __pyx_n_s_IsH5, __pyx_n_s_h, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_offset, __pyx_n_s_data_name); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(21, 0, 26, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_GetSparseIdx, 628, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 628, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(21, 0, 26, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_GetSparseIdx, 637, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 637, __pyx_L1_error)
 
-  /* "readdrSH.pyx":837
+  /* "readdrSH.pyx":841
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseData(             # <<<<<<<<<<<<<<
  *     MPI.Comm shm_comm_py,
  *     char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
  */
-  __pyx_tuple__24 = PyTuple_Pack(29, __pyx_n_s_shm_comm_py, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_H5OlpName, __pyx_n_s_H5DrName, __pyx_n_s_nfileham, __pyx_n_s_nfileolp, __pyx_n_s_nfiledr, __pyx_n_s_atomnum, __pyx_n_s_norb_m, __pyx_n_s_key_num_h, __pyx_n_s_key_num_o, __pyx_n_s_key_num_dr, __pyx_n_s_pub_key_h, __pyx_n_s_pub_key_o, __pyx_n_s_pub_key_dr, __pyx_n_s_keyinfo_h, __pyx_n_s_keyinfo_o, __pyx_n_s_keyinfo_dr, __pyx_n_s_data_h, __pyx_n_s_data_o, __pyx_n_s_data_dr, __pyx_n_s_IsH5, __pyx_n_s_shm_nprocs, __pyx_n_s_shm_id, __pyx_n_s_ierr, __pyx_n_s_data_name, __pyx_n_s_f_dr, __pyx_n_s_shm_comm); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 837, __pyx_L1_error)
+  __pyx_tuple__24 = PyTuple_Pack(30, __pyx_n_s_shm_comm_py, __pyx_n_s_inDir, __pyx_n_s_H5HamName, __pyx_n_s_H5OlpName, __pyx_n_s_H5DrName, __pyx_n_s_nfileham, __pyx_n_s_nfileolp, __pyx_n_s_nfiledr, __pyx_n_s_atomnum, __pyx_n_s_norb_m, __pyx_n_s_key_num_h, __pyx_n_s_key_num_o, __pyx_n_s_key_num_dr, __pyx_n_s_pub_key_h, __pyx_n_s_pub_key_o, __pyx_n_s_pub_key_dr, __pyx_n_s_keyinfo_h, __pyx_n_s_keyinfo_o, __pyx_n_s_keyinfo_dr, __pyx_n_s_data_h, __pyx_n_s_data_o, __pyx_n_s_data_dr, __pyx_n_s_Ispin, __pyx_n_s_IsH5, __pyx_n_s_shm_nprocs, __pyx_n_s_shm_id, __pyx_n_s_ierr, __pyx_n_s_data_name, __pyx_n_s_f_dr, __pyx_n_s_shm_comm); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 841, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(23, 0, 29, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_GetSparseData, 837, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 837, __pyx_L1_error)
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(24, 0, 30, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_GetSparseData, 841, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 841, __pyx_L1_error)
 
-  /* "readdrSH.pyx":910
+  /* "readdrSH.pyx":915
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def coo2csridx(             # <<<<<<<<<<<<<<
  *     int N, int Nsparse, long[:,::1] coo_idx,
  *     int[:,::1] csr_ridx, int[::1] csr_cidx
  */
-  __pyx_tuple__26 = PyTuple_Pack(11, __pyx_n_s_N, __pyx_n_s_Nsparse, __pyx_n_s_coo_idx, __pyx_n_s_csr_ridx, __pyx_n_s_csr_cidx, __pyx_n_s_i, __pyx_n_s_idx, __pyx_n_s_ridx, __pyx_n_s_s_int, __pyx_n_s_coo_ridx, __pyx_n_s_coo_cidx); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 910, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(11, __pyx_n_s_N, __pyx_n_s_Nsparse, __pyx_n_s_coo_idx, __pyx_n_s_csr_ridx, __pyx_n_s_csr_cidx, __pyx_n_s_i, __pyx_n_s_idx, __pyx_n_s_ridx, __pyx_n_s_s_int, __pyx_n_s_coo_ridx, __pyx_n_s_coo_cidx); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 915, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(5, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_coo2csridx, 910, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 910, __pyx_L1_error)
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(5, 0, 11, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_coo2csridx, 915, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 915, __pyx_L1_error)
 
-  /* "readdrSH.pyx":1075
+  /* "readdrSH.pyx":1080
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def olp_inv(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nprocs, int myid,
  *     double[::1] olp, int[:,::1] olp_keyinfo, int Nsparse_o,
  */
-  __pyx_tuple__28 = PyTuple_Pack(65, __pyx_n_s_comm, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_olp, __pyx_n_s_olp_keyinfo, __pyx_n_s_Nsparse_o, __pyx_n_s_ham, __pyx_n_s_ham_keyinfo, __pyx_n_s_Nsparse_h, __pyx_n_s_dr, __pyx_n_s_dr_csr_ridx, __pyx_n_s_dr_csr_cidx, __pyx_n_s_Nsparse_dr, __pyx_n_s_drp_min, __pyx_n_s_N, __pyx_n_s_Nsplit, __pyx_n_s_Mb, __pyx_n_s_Nb, __pyx_n_s_drSH, __pyx_n_s_c_comm, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_Nproc_min, __pyx_n_s_Nproc_max, __pyx_n_s_Nproc_len, __pyx_n_s_i1, __pyx_n_s_i0, __pyx_n_s_nprow, __pyx_n_s_npcol, __pyx_n_s_myrow, __pyx_n_s_mycol, __pyx_n_s_mb, __pyx_n_s_nb, __pyx_n_s_nprow1, __pyx_n_s_npcol1, __pyx_n_s_myrow1, __pyx_n_s_mycol1, __pyx_n_s_mb1, __pyx_n_s_ictxt, __pyx_n_s_ictxt1, __pyx_n_s_N_mkl, __pyx_n_s_Nsparse_mkl, __pyx_n_s_Nproc_mkl, __pyx_n_s_Np_mkl, __pyx_n_s_lldSp, __pyx_n_s_lldS, __pyx_n_s_info, __pyx_n_s_descSp, __pyx_n_s_descS, __pyx_n_s_s_int, __pyx_n_s_s_d, __pyx_n_s_Nproc, __pyx_n_s_Nproc_num, __pyx_n_s_olpinvham, __pyx_n_s_matbuf, __pyx_n_s_olpbuf_pb, __pyx_n_s_hambuf_pb, __pyx_n_s_f0, __pyx_n_s_f1, __pyx_n_s_lv, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_descrdr, __pyx_n_s_csrdr); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 1075, __pyx_L1_error)
+  __pyx_tuple__28 = PyTuple_Pack(65, __pyx_n_s_comm, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_olp, __pyx_n_s_olp_keyinfo, __pyx_n_s_Nsparse_o, __pyx_n_s_ham, __pyx_n_s_ham_keyinfo, __pyx_n_s_Nsparse_h, __pyx_n_s_dr, __pyx_n_s_dr_csr_ridx, __pyx_n_s_dr_csr_cidx, __pyx_n_s_Nsparse_dr, __pyx_n_s_drp_min, __pyx_n_s_N, __pyx_n_s_Nsplit, __pyx_n_s_Mb, __pyx_n_s_Nb, __pyx_n_s_drSH, __pyx_n_s_c_comm, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_Nproc_min, __pyx_n_s_Nproc_max, __pyx_n_s_Nproc_len, __pyx_n_s_i1, __pyx_n_s_i0, __pyx_n_s_nprow, __pyx_n_s_npcol, __pyx_n_s_myrow, __pyx_n_s_mycol, __pyx_n_s_mb, __pyx_n_s_nb, __pyx_n_s_nprow1, __pyx_n_s_npcol1, __pyx_n_s_myrow1, __pyx_n_s_mycol1, __pyx_n_s_mb1, __pyx_n_s_ictxt, __pyx_n_s_ictxt1, __pyx_n_s_N_mkl, __pyx_n_s_Nsparse_mkl, __pyx_n_s_Nproc_mkl, __pyx_n_s_Np_mkl, __pyx_n_s_lldSp, __pyx_n_s_lldS, __pyx_n_s_info, __pyx_n_s_descSp, __pyx_n_s_descS, __pyx_n_s_s_int, __pyx_n_s_s_d, __pyx_n_s_Nproc, __pyx_n_s_Nproc_num, __pyx_n_s_olpinvham, __pyx_n_s_matbuf, __pyx_n_s_olpbuf_pb, __pyx_n_s_hambuf_pb, __pyx_n_s_f0, __pyx_n_s_f1, __pyx_n_s_lv, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_descrdr, __pyx_n_s_csrdr); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 1080, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(19, 0, 65, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_olp_inv, 1075, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 1075, __pyx_L1_error)
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(19, 0, 65, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_olp_inv, 1080, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 1080, __pyx_L1_error)
 
-  /* "readdrSH.pyx":1234
+  /* "readdrSH.pyx":1243
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def drSH2dhamil(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nprocs, int myid, int natom,
  *     int N, int Nsplit, int[::1] norb_u, int[::1] norb_u_num,
  */
-  __pyx_tuple__30 = PyTuple_Pack(33, __pyx_n_s_comm, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_natom, __pyx_n_s_N, __pyx_n_s_Nsplit, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_drSH, __pyx_n_s_dhamil, __pyx_n_s_c_comm, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_n, __pyx_n_s_xyz, __pyx_n_s_Np_num, __pyx_n_s_s_int, __pyx_n_s_s_d, __pyx_n_s_Np, __pyx_n_s_icell, __pyx_n_s_dh_buf, __pyx_n_s_count, __pyx_n_s_displ, __pyx_n_s_Npproc, __pyx_n_s_Npproc_num, __pyx_n_s_dh, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_Np_min, __pyx_n_s_Np_max); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 1234, __pyx_L1_error)
+  __pyx_tuple__30 = PyTuple_Pack(33, __pyx_n_s_comm, __pyx_n_s_nprocs, __pyx_n_s_myid, __pyx_n_s_natom, __pyx_n_s_N, __pyx_n_s_Nsplit, __pyx_n_s_norb_u, __pyx_n_s_norb_u_num, __pyx_n_s_drSH, __pyx_n_s_dhamil, __pyx_n_s_c_comm, __pyx_n_s_i, __pyx_n_s_j, __pyx_n_s_k, __pyx_n_s_l, __pyx_n_s_m, __pyx_n_s_n, __pyx_n_s_xyz, __pyx_n_s_Np_num, __pyx_n_s_s_int, __pyx_n_s_s_d, __pyx_n_s_Np, __pyx_n_s_icell, __pyx_n_s_dh_buf, __pyx_n_s_count, __pyx_n_s_displ, __pyx_n_s_Npproc, __pyx_n_s_Npproc_num, __pyx_n_s_dh, __pyx_n_s_starttime, __pyx_n_s_endtime, __pyx_n_s_Np_min, __pyx_n_s_Np_max); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 1243, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__30);
   __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(10, 0, 33, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_drSH2dhamil, 1234, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 1234, __pyx_L1_error)
+  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(10, 0, 33, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_readdrSH_pyx, __pyx_n_s_drSH2dhamil, 1243, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 1243, __pyx_L1_error)
 
   /* "View.MemoryView":287
  *         return self.name
@@ -25918,7 +25836,6 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_8 = PyInt_FromLong(8); if (unlikely(!__pyx_int_8)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_112105877 = PyInt_FromLong(112105877L); if (unlikely(!__pyx_int_112105877)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_136983863 = PyInt_FromLong(136983863L); if (unlikely(!__pyx_int_136983863)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_184977713 = PyInt_FromLong(184977713L); if (unlikely(!__pyx_int_184977713)) __PYX_ERR(0, 1, __pyx_L1_error)
@@ -26285,7 +26202,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "readdrSH.pyx":274
+  /* "readdrSH.pyx":275
  * cdef int* atom_idx_sum
  * cdef int key_num_p
  * cdef double Hartree2eV = 27.211386245988             # <<<<<<<<<<<<<<
@@ -26294,7 +26211,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_8readdrSH_Hartree2eV = 27.211386245988;
 
-  /* "readdrSH.pyx":275
+  /* "readdrSH.pyx":276
  * cdef int key_num_p
  * cdef double Hartree2eV = 27.211386245988
  * cdef double Bohr2Ang = 0.529177249             # <<<<<<<<<<<<<<
@@ -26303,76 +26220,76 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_v_8readdrSH_Bohr2Ang = 0.529177249;
 
-  /* "readdrSH.pyx":421
+  /* "readdrSH.pyx":423
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseNum(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
  *     int nfileham, int nfileolp, int nfiledr, int atomnum,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_1GetSparseNum, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 421, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_1GetSparseNum, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseNum, __pyx_t_1) < 0) __PYX_ERR(0, 421, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseNum, __pyx_t_1) < 0) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readdrSH.pyx":628
+  /* "readdrSH.pyx":637
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseIdx(             # <<<<<<<<<<<<<<
  *     char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
  *     int nfileham, int nfileolp, int nfiledr, int atomnum, int norbital,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_3GetSparseIdx, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 628, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_3GetSparseIdx, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseIdx, __pyx_t_1) < 0) __PYX_ERR(0, 628, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseIdx, __pyx_t_1) < 0) __PYX_ERR(0, 637, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readdrSH.pyx":837
+  /* "readdrSH.pyx":841
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def GetSparseData(             # <<<<<<<<<<<<<<
  *     MPI.Comm shm_comm_py,
  *     char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_5GetSparseData, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 837, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_5GetSparseData, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 841, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseData, __pyx_t_1) < 0) __PYX_ERR(0, 837, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetSparseData, __pyx_t_1) < 0) __PYX_ERR(0, 841, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readdrSH.pyx":910
+  /* "readdrSH.pyx":915
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def coo2csridx(             # <<<<<<<<<<<<<<
  *     int N, int Nsparse, long[:,::1] coo_idx,
  *     int[:,::1] csr_ridx, int[::1] csr_cidx
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_7coo2csridx, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 910, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_7coo2csridx, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 915, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_coo2csridx, __pyx_t_1) < 0) __PYX_ERR(0, 910, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_coo2csridx, __pyx_t_1) < 0) __PYX_ERR(0, 915, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readdrSH.pyx":1075
+  /* "readdrSH.pyx":1080
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def olp_inv(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nprocs, int myid,
  *     double[::1] olp, int[:,::1] olp_keyinfo, int Nsparse_o,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_9olp_inv, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1075, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_9olp_inv, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1080, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_olp_inv, __pyx_t_1) < 0) __PYX_ERR(0, 1075, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_olp_inv, __pyx_t_1) < 0) __PYX_ERR(0, 1080, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "readdrSH.pyx":1234
+  /* "readdrSH.pyx":1243
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * def drSH2dhamil(             # <<<<<<<<<<<<<<
  *     MPI.Comm comm, int nprocs, int myid, int natom,
  *     int N, int Nsplit, int[::1] norb_u, int[::1] norb_u_num,
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_11drSH2dhamil, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1234, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_8readdrSH_11drSH2dhamil, NULL, __pyx_n_s_readdrSH); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1243, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_drSH2dhamil, __pyx_t_1) < 0) __PYX_ERR(0, 1234, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_drSH2dhamil, __pyx_t_1) < 0) __PYX_ERR(0, 1243, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "readdrSH.pyx":1
@@ -26606,70 +26523,6 @@ static PyObject *__Pyx_GetBuiltinName(PyObject *name) {
 #endif
     }
     return result;
-}
-
-/* PyErrFetchRestore */
-#if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    tmp_type = tstate->curexc_type;
-    tmp_value = tstate->curexc_value;
-    tmp_tb = tstate->curexc_traceback;
-    tstate->curexc_type = type;
-    tstate->curexc_value = value;
-    tstate->curexc_traceback = tb;
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-}
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-    *type = tstate->curexc_type;
-    *value = tstate->curexc_value;
-    *tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-}
-#endif
-
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-    else state = (PyGILState_STATE)0;
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
 }
 
 /* RaiseArgTupleInvalid */
@@ -26965,6 +26818,70 @@ static int __Pyx__ArgTypeTest(PyObject *obj, PyTypeObject *type, const char *nam
         "Argument '%.200s' has incorrect type (expected %.200s, got %.200s)",
         name, type->tp_name, Py_TYPE(obj)->tp_name);
     return 0;
+}
+
+/* PyErrFetchRestore */
+#if CYTHON_FAST_THREAD_STATE
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+}
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
+}
+#endif
+
+/* WriteUnraisableException */
+static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+    else state = (PyGILState_STATE)0;
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
+    }
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
 }
 
 /* PyObjectCall */
@@ -29887,17 +29804,17 @@ __pyx_fail:
 }
 
 /* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_double(PyObject *obj, int writable_flag) {
+  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(PyObject *obj, int writable_flag) {
     __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
     __Pyx_BufFmt_StackElem stack[1];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_CONTIG) };
+    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_FOLLOW), (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_CONTIG) };
     int retcode;
     if (obj == Py_None) {
         result.memview = (struct __pyx_memoryview_obj *) Py_None;
         return result;
     }
     retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, __Pyx_IS_C_CONTIG,
-                                                 (PyBUF_C_CONTIGUOUS | PyBUF_FORMAT) | writable_flag, 1,
+                                                 (PyBUF_C_CONTIGUOUS | PyBUF_FORMAT) | writable_flag, 2,
                                                  &__Pyx_TypeInfo_double, stack,
                                                  &result, obj);
     if (unlikely(retcode == -1))
@@ -29910,17 +29827,17 @@ __pyx_fail:
 }
 
 /* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_d_dc_double(PyObject *obj, int writable_flag) {
+  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_dc_double(PyObject *obj, int writable_flag) {
     __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
     __Pyx_BufFmt_StackElem stack[1];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_FOLLOW), (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_CONTIG) };
+    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_CONTIG) };
     int retcode;
     if (obj == Py_None) {
         result.memview = (struct __pyx_memoryview_obj *) Py_None;
         return result;
     }
     retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, __Pyx_IS_C_CONTIG,
-                                                 (PyBUF_C_CONTIGUOUS | PyBUF_FORMAT) | writable_flag, 2,
+                                                 (PyBUF_C_CONTIGUOUS | PyBUF_FORMAT) | writable_flag, 1,
                                                  &__Pyx_TypeInfo_double, stack,
                                                  &result, obj);
     if (unlikely(retcode == -1))

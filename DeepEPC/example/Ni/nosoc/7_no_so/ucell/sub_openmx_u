@@ -1,0 +1,36 @@
+#!/bin/bash
+#SBATCH --partition       intel
+#SBATCH -J tyy
+#SBATCH --time            1:00:00
+#SBATCH --nodes           1
+#SBATCH --ntasks-per-node 8
+#SBATCH --cpus-per-task   1
+#SBATCH --error           out_%j.err
+#SBATCH --output          out_%j.log
+
+ulimit -s unlimited
+
+#module purge
+#module load compiler/gcc/10.3.0
+#module load compiler/intel/intel-compiler-2017.5.239
+#module load mpi/intelmpi/mpi/2017.4.239
+
+echo "============================================================"
+module list
+env | grep "MKLROOT="
+echo "============================================================"
+echo "Job ID: $SLURM_JOB_NAME"
+echo "Job name: $SLURM_JOB_NAME"
+echo "Number of nodes: $SLURM_JOB_NUM_NODES"
+echo "Number of processors: $SLURM_NTASKS"
+echo "Task is running on the following nodes:"
+echo $SLURM_JOB_NODELIST
+echo "OMP_NUM_THREADS = $SLURM_CPUS_PER_TASK"
+echo "============================================================"
+echo
+
+#srun vasp_std
+#srun --mpi=pmi2 vasp_gam
+#srun --mpi=pmi2 /public/software/apps/vasp/intelmpi/5.4.4/vasp_gam
+#srun vasp_ncl
+mpirun openmx input.dat

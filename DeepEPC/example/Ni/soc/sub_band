@@ -1,0 +1,35 @@
+#!/bin/bash
+#SBATCH --partition       intel
+#SBATCH -J tyy
+#SBATCH --time            12:00:00
+#SBATCH --nodes           1
+#SBATCH --ntasks-per-node 64
+#SBATCH --cpus-per-task   1
+##SBATCH --ntasks-per-socket=16
+#SBATCH --error           band.err
+#SBATCH --output          band.log
+
+ulimit -s unlimited
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+#export I_MPI_PMI_LIBRARY=libpmi2.so
+
+#module purge
+#module load compiler/gcc/10.3.0
+#module load compiler/intel/intel-compiler-2017.5.239
+#module load mpi/intelmpi/mpi/2017.4.239
+
+echo "============================================================"
+module list
+env | grep "MKLROOT="
+echo "============================================================"
+echo "Job ID: $SLURM_JOB_NAME"
+echo "Job name: $SLURM_JOB_NAME"
+echo "Number of nodes: $SLURM_JOB_NUM_NODES"
+echo "Number of processors: $SLURM_NTASKS"
+echo "Task is running on the following nodes:"
+echo $SLURM_JOB_NODELIST
+echo "OMP_NUM_THREADS = $SLURM_CPUS_PER_TASK"
+echo "============================================================"
+echo
+
+mpirun python epc_band_ucell_sparse_nc.py
