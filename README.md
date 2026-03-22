@@ -27,11 +27,11 @@ Before performing preprocessing and NAMD simulations, some parameters need to be
 
 Some new tags are added in new version under DeepEPC branch. 
 
-```fortran
+```python
 &NAMDPARA
   EMIN       = -5
   EMAX       = 2
-** NBANDS     = 2 now removed, can be read from EPC **
+# NBANDS     = 2 now removed, can be read from EPC
   NQX        = 90
   NQY        = 90
   NQZ        = 1
@@ -46,29 +46,24 @@ Some new tags are added in new version under DeepEPC branch.
   NTRAJ      = 2000
   LHOLE      = .F.
 
-  LHDF5      = .T.
-** Use .T. to interface with Perturbo **
-** If .F., NPARTS, EPMDIR and EPMPREF are ignored **
+  LHDF5      = .T.         # .T.: interface with Perturbo
+                           # .F.: interface with DeepEPC
+                           # if .F., NPARTS, EPMDIR and EPMPREF are ignored
   NPARTS     = 9
   EPMDIR     = '../namdepc/h5files'
   EPMPREF    = 'graphene'
   NAMDDIR    = 'output'
   LTRANS     = 'L'
 
-  BANDDEG    = 1
-** Band degeneracy (still some bugs), just set to 1 **
-  LEPCSHM    = .F.
-** If EPC matrix are smaller than memory of one node, **
-** use .T. to speed up surface hopping calculation. **
-  LPHSHM     = .T.
-** For nk_s << nq, use .T. to store only one phonon data **
-** on each node, which can save memory. **
-  LSPLIT     = .F.
-** If .T., the program will end after time propagation. **
-** You need to manually resubmit job for suface hopping. **
-** Useful when calculating different SurfHop with same TimeProp. **
-  NM_BLOCK   = 6
-** [1,nmodes], smaller number can save more memory when symmetrizing EPC**
+  BANDDEG    = 1           # band degeneracy (still some bugs), just set to 1
+  LEPCSHM    = .F.         # if EPC matrix are smaller than memory of one node, 
+                           # use .T. to speed up surface hopping calculation
+  LPHSHM     = .T.         # for nk_s << nq, you can use .T. to store only 
+                           # one phonon data on each node to save memory
+  LSPLIT     = .F.         # if .T., the program will end after time propagation
+                           # you need to manually resubmit job for suface hopping
+                           # useful when calculating different SurfHop with same TimeProp
+  NM_BLOCK   = 6           # [1,nmodes], smaller number can save more memory when symmetrizing EPC
 /
 ```
 
