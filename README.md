@@ -16,12 +16,15 @@ To use this implementation, prepare Intel MKL library and C compiler with MPI. P
 ## Run NAMD_k
 
 1. Set parameters in `inp` and `INICON` in rundir(./).
-2. Use `make c` to generate C code files.
-   Use `make so` to generate dynamic-link libraries from C code files.
-   Use `make exe` to generate namd-epc target file `namd-epc`.
-   Or instead, use `make` or `make all` to finish the above three processes.
+2. Use `make c` to generate C code files.  
+   Use `make so` to generate dynamic-link libraries from C code files.  
+   Use `make exe` to generate namd-epc target file `namd-epc`.  
+   Or instead, use `make` or `make all` to finish the above three processes.  
    `makefile` checks the path of `Python.h`, `numpy/*.h` and `hdf5.h` header files from Python installation directory.
-3. Run `mpirun -np ncore namd-epc` or `sbatch sub_namd`.
+3. Build NAMD-k working directory. Generate `inp` and `INICON` under this folder.  
+   If EPC matrix is output by DeepEPC (`LHDF5 = .F.` in `inp`), please copy `config.ini` to here. Then modify parameter `inDir` in `config.ini` to this NAMD-k working directory.  
+   If `Ispin = 1` in DeepEPC calculation, spin-up and spin-down files are separately stored. Just add "_up" or "_dn" after parameters `valname`, `vecname`, `basselname` and `epcname` in `config.ini`. Then you can perform NAMD-k simulation with selected spin component. Please refer to `DeepEPC/example/Ni/nosoc` for detailed usage.
+5. Run `mpirun -np ncore namd-epc` or `sbatch sub_namd`.
 
 Before performing preprocessing and NAMD simulations, some parameters need to be specified in `inp`. We list all the parameters needing to be customized. An example of NAMD `inp` file is listed here.
 
