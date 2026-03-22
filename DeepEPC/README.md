@@ -129,12 +129,15 @@ Follow the above example to generate the config.ini file in the working director
 
 We will firstly show how to use the OpenMX interface of DeepEPC. Run the scripts in the following order
 
-`python supercell.py`: Generate `inDir/infile_out` with fixed grid center.
-`python makedir.py`: Build input folder structure.
-`python sub_para.py`: Concurrently submit job tasks. When the number of tasks is small, you can manually submit by running `sbatch subfile`.
-`mpirun -np N python epc_band_ucell_sparse(_nc).py`: Energy band calculation. If Ispin = 0 or 1, use epc_band_ucell_sparse.py, otherwise use epc_band_ucell_sparse_nc.py.
-`python epc_fc_ase.py`: Interatomic force constant calculation.
-`mpirun -np N python epc_phonon.py`: Phonon dispersion calculation.
+1. `python supercell.py`: Generate `inDir/infile_out` with fixed grid center.
+2. `python makedir.py`: Build input folder structure.
+3. `python sub_para.py`: Concurrently submit job tasks.  
+   When the number of tasks is small, you can manually submit by running `sbatch subfile`.
+5. `mpirun -np N python epc_band_ucell_sparse(_nc).py`: Energy band calculation.  
+   If Ispin = 0 or 1, use epc_band_ucell_sparse.py, otherwise use epc_band_ucell_sparse_nc.py.  
+   If IsAllKlist = False, `valpname`, `vecpanme` and `basselname` are also output in `inDir/bandDir`.
+7. `python epc_fc_ase.py`: Interatomic force constant calculation.
+8. `mpirun -np N python epc_phonon.py`: Phonon dispersion calculation.
 
 You can also submit band/phonon tasks if computational cost is large.
 
@@ -145,17 +148,17 @@ There are some simple Python/Cython scripts under `DeepEPC/src` folder. To run t
 * HDF5 library >= 1.10.5 (H5PATH needs to be specified in makefile)
 * mpiicc compiler & Intel MKL library
 
-`mpirun -np N python epcsparse.py`: EPC part1 calculation.
-`mpirun -np N python epc_nl.py`: EPC part2 calculation.
+`mpirun -np N python epcsparse.py`: EPC part1 calculation.  
+`mpirun -np N python epc_nl.py`: EPC part2 calculation.  
 The EPC part1 calculation will firstly output result in `inDir/epcDir/epcname`, then EPC part2 calculation will add the rest result on the above outputting file.
 Binary file `inDir/epcDir/epcname` has the following format:
 
-`IsAllKlist = True`: (nk = nq = nq[0]\*nq[1]\*nq[2])
-`EpcType = A`: [nk,nq,nmode,nband,nband]
-`EpcType = K`: [nkpath,nq,nmode,nband,nband]
-`EpcType = Q`: [nk,nqpath,nmode,nband,nband]
+`IsAllKlist = True`: (nk = nq = nq[0]\*nq[1]\*nq[2])  
+`EpcType = A`: [nk,nq,nmode,nband,nband]  
+`EpcType = K`: [nkpath,nq,nmode,nband,nband]  
+`EpcType = Q`: [nk,nqpath,nmode,nband,nband]  
 
-`IsAllKlist = False`: (nbasis = basselname.shape[0])
+`IsAllKlist = False`: (nbasis = basselname.shape[0])  
 `EpcType = A`: [nbasis,nbasis,nmode]
 
 You can also build submitting EPC job if computational cost is large.
