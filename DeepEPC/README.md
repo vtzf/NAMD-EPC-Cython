@@ -9,109 +9,109 @@ Before performing preparing calculations before obtaining EPC matrix, some param
 ```python
 [epc]
 # input files
-Ispin = 1			# Ispin = 0: non-spin-polarized calculations
-				# Ispin = 1: spin-polarized calculations (collinear)
-				# Ispin = 2: spin-polarized calculations (non-collinear, SOC)
+Ispin = 1							# Ispin = 0: non-spin-polarized calculations
+									# Ispin = 1: spin-polarized calculations (collinear)
+									# Ispin = 2: spin-polarized calculations (non-collinear, SOC)
 para_dic = {"Ni":"10.0 8.0  off"}	# OpenMX parameter in "Atoms.SpeciesAndCoordinates"
-				# automatically added after corresponding atomic coordinates
-ucellidx = [7,7,7]		# supercell size for finite-displacement phonon/EPC calculations
-dQ = 0.01			# finite-displacement step size of phonon/EPC calculations
-inDir = 7_no_so			# working directory of band/phonon/EPC calculations
-poscar_ucell = POSCAR_u		# unitcell POSCAR file
-infile_in_s = input_s.dat	# OpenMX supercell input file without atomic information of
-				# "Atoms.SpeciesAndCoordinates" and "Atoms.UnitVectors"
-infile_split_s = 21		# number of line to insert atomic information in supercell input file
-infile_out = input.dat		# OpenMX unitcell/supercell output file with atomic information
-				# automatically generated in "inDir" and "inDir/dhamilDir/*±*"
-subfile_s = sub_openmx_s	# OpenMX supercell submit script
+									# automatically added after corresponding atomic coordinates
+ucellidx = [7,7,7]					# supercell size for finite-displacement phonon/EPC calculations
+dQ = 0.01							# finite-displacement step size of phonon/EPC calculations
+inDir = 7_no_so						# working directory of band/phonon/EPC calculations
+poscar_ucell = POSCAR_u				# unitcell POSCAR file
+infile_in_s = input_s.dat			# OpenMX supercell input file without atomic information of
+									# "Atoms.SpeciesAndCoordinates" and "Atoms.UnitVectors"
+infile_split_s = 21					# number of line to insert atomic information in supercell input file
+infile_out = input.dat				# OpenMX unitcell/supercell output file with atomic information
+									# automatically generated in "inDir" and "inDir/dhamilDir/*±*"
+subfile_s = sub_openmx_s			# OpenMX supercell submit script
 
 # band files
-bandDir = epc_band		# band files store in "inDir/bandDir"
-valname = band_val_k-10.npy	# band eigenvalue file name
-vecname = band_vec_k-10.npy	# band eigenvector file name
-basselname = bassel-10.npy	# selected basis file when IsAllKlist = False
-spinname = spinDM-10.npy	# spin density matrix file when "Ispin = 2"
+bandDir = epc_band					# band files store in "inDir/bandDir"
+valname = band_val_k-10.npy			# band eigenvalue file name
+vecname = band_vec_k-10.npy			# band eigenvector file name
+basselname = bassel-10.npy			# selected basis file when IsAllKlist = False
+spinname = spinDM-10.npy			# spin density matrix file when "Ispin = 2"
 
 # phonon files
-phononDir = phonon		# phonon files store in "inDir/phononDir"
-ifcname = fc_avg.npy		# interatomic force constant file name
-ifcRcut = 5.0			# cutoff radius of force constant
-				# if cutoff radius is unnecessary, just leave it blank
-phvalname = val-10.npy		# phonon eigenvalue file name
-phvecname = vec-10.dat		# phonon eigenvector file name
-phonon_method = F		# finite difference method in phonon calculation
-				# F: forward difference; B: backward difference; C: central difference
+phononDir = phonon					# phonon files store in "inDir/phononDir"
+ifcname = fc_avg.npy				# interatomic force constant file name
+ifcRcut = 5.0						# cutoff radius of force constant
+									# if cutoff radius is unnecessary, just leave it blank
+phvalname = val-10.npy				# phonon eigenvalue file name
+phvecname = vec-10.dat				# phonon eigenvector file name
+phonon_method = F					# finite difference method in phonon calculation
+									# F: forward difference; B: backward difference; C: central difference
 # method: F B C
 
 # epc calculation
-dhamilDir = dhamil		# finite-displacemant Hamiltonian stores in "inDir/dhamilDir"
-epcDir = epc_all		# EPC result stores in "inDir/epcDir"
-epcname = epc_all_p-10.dat	# EPC matrix file name
-IsH5 = False			# interface type of EPC calculation
-				# True: DeepH HDF5 file; False: OpenMX scfout file
-				# the following five "H5*" parameters are ignored if IsH5 = False
-H5HamName = out/hamiltonians	# HDf5 supercell (perturbation) Hamiltonian files 
-				# are named as "inDir/dhamilDir/*±*/H5HamName.H5"
-H5OlpName = out/overlaps	# HDf5 supercell overlap files are named as "inDir/H5OlpName(_*).H5"
-H5OlpNum = 1			# number of HDF5 files for supercell overlap matrix
-				# if H5OlpNum = N > 1, each file is named as "H5OlpName_{0..N-1}.H5"
-H5DrName = output/overlaps_d	# supercell momentum operator matrix files
-				# are named as "inDir/H5DrName(_*).H5"
-H5DrNum = 8			# number of HDF5 files for supercell momentum operator matrix
-				# if H5DrNum = N > 1, each file is named as "H5DrName_{0..N-1}.H5"
-nq = [10,10,10]			# 3D k/q grid size to output EPC data
-atom = [1]			# number of each kind of atom, corresponding to poscar_ucell
-orbital = [14]			# number of NAO in each kind of atom, corresponding to infile_in_u
-EpcType = A			# EPC calculation type
-				# A: IsAllKlist = True: all k-grid → all q-grid
-				# A: IsAllKlist = False: selected k-grid → selected k-grid
-				# K: Kpoint defined k-path → all q-grid
-				# Q: all k-grid → Kpoint defined q-path
+dhamilDir = dhamil					# finite-displacemant Hamiltonian stores in "inDir/dhamilDir"
+epcDir = epc_all					# EPC result stores in "inDir/epcDir"
+epcname = epc_all_p-10.dat			# EPC matrix file name
+IsH5 = False						# interface type of EPC calculation
+									# True: DeepH HDF5 file; False: OpenMX scfout file
+									# the following five "H5*" parameters are ignored if IsH5 = False
+H5HamName = out/hamiltonians		# HDf5 supercell (perturbation) Hamiltonian files 
+									# are named as "inDir/dhamilDir/*±*/H5HamName.H5"
+H5OlpName = out/overlaps			# HDf5 supercell overlap files are named as "inDir/H5OlpName(_*).H5"
+H5OlpNum = 1						# number of HDF5 files for supercell overlap matrix
+									# if H5OlpNum = N > 1, each file is named as "H5OlpName_{0..N-1}.H5"
+H5DrName = output/overlaps_d		# supercell momentum operator matrix files
+									# are named as "inDir/H5DrName(_*).H5"
+H5DrNum = 8							# number of HDF5 files for supercell momentum operator matrix
+									# if H5DrNum = N > 1, each file is named as "H5DrName_{0..N-1}.H5"
+nq = [10,10,10]						# 3D k/q grid size to output EPC data
+atom = [1]							# number of each kind of atom, corresponding to poscar_ucell
+orbital = [14]						# number of NAO in each kind of atom, corresponding to infile_in_u
+EpcType = A							# EPC calculation type
+									# A: IsAllKlist = True: all k-grid → all q-grid
+									# A: IsAllKlist = False: selected k-grid → selected k-grid
+									# K: Kpoint defined k-path → all q-grid
+									# Q: all k-grid → Kpoint defined q-path
 # type: A K Q
-Kpoint = [[0,0,0],[0,1/2,0]]	# k/q-point of EpcType = K/Q calculation
-				# k/q-path is obtained by interpolation under Kpoint and nq
-IsAllVec = False			# True: get all energy bands in [bmin=0,bmax=dot(atom,orbital)-1]
-				# False: get energy band with given index [bmin,bmax]
-bmin = 8			# minimum energy band index starting from 0
-bmax = 9			# maximum energy band index starting from 0
-IsAllKlist = False		# True: get energy band of all k-grid (under given [bmin,bmax])
-				# False: get energy band in [emin,emax] (under given [bmin,bmax])
-emin = -6.21423134		# minimum band energy
-emax = -5.21423134		# maximum band energy
-dhamil_method = F		# finite difference method in EPC calculation, similar to phonon_method
+Kpoint = [[0,0,0],[0,1/2,0]]		# k/q-point of EpcType = K/Q calculation
+									# k/q-path is obtained by interpolation under Kpoint and nq
+IsAllVec = False					# True: get all energy bands in [bmin=0,bmax=dot(atom,orbital)-1]
+									# False: get energy band with given index [bmin,bmax]
+bmin = 8							# minimum energy band index starting from 0
+bmax = 9							# maximum energy band index starting from 0
+IsAllKlist = False					# True: get energy band of all k-grid (under given [bmin,bmax])
+									# False: get energy band in [emin,emax] (under given [bmin,bmax])
+emin = -6.21423134					# minimum band energy
+emax = -5.21423134					# maximum band energy
+dhamil_method = F					# finite difference method in EPC calculation, similar to phonon_method
 # method: F B C
 
 [ucell]
-IsH5_u = False			# interface type of band calculation, similar to IsH5
-H5HamName_u = out/hamiltonians	# HDf5 unitcell Hamiltonian files are named as
-				# "inDir/dhamilDir/*±*/H5HamName_u.H5"
-H5OlpName_u = output/overlaps	# HDf5 unitcell overlap files are named as "inDir/H5OlpName_u(_*).H5"
-H5OlpNum_u = 4			# number of HDF5 files for unitcell overlap matrix
-				# if H5OlpNum_u = N > 1, each file is named as "H5OlpName_u_{0..N-1}.H5"
-infile_in_u = input_u.dat	# OpenMX unitcell input file without atomic information of
-				# "Atoms.SpeciesAndCoordinates" and "Atoms.UnitVectors"
-infile_split_u = 21		# number of line to insert atomic information in unitcell input file
-subfile_u = sub_openmx_u	# OpenMX unitcell submit script
+IsH5_u = False						# interface type of band calculation, similar to IsH5
+H5HamName_u = out/hamiltonians		# HDf5 unitcell Hamiltonian files are named as
+									# "inDir/dhamilDir/*±*/H5HamName_u.H5"
+H5OlpName_u = output/overlaps		# HDf5 unitcell overlap files are named as "inDir/H5OlpName_u(_*).H5"
+H5OlpNum_u = 4						# number of HDF5 files for unitcell overlap matrix
+									# if H5OlpNum_u = N > 1, each file is named as "H5OlpName_u_{0..N-1}.H5"
+infile_in_u = input_u.dat			# OpenMX unitcell input file without atomic information of
+									# "Atoms.SpeciesAndCoordinates" and "Atoms.UnitVectors"
+infile_split_u = 21					# number of line to insert atomic information in unitcell input file
+subfile_u = sub_openmx_u			# OpenMX unitcell submit script
 
 [sub]
-SUB_NUM_HAMIL = 2		# number of jobs run simultaneously in sub_para.py script
-TIME_MAX_HAMIL = 360		# maximum job running time in sub_para.py script
+SUB_NUM_HAMIL = 2					# number of jobs run simultaneously in sub_para.py script
+TIME_MAX_HAMIL = 360				# maximum job running time in sub_para.py script
 # second
 
 [mpi]
-DHAMIL_BLOCK = 4		# number of MPI processes used to read and store
-				# each supercell Hamiltonian in epcsparse.py
-				# 1 <= DHAMIL_BLOCK <= number of MPI processes in one nnode
-NMODES_BLOCK = 3		# epcsparse: number of perturbation Hamiltonian
-				# read in each calculation loop
-				# epc_nl.py: number of phonon modes of EPC calculated in part2 calculation
-				# 1 <= NMODES_BLOCK <= nmodes and smaller NMODES_BLOCK 
-				# can save memory but may reduce computational efficiency
+DHAMIL_BLOCK = 4					# number of MPI processes used to read and store
+									# each supercell Hamiltonian in epcsparse.py
+									# 1 <= DHAMIL_BLOCK <= number of MPI processes in one nnode
+NMODES_BLOCK = 3					# epcsparse: number of perturbation Hamiltonian
+									# read in each calculation loop
+									# epc_nl.py: number of phonon modes of EPC calculated in part2 calculation
+									# 1 <= NMODES_BLOCK <= nmodes and smaller NMODES_BLOCK 
+									# can save memory but may reduce computational efficiency
 # scalapack parameter
-M_BLOCK = 32			# scalapack row block size in epc_nl.py
-N_BLOCK = 32			# scalapack column block size in epc_nl.py
-				# here M_BLOCK = N_BLOCK is needed to avoid some bugs
-				# norbital*ncell > M_BLOCK*nprocs/GCD(nprocs) is recommanded
+M_BLOCK = 32						# scalapack row block size in epc_nl.py
+N_BLOCK = 32						# scalapack column block size in epc_nl.py
+									# here M_BLOCK = N_BLOCK is needed to avoid some bugs
+									# norbital*ncell > M_BLOCK*nprocs/GCD(nprocs) is recommanded
 ```
 
 ## Perform preparing calculations with Python Scripts
