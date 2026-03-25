@@ -4,23 +4,17 @@ import configparser
 from glob import glob
 import h5py
 
-#conf = configparser.ConfigParser()
-#conf.read('config.ini',encoding='utf-8')
-#
-#IsH5_u = True if conf['ucell']['IsH5_u']=='True' else False
-#inDir = conf['epc']['inDir']+'/'
-#
-#if IsH5_u:
-#    H5HamName_u = conf['ucell']['H5HamName_u']
-#    filename = inDir+'ucell/%s.h5'%H5HamName_u
-#else:
-#    filename = glob(inDir+'ucell/*.scfout')[0]
+conf = configparser.ConfigParser()
+conf.read('config.ini',encoding='utf-8')
 
-IsH5_u = True
-filename = '../example/Ni/soc/7_so/ucell/out/hamiltonians.h5'
+IsH5_u = True if conf['ucell']['IsH5_u']=='True' else False
+inDir = conf['epc']['inDir']+'/'
 
-#IsH5_u = False
-#filename = '../example/Ni/nosoc/7_no_so/ucell/openmx.scfout'
+if IsH5_u:
+    H5HamName_u = conf['ucell']['H5HamName_u']
+    filename = inDir+'ucell/%s.h5'%H5HamName_u
+else:
+    filename = glob(inDir+'ucell/*.scfout')[0]
 
 # get R_num
 def ReadRlist(Name):
