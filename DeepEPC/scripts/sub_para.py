@@ -122,16 +122,16 @@ def sub_para_hamil(subfile,hamildir,SUB_NUM,TIME_MAX):
 
 starttime = time.time()
 sub_para_hamil(subfile_s,hamildir,SUB_NUM_HAMIL,TIME_MAX_HAMIL)
-os.chdir(inDir)
 
+os.chdir(inDir)
 os.system('sbatch %s'%(subfile_s))
 sub_one()
 os.chdir('../')
 
-subfile_u = conf['ucell']['subfile_u']
-os.chdir(inDir+'ucell')
-os.system('sbatch %s'%(subfile_u))
-sub_one()
-os.chdir('../../')
+#subfile_u = conf['ucell']['subfile_u']
+#os.chdir(inDir+'ucell')
+#os.system('sbatch %s'%(subfile_u))
+#sub_one()
+#os.chdir('../../')
 endtime = time.time()
 print('Submitting time: %fs'%(endtime-starttime))
