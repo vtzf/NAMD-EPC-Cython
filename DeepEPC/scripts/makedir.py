@@ -130,7 +130,7 @@ def process(inDir,infile_out):
     else:
         write_file(info,info1,info2,xyz,abc,1)
         write_file(info,info1,info2,xyz,abc,-1)
-    write_ucell(info1)
+#    write_ucell(info1)
 
 
 start = time.time()

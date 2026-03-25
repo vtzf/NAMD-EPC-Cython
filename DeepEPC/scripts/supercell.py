@@ -3,7 +3,8 @@ from ase.io import read
 import time
 import configparser
 import json
-
+import shutil
+import os, sys
 
 start = time.time()
 
@@ -132,4 +133,46 @@ f.write("scf.fixed.grid  %17.12f %17.12f %17.12f\n"\
 f.close()
 
 end = time.time()
-print('Supercell time: %.4fs'%(end-start))
+print('Generate supercell input file time: %.4fs'%(end-start))
+
+
+def write_ucell():
+    if not os.path.exists(inDir+'ucell'):
+        os.mkdir(inDir+'ucell')
+    ucell = pos.cell[:]
+    atom = pos.positions
+
+    infile_in = conf['ucell']['infile_in_u']
+    infile_split = int(conf['ucell']['infile_split_u'])
+    infile_c = open(inDir+infile_in).readlines()
+    f = open(inDir+'ucell/'+conf['epc']['infile_out'],'w')
+    for i in range(infile_split):
+        f.write(infile_c[i])
+    f.write("Atoms.Number  %5d\n"%(atom.shape[0]))
+    f.write("Atoms.SpeciesAndCoordinates.Unit   Ang # Ang|AU\n")
+    f.write("<Atoms.SpeciesAndCoordinates\n")
+    for i in range(atom.shape[0]):
+        f.write('%3d  %2s'%(i+1,atom_s[i]))
+        for j in range(3):
+            f.write('%18.12f'%(atom[i,j]))
+        f.write('  %s\n'%(para_s[i]))
+    f.write("Atoms.SpeciesAndCoordinates>\n")
+    f.write("Atoms.UnitVectors.Unit             Ang # Ang|AU\n")
+    f.write("<Atoms.UnitVectors\n")
+    for i in range(3):
+        for j in range(3):
+            f.write("%18.12f"%(ucell[i,j]))
+        f.write("\n")
+    f.write("Atoms.UnitVectors>\n")
+    for i in range(infile_split,len(infile_c)):
+        f.write(infile_c[i])
+    f.close()
+
+    subfile_u = conf['ucell']['subfile_u']
+    shutil.copyfile(inDir+subfile_u,inDir+'ucell/'+subfile_u)
+
+
+start = time.time()
+write_ucell()
+end = time.time()
+print('Generate unitcell input file time: %.4fs'%(end-start))
