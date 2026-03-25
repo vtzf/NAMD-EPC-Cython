@@ -129,11 +129,13 @@ Follow the above example to generate the config.ini file in the working director
 
 We will firstly show how to use the OpenMX interface of DeepEPC. Run the scripts in the following order
 
-1. `python supercell.py`: Generate `inDir/infile_out` with fixed grid center.
-2. `python makedir.py`: Build input folder structure.
-3. `python sub_para.py`: Concurrently submit job tasks.  
+1. `python supercell.py`: Generate `inDir/infile_out` with fixed grid center. Generate `inDir/ucell/infile_out`.
+2. cd `inDir/ucell` and run `sbatch subfile` to calculate unitcell Hamiltonian matrix.
+3. `python get_Rlist.py` to obtain suggested `ucellidx` parameter from unitcell Hamiltonian result. You can also customize this parameter.
+4. `python makedir.py`: Build supercell input folder structure.
+5. `python sub_para.py`: Concurrently submit supercell job tasks.  
    When the number of tasks is small, you can manually submit by running `sbatch subfile`.
-5. `mpirun -np N python epc_band_ucell_sparse(_nc).py`: Energy band calculation.  
+6. `mpirun -np N python epc_band_ucell_sparse(_nc).py`: Energy band calculation.  
    If Ispin = 0 or 1, use epc_band_ucell_sparse.py, otherwise use epc_band_ucell_sparse_nc.py.  
    If IsAllKlist = False, `valpname`, `vecpanme` and `basselname` are also output in `inDir/bandDir`.
 7. `python epc_fc_ase.py`: Interatomic force constant calculation.
