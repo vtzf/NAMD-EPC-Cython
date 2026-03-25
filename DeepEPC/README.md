@@ -131,7 +131,7 @@ We will firstly show how to use the OpenMX interface of DeepEPC. Run the scripts
 
 1. `python supercell.py`: Generate `inDir/infile_out` with fixed grid center. Generate `inDir/ucell/infile_out`.
 2. cd `inDir/ucell` and run `sbatch subfile` to calculate unitcell Hamiltonian matrix.
-3. `python get_Rlist.py` to obtain suggested `ucellidx` parameter from unitcell Hamiltonian result. You can also customize this parameter.
+3. `python get_Rlist.py`: Obtain suggested `ucellidx` parameter from unitcell Hamiltonian result. You can also customize this parameter.
 4. `python makedir.py`: Build supercell input folder structure.
 5. `python sub_para.py`: Concurrently submit supercell job tasks.  
    When the number of tasks is small, you can manually submit by running `sbatch subfile`.
