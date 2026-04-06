@@ -1,5 +1,40 @@
 from libc.time cimport time_t
 
+# ---------------------------------------------------------------------------
+# Compatibility shim for H5Ovisit API across HDF5 versions
+#
+# HDF5 < 1.10.3 (e.g. 1.8.x):
+#   - H5Ovisit(obj_id, idx_type, order, H5O_iterate_t op, op_data)
+#   - callback: typedef herr_t (*H5O_iterate_t)(hid_t, const char*, const H5O_info_t*, void*)
+#
+# HDF5 >= 1.10.3:
+#   - H5Ovisit1(obj_id, idx_type, order, H5O_iterate1_t op, op_data)
+#   - callback: typedef herr_t (*H5O_iterate1_t)(hid_t, const char*, const H5O_info1_t*, void*)
+#   - H5O_info1_t is structurally identical to the old H5O_info_t
+#
+# HDF5 >= 1.12.0:
+#   - H5Ovisit1 is deprecated (H5Ovisit3 is the new default) but still available
+#
+# The shim below aliases H5Ovisit1 / H5O_info1_t / H5O_iterate1_t to the
+# old unversioned names when compiling against HDF5 < 1.10.3, so the rest
+# of the Cython code can always use the versioned names.
+# ---------------------------------------------------------------------------
+cdef extern from *:
+    """
+    #include "hdf5.h"
+    #if !H5_VERSION_GE(1,10,3)
+    /* HDF5 < 1.10.3: versioned names do not exist; create aliases. */
+    typedef H5O_info_t    H5O_info1_t;
+    typedef H5O_iterate_t H5O_iterate1_t;
+    static herr_t H5Ovisit1(hid_t obj_id, H5_index_t idx_type,
+                             H5_iter_order_t order,
+                             H5O_iterate1_t op, void *op_data) {
+        return H5Ovisit(obj_id, idx_type, order, op, op_data);
+    }
+    #endif
+    """
+    pass
+
 cdef extern from "hdf5.h":
     ctypedef long hid_t
     ctypedef int herr_t
@@ -65,7 +100,9 @@ cdef extern from "hdf5.h":
         H5O_TYPE_NAMED_DATATYPE,
         H5O_TYPE_NTYPES
 
-    # HDF5 >= 1.10.5
+    # H5O_info1_t / H5O_iterate1_t / H5Ovisit1 are available natively on
+    # HDF5 >= 1.10.3, and provided via the compatibility shim above on
+    # HDF5 < 1.10.3 (where the old unversioned H5O_info_t layout is identical).
     ctypedef struct H5O_info1_t:
         unsigned long   fileno
         haddr_t         addr
