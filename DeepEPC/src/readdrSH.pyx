@@ -4,6 +4,7 @@
 cimport cython
 from epc cimport *
 from hdf5 cimport *
+from mkl_spblas cimport *
 from mkl_blacs cimport *
 
 cdef long norb
@@ -961,7 +962,7 @@ def olp_inv(
             c_comm,matbuf,nprocs,myid,N,Nproc_len,
             Nsplit,Nproc,Nproc_num,drSH[i]
         )
-        mkl_sparse_destroy(csrdr)
+#        mkl_sparse_destroy(csrdr)
 
     free(Nproc)
     free(Nproc_num)

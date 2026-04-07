@@ -32,6 +32,16 @@ cdef extern from "mkl_spblas.h" nogil:
         MKL_INT rows, MKL_INT cols, MKL_INT nnz,
         MKL_INT *row_indx, MKL_INT *col_indx, MKL_Complex16 *values
     )
+    cdef sparse_status_t mkl_sparse_d_create_csr(
+        sparse_matrix_t *A, sparse_index_base_t indexing,
+        MKL_INT rows, MKL_INT cols, MKL_INT *rows_start,
+        MKL_INT *rows_end, MKL_INT *col_indx, double *values
+    )
+    cdef sparse_status_t mkl_sparse_z_create_csr(
+        sparse_matrix_t *A, sparse_index_base_t indexing,
+        MKL_INT rows, MKL_INT cols, MKL_INT *rows_start,
+        MKL_INT *rows_end, MKL_INT *col_indx, MKL_Complex16 *values
+    )
     cdef sparse_status_t mkl_sparse_optimize(sparse_matrix_t A)
     cdef sparse_status_t mkl_sparse_destroy(sparse_matrix_t A)
 

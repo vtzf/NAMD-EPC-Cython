@@ -108,13 +108,13 @@ def MPIepc(
     cdef int kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
              kpidx_x, kpidx_y, kpidx_z, kpidx_xy, kpidx, \
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
-             qnum_p, qnum_s, matlen, dhlen, spin, s_r, s_c
+             qnum_p, qnum_s, matlen, dhlen, spin, s_r, s_c, r
     cdef int nbands2 = nbands*nbands
     cdef int norb2 = norbital*norbital
     cdef int nspin2 = nspin*nspin
     cdef int * tag
-    cdef MKL_INT* coo_ridx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
-    cdef MKL_INT* coo_cidx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
+    cdef MKL_INT* csr_rowptr = <MKL_INT*>malloc(sizeof(MKL_INT)*ncell*(norbital+1))
+    cdef MKL_INT* csr_cidx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
     cdef double kx, ky, kz, kpx, kpy, kpz, RKx, RKy, RKz, RK, starttime, endtime
     cdef double complex* hamilveck
     cdef MKL_Complex16* hamilveck_t
@@ -126,7 +126,7 @@ def MPIepc(
     cdef long norbnb_l = norbital*nbands
     cdef int norbnb = norbital*nbands
     cdef matrix_descr descrH
-    cdef sparse_matrix_t cooH
+    cdef sparse_matrix_t csrH
     cdef double complex pi2j = M_PI*2j
     cdef double complex c0 = 0.0
     cdef double complex c1 = 1.0
@@ -147,8 +147,15 @@ def MPIepc(
             tag[i] = 1
             if key_num_s[i,0] == norb2: tag[i] = 2
     for i in range(key_num_s[ncell,1]):
-        coo_ridx[i] = <int>(key_info_s[i]/norbital)
-        coo_cidx[i] = key_info_s[i]%norbital
+        csr_cidx[i] = key_info_s[i]%norbital
+    for j in range(ncell):
+        for r in range(norbital+1):
+            csr_rowptr[j*(norbital+1)+r] = 0
+        for i in range(key_num_s[j,0]):
+            r = <int>(key_info_s[key_num_s[j,1]+i]/norbital)
+            csr_rowptr[j*(norbital+1)+r+1] += 1
+        for r in range(norbital):
+            csr_rowptr[j*(norbital+1)+r+1] += csr_rowptr[j*(norbital+1)+r]
 
     matlen = key_num_s[0,0]
     for i in range(1,ncell):
@@ -224,19 +231,21 @@ def MPIepc(
                             for spin in range(nspin2):
                                 s_r = <int>(spin/nspin)
                                 s_c = spin%nspin
-                                mkl_sparse_z_create_coo(
-                                    &cooH,SPARSE_INDEX_BASE_ZERO,norbital,norbital,dhlen,
-                                    &coo_ridx[key_num_s[j,1]],&coo_cidx[key_num_s[j,1]],
+                                mkl_sparse_z_create_csr(
+                                    &csrH,SPARSE_INDEX_BASE_ZERO,norbital,norbital,
+                                    &csr_rowptr[j*(norbital+1)],
+                                    &csr_rowptr[j*(norbital+1)+1],
+                                    &csr_cidx[key_num_s[j,1]],
                                     <MKL_Complex16*>(&dhexpikR[spin*dhlen])
                                 )
-                                mkl_sparse_optimize(cooH)
+                                mkl_sparse_optimize(csrH)
                                 mkl_sparse_z_mm(
                                     SPARSE_OPERATION_NON_TRANSPOSE,c1mkl,
-                                    cooH,descrH,SPARSE_LAYOUT_ROW_MAJOR,
+                                    csrH,descrH,SPARSE_LAYOUT_ROW_MAJOR,
                                     <MKL_Complex16*>(&bandveck[kidx,s_r*norbital,0]),
                                     nbands,nbands,c1mkl,&hamilveck_t[s_c*norbnb],nbands
                                 )
-                                mkl_sparse_destroy(cooH)
+                                mkl_sparse_destroy(csrH)
                         else:
                             for spin in range(nspin2):
                                 s_r = <int>(spin/nspin)
@@ -260,8 +269,8 @@ def MPIepc(
     free(dhvexpikR)
     free(vdhvexpikR)
     free(hamilveck)
-    free(coo_ridx)
-    free(coo_cidx)
+    free(csr_rowptr)
+    free(csr_cidx)
     free(tag)
 
     mpi.MPI_Barrier(c_comm)
@@ -286,13 +295,13 @@ def MPIepc_q(
     cdef int qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
              kpidx_x, kpidx_y, kpidx_z, kpidx_xy, kpidx, \
              kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
-             knum_p, knum_s, matlen, dhlen, spin, s_r, s_c
+             knum_p, knum_s, matlen, dhlen, spin, s_r, s_c, r
     cdef int nbands2 = nbands*nbands
     cdef int norb2 = norbital*norbital
     cdef int nspin2 = nspin*nspin
     cdef int * tag
-    cdef MKL_INT* coo_ridx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
-    cdef MKL_INT* coo_cidx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
+    cdef MKL_INT* csr_rowptr = <MKL_INT*>malloc(sizeof(MKL_INT)*ncell*(norbital+1))
+    cdef MKL_INT* csr_cidx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
     cdef double kx, ky, kz, kpx, kpy, kpz, RKx, RKy, RKz, RK, starttime, endtime
     cdef double complex* hamilveck
     cdef MKL_Complex16* hamilveck_t
@@ -304,7 +313,7 @@ def MPIepc_q(
     cdef long norbnb_l = norbital*nbands
     cdef int norbnb = norbital*nbands
     cdef matrix_descr descrH
-    cdef sparse_matrix_t cooH
+    cdef sparse_matrix_t csrH
     cdef double complex pi2j = M_PI*2j
     cdef double complex c0 = 0.0
     cdef double complex c1 = 1.0
@@ -325,8 +334,15 @@ def MPIepc_q(
             tag[i] = 1
             if key_num_s[i,0] == norb2: tag[i] = 2
     for i in range(key_num_s[ncell,1]):
-        coo_ridx[i] = <int>(key_info_s[i]/norbital)
-        coo_cidx[i] = key_info_s[i]%norbital
+        csr_cidx[i] = key_info_s[i]%norbital
+    for j in range(ncell):
+        for r in range(norbital+1):
+            csr_rowptr[j*(norbital+1)+r] = 0
+        for i in range(key_num_s[j,0]):
+            r = <int>(key_info_s[key_num_s[j,1]+i]/norbital)
+            csr_rowptr[j*(norbital+1)+r+1] += 1
+        for r in range(norbital):
+            csr_rowptr[j*(norbital+1)+r+1] += csr_rowptr[j*(norbital+1)+r]
 
     matlen = key_num_s[0,0]
     for i in range(1,ncell):
@@ -380,19 +396,21 @@ def MPIepc_q(
                         for spin in range(nspin2):
                             s_r = <int>(spin/nspin)
                             s_c = spin%nspin
-                            mkl_sparse_z_create_coo(
-                                &cooH,SPARSE_INDEX_BASE_ZERO,norbital,norbital,dhlen,
-                                &coo_ridx[key_num_s[j,1]],&coo_cidx[key_num_s[j,1]],
+                            mkl_sparse_z_create_csr(
+                                &csrH,SPARSE_INDEX_BASE_ZERO,norbital,norbital,
+                                &csr_rowptr[j*(norbital+1)],
+                                &csr_rowptr[j*(norbital+1)+1],
+                                &csr_cidx[key_num_s[j,1]],
                                 <MKL_Complex16*>(&dhexpikR[spin*dhlen])
                             )
-                            mkl_sparse_optimize(cooH)
+                            mkl_sparse_optimize(csrH)
                             mkl_sparse_z_mm(
                                 SPARSE_OPERATION_NON_TRANSPOSE,c1mkl,
-                                cooH,descrH,SPARSE_LAYOUT_ROW_MAJOR,
+                                csrH,descrH,SPARSE_LAYOUT_ROW_MAJOR,
                                 <MKL_Complex16*>(&bandveck[k1,s_r*norbital,0]),
                                 nbands,nbands,c1mkl,&hamilveck_t[s_c*norbnb],nbands
                             )
-                            mkl_sparse_destroy(cooH)
+                            mkl_sparse_destroy(csrH)
                     else:
                         for spin in range(nspin2):
                             s_r = <int>(spin/nspin)
@@ -439,8 +457,8 @@ def MPIepc_q(
     free(dhvexpikR)
     free(vdhvexpikR)
     free(hamilveck)
-    free(coo_ridx)
-    free(coo_cidx)
+    free(csr_rowptr)
+    free(csr_cidx)
     free(tag)
 
     mpi.MPI_Barrier(c_comm)
@@ -499,7 +517,7 @@ def MPIepc_p(
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
              kpidx_x, kpidx_y, kpidx_z, kpidx_xy, kpidx, \
              knum_p, knum_s, k1, k2, kt, idx1, idx2, matlen, \
-             dhlen, spin, s_r, s_c
+             dhlen, spin, s_r, s_c, r
     cdef int norb2 = norbital*norbital
     cdef int knum2 = knum*knum
     cdef int nspin2 = nspin*nspin
@@ -513,9 +531,9 @@ def MPIepc_p(
     cdef long len_hv
     cdef long norbital_l = norbital
     cdef matrix_descr descrH
-    cdef sparse_matrix_t cooH
-    cdef MKL_INT* coo_ridx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
-    cdef MKL_INT* coo_cidx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
+    cdef sparse_matrix_t csrH
+    cdef MKL_INT* csr_rowptr = <MKL_INT*>malloc(sizeof(MKL_INT)*ncell*(norbital+1))
+    cdef MKL_INT* csr_cidx = <MKL_INT*>malloc(sizeof(MKL_INT)*key_num_s[ncell,1])
     cdef double complex pi2j = M_PI*2j
     cdef double complex c0 = 0.0
     cdef double complex c1 = 1.0
@@ -536,8 +554,15 @@ def MPIepc_p(
             tag[i] = 1
             if key_num_s[i,0] == norb2: tag[i] = 2
     for i in range(key_num_s[ncell,1]):
-        coo_ridx[i] = <int>(key_info_s[i]/norbital)
-        coo_cidx[i] = key_info_s[i]%norbital
+        csr_cidx[i] = key_info_s[i]%norbital
+    for j in range(ncell):
+        for r in range(norbital+1):
+            csr_rowptr[j*(norbital+1)+r] = 0
+        for i in range(key_num_s[j,0]):
+            r = <int>(key_info_s[key_num_s[j,1]+i]/norbital)
+            csr_rowptr[j*(norbital+1)+r+1] += 1
+        for r in range(norbital):
+            csr_rowptr[j*(norbital+1)+r+1] += csr_rowptr[j*(norbital+1)+r]
 
     matlen = key_num_s[0,0]
     for i in range(1,ncell):
@@ -609,18 +634,20 @@ def MPIepc_p(
                             for spin in range(nspin2):
                                 s_r = <int>(spin/nspin)
                                 s_c = spin%nspin
-                                mkl_sparse_z_create_coo(
-                                    &cooH,SPARSE_INDEX_BASE_ZERO,norbital,norbital,dhlen,
-                                    &coo_ridx[key_num_s[j,1]],&coo_cidx[key_num_s[j,1]],
+                                mkl_sparse_z_create_csr(
+                                    &csrH,SPARSE_INDEX_BASE_ZERO,norbital,norbital,
+                                    &csr_rowptr[j*(norbital+1)],
+                                    &csr_rowptr[j*(norbital+1)+1],
+                                    &csr_cidx[key_num_s[j,1]],
                                     <MKL_Complex16*>(&dhexpikR[spin*dhlen])
                                 )
-                                mkl_sparse_optimize(cooH)
+                                mkl_sparse_optimize(csrH)
                                 mkl_sparse_z_mv(
-                                    SPARSE_OPERATION_NON_TRANSPOSE,c1mkl,cooH,
+                                    SPARSE_OPERATION_NON_TRANSPOSE,c1mkl,csrH,
                                     descrH,<MKL_Complex16*>(&bandveck[idx1,s_r*norbital]),
                                     c1mkl,&hamilveck_t[s_c*norbital]
                                 )
-                                mkl_sparse_destroy(cooH)
+                                mkl_sparse_destroy(csrH)
                         else:
                             for spin in range(nspin2):
                                 s_r = <int>(spin/nspin)
@@ -643,8 +670,8 @@ def MPIepc_p(
     free(dhvexpikR)
     free(tag)
     free(hamilveck)
-    free(coo_ridx)
-    free(coo_cidx)
+    free(csr_rowptr)
+    free(csr_cidx)
 
     mpi.MPI_Barrier(c_comm)
     endtime = mpi.MPI_Wtime()

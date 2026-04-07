@@ -4,6 +4,7 @@
 cimport cython
 from epc cimport *
 from hdf5 cimport *
+from mkl_spblas cimport *
 from mkl_blacs cimport *
 
 cdef long norb
@@ -632,7 +633,7 @@ def olp_inv(
                 descrH,SPARSE_LAYOUT_ROW_MAJOR,olpinv,
                 lldSp,lldSp,0.0,olpinvham,lldSp
             )
-            mkl_sparse_destroy(csrH)
+#            mkl_sparse_destroy(csrH)
             # H*S^-1 has C order, needs to transpose because
             # in C order, actually matrix is (H*S^-1)^T = S^-1*H
             mat_tran(
@@ -657,7 +658,7 @@ def olp_inv(
                     c_comm,matbuf,nprocs,myid,m,N,Nproc_len,
                     Nsplit,Nproc,Nproc_num,drSH[n,i]
                 )
-                mkl_sparse_destroy(csrdr)
+#                mkl_sparse_destroy(csrdr)
 
     free(Nproc)
     free(Nproc_num)
