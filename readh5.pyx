@@ -684,7 +684,7 @@ def ReadH5Info(
     mpi.MPI_Bcast(&bmin_s,1,mpi.MPI_INT,0,c_comm)
     mpi.MPI_Bcast(&bmax_s,1,mpi.MPI_INT,0,c_comm)
 
-    return nk_s, nk_a, nbands, nmodes, kmin_s, kmax_s, bmin_s, bmax_s, abc
+    return nk_s, nk_a, nmodes, nbands, kmin_s, kmax_s, bmin_s, bmax_s, abc
 
 
 @cython.boundscheck(False)
