@@ -79,10 +79,10 @@ cdef void readscfout(
                             hamil_buf[3*ns+i+offset] = data_buf[i]*Hartree2eV
                     elif spin == 2:
                         for i in range(TNO1*TNO2):
-                            hamil_buf[ns+i+offset] += data_buf[i]*Hartree2eV*0.0
+                            hamil_buf[ns+i+offset] += data_buf[i]*Hartree2eV
                     else:
                         for i in range(TNO1*TNO2):
-                            hamil_buf[ns+i+offset] += 1j*data_buf[i]*Hartree2eV*0.0
+                            hamil_buf[ns+i+offset] += 1j*data_buf[i]*Hartree2eV
                     key_idx[Rij] += TNO1*TNO2
                 else:
                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
@@ -109,7 +109,7 @@ cdef void readscfout(
                             hamil_buf[3*ns+i+offset] += 1j*data_buf[i]*Hartree2eV
                     else:
                         for i in range(TNO1*TNO2):
-                            hamil_buf[ns+i+offset] += 1j*data_buf[i]*Hartree2eV*0.0
+                            hamil_buf[ns+i+offset] += 1j*data_buf[i]*Hartree2eV
                     key_idx[Rij] += TNO1*TNO2
                 else:
                     fseek(fp,TNO1*TNO2*8,SEEK_CUR)
@@ -294,11 +294,11 @@ cdef void readscfout1(
                             elif spin == 2:
                                 for i in range(TNO1*TNO2):
                                     epc[1,key_info1[i+offset,1]] \
-                                    += data_buf[i]*Hartree2eV*0.0
+                                    += data_buf[i]*Hartree2eV
                             else:
                                 for i in range(TNO1*TNO2):
                                     epc[1,key_info1[i+offset,1]] \
-                                    += 1j*data_buf[i]*Hartree2eV*0.0
+                                    += 1j*data_buf[i]*Hartree2eV
                         else:
                             if spin == 0:
                                 for i in range(TNO1*TNO2):
@@ -345,7 +345,7 @@ cdef void readscfout1(
                             else:
                                 for i in range(TNO1*TNO2):
                                     epc[1,key_info1[i+offset,1]] \
-                                    += 1j*data_buf[i]*Hartree2eV*0.0
+                                    += 1j*data_buf[i]*Hartree2eV
                         else:
                             if spin == 0:
                                 for i in range(TNO1*TNO2):
