@@ -151,7 +151,7 @@ def ReadEpc(
                 energy = np.zeros((nk),dtype=float)
             comm.Bcast(ekidx,root=0)
             comm.Bcast(ebidx,root=0)
-    comm.Bcast(energy,root=0)
+            comm.Bcast(energy,root=0)
 
     if IsAllVec or IsAllKlist:
         return readh5.ReadNpy(
