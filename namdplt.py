@@ -36,8 +36,8 @@ def main():
     kpath = np.array(\
        [[0.00000, 0.00000, 0.00000],
         [0.50000, 0.00000, 0.00000],
-        [0.33333, 0.33333, 0.00000],
-        [0.00000, 0.00000, 0.00000]]\
+        [0.50000, 0.50000, 0.00000],
+        [0.50000, 0.50000, 0.50000]]\
     )
 
     qpath = kpath # for TDPH.png
@@ -66,77 +66,93 @@ def main():
 
     print("\nReading data ...")
     inp = pn.read_inp('inp')
-    #prefix = inp['EPMPREF']; epmdir = inp['EPMDIR']
-    #filepm = os.path.join(epmdir, prefix + '_ephmat_p1.h5')
-    #A = pn.read_ephmath5(filepm, dset='/el_ph_band_info/lattice_vec_angstrom')
-
-    #en, kpts = pn.ek_selected(inp=inp) # en & kpts selected
-    #Enk = pn.get_Enk_tot(kpath, A, inp=inp) # total Enk
-    #qpts = pn.read_ephmath5(filepm, dset='/el_ph_band_info/q_list')
-    #phen = pn.read_ephmath5(filepm, dset='/el_ph_band_info/ph_disp_meV')
-
     bassel = np.load('bassel.npy')
     b_index = bassel[:,1]
-    NSW     = int(inp['NSW'])
+    LEF = True if inp['LEF'] == '.T.' else False
+    LHDF5 = True if inp['LHDF5'] == '.T.' else False
+    EFSTART = int(inp['EFSTART'])
+    EFTIME  = int(inp['EFTIME'])
     LHOLE = True if inp['LHOLE'] == '.T.' else False
+    NSW     = int(inp['NSW'])
     if LHOLE: lphinv = -1.0
     else: lphinv = 1.0
+    EMIN = float(inp['EMIN'])
+    EMAX = float(inp['EMAX'])
     nbasis  = bassel.shape[0]
 
-    import configparser
-    conf = configparser.ConfigParser()
-    conf.read('config.ini',encoding='utf-8')
-    inDir = conf['epc']['inDir']+'/'
-    bandDir = conf['epc']['bandDir']+'/'
-    phononDir = conf['epc']['phononDir']+'/'
+    if LHDF5:
+        prefix = inp['EPMPREF']; epmdir = inp['EPMDIR']
+        filepm = os.path.join(epmdir, prefix + '_ephmat_p1.h5')
+        abc = pn.read_ephmath5(filepm, dset='/el_ph_band_info/lattice_vec_angstrom')
+        A = np.zeros((3,3))
+        tmp = np.cross(abc[1],abc[2])
+        A[0] = tmp
+        CellV = abs(np.dot(abc[0],tmp))
+        A[1] = np.cross(abc[2],abc[0])
+        A[2] = np.cross(abc[0],abc[1])
+        A *= 1.0/CellV
 
-    valname = conf['epc']['valname']
-    IsAllVec = True if conf['epc']['IsAllVec']=='True' else False
-    if IsAllVec:
-        bmin = int(conf['epc']['bmin'])
-        bmax = int(conf['epc']['bmax'])
-        en_tot = np.ascontiguousarray(
-            np.load('../'+inDir+bandDir+valname)[:,bmin:bmax+1]
-        )
+        en_tot, kpts_tot = pn.read_ektot(inp)
+        en, kpts = pn.ek_selected(inp=inp,bassel=bassel+1) # en & kpts selected
+        qpts = pn.read_ephmath5(filepm, dset='/el_ph_band_info/q_list')
+        phen = pn.read_ephmath5(filepm, dset='/el_ph_band_info/ph_disp_meV')
+
+        nmodes = phen.shape[1]
+        nqs = qpts.shape[0]
     else:
-        en_tot = np.load('../'+inDir+bandDir+valname)
-    phvalname = conf['epc']['phvalname']
-    phen = np.load('../'+inDir+phononDir+phvalname)*1000.0
-    nmodes = phen.shape[1]
+        import configparser
+        conf = configparser.ConfigParser()
+        conf.read('config.ini',encoding='utf-8')
+        inDir = conf['epc']['inDir']+'/'
+        bandDir = conf['epc']['bandDir']+'/'
+        phononDir = conf['epc']['phononDir']+'/'
+    
+        valname = conf['epc']['valname']
+        IsAllVec = True if conf['epc']['IsAllVec']=='True' else False
+        if IsAllVec:
+            bmin = int(conf['epc']['bmin'])
+            bmax = int(conf['epc']['bmax'])
+            en_tot = np.ascontiguousarray(
+                np.load('../'+inDir+bandDir+valname)[:,bmin:bmax+1]
+            )
+        else:
+            en_tot = np.load('../'+inDir+bandDir+valname)
+        phvalname = conf['epc']['phvalname']
+        phen = np.load('../'+inDir+phononDir+phvalname)*1000.0
+        nmodes = phen.shape[1]
+    
+        nq_str = conf['epc']['nq']
+        nq_list = nq_str[1:-1].split(',')
+        nq = np.array([int(i) for i in nq_list],dtype=np.int32)
+        nqs = nq[0]*nq[1]*nq[2]
+    
+        kpts_tot = np.zeros((nqs,3),dtype=float)
+        for i in range(nq[0]):
+            for j in range(nq[1]):
+                for k in range(nq[2]):
+                    kidx = (i*nq[1]+j)*nq[2]+k
+                    kpts_tot[kidx,0] = i/nq[0]
+                    kpts_tot[kidx,1] = j/nq[1]
+                    kpts_tot[kidx,2] = k/nq[2]
+        qpts = kpts_tot.copy()
+        en = en_tot[bassel[:,0], bassel[:,1]]
+        kpts = kpts_tot[bassel[:,0]]
+    
+        from ase.io import read
+        poscar_ucell = inDir+conf['epc']['poscar_ucell']
+        pos = read('../'+poscar_ucell)
+        A = pos.cell.reciprocal()[:]
 
-    nq_str = conf['epc']['nq']
-    nq_list = nq_str[1:-1].split(',')
-    nq = np.array([int(i) for i in nq_list],dtype=np.int32)
-    nqs = nq[0]*nq[1]*nq[2]
-
-    kpts_tot = np.zeros((nqs,3),dtype=float)
-    for i in range(nq[0]):
-        for j in range(nq[1]):
-            for k in range(nq[2]):
-                kidx = (i*nq[1]+j)*nq[2]+k
-                kpts_tot[kidx,0] = i/nq[0]
-                kpts_tot[kidx,1] = j/nq[1]
-                kpts_tot[kidx,2] = k/nq[2]
-    qpts = kpts_tot.copy()
-    en = en_tot[bassel[:,0], bassel[:,1]]
-    #np.save('en.npy',en)
-    kpts = kpts_tot[bassel[:,0]]
-
-    from ase.io import read
-    poscar_ucell = inDir+conf['epc']['poscar_ucell']
-    pos = read('../'+poscar_ucell)
-    #A = pos.cell[:]
-    A = pos.cell.reciprocal()[:]
     Enk = pn.get_Enk_tot(en_tot, kpts_tot, kpath, A, inp=inp) # total Enk
+    kpts_tot = None
 
     np.save('kpts.npy',kpts)
     np.save('kpath.npy',kpath)
-    k_index, k_loc, kp_loc = pn.pick_kpts_on_path(kpts, kpath, A, norm=0.0002)
+    k_index, k_loc, kp_loc = pn.pick_kpts_on_path(kpts, kpath, A, norm=0.0008)
     q_index, q_loc, qp_loc = pn.pick_kpts_on_path(qpts, qpath, A, norm=0.001)
 #    print(k_index)
 
     if ((1 in which_plt) or (11 in which_plt)):
-
         #if os.path.isfile('EPECTXT'):
         #    coup = pn.read_couple(filcoup='EPECTXT', inp=inp)
         #    coup = coup * 1000.0 # change unit to meV
@@ -146,10 +162,8 @@ def main():
         #else:
         #    print("\nERROR: EPELTXT file is not found!")
 
-        coup = np.load('epcec-0.npy')
-        coup = coup[np.newaxis]
-        coup = coup * 1000.0 # change unit to meV
-        coup_av = np.average(np.abs(coup), axis=0)
+        coup_av = np.load('epcec-0.npy')
+        coup_av *= 1000.0 # change unit to meV
 
     if ((12 in which_plt) or (len(ph_indices)==0)):
         #if os.path.isfile('EPPHTXT'):
@@ -233,7 +247,7 @@ def main():
                      figname='COUPLE_PH.png')
 
     if (2 in which_plt):
-        plot_tdprop(shp, Eref, lplot=2, ksen=en, figname='TDEN.png')
+        plot_tdprop(shp, Eref, lplot=2, ksen=en, emin=EMIN, emax=EMAX, figname='TDEN.png')
 
     times = np.array([80,250,500,750,1000])-1
 
@@ -451,7 +465,7 @@ def plot_coup_ph(coup_ph, q_loc, phen, qp_loc, qplabels, index,
     print("\n%s has been saved."%figname)
 
 
-def plot_tdprop(shp, Eref=0.0, lplot=1, ksen=None, figname='tdshp.png'):
+def plot_tdprop(shp, Eref=0.0, lplot=1, ksen=None, emin=None, emax=None, figname='tdshp.png'):
     '''
     This function loads data from SHPROP.xxx files,
     and plot average evolution of energy & surface hopping proportion of
@@ -503,9 +517,9 @@ def plot_tdprop(shp, Eref=0.0, lplot=1, ksen=None, figname='tdshp.png'):
         T = np.tile(shp[:,0], nbands).reshape(nbands,ntsteps).T
         sc = ax.scatter(T, E[:,sort], s=dotsize, c=pop[:, sort], lw=0,
                         norm=norm, cmap=cmap)
-        #energy = np.load('energy.npy')
-        #emax = np.array([energy[pop[i].argmax()] for i in range(ntsteps)])
-        #ax.plot(shp[:,0], emax-Eref, 'b', lw=0.3, label='Max Pop Energy')
+#        energy = np.load('energy.npy')
+#        emax = np.array([energy[pop[i].argmax()] for i in range(ntsteps)])
+#        ax.plot(shp[:,0], emax-Eref, 'b', lw=0.3, label='Max Pop Energy')
 
         ax.plot(shp[:,0], shp[:,1]-Eref, 'b', lw=1, label='Average Energy')
         plt.colorbar(sc)
@@ -518,8 +532,10 @@ def plot_tdprop(shp, Eref=0.0, lplot=1, ksen=None, figname='tdshp.png'):
         ax.set_ylabel(ylabel)
 
     ax.set_xlim(0,namdtime)
-    ax.set_ylim(int(shp[:,1].min())-1,int(shp[:,1].max())+1)
     ax.set_xlabel('Time (fs)')
+
+    #ax.set_ylim(emin,emax)
+    ax.set_ylim(int(shp[:,1].min())-1,int(shp[:,1].max())+1)
 
     plt.tight_layout()
     plt.savefig(os.path.join(fig_path, figname), dpi=300)
@@ -536,7 +552,7 @@ def plot_tdkprop(kpts, shp, times, axis='xy', figname='TDKPROP.png'):
     tindex = times
     #tindex = times2index(times, shp)
     #times = shp[tindex,0]
-    nts = len(times)
+    nts = len(tindex)
     pop = shp[tindex,2:]
     #cmin = 1e-10; cmax = 1e-2
     cmin = np.min(pop[pop>0.0]); cmax = np.max(pop)
@@ -570,7 +586,7 @@ def plot_tdkprop(kpts, shp, times, axis='xy', figname='TDKPROP.png'):
         else:
             ax = axes[math.floor(it/ncol), it%ncol]
 
-        ax.set_title('%.0f fs'%times[it])
+        ax.set_title('%.0f fs'%tindex[it])
 
         sort = np.argsort(pop[it,:])
         sc = ax.scatter(X[sort], Y[sort], s=10, lw=0, c=pop[it,sort],
@@ -585,6 +601,8 @@ def plot_tdkprop(kpts, shp, times, axis='xy', figname='TDKPROP.png'):
         # ax.set_yticks([])
         ax.set_xlabel('k$_%s$'%axis[0])
         ax.set_ylabel('k$_%s$'%axis[1])
+
+        ax.grid('on', ls='--', lw=1.0, alpha=0.8, color='gray', which='major')
 
     ll = 0.6/figsize_x ; rr = 1.0 - 0.7 / figsize_x
     bb = 0.5/figsize_y ; tt = 1.0 - 0.4 / figsize_y
@@ -602,7 +620,7 @@ def plot_tdkprop(kpts, shp, times, axis='xy', figname='TDKPROP.png'):
 
 
 def plot_tdband_sns(k_loc, en, kp_loc, kplabels, shp, index, times,
-        b_index=None, Enk=None, Eref=0.0, nsw=None, nbasis=None, figname='TDBAND.png'):
+        b_index=None, Enk=None, Eref=0.0, lef=False, nsw=None, nbasis=None, figname='TDBAND.png'):
 
     tindex = times
     pop = shp[:,index+2][tindex,:]
@@ -622,7 +640,7 @@ def plot_tdband_sns(k_loc, en, kp_loc, kplabels, shp, index, times,
 #    else:
 #        ncol = math.ceil(np.sqrt(nts))
 #        nrow = math.ceil( nts / ncol )
-
+    
     ncol = 5; nrow = 1
 
     figsize_x = 2.4 * ncol + 1.0
@@ -729,7 +747,7 @@ def plot_tdph_sns(q_loc, phen, qp_loc, qplabels, php, index, times,
 #    else:
 #        ncol = math.ceil(np.sqrt(nts))
 #        nrow = math.ceil( nts / ncol )
-
+    
     ncol = 5; nrow = 1
 
     figsize_x = 2.4 * ncol + 1.0
@@ -855,7 +873,7 @@ def plot_tdphen(php, figname='TDPHEN.png'):
     if (nmodes<=100):
         ncol = int(np.sqrt(nmodes) / 2) + 1
         fsize = 10 - np.sqrt(nmodes) / 2
-        ax.legend(loc=1, ncol=ncol, fontsize=fsize)
+        ax.legend(loc='upper left', ncol=ncol, fontsize=fsize)
 
     ax.set_xlim(0,namdtime)
     ax.set_xlabel('Time (fs)')
@@ -1132,64 +1150,68 @@ def save_phmod(inp, ph_indices, coup_ph=None):
         print("\nNo phonon mode to save!!!")
         return
 
-    #prefix = inp['EPMPREF']; epmdir = inp['EPMDIR']
-    #filepm = os.path.join(epmdir, prefix + '_ephmat_p1.h5')
-    #qpts = pn.read_ephmath5(filepm, dset='/el_ph_band_info/q_list')
-    #phen = pn.read_ephmath5(filepm, dset='/el_ph_band_info/ph_disp_meV')
-    #latt_vec = pn.read_ephmath5(filepm, dset='/el_ph_band_info/lattice_vec_angstrom')
-    #phmod_ev_r_tot = pn.read_ephmath5(filepm, dset='/el_ph_band_info/phmod_ev_r')
-    #phmod_ev_i_tot = pn.read_ephmath5(filepm, dset='/el_ph_band_info/phmod_ev_i')
-    #at_pos = pn.read_ephmath5(filepm, dset='/el_ph_band_info/atom_pos')
-    #at_mass = pn.read_ephmath5(filepm, dset='/el_ph_band_info/mass_a.u.')
+    LHDF5 = True if inp['LHDF5'] == '.T.' else False
+    if LHDF5:
+        prefix = inp['EPMPREF']; epmdir = inp['EPMDIR']
+        filepm = os.path.join(epmdir, prefix + '_ephmat_p1.h5')
+        qpts = pn.read_ephmath5(filepm, dset='/el_ph_band_info/q_list')
+        phen = pn.read_ephmath5(filepm, dset='/el_ph_band_info/ph_disp_meV')
+        latt_vec = pn.read_ephmath5(filepm, dset='/el_ph_band_info/lattice_vec_angstrom')
+        phmod_ev_r_tot = pn.read_ephmath5(filepm, dset='/el_ph_band_info/phmod_ev_r')
+        phmod_ev_i_tot = pn.read_ephmath5(filepm, dset='/el_ph_band_info/phmod_ev_i')
+        at_pos = pn.read_ephmath5(filepm, dset='/el_ph_band_info/atom_pos')
+        at_mass = pn.read_ephmath5(filepm, dset='/el_ph_band_info/mass_a.u.')
+        # Atom number maybe wrong, please check output .xsf files!!!
+        at_num = [int(mass/2) for mass in at_mass]
+    else:
+        import configparser
+        conf = configparser.ConfigParser()
+        conf.read('config.ini',encoding='utf-8')
+        inDir = conf['epc']['inDir']+'/'
+        phononDir = conf['epc']['phononDir']+'/'
 
-    import configparser
-    conf = configparser.ConfigParser()
-    conf.read('config.ini',encoding='utf-8')
-    inDir = conf['epc']['inDir']+'/'
-    phononDir = conf['epc']['phononDir']+'/'
+        phvalname = conf['epc']['phvalname']
+        phen = np.load('../'+inDir+phononDir+phvalname)*1000
+        nmodes = phen.shape[1]
 
-    phvalname = conf['epc']['phvalname']
-    phen = np.load('../'+inDir+phononDir+phvalname)*1000
-    nmodes = phen.shape[1]
+        nq_str = conf['epc']['nq']
+        nq_list = nq_str[1:-1].split(',')
+        nq = np.array([int(i) for i in nq_list],dtype=np.int32)
+        nqs = nq[0]*nq[1]*nq[2]
+        qpts = np.zeros((nqs,3),dtype=float)
+        for i in range(nq[0]):
+            for j in range(nq[1]):
+                for k in range(nq[2]):
+                    qidx = (i*nq[1]+j)*nq[2]+k
+                    qpts[qidx,0] = i/nq[0]
+                    qpts[qidx,1] = j/nq[1]
+                    qpts[qidx,2] = k/nq[2]
 
-    nq_str = conf['epc']['nq']
-    nq_list = nq_str[1:-1].split(',')
-    nq = np.array([int(i) for i in nq_list],dtype=np.int32)
-    nqs = nq[0]*nq[1]*nq[2]
-    qpts = np.zeros((nqs,3),dtype=float)
-    for i in range(nq[0]):
-        for j in range(nq[1]):
-            for k in range(nq[2]):
-                qidx = (i*nq[1]+j)*nq[2]+k
-                qpts[qidx,0] = i/nq[0]
-                qpts[qidx,1] = j/nq[1]
-                qpts[qidx,2] = k/nq[2]
-
-    from ase.io import read
-    poscar_ucell = inDir+conf['epc']['poscar_ucell']
-    pos = read('../'+poscar_ucell)
-    latt_vec = pos.cell[:]
-    at_pos = pos.positions[:]
-    natom = at_pos.shape[0]
-    nmodes = natom*3
-    from ase.data import atomic_numbers, atomic_masses
-    at_mass = np.array([atomic_masses[atomic_numbers[i]] for i in pos.symbols])
-    phvecname = conf['epc']['phvecname']
-    phmode = np.fromfile('../'+inDir+phononDir+phvecname,dtype=complex)
-    phmod_ev = phmode.reshape(nqs,natom,3,nmodes)
-
-    # Atom number maybe wrong, please check output .xsf files!!!
-    at_num = [int(mass/2) for mass in at_mass]
+        from ase.io import read
+        poscar_ucell = inDir+conf['epc']['poscar_ucell']
+        pos = read('../'+poscar_ucell)
+        latt_vec = pos.cell[:]
+        at_pos = pos.positions[:]
+        natom = at_pos.shape[0]
+        nmodes = natom*3
+        from ase.data import atomic_numbers, atomic_masses
+        at_mass = np.array([atomic_masses[atomic_numbers[i]] for i in pos.symbols])
+        phvecname = conf['epc']['phvecname']
+        phmode = np.fromfile('../'+inDir+phononDir+phvecname,dtype=complex)
+        phmod_ev = phmode.reshape(nqs,natom,3,nmodes)
+        at_num = [atomic_numbers[i] for i in pos.symbols]
 
     for iph in range(nph):
 
         iq = ph_indices[iph,0]
         im = ph_indices[iph,1]
         qpt = qpts[iq]
-        phmod_ev_r = phmod_ev[iq,:,:,im].real
-        phmod_ev_i = phmod_ev[iq,:,:,im].imag
-        #phmod_ev_r = phmod_ev_r_tot[:,:,im,iq].T
-        #phmod_ev_i = phmod_ev_i_tot[:,:,im,iq].T
+        if not LHDF5:
+            phmod_ev_r = phmod_ev[iq,:,:,im].real
+            phmod_ev_i = phmod_ev[iq,:,:,im].imag
+        else:
+            phmod_ev_r = phmod_ev_r_tot[:,:,im,iq].T
+            phmod_ev_i = phmod_ev_i_tot[:,:,im,iq].T
 
         if (coup_ph is None):
             header  = "Phonon Mode\n"
