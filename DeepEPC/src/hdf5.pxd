@@ -54,6 +54,7 @@ cdef extern from "hdf5.h":
         hid_t file_space_id, hid_t plist_id, void* buf
     )
     cdef herr_t H5Dclose(hid_t dset_id)
+    cdef herr_t H5Tclose(hid_t type_id)
     cdef herr_t H5Fclose(hid_t file_id)
     cdef hid_t H5Dget_type(hid_t dset_id)
 
