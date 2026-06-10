@@ -490,7 +490,7 @@ def band_cal(inDir,bandDir,knum,k_list,Ispin):
                         print("bassel%s_p[%5d](ik,ib)=(%d,%d) in id[%d]."\
                               %(name_ex[spin],k_idx_num_p,i,j,myid),flush=True)
                         vals_p.append(val_t[j])
-                        vecs_p.append(vec_t[:,j])
+                        vecs_p.append(vec_t[:,j].copy())
                         k_idx_list.append([i,j])
                         k_idx_num_p += 1
 

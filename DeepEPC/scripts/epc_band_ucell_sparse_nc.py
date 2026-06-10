@@ -574,8 +574,8 @@ def band_cal(inDir,bandDir,knum,k_list):
                 if val_t[j]>=emin and val_t[j]<=emax:
                     print("bassel_p[%5d](ik,ib)=(%d,%d) in id[%d]."%(k_idx_num_p,i,j,myid),flush=True)
                     vals_p.append(val_t[j])
-                    vecs_p.append(vec_t[:,j])
-                    spinDMs_p.append(spinDM_t[j])
+                    vecs_p.append(vec_t[:,j].copy())
+                    spinDMs_p.append(spinDM_t[j].copy())
                     k_idx_list.append([i,j])
                     k_idx_num_p += 1
     # alloc val/vec & gather
