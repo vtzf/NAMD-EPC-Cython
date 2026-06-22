@@ -8,53 +8,6 @@ from mkl_spblas cimport *
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def epc_preprocess(
-    MPI.Comm shm_comm, 
-    int myid, int shm_id, int nprocs_shm, int knum, int nmodes, int nm_num, int nm_min, 
-    int atomnum, double factor1, double[::1] mass, double[:,::1] phval, 
-    double complex[:,:,::1] phvecval, char* phvecname
-):
-    cdef mpi.MPI_Comm c_shm_comm = shm_comm.ob_mpi
-    cdef int h, i, j, k, l
-    cdef double m, phvalmass, starttime, endtime
-    cdef double* mass2 = <double*>malloc(sizeof(double)*atomnum)
-    cdef int knum_min, knum_max
-    cdef long nmodes_l = nmodes
-    cdef FILE * fp
-
-    starttime = mpi.MPI_Wtime()
-    #mpi.MPI_Barrier(c_shm_comm)
-    if (shm_id == 0):
-        fp = fopen(phvecname,"rb")
-        fseek(fp,0,SEEK_SET)
-        for i in range(knum):
-            fseek(fp,nm_min*nmodes_l*16,SEEK_CUR)
-            fread(&phvecval[i,0,0],sizeof(double complex),nm_num*nmodes,fp)
-            fseek(fp,(nmodes-nm_min-nm_num)*nmodes_l*16,SEEK_CUR)
-        fclose(fp)
-    mpi.MPI_Barrier(c_shm_comm)
-
-    knum_min = <int>((knum*shm_id)/nprocs_shm)
-    knum_max = <int>((knum*(shm_id+1))/nprocs_shm)
-    for i in range(atomnum):
-        mass2[i] = 1.0/sqrt(mass[i])*factor1
-    for i in range(knum_min,knum_max):
-        for j in range(nm_num):
-            h = <int>((j+nm_min)/3)
-            m = mass2[h]
-            for l in range(nmodes):
-                phvalmass = phval[i,l]*m
-                phvecval[i,j,l] *= phvalmass
-
-    free(mass2)
-    mpi.MPI_Barrier(c_shm_comm)
-    endtime = mpi.MPI_Wtime()
-    if myid == 0:
-        printf("epc_preprocess time in mode[%4d:%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
-
-
-@cython.boundscheck(False)
-@cython.wraparound(False)
 cdef void epckq(
     double Kpx, double Kpy, double Kpz, double complex* hamilveck,
     double complex[:,::1] bandveckp, double complex[:,::1] phvecval, 

@@ -13,6 +13,7 @@ cdef int* atom_idx_all
 cdef double* data_buf
 cdef int* key_buf
 cdef double Hartree2eV = 27.211396641308
+#cdef double Hartree2eV = 27.2113845
 
 
 @cython.boundscheck(False)
@@ -670,25 +671,23 @@ cdef void readh5_p0(
     mpi.MPI_Barrier(comm_b)
     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
-    offset = 0
-    for i in range(key_min):
-        offset += pub_key[i,4]
 
-    f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
-    for h in range(key_min,key_max):
-        sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
-        data_id = H5Dopen(f,key_t,H5P_DEFAULT)
-        status = H5Dread(
-            data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
-            H5S_ALL,H5P_DEFAULT,data_buf
-        )
-        offset = pub_key[h,5]
-        for i in range(pub_key[h,4]):
-            hamil_buf[i+offset] = data_buf[i]
+    if (key_min<key_max):
+        f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
+        for h in range(key_min,key_max):
+            sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
+            data_id = H5Dopen(f,key_t,H5P_DEFAULT)
+            status = H5Dread(
+                data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
+                H5S_ALL,H5P_DEFAULT,data_buf
+            )
+            offset = pub_key[h,5]
+            for i in range(pub_key[h,4]):
+                hamil_buf[i+offset] = data_buf[i]
 
-        status = H5Dclose(data_id)
+            status = H5Dclose(data_id)
 
-    status = H5Fclose(f)
+        status = H5Fclose(f)
 
 
 @cython.boundscheck(False)
@@ -714,28 +713,76 @@ cdef void readh5_p1(
     key_min = <int>((key_num[ncell2,2]*myid_b)/nprocs_b)
     key_max = <int>((key_num[ncell2,2]*(myid_b+1))/nprocs_b)
 
-    f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
-    for h in range(key_min,key_max):
-        sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
-        if H5Lexists(f,key_t,H5P_DEFAULT):
-            sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
-            if H5Lexists(f,key_t1,H5P_DEFAULT):
-                data_id = H5Dopen(f,key_t,H5P_DEFAULT)
-                status = H5Dread(
-                    data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
-                    H5S_ALL,H5P_DEFAULT,data_buf
-                )
-                offset = pub_key[h,5]
-                if LADD:
-                    for i in range(pub_key[h,4]):
-                        dhamil[key_info1[i+offset,1]] \
-                        = (data_buf[i]-hamil_buf[i+offset])*factor
-                else:
-                    for i in range(pub_key[h,4]):
-                        hamil_buf[i+offset] = data_buf[i]
-                status = H5Dclose(data_id)
+    if (key_min<key_max):
+        f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
+        for h in range(key_min,key_max):
+            sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
+            if H5Lexists(f,key_t,H5P_DEFAULT):
+                sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
+                if H5Lexists(f,key_t1,H5P_DEFAULT):
+                    data_id = H5Dopen(f,key_t,H5P_DEFAULT)
+                    status = H5Dread(
+                        data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
+                        H5S_ALL,H5P_DEFAULT,data_buf
+                    )
+                    offset = pub_key[h,5]
+                    if LADD:
+                        for i in range(pub_key[h,4]):
+                            dhamil[key_info1[i+offset,1]] \
+                            = (data_buf[i]-hamil_buf[i+offset])*factor
+                    else:
+                        for i in range(pub_key[h,4]):
+                            hamil_buf[i+offset] = data_buf[i]
+                    status = H5Dclose(data_id)
 
-    status = H5Fclose(f)
+        status = H5Fclose(f)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def ReadHamil0(
+    MPI.Comm shm_comm_py, int norbital_u, int ncell, int norbital_m, 
+    int atomnum, int[:,::1] key_num, int[:,::1] pub_key, 
+    int[::1] atom_idx_py, int[::1] atom_idx_all_py, double[::1] hamil_buf,
+    char* inDir, char* H5HamName, int Ispin, bint IsH5
+):
+    cdef int i, j, ierr, shm_nprocs, shm_id
+    cdef int ncell2 = ncell*ncell
+    cdef mpi.MPI_Comm shm_comm = shm_comm_py.ob_mpi
+    cdef char data_name[500]
+    global data_buf
+    global atom_idx
+    global atom_idx_all
+    global R_num
+    global norb_u
+
+    R_num = ncell
+    norb_u = norbital_u
+    data_buf = <double*>malloc(norbital_m*norbital_m*sizeof(double))
+    atom_idx = <int*>malloc(atomnum*sizeof(int))
+    for i in range(atomnum):
+        atom_idx[i] = atom_idx_py[i]
+    atom_idx_all = <int*>malloc((atomnum+1)*sizeof(int))
+    for i in range(atomnum+1):
+        atom_idx_all[i] = atom_idx_all_py[i]
+
+    ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
+    ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
+
+    if IsH5:
+        sprintf(data_name,"%s/%s.h5",inDir,H5HamName)
+        readh5_p0(
+            shm_comm,data_name,shm_nprocs,shm_id,
+            ncell2,key_num,pub_key,data_buf,&hamil_buf[0]
+        )
+    else:
+        if (shm_id==0):
+            sprintf(data_name,"%s/openmx.scfout",inDir)
+            readscfout(data_name,ncell2,key_num,data_buf,&hamil_buf[0],Ispin)
+
+    free(data_buf)
+    free(atom_idx)
+    free(atom_idx_all)
 
 
 @cython.boundscheck(False)
@@ -743,9 +790,9 @@ cdef void readh5_p1(
 def deltahamil_b(
     MPI.Comm comm, MPI.Comm shm_comm, int nmodes, int nm_min,  
     int dH_block, int norbital_u, int ncell, int norbital_m, 
-    int atomnum_py, int[::1] atom_idx_py, 
-    int[::1] atom_idx_all_py, int[::1] catom, int[:,::1] key_num, 
-    int[:,::1] pub_key, int[:,::1] key_info1, double dQ1, 
+    int atomnum_py, int[::1] atom_idx_py, int[::1] atom_idx_all_py, 
+    int[::1] catom, int[:,::1] key_num, int[:,::1] pub_key, 
+    int[:,::1] key_info1, double dQ1, double[::1] hamil_buf0, 
     double[:,:,::1] dhamil, char* inDir, char* dhamilDir, 
     char* H5HamName, char* dhamil_method, int Ispin, bint IsH5
 ):
@@ -859,15 +906,18 @@ def deltahamil_b(
 
     data_buf = <double*>malloc(norbital_m*norbital_m*sizeof(double))
 
-    if (myid_b==0):
-        l_hamil_buf = (Ispin+1)*key_num[ncell2,3]*sizeof(double)
-    else:
-        l_hamil_buf = 0
-    mpi.MPI_Win_allocate_shared(
-        l_hamil_buf,s_d,mpi.MPI_INFO_NULL,comm_b,&hamil_buf,&win
-    )
-    if (myid_b!=0):
-        mpi.MPI_Win_shared_query(win,0,&l_hamil_buf,&s_d,&hamil_buf)
+    # hamil_buf is only used in FD C method
+    # and imodes_min < imodes_max
+    if dhamil_method[0]==diff[2] and imodes_min < imodes_max:
+        if (myid_b==0):
+            l_hamil_buf = (Ispin+1)*key_num[ncell2,3]*sizeof(double)
+        else:
+            l_hamil_buf = 0
+        mpi.MPI_Win_allocate_shared(
+            l_hamil_buf,s_d,mpi.MPI_INFO_NULL,comm_b,&hamil_buf,&win
+        )
+        if (myid_b!=0):
+            mpi.MPI_Win_shared_query(win,0,&l_hamil_buf,&s_d,&hamil_buf)
     mpi.MPI_Barrier(c_comm)
 
     if (dhamil_method[0]!=diff[2]):
@@ -877,16 +927,6 @@ def deltahamil_b(
         else:
             factor[1] = ndQ1
             h = 1
-        if IsH5:
-            sprintf(data_name,"%s/%s.h5",inDir,H5HamName)
-            readh5_p0(
-                comm_b,data_name,nprocs_b,myid_b,
-                ncell2,key_num,pub_key,data_buf,hamil_buf
-            )
-        else:
-            if (myid_b==0):
-                sprintf(data_name,"%s/openmx.scfout",inDir)
-                readscfout(data_name,ncell2,key_num,data_buf,hamil_buf,Ispin)
         mpi.MPI_Barrier(comm_b)
         for i in range(imodes_min,imodes_max):
             j = <int>((i+nm_min)/3)
@@ -900,7 +940,7 @@ def deltahamil_b(
                 readh5_p1(
                     comm_b,data_name,nprocs_b,myid_b,ncell2,
                     key_num,pub_key,key_info1,factor[h],
-                    data_buf,hamil_buf,dhamil[i,0],1
+                    data_buf,&hamil_buf0[0],dhamil[i,0],1
                 )
             else:
                 if (myid_b==0):
@@ -910,7 +950,7 @@ def deltahamil_b(
                     )
                     readscfout1(
                         data_name,ncell2,key_num,pub_key,key_info1,
-                        data_buf,hamil_buf,dhamil[i],factor[h],Ispin,1
+                        data_buf,&hamil_buf0[0],dhamil[i],factor[h],Ispin,1
                     )
             mpi.MPI_Barrier(comm_b)
     else:
@@ -987,7 +1027,8 @@ def deltahamil_b(
 
         mpi.MPI_Type_free(&DB_NOB)
 
-    mpi.MPI_Win_free(&win)
+    if dhamil_method[0]==diff[2] and imodes_min < imodes_max:
+        mpi.MPI_Win_free(&win)
 
     free(nodelist)
     free(imodes_num)

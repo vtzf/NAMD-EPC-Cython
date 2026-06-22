@@ -1,6 +1,7 @@
 import numpy as np
 import json
 import os
+import sys
 from ase.data import atomic_numbers, atomic_masses
 import configparser
 import readhamilsparse
@@ -14,7 +15,7 @@ from mpi4py import MPI
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 # load config
 conf = configparser.ConfigParser()
-conf.read('config.ini',encoding='utf-8')
+conf.read(sys.argv[1] if len(sys.argv)>1 else 'config.ini',encoding='utf-8')
 
 Ispin = int(conf['epc']['Ispin'])
 IsH5 = True if conf['epc']['IsH5']=='True' else False
@@ -182,6 +183,9 @@ nprocs_shm = shm_comm.Get_size()
 shm_id = shm_comm.Get_rank()
 nnodes = nprocs//nprocs_shm
 
+s_int = 4
+s_d = 8
+s_dcplx = 16
 # split nmodes
 nm_loop = nmodes//nm_block
 nm_buffer = nm_block
@@ -195,7 +199,6 @@ for i in range(nm_loop):
     nmodes_split[i+1] = nmodes_max
 
 # get sparse matrix info
-s_int = 4
 ncell2 = ncell*ncell
 if (shm_id==0):
     len_keynum = (ncell2+1)*4*s_int
@@ -278,6 +281,47 @@ if (shm_id==0):
         ncell,key_num,key_num_s,key_info,key_info_s
     )
 shm_comm.Barrier()
+# read H0
+if Ispin == 2:
+    if dhamil_method[0] != 'C':
+        if (shm_id==0):
+            len_hamil = 4*key_num[ncell2,3]*s_dcplx
+        else:
+            len_hamil = 0
+        win06 = MPI.Win.Allocate_shared(len_hamil,s_dcplx,comm=shm_comm)
+        buf06,s_dcplx = win06.Shared_query(0)
+        hamil_buf = np.ndarray(
+            buffer=buf06,dtype=np.complex128,shape=(4*key_num[ncell2,3])
+        )
+        readhamilsparse_nc.ReadHamil0(
+            shm_comm,norbital,ncell,max(orbital),atomnum*ncell,
+            key_num,pub_key,atom_idx_all0,atom_idx_all,
+            hamil_buf,inDir.encode('utf-8'),
+            (H5HamName if IsH5 else 'None').encode('utf-8'),IsH5
+        )
+    else:
+        hamil_buf = np.zeros((0),dtype=np.complex128)
+else:
+    if dhamil_method[0] != 'C':
+        if (shm_id==0):
+            len_hamil = (Ispin+1)*key_num[ncell2,3]*s_d
+        else:
+            len_hamil = 0
+        win06 = MPI.Win.Allocate_shared(len_hamil,s_d,comm=shm_comm)
+        buf06,s_d = win06.Shared_query(0)
+        hamil_buf = np.ndarray(
+            buffer=buf06,dtype=np.float64,shape=((Ispin+1)*key_num[ncell2,3])
+        )
+        readhamilsparse.ReadHamil0(
+            shm_comm,norbital,ncell,max(orbital),atomnum*ncell,
+            key_num,pub_key,atom_idx_all0,atom_idx_all,
+            hamil_buf,inDir.encode('utf-8'),
+            (H5HamName if IsH5 else 'None').encode('utf-8'),Ispin,IsH5
+        )
+    else:
+        hamil_buf = np.zeros((0),dtype=np.float64)
+shm_comm.Barrier()
+
 #if (myid == 0):
 #    np.save('key_num.npy',key_num)
 #    np.save('key_num_s.npy',key_num_s)
@@ -327,8 +371,6 @@ if IsAllKlist:
             kproc[i+1] = knum_max
     
     # create shm buffer
-    s_d = 8
-    s_dcplx = 16
     if (shm_id==0):
         #print(nm_buffer,key_num[ncell2,3])
         if Ispin != 2:
@@ -430,7 +472,7 @@ if IsAllKlist:
                 readhamilsparse.deltahamil_b(
                     comm,shm_comm,nm_num,nm_min,dH_block,norbital,ncell,
                     max(orbital),atomnum*ncell,atom_idx_all0,atom_idx_all,
-                    catom,key_num,pub_key,key_info1,1.0/dQ,dhamil,
+                    catom,key_num,pub_key,key_info1,1.0/dQ,hamil_buf,dhamil,
                     inDir.encode('utf-8'),dhamilDir.encode('utf-8'),
                     (H5HamName if IsH5 else 'None').encode('utf-8'),
                     dhamil_method.encode('utf-8'),Ispin,IsH5
@@ -439,7 +481,7 @@ if IsAllKlist:
                 readhamilsparse_nc.deltahamil_b(
                     comm,shm_comm,nm_num,nm_min,dH_block,norbital,ncell,
                     max(orbital),atomnum*ncell,atom_idx_all0,atom_idx_all,
-                    catom,key_num,pub_key,key_info1,1.0/dQ,dhamil,
+                    catom,key_num,pub_key,key_info1,1.0/dQ,hamil_buf,dhamil,
                     inDir.encode('utf-8'),dhamilDir.encode('utf-8'),
                     (H5HamName if IsH5 else 'None').encode('utf-8'),
                     dhamil_method.encode('utf-8'),IsH5
@@ -605,7 +647,7 @@ else:
                 readhamilsparse.deltahamil_b(
                     comm,shm_comm,nm_num,nm_min,dH_block,norbital,ncell,
                     max(orbital),atomnum*ncell,atom_idx_all0,atom_idx_all,
-                    catom,key_num,pub_key,key_info1,1.0/dQ,dhamil,
+                    catom,key_num,pub_key,key_info1,1.0/dQ,hamil_buf,dhamil,
                     inDir.encode('utf-8'),dhamilDir.encode('utf-8'),
                     (H5HamName if IsH5 else 'None').encode('utf-8'),
                     dhamil_method.encode('utf-8'),Ispin,IsH5
@@ -614,7 +656,7 @@ else:
                 readhamilsparse_nc.deltahamil_b(
                     comm,shm_comm,nm_num,nm_min,dH_block,norbital,ncell,
                     max(orbital),atomnum*ncell,atom_idx_all0,atom_idx_all,
-                    catom,key_num,pub_key,key_info1,1.0/dQ,dhamil,
+                    catom,key_num,pub_key,key_info1,1.0/dQ,hamil_buf,dhamil,
                     inDir.encode('utf-8'),dhamilDir.encode('utf-8'),
                     (H5HamName if IsH5 else 'None').encode('utf-8'),
                     dhamil_method.encode('utf-8'),IsH5
@@ -660,3 +702,5 @@ MPI.Win.Free(win02)
 MPI.Win.Free(win03)
 MPI.Win.Free(win04)
 MPI.Win.Free(win05)
+if dhamil_method[0] != 'C':
+    MPI.Win.Free(win06)

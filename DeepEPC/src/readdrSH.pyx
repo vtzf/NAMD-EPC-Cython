@@ -11,7 +11,8 @@ cdef long norb
 cdef int* atom_idx
 cdef int* atom_idx_sum
 cdef int key_num_p
-cdef double Hartree2eV = 27.211386245988
+cdef double Hartree2eV = 27.211396641308
+#cdef double Hartree2eV = 27.2113845
 cdef double Bohr2Ang = 0.529177249
 
 
@@ -429,7 +430,27 @@ cdef void readh5(
             mpi.MPI_Barrier(shm_comm)
             key_min = key_num[i,2]+(key_num[i,0]*shm_id)/shm_nprocs
             key_max = key_num[i,2]+(key_num[i,0]*(shm_id+1))/shm_nprocs
-            sprintf(h5name,"%s_%d.h5",h5_name,i)
+            if (key_min<key_max):
+                sprintf(h5name,"%s_%d.h5",h5_name,i)
+                f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
+                for j in range(key_min,key_max):
+                    sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
+                    data_id = H5Dopen(f,key_t,H5P_DEFAULT)
+                    status = H5Dread(
+                        data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
+                        H5S_ALL,H5P_DEFAULT,data_buf
+                    )
+                    offset = pub_key[j,5]
+                    for k in range(pub_key[j,4]):
+                        data[key_info[k+offset,1]] = data_buf[k]*factor
+                    status = H5Dclose(data_id)
+                status = H5Fclose(f)
+    else:
+        mpi.MPI_Barrier(shm_comm)
+        key_min = (key_num[0,0]*shm_id)/shm_nprocs
+        key_max = (key_num[0,0]*(shm_id+1))/shm_nprocs
+        if (key_min<key_max):
+            sprintf(h5name,"%s.h5",h5_name)
             f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
             for j in range(key_min,key_max):
                 sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
@@ -443,24 +464,6 @@ cdef void readh5(
                     data[key_info[k+offset,1]] = data_buf[k]*factor
                 status = H5Dclose(data_id)
             status = H5Fclose(f)
-    else:
-        mpi.MPI_Barrier(shm_comm)
-        key_min = (key_num[0,0]*shm_id)/shm_nprocs
-        key_max = (key_num[0,0]*(shm_id+1))/shm_nprocs
-        sprintf(h5name,"%s.h5",h5_name)
-        f = H5Fopen(h5name,H5F_ACC_RDONLY,H5P_DEFAULT)
-        for j in range(key_min,key_max):
-            sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
-            data_id = H5Dopen(f,key_t,H5P_DEFAULT)
-            status = H5Dread(
-                data_id,H5T_NATIVE_DOUBLE,H5S_ALL,
-                H5S_ALL,H5P_DEFAULT,data_buf
-            )
-            offset = pub_key[j,5]
-            for k in range(pub_key[j,4]):
-                data[key_info[k+offset,1]] = data_buf[k]*factor
-            status = H5Dclose(data_id)
-        status = H5Fclose(f)
 
     free(data_buf)
 
