@@ -62,6 +62,7 @@ cdef void phvec_gather(
     cdef mpi.MPI_Datatype CPLX_N
 
     starttime = mpi.MPI_Wtime()
+    mpi.MPI_Barrier(comm)
     phbuf = <double complex*>malloc(qnum_p*nm_num*nmodes*s_dcplx)
     for i in range(qnum_p):
         for j in range(nmodes):
