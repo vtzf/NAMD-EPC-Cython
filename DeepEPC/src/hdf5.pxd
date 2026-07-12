@@ -57,6 +57,9 @@ cdef extern from "hdf5.h":
     cdef herr_t H5Tclose(hid_t type_id)
     cdef herr_t H5Fclose(hid_t file_id)
     cdef hid_t H5Dget_type(hid_t dset_id)
+    cdef int H5T_COMPOUND
+    cdef hid_t H5Tcreate(int cls, size_t size)
+    cdef herr_t H5Tinsert(hid_t parent_id, char* name, size_t offset, hid_t member_id)
 
     ctypedef signed long long haddr_t
     ctypedef long long hsize_t

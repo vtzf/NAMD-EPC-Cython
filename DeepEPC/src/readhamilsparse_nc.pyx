@@ -441,7 +441,7 @@ cdef void readh5_p0(
     int myid_b, int ncell2, int[:,::1] key_num, 
     int[:,::1] pub_key, double* data_buf, double complex* hamil_buf
 ):
-    cdef hid_t f, data_id, data_type
+    cdef hid_t f, data_id, memtype
     cdef herr_t status
     cdef int h, i, j, k, key_min, key_max, offset, TNO1, TNO2
     cdef int ns = key_num[ncell2,3]
@@ -457,12 +457,14 @@ cdef void readh5_p0(
 
     if (key_min<key_max):
         f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
+        memtype = H5Tcreate(H5T_COMPOUND,16)
+        H5Tinsert(memtype,"r",0,H5T_NATIVE_DOUBLE)
+        H5Tinsert(memtype,"i",8,H5T_NATIVE_DOUBLE)
         for h in range(key_min,key_max):
             sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
             data_id = H5Dopen(f,key_t,H5P_DEFAULT)
-            data_type = H5Dget_type(data_id)
             status = H5Dread(
-                data_id,data_type,H5S_ALL,
+                data_id,memtype,H5S_ALL,
                 H5S_ALL,H5P_DEFAULT,databuf
             )
             TNO1 = pub_key[h,2]
@@ -476,9 +478,9 @@ cdef void readh5_p0(
                     hamil_buf[2*ns+k] = databuf[(i+TNO1)*TNO2*2+j]
                     hamil_buf[3*ns+k] = databuf[(i+TNO1)*TNO2*2+j+TNO2]
 
-            status = H5Tclose(data_type)
             status = H5Dclose(data_id)
 
+        status = H5Tclose(memtype)
         status = H5Fclose(f)
 
 
@@ -490,7 +492,7 @@ cdef void readh5_p1(
     int[:,::1] key_info1, double factor, double* data_buf, 
     double complex* hamil_buf, double complex[:,::1] dhamil, bint LADD
 ):
-    cdef hid_t f, data_id, data_type
+    cdef hid_t f, data_id, memtype
     cdef herr_t status
     cdef int h, i, j, k, l, key_min, key_max, offset, TNO1, TNO2
     cdef int ns = key_num[ncell2,3]
@@ -508,15 +510,17 @@ cdef void readh5_p1(
 
     if (key_min<key_max):
         f = H5Fopen(h5_name,H5F_ACC_RDONLY,H5P_DEFAULT)
+        memtype = H5Tcreate(H5T_COMPOUND,16)
+        H5Tinsert(memtype,"r",0,H5T_NATIVE_DOUBLE)
+        H5Tinsert(memtype,"i",8,H5T_NATIVE_DOUBLE)
         for h in range(key_min,key_max):
             sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[h,0]+1,pub_key[h,1]+1)
             if H5Lexists(f,key_t,H5P_DEFAULT):
                 sprintf(key_t1,"[0, 0, 0, %d, %d]",pub_key[h,1]+1,pub_key[h,0]+1)
                 if H5Lexists(f,key_t1,H5P_DEFAULT):
                     data_id = H5Dopen(f,key_t,H5P_DEFAULT)
-                    data_type = H5Dget_type(data_id)
                     status = H5Dread(
-                        data_id,data_type,H5S_ALL,
+                        data_id,memtype,H5S_ALL,
                         H5S_ALL,H5P_DEFAULT,databuf
                     )
                     TNO1 = pub_key[h,2]
@@ -543,9 +547,9 @@ cdef void readh5_p1(
                                 hamil_buf[ns+k] = databuf[i*TNO2*2+j+TNO2]
                                 hamil_buf[2*ns+k] = databuf[(i+TNO1)*TNO2*2+j]
                                 hamil_buf[3*ns+k] = databuf[(i+TNO1)*TNO2*2+j+TNO2]
-                    status = H5Tclose(data_type)
                     status = H5Dclose(data_id)
 
+        status = H5Tclose(memtype)
         status = H5Fclose(f)
 
 

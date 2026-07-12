@@ -24,13 +24,16 @@ cdef void readh5_h(
     long[:,::1] key_info, double[:,:,::1] data, double factor
 ):
     cdef int h, i, j, k, l, m, key_min, key_max, offset, TNO1, TNO2
-    cdef hid_t f
+    cdef hid_t f, memtype
     cdef herr_t status
     cdef char h5name[500]
     cdef char key_t[100]
     cdef double complex* data_buf = <double complex*>malloc(norb_m*norb_m*4*sizeof(double complex))
     cdef double* databuf = <double*>data_buf
 
+    memtype = H5Tcreate(H5T_COMPOUND,16)
+    H5Tinsert(memtype,"r",0,H5T_NATIVE_DOUBLE)
+    H5Tinsert(memtype,"i",8,H5T_NATIVE_DOUBLE)
     if nfile>1:
         for i in range(nfile):
             mpi.MPI_Barrier(shm_comm)
@@ -43,7 +46,7 @@ cdef void readh5_h(
                     sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
                     data_id = H5Dopen(f,key_t,H5P_DEFAULT)
                     status = H5Dread(
-                        data_id,H5Dget_type(data_id),H5S_ALL,
+                        data_id,memtype,H5S_ALL,
                         H5S_ALL,H5P_DEFAULT,data_buf
                     )
                     TNO1 = pub_key[j,2]
@@ -73,7 +76,7 @@ cdef void readh5_h(
                 sprintf(key_t,"[0, 0, 0, %d, %d]",pub_key[j,0]+1,pub_key[j,1]+1)
                 data_id = H5Dopen(f,key_t,H5P_DEFAULT)
                 status = H5Dread(
-                    data_id,H5Dget_type(data_id),H5S_ALL,
+                    data_id,memtype,H5S_ALL,
                     H5S_ALL,H5P_DEFAULT,data_buf
                 )
                 TNO1 = pub_key[j,2]
@@ -93,6 +96,7 @@ cdef void readh5_h(
                 status = H5Dclose(data_id)
             status = H5Fclose(f)
 
+    status = H5Tclose(memtype)
     free(data_buf)
 
 
