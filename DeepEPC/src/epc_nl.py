@@ -590,6 +590,8 @@ if IsAllKlist:
                 drSH,bandveck,phvecval_p,kproc,kproc_num,
                 Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
             )
+            # SOC: R uses conj(drSH) (H Hermitian -> conj on the transpose)
+            np.conjugate(drSH,out=drSH)
             epcfunc_nl_nc.MPIepcNL_R(
                 comm,nmodes,natom_loop,natom_buffer,Np,nbands,
                 ncell,knum,2,natom_split,nq,R_list,nkpath,kpath,
@@ -607,6 +609,8 @@ if IsAllKlist:
                 drSH,bandveck,phvecval_p,kproc,kproc_num,
                 Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
             )
+            # SOC: R uses conj(drSH) (H Hermitian -> conj on the transpose)
+            np.conjugate(drSH,out=drSH)
             epcfunc_nl_nc.MPIepcNL_R_q(
                 comm,nmodes,natom_loop,natom_buffer,Np,nbands,
                 ncell,knum,2,natom_split,nq,R_list,nkpath,kpath,
@@ -747,6 +751,8 @@ else:
             phvecval_p,kproc[0],kproc_num[0],qproc,qproc_num,bassel[0],
             Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
         )
+        # SOC: R uses conj(drSH) (H Hermitian -> conj on the transpose)
+        np.conjugate(drSH,out=drSH)
         epcfunc_nl_nc.MPIepcNL_p_R(
             comm,nmodes,natom_loop,natom_buffer,Np,ncell,
             knum_p[0],knum,2,natom_split,nq,R_list,drSH,bandveck,
