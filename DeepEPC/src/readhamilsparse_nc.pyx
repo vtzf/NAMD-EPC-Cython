@@ -847,6 +847,12 @@ def deltahamil_b(
     free(key_buf)
     free(data_buf)
 
+    mpi.MPI_Comm_free(&comm_b)
+    if comm_gp != mpi.MPI_COMM_NULL:
+        mpi.MPI_Comm_free(&comm_gp)
+    mpi.MPI_Group_free(&group)
+    mpi.MPI_Group_free(&group_all)
+
     mpi.MPI_Barrier(c_comm)
     endtime = mpi.MPI_Wtime()
     if myid == 0:
