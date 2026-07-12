@@ -311,13 +311,14 @@ def MPIepcNL_L(
                 for j in range(norb_p*nbands):
                     drveck[xyz*norbnb+norb_s*nbands+j] \
                     = drveck_a[(ik*3+xyz)*norb_p*nbands+j]
-                mpi.MPI_Barrier(shm_comm)
-                if (shm_id == 0):
-                    mpi.MPI_Allgatherv(
-                        mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                        &drveck[xyz*norbnb],&dr_num[0],&dr[0],
-                        mpi.MPI_DOUBLE_COMPLEX,remote_comm
-                    )
+                if nnode > 1:
+                    mpi.MPI_Barrier(shm_comm)
+                    if (shm_id == 0):
+                        mpi.MPI_Allgatherv(
+                            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                            &drveck[xyz*norbnb],&dr_num[0],&dr[0],
+                            mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                        )
             mpi.MPI_Barrier(shm_comm)
             for i in range(qnum_p):
                 k1 = i+qnum_s
@@ -765,13 +766,14 @@ def MPIepcNL_p_L(
                 for j in range(norb_p):
                     drveck[xyz*norbital+norb_s+j] \
                     = drveck_a[(l*3+xyz)*norb_p+j]
-                mpi.MPI_Barrier(shm_comm)
-                if (shm_id == 0):
-                    mpi.MPI_Allgatherv(
-                        mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                        &drveck[xyz*norbital],&dr_num[0],&dr[0],
-                        mpi.MPI_DOUBLE_COMPLEX,remote_comm
-                    )
+                if nnode > 1:
+                    mpi.MPI_Barrier(shm_comm)
+                    if (shm_id == 0):
+                        mpi.MPI_Allgatherv(
+                            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                            &drveck[xyz*norbital],&dr_num[0],&dr[0],
+                            mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                        )
             mpi.MPI_Barrier(shm_comm)
             for i in range(knum_p):
                 k2 = bassel[i+knum_s,0]
