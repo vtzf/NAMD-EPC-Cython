@@ -501,26 +501,26 @@ def MPIepcNL_R(
         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
     mpi.MPI_Barrier(shm_comm)
 
-    if norb_p > 0:
-        for h in range(knum):
-            kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
-            kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
-            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-            kpx = (<double>(kpidx_x))/(<double>(nq[0]))
-            kpy = (<double>(kpidx_y))/(<double>(nq[1]))
-            kpz = (<double>(kpidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKpx = R_list[i,0]*kpx
-                RKpy = R_list[i,1]*kpy
-                RKpz = R_list[i,2]*kpz
-                RKp = RKpx + RKpy + RKpz
-                expikR[i] = cexp(-1.0*pi2j*RKp)
-            for i in range(nspin*norbital):
-                for j in range(nbands):
-                    bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
-            for s_r in range(nspin):
-                for xyz in range(3):
-                    l = (h*3+xyz)*nspin+s_r
+    for h in range(knum):
+        kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+        kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+        kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+        kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+        kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+        kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+        for i in range(ncell):
+            RKpx = R_list[i,0]*kpx
+            RKpy = R_list[i,1]*kpy
+            RKpz = R_list[i,2]*kpz
+            RKp = RKpx + RKpy + RKpz
+            expikR[i] = cexp(-1.0*pi2j*RKp)
+        for i in range(nspin*norbital):
+            for j in range(nbands):
+                bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+        for s_r in range(nspin):
+            for xyz in range(3):
+                l = (h*3+xyz)*nspin+s_r
+                if norb_p > 0:
                     memset(drveck_p,0,s_dcplx*norb_p*nbands)
                     for s_c in range(nspin):
                         spin = s_r*nspin+s_c
@@ -538,14 +538,14 @@ def MPIepcNL_R(
                     # drveck_p -> drveck (gather to node comm)
                     for j in range(norb_p*nbands):
                         drveck[l*norbnb+norb_s*nbands+j] = drveck_p[j]
-                    if nnode > 1:
-                        mpi.MPI_Barrier(shm_comm)
-                        if (shm_id == 0):
-                            mpi.MPI_Allgatherv(
-                                mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                                &drveck[l*norbnb],&dr_num[0],&dr[0],
-                                mpi.MPI_DOUBLE_COMPLEX,remote_comm
-                            )
+                if nnode > 1:
+                    mpi.MPI_Barrier(shm_comm)
+                    if (shm_id == 0):
+                        mpi.MPI_Allgatherv(
+                            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                            &drveck[l*norbnb],&dr_num[0],&dr[0],
+                            mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                        )
     mpi.MPI_Barrier(shm_comm)
     free(drveck_p)
 
@@ -1346,26 +1346,26 @@ def MPIepcNL_R_q(
     knum_p = kproc_num[myid]
     knum_s = kproc[myid]
 
-    if norb_p > 0:
-        for h in range(knum):
-            kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
-            kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
-            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-            kpx = (<double>(kpidx_x))/(<double>(nq[0]))
-            kpy = (<double>(kpidx_y))/(<double>(nq[1]))
-            kpz = (<double>(kpidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKpx = R_list[i,0]*kpx
-                RKpy = R_list[i,1]*kpy
-                RKpz = R_list[i,2]*kpz
-                RKp = RKpx + RKpy + RKpz
-                expikR[i] = cexp(-1.0*pi2j*RKp)
-            for i in range(nspin*norbital):
-                for j in range(nbands):
-                    bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
-            for s_r in range(nspin):
-                for xyz in range(3):
-                    l = (h*3+xyz)*nspin+s_r
+    for h in range(knum):
+        kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+        kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+        kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+        kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+        kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+        kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+        for i in range(ncell):
+            RKpx = R_list[i,0]*kpx
+            RKpy = R_list[i,1]*kpy
+            RKpz = R_list[i,2]*kpz
+            RKp = RKpx + RKpy + RKpz
+            expikR[i] = cexp(-1.0*pi2j*RKp)
+        for i in range(nspin*norbital):
+            for j in range(nbands):
+                bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+        for s_r in range(nspin):
+            for xyz in range(3):
+                l = (h*3+xyz)*nspin+s_r
+                if norb_p > 0:
                     memset(drveck_p,0,s_dcplx*norb_p*nbands)
                     for s_c in range(nspin):
                         spin = s_r*nspin+s_c
@@ -1383,14 +1383,14 @@ def MPIepcNL_R_q(
                     # drveck_p -> drveck (gather to node comm)
                     for j in range(norb_p*nbands):
                         drveck[l*norbnb+norb_s*nbands+j] = drveck_p[j]
-                    if nnode > 1:
-                        mpi.MPI_Barrier(shm_comm)
-                        if (shm_id == 0):
-                            mpi.MPI_Allgatherv(
-                                mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                                &drveck[l*norbnb],&dr_num[0],&dr[0],
-                                mpi.MPI_DOUBLE_COMPLEX,remote_comm
-                            )
+                if nnode > 1:
+                    mpi.MPI_Barrier(shm_comm)
+                    if (shm_id == 0):
+                        mpi.MPI_Allgatherv(
+                            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                            &drveck[l*norbnb],&dr_num[0],&dr[0],
+                            mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                        )
     mpi.MPI_Barrier(shm_comm)
     free(drveck_p)
     

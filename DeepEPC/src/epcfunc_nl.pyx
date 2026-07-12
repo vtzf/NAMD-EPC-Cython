@@ -488,24 +488,24 @@ def MPIepcNL_R(
         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
     mpi.MPI_Barrier(shm_comm)
 
-    if norb_p > 0:
-        for h in range(knum):
-            kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
-            kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
-            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-            kpx = (<double>(kpidx_x))/(<double>(nq[0]))
-            kpy = (<double>(kpidx_y))/(<double>(nq[1]))
-            kpz = (<double>(kpidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKpx = R_list[i,0]*kpx
-                RKpy = R_list[i,1]*kpy
-                RKpz = R_list[i,2]*kpz
-                RKp = RKpx + RKpy + RKpz
-                expikR[i] = cexp(-1.0*pi2j*RKp)
-            for i in range(norbital):
-                for j in range(nbands):
-                    bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
-            for xyz in range(3):
+    for h in range(knum):
+        kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+        kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+        kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+        kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+        kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+        kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+        for i in range(ncell):
+            RKpx = R_list[i,0]*kpx
+            RKpy = R_list[i,1]*kpy
+            RKpz = R_list[i,2]*kpz
+            RKp = RKpx + RKpy + RKpz
+            expikR[i] = cexp(-1.0*pi2j*RKp)
+        for i in range(norbital):
+            for j in range(nbands):
+                bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+        for xyz in range(3):
+            if norb_p > 0:
                 # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
@@ -520,6 +520,7 @@ def MPIepcNL_R(
                 # drveck_p -> drveck (gather to node comm)
                 for j in range(norb_p*nbands):
                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+            if nnode > 1:
                 mpi.MPI_Barrier(shm_comm)
                 if (shm_id == 0):
                     mpi.MPI_Allgatherv(
@@ -527,8 +528,8 @@ def MPIepcNL_R(
                         &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
                         mpi.MPI_DOUBLE_COMPLEX,remote_comm
                     )
-                mpi.MPI_Barrier(shm_comm)
 
+    mpi.MPI_Barrier(shm_comm)
     free(drveck_p)
     endtime = mpi.MPI_Wtime()
     if myid == 0:
@@ -1297,24 +1298,24 @@ def MPIepcNL_R_q(
     knum_p = kproc_num[myid]
     knum_s = kproc[myid]
 
-    if norb_p > 0:
-        for h in range(knum):
-            kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
-            kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
-            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-            kpx = (<double>(kpidx_x))/(<double>(nq[0]))
-            kpy = (<double>(kpidx_y))/(<double>(nq[1]))
-            kpz = (<double>(kpidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKpx = R_list[i,0]*kpx
-                RKpy = R_list[i,1]*kpy
-                RKpz = R_list[i,2]*kpz
-                RKp = RKpx + RKpy + RKpz
-                expikR[i] = cexp(-1.0*pi2j*RKp)
-            for i in range(norbital):
-                for j in range(nbands):
-                    bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
-            for xyz in range(3):
+    for h in range(knum):
+        kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+        kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+        kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+        kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+        kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+        kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+        for i in range(ncell):
+            RKpx = R_list[i,0]*kpx
+            RKpy = R_list[i,1]*kpy
+            RKpz = R_list[i,2]*kpz
+            RKp = RKpx + RKpy + RKpz
+            expikR[i] = cexp(-1.0*pi2j*RKp)
+        for i in range(norbital):
+            for j in range(nbands):
+                bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+        for xyz in range(3):
+            if norb_p > 0:
                 # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
@@ -1329,6 +1330,7 @@ def MPIepcNL_R_q(
                 # drveck_p -> drveck (gather to node comm)
                 for j in range(norb_p*nbands):
                     drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
+            if nnode > 1:
                 mpi.MPI_Barrier(shm_comm)
                 if (shm_id == 0):
                     mpi.MPI_Allgatherv(
@@ -1336,10 +1338,9 @@ def MPIepcNL_R_q(
                         &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
                         mpi.MPI_DOUBLE_COMPLEX,remote_comm
                     )
-                mpi.MPI_Barrier(shm_comm)
 
-    free(drveck_p)
     mpi.MPI_Barrier(shm_comm)
+    free(drveck_p)
     endtime = mpi.MPI_Wtime()
     if myid == 0:
         printf("epc_NL(Right)_q part1 time:%12.4fs.\n",endtime-starttime)
