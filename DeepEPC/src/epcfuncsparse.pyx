@@ -651,7 +651,7 @@ def MPIepc_write(
     cdef mpi.MPI_Datatype CPLX_N
     cdef int nprocs, myid, ierr
     cdef long nmnb2l = nmnb2
-    cdef mpi.MPI_Offset offset
+    cdef mpi.MPI_Offset offset, fsize
     cdef mpi.MPI_Status status
     cdef mpi.MPI_File fh
 
@@ -667,6 +667,12 @@ def MPIepc_write(
         mpi.MPI_MODE_CREATE | mpi.MPI_MODE_WRONLY,
         mpi.MPI_INFO_NULL,&fh
     )
+    # truncate any pre-existing longer file to exactly the data size, else its
+    # stale tail past the last rank's write would survive (write_at_all only
+    # touches each rank's own offset range).
+    fsize = nmnb2l*(<long>kproc[nprocs-1]+<long>kproc_num[nprocs-1]) \
+            *sizeof(double complex)
+    mpi.MPI_File_set_size(fh,fsize)
     offset = nmnb2l*kproc[myid]*sizeof(double complex)
     mpi.MPI_File_write_at_all(
         fh,offset,&epc_t[0,0],kproc_num[myid],CPLX_N,&status
