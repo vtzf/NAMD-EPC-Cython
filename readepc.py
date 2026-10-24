@@ -25,8 +25,8 @@ def ReadEpcInfo(comm,myid,nqx,nqy,nqz,EMIN,EMAX):
     nq = np.array([int(i) for i in nq_list],dtype=np.int32)
 
     if nq[0] != nqx or nq[1] != nqy or nq[2] != nqz:
-        print('Unmatch of nq and [nqx,nqy,nqz]!\n')
-        sys.exit()
+        print('Unmatch of nq and [nqx,nqy,nqz]!\n',flush=True)
+        MPI.COMM_WORLD.Abort(1)
 
     bmin = int(conf['epc']['bmin'])
     bmax = int(conf['epc']['bmax'])
@@ -74,8 +74,8 @@ def ReadEpcInfo(comm,myid,nqx,nqy,nqz,EMIN,EMAX):
     bmin_s = comm.bcast(bmin_s,root=0)
     bmax_s = comm.bcast(bmax_s,root=0)
     if nk == 0:
-        print("No data in energy range [%.5f,%.5f]!"%(EMIN,EMAX))
-        sys.exit()
+        print("No data in energy range [%.5f,%.5f]!"%(EMIN,EMAX),flush=True)
+        MPI.COMM_WORLD.Abort(1)
    
     poscar = open(inDir+conf['epc']['poscar_ucell']).readlines()
     abc = np.array([i.split()[0:3] for i in poscar[2:5]],dtype=float)*float(poscar[1].split()[0])
@@ -94,8 +94,8 @@ def ReadEpc(
     conf.read('config.ini',encoding='utf-8')
     EpcType = conf['epc']['EpcType']
     if EpcType != 'A':
-        print('EpcType not supporting!')
-        sys.exit()
+        print('EpcType not supporting!',flush=True)
+        MPI.COMM_WORLD.Abort(1)
 
     inDir = conf['epc']['inDir']+'/'
     bandDir = conf['epc']['bandDir']+'/'

@@ -242,7 +242,7 @@ cdef void GetKqidx(
             qidx0 = (qxidx*nqy+qyidx)*nqz+qzidx
             if (qidx0<q2qmap[0] or qidx0>q2qmap[nq*2-2]):
                 printf("[k,k\']->q map incomplete!\n")
-                sys.exit()
+                mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
             else:
                 idx_s = 0
                 idx_e = nq
@@ -254,7 +254,7 @@ cdef void GetKqidx(
                             idx_t0 = idx_e
                         else:
                             printf("[k,k\']->q map incomplete!\n")
-                            sys.exit()
+                            mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
                         break
                     idx_t0 = (idx_s+idx_e)/2
                     if (qidx0<q2qmap[idx_t0*2]):
@@ -265,7 +265,7 @@ cdef void GetKqidx(
             qidx1 = (((nqx-qxidx)%nqx)*nqy+(nqy-qyidx)%nqy)*nqz+(nqz-qzidx)%nqz
             if (qidx1<q2qmap[0] or qidx1>q2qmap[nq*2-2]):
                 printf("[k,k\']->q map incomplete!\n")
-                sys.exit()
+                mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
             else:
                 idx_s = 0
                 idx_e = nq
@@ -277,7 +277,7 @@ cdef void GetKqidx(
                             idx_t1 = idx_e
                         else:
                             printf("[k,k\']->q map incomplete!\n")
-                            sys.exit()
+                            mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
                         break
                     idx_t1 = (idx_s+idx_e)/2
                     if (qidx1<q2qmap[idx_t1*2]):
@@ -643,10 +643,10 @@ def ReadH5Info(
 
     if (nk_a>nq):
         printf('Unmatch of q and k points exists!\n')
-        sys.exit()
+        mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
     if (nqx*nqy*nqz!=nq):
         printf('Unmatch of nq and nqx*nqy*nqz!\n')
-        sys.exit()
+        mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
 
     if (myid==0):
         energy_buf = <double*>malloc(sizeof(double)*nk_a*nbands)
@@ -730,7 +730,7 @@ def ReadH5(
     TRANS[2] = strcmp(LTRANS,"S")
     if TRANS[0]!=0 and TRANS[1]!=0 and TRANS[2]!=0:
         printf("No LTRANS=\"%s\" option!\n",LTRANS)
-        sys.exit()
+        mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
 
     starttime = mpi.MPI_Wtime()
     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
@@ -766,7 +766,7 @@ def ReadH5(
     nmodes = info[3]
     if (n_p < nq):
         printf('q grid number doesn\'t match file nq!\n')
-        sys.exit()
+        mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
 
     q_list = np.zeros((nq,3),dtype=np.float64)
     data_id = H5Dopen(file_id,"el_ph_band_info/q_list",H5P_DEFAULT)
@@ -1035,7 +1035,7 @@ def ReadNpy(
     TRANS[2] = strcmp(LTRANS,"S")
     if TRANS[0]!=0 and TRANS[1]!=0 and TRANS[2]!=0:
         printf("No LTRANS=\"%s\" option!\n",LTRANS)
-        sys.exit()
+        mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
 
     starttime = mpi.MPI_Wtime()
     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
@@ -1505,7 +1505,7 @@ def ReadNpyPart(
     TRANS[2] = strcmp(LTRANS,"S")
     if TRANS[0]!=0 and TRANS[1]!=0 and TRANS[2]!=0:
         printf("No LTRANS=\"%s\" option!\n",LTRANS)
-        sys.exit()
+        mpi.MPI_Abort(mpi.MPI_COMM_WORLD,1)
 
     starttime = mpi.MPI_Wtime()
     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)

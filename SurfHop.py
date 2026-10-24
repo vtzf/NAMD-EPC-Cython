@@ -17,8 +17,8 @@ def SurfHop():
     if len(inicon.shape) == 1:
         inicon = inicon.reshape(1,-1)
     if inicon.shape[0] < Args.NSAMPLE:
-        print('Sample number in INICON is samller than NSAMPLE!')
-        sys.exit()
+        print('Sample number in INICON is samller than NSAMPLE!',flush=True)
+        MPI.COMM_WORLD.Abort(1)
 
     nel = (inicon.shape[1]-1)//2
     step_s = inicon[:,0]
@@ -79,8 +79,8 @@ def SurfHop():
             # alloc k1kidxE, energy_a
             nq = Args.nqx*Args.nqy*Args.nqz
             if (nk_a!=nq and Args.LEF):
-                print('Energy grid incomplete under electric field!')
-                sys.exit()
+                print('Energy grid incomplete under electric field!',flush=True)
+                MPI.COMM_WORLD.Abort(1)
             if (shm_id==0):
                 l_k1kidxE = nq*2*4
                 l_energy_a = nk_a*nbands*8
@@ -180,8 +180,8 @@ def SurfHop():
                         ekidx,ebidx,ikstate_s[iel],ibstate_s[iel],nk_s
                     )
                     if istate_s[iel] < 0 and myid_split == 0:
-                        print('Initial energy out of [EMIN,EMAX]!')
-                        sys.exit()
+                        print('Initial energy out of [EMIN,EMAX]!',flush=True)
+                        MPI.COMM_WORLD.Abort(1)
                 if Args.LEF:
                     if color == 0 and myid_split == 0:
                         print(kmin_s,kmax_s,bmin_s,bmax_s,flush=True)
