@@ -127,7 +127,7 @@ cdef inline void GetH0(
             for k in range(nk_a):
                 phq_tmp = cimag(phq_t[i,kqidx_p[j+k_p_m,k]])
                 H[j,k] += creal(epc_a[i,j+k_p_m,k])*phq_tmp*1j \
-                        + cimag(epc_a[i,j+k_p_m,k])*phq_tmp
+                        - cimag(epc_a[i,j+k_p_m,k])*phq_tmp
 
     for i in range(nk_p):
         H[i,i+nk_min] += E_p[i]
@@ -153,7 +153,7 @@ cdef inline void GetH(
             for k in range(nk_a):
                 phq_tmp = cimag(phq_t[i,kqidx_p[j+k_p_m,k]])
                 H1_p[j,k] += creal(epc_a[i,j+k_p_m,k])*phq_tmp*1j \
-                           + cimag(epc_a[i,j+k_p_m,k])*phq_tmp
+                           - cimag(epc_a[i,j+k_p_m,k])*phq_tmp
 
     for i in range(nk_p):
         H1_p[i,i+nk_min] += E_p[i]
@@ -419,7 +419,7 @@ cdef inline int fsshhop(
     cdef int i, j, k, idx_s, idx_e, qidx, state_t
     cdef int state_n = state
     cdef int state_t0 = <int>(state/BANDDEG)
-    cdef double complex psi0 = conj(psi_a[state_t0])
+    cdef double complex psi0 = psi_a[state_t0]
     cdef double densitydiag = \
                 f2/(creal(psi0)*creal(psi0)+cimag(psi0)*cimag(psi0))
     cdef double dEt, prop_t, epc_p1, prop0, prop_sum
@@ -432,7 +432,7 @@ cdef inline int fsshhop(
 
     prop_sum = 0.0
     for i in range(nk_a):
-        density = psi_a[i]*psi0
+        density = conj(psi_a[i])*psi0
         prop_t = cimag(density)*H_hop[i]*densitydiag
         if prop_t>0:
             prop[i] = prop_t
