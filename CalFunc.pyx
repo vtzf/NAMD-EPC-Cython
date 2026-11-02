@@ -55,6 +55,30 @@ cdef extern from "mkl.h" nogil:
     )
 
 
+# row-cache shm budget in bytes per node; override at build time
+cdef extern from *:
+    """
+    #ifndef SHM_MAX_BYTES
+    #define SHM_MAX_BYTES 53687091200L
+    #endif
+    """
+    const long SHM_MAX_BYTES
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef int Cmp_l(void * pa, void * pb) nogil:
+    cdef long *pa1 = <long*>pa
+    cdef long *pb1 = <long*>pb
+
+    if pa1[0]>pb1[0]:
+        return 1
+    elif pa1[0]<pb1[0]:
+        return -1
+    else:
+        return 0
+
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef int Cmp_s(void * pa, void * pb) nogil:
@@ -1031,6 +1055,430 @@ cdef void fssh_sh(
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
+cdef inline int GetOwner(int state_sel, int nprocs, int[::1] k_proc):
+    cdef int k = 0
+    cdef int l = nprocs
+    cdef int p
+    while l-k>1:
+        p = <int>((k+l)/2)
+        if state_sel<k_proc[p]:
+            l = p
+        else:
+            k = p
+    if state_sel<k_proc[k]:
+        k = l
+    return k
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef void CacheFill(
+    mpi.MPI_Comm c_comm, mpi.MPI_Comm shm_comm, mpi.MPI_Comm node_comm,
+    int myid, int nprocs, int shm_id, int shm_nprocs, int node_id, int nnode,
+    int fill_id, int nk_a, int nmodes, int n_slot,
+    int BANDDEG, long recvlen,
+    int[::1] state_a, int[::1] iel_arr, int n_iel,
+    int[::1] k_proc,
+    double complex[:,:,::1] epc_a, int[:,::1] kqidx_p,
+    char * recvbuf, int * slot_of_state, int * cache_need, int * fill_tag,
+    int * state_of_slot, int * lru, char * cmap
+):
+    # gather requested rows on the node, using free slots before LRU eviction
+    cdef int i, j, k, l, m, n_own, n_r_req, n_s_req, k0, \
+             state_t, t0, t1, n_free, n_cl, n_cr
+    cdef int epclen = nmodes*nk_a
+    cdef int s_int = sizeof(int)
+    cdef int s_long = sizeof(long)
+    cdef int s_req = sizeof(mpi.MPI_Request)
+    cdef char ** sendbuf
+    cdef double complex * epc_buf
+    cdef int * kqidx_buf
+    cdef int * free_s
+    cdef long * cand_l
+    cdef long * cand_r
+    cdef mpi.MPI_Request * send_req
+    cdef mpi.MPI_Request * recv_req
+
+    for j in range(n_iel):
+        cache_need[<int>(state_a[iel_arr[j]]/BANDDEG)] = fill_id
+    mpi.MPI_Barrier(shm_comm)
+    if shm_id==0:
+        for j in range(nk_a):
+            cmap[node_id*nk_a+j] = 0
+            if cache_need[j]==fill_id:
+                if slot_of_state[j]>=0:
+                    lru[slot_of_state[j]] = fill_id
+                else:
+                    cmap[node_id*nk_a+j] = 1
+        free_s = <int*>malloc(n_slot*s_int)
+        cand_l = <long*>malloc(n_slot*s_long)
+        cand_r = <long*>malloc(n_slot*s_long)
+        n_free = 0
+        n_cl = 0
+        n_cr = 0
+        for j in range(n_slot):
+            k = state_of_slot[j]
+            if k<0:
+                free_s[n_free] = j
+                n_free += 1
+            elif cache_need[k]!=fill_id:
+                if <int>(GetOwner(k,nprocs,k_proc)/shm_nprocs)==node_id:
+                    cand_l[n_cl] = lru[j]*<long>n_slot+j
+                    n_cl += 1
+                else:
+                    cand_r[n_cr] = lru[j]*<long>n_slot+j
+                    n_cr += 1
+        qsort(cand_l,n_cl,s_long,&Cmp_l)
+        qsort(cand_r,n_cr,s_long,&Cmp_l)
+        # prefer identity slots, then free slots, local rows, remote rows
+        i = 0
+        l = 0
+        for j in range(nk_a):
+            if cmap[node_id*nk_a+j]:
+                k = -1
+                if j<n_slot and state_of_slot[j]<0:
+                    k = j
+                else:
+                    while n_free>0:
+                        n_free -= 1
+                        if state_of_slot[free_s[n_free]]<0:
+                            k = free_s[n_free]
+                            break
+                    if k<0 and i<n_cl:
+                        k = <int>(cand_l[i]%n_slot)
+                        i += 1
+                    if k<0 and l<n_cr:
+                        k = <int>(cand_r[l]%n_slot)
+                        l += 1
+                if k>=0:
+                    if state_of_slot[k]>=0:
+                        slot_of_state[state_of_slot[k]] = -1
+                    state_of_slot[k] = j
+                    slot_of_state[j] = k
+                    lru[k] = fill_id
+                    fill_tag[j] = fill_id
+                else:
+                    cmap[node_id*nk_a+j] = 0
+        free(free_s)
+        free(cand_l)
+        free(cand_r)
+        mpi.MPI_Allgather(
+            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+            cmap,nk_a,mpi.MPI_CHAR,node_comm
+        )
+    mpi.MPI_Barrier(shm_comm)
+    # remote receives are strided over node ranks; local owners write directly
+    recv_req = <mpi.MPI_Request*>malloc((<int>(nk_a/shm_nprocs)+1)*s_req)
+    n_r_req = 0
+    for j in range(shm_id,nk_a,shm_nprocs):
+        if fill_tag[j]==fill_id:
+            k = GetOwner(j,nprocs,k_proc)
+            if <int>(k/shm_nprocs)!=node_id:
+                mpi.MPI_Irecv(
+                    recvbuf+slot_of_state[j]*recvlen,recvlen,mpi.MPI_BYTE,
+                    k,j,c_comm,&recv_req[n_r_req]
+                )
+                n_r_req += 1
+    k0 = k_proc[myid]
+    n_own = k_proc[myid+1]-k0
+    send_req = <mpi.MPI_Request*>malloc((n_own*nnode+1)*s_req)
+    sendbuf = <char**>malloc(sizeof(char*)*(n_own+1))
+    n_s_req = 0
+    for j in range(n_own):
+        sendbuf[j] = NULL
+        epc_buf = NULL
+        for m in range(nnode):
+            if cmap[m*nk_a+k0+j] and m==node_id:
+                epc_buf = <double complex*>(recvbuf+slot_of_state[k0+j]*recvlen)
+                break
+        if epc_buf==NULL:
+            for m in range(nnode):
+                if cmap[m*nk_a+k0+j]:
+                    sendbuf[j] = <char*>malloc(recvlen)
+                    epc_buf = <double complex*>(sendbuf[j])
+                    break
+        if epc_buf==NULL:
+            continue
+        kqidx_buf = <int*>(epc_buf+epclen)
+        for t0 in range(nmodes):
+            for t1 in range(nk_a):
+                epc_buf[t0*nk_a+t1]=epc_a[t0,j,t1]
+        memcpy(kqidx_buf,&kqidx_p[j,0],nk_a*s_int)
+        for m in range(nnode):
+            if cmap[m*nk_a+k0+j] and m!=node_id:
+                mpi.MPI_Isend(
+                    epc_buf,recvlen,mpi.MPI_BYTE,
+                    m*shm_nprocs+(k0+j)%shm_nprocs,k0+j,
+                    c_comm,&send_req[n_s_req]
+                )
+                n_s_req += 1
+    mpi.MPI_Waitall(n_r_req,recv_req,mpi.MPI_STATUSES_IGNORE)
+    mpi.MPI_Waitall(n_s_req,send_req,mpi.MPI_STATUSES_IGNORE)
+    free(recv_req)
+    for j in range(n_own):
+        free(sendbuf[j])
+    free(sendbuf)
+    free(send_req)
+    mpi.MPI_Barrier(shm_comm)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef void fssh_sh_cache(
+    mpi.MPI_Comm c_comm, mpi.MPI_Comm shm_comm, int myid, int nprocs,
+    int shm_id, int shm_nprocs, str namddir, int sample, int NTRAJ, int NSW,
+    int nk_proc, int nk_a, int nq, int n_p, int nmodes, int nel, double dt,
+    double KbT, double hbar, double sigma, int[::1] state_s, int[::1] k_proc,
+    int[:,::1] kqidx_p, double[::1] energy, double[:,::1] phonon,
+    double[:,::1] BEfactor, double complex[:,:,::1] epc_a,
+    float[:,::1] pop_sh, float[:,:,::1] ph_pop, int BANDDEG, bint LHOLE,
+    bint LPHSHM
+):
+    cdef double KbT1 = 1.0/KbT
+    cdef double f0 = -0.5/(sigma*sigma)
+    cdef double f1 = sqrt(2*M_PI)/sigma/n_p
+    cdef double f2 = <double>(2.0*dt)/hbar
+    cdef double E0
+
+    cdef int i, j, k, it, ierr, node_id, nnode, \
+             iel, state_t, slot, n_defer, n_hop, n_defer_all
+
+    cdef double complex * psi
+    cdef double[:,::1] BE2 = np.zeros((nmodes,nq),dtype=np.float64)
+    cdef double[::1] H_hop = np.zeros((nk_a),dtype=np.float64)
+    cdef float[::1] pop_sh_p = np.zeros((nk_a),dtype=np.float32)
+
+    cdef float[:,::1] ph_pop_p = np.zeros((nmodes,nq),dtype=np.float32)
+    cdef int[::1] iel_arr = np.arange(nel,dtype=np.int32)
+    cdef int[::1] defer_iel = np.zeros((nel),dtype=np.int32)
+    cdef int[::1] hop_arr
+    cdef int[::1] state_num = np.zeros((nk_a),dtype=np.int32)
+    cdef int[::1] state_idx = np.zeros((nel),dtype=np.int32)
+
+    cdef int itraj_max
+    cdef int[:,::1] state_a, n_occ
+
+    cdef int s_int = sizeof(int)
+    cdef int s_float = sizeof(float)
+    cdef int s_double = sizeof(double)
+    cdef int s_dcplx = sizeof(double complex)
+    cdef int s_void = 1
+
+    cdef int epclen = nmodes*nk_a
+    cdef long recvlen = epclen*s_dcplx+nk_a*s_int
+    cdef long nel_l = nel
+    cdef long nk_a_l = nk_a
+    cdef char * recvbuf
+    cdef double complex * epc_p
+    cdef int * kqidx
+    cdef int n_slot
+    cdef int * slot_of_state
+    cdef int * cache_need
+    cdef int * fill_tag
+    cdef int * state_of_slot
+    cdef int * lru
+    cdef char * cmap
+
+    cdef double *ph_pop_t = <double*>malloc(nmodes*s_double)
+    cdef double *prop = <double*>malloc(nk_a*s_double)
+    cdef double *prop_a = <double*>malloc((nk_a*BANDDEG+1)*s_double)
+    cdef double *dE = <double*>malloc(nk_a*s_double)
+    cdef double starttime, endtime
+
+    cdef mpi.MPI_Win win1, win2
+    cdef mpi.MPI_Comm node_comm
+    cdef mpi.MPI_Group split_gp, shm_gp
+    cdef int * nodelist
+    cdef int nfail, nfail_tot, s_own
+    cdef int fill_next = 1
+    cdef mpi.MPI_Aint l_recvbuf, l_recvbuf_lo, l_psi, len_own
+    cdef char * own_qp
+    cdef long shm_fixed
+    cdef char data_name[500]
+    cdef FILE * fp
+    namddir_t = namddir.encode("utf-8")
+    cdef char* namddir_c = namddir_t
+
+    if NTRAJ % nprocs == 0:
+        itraj_max = <int>(NTRAJ/nprocs)
+    else:
+        itraj_max = <int>(NTRAJ/nprocs)+1
+    node_id = myid/shm_nprocs
+
+    # fixed shared arrays and all cache metadata count against the node budget
+    shm_fixed = nel_l*nk_a*s_dcplx+nk_a*s_int
+    if LPHSHM:
+        shm_fixed += 2*nq*nmodes*s_dcplx+nq*nmodes*s_double
+    nnode = nprocs/shm_nprocs
+    nodelist = <int*>malloc(s_int*nnode)
+    for i in range(nnode):
+        nodelist[i] = i*shm_nprocs
+    mpi.MPI_Comm_group(c_comm,&split_gp)
+    mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)
+    ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&node_comm)
+    free(nodelist)
+    n_slot = <int>((SHM_MAX_BYTES-shm_fixed-3*nk_a*s_int-nnode*nk_a)/(recvlen+2*s_int))
+    if n_slot>=nk_a:
+        n_slot = nk_a
+    elif n_slot<1:
+        if myid==0:
+            printf("FSSH cache: no slot fits the shm budget, abort\n")
+        mpi.MPI_Abort(c_comm,1)
+    elif myid==0:
+        printf("FSSH cache: bounded to %d/%d slots/node\n",n_slot,nk_a)
+    if myid==0:
+        printf("FSSH row cache: %ld MB/node\n",n_slot*recvlen/1048576)
+    # owner-slice allocation and first touch spread pages over NUMA domains
+    l_recvbuf = n_slot*recvlen+(3*nk_a+2*n_slot)*s_int+nnode*nk_a
+    l_recvbuf_lo = l_recvbuf*shm_id/shm_nprocs
+    l_recvbuf = l_recvbuf*(shm_id+1)/shm_nprocs-l_recvbuf_lo
+    l_psi = nel_l*(nk_a*(shm_id+1)/shm_nprocs-nk_a*shm_id/shm_nprocs)*s_dcplx
+    mpi.MPI_Win_allocate_shared(
+        l_recvbuf,s_void,mpi.MPI_INFO_NULL,shm_comm,&recvbuf,&win1
+    )
+    mpi.MPI_Win_allocate_shared(
+        l_psi,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi,&win2
+    )
+    if (shm_id!=0):
+        mpi.MPI_Win_shared_query(win1,0,&l_recvbuf,&s_void,&recvbuf)
+        mpi.MPI_Win_shared_query(win2,0,&l_psi,&s_dcplx,&psi)
+    nfail = 0
+    mpi.MPI_Win_shared_query(win1,shm_id,&len_own,&s_own,&own_qp)
+    if (own_qp-recvbuf)!=l_recvbuf_lo: nfail += 1
+    mpi.MPI_Win_shared_query(win2,shm_id,&len_own,&s_own,&own_qp)
+    if (<char*>own_qp-<char*>psi)!=(nel_l*(nk_a*shm_id/shm_nprocs)*s_dcplx): nfail += 1
+    mpi.MPI_Allreduce(&nfail,&nfail_tot,1,mpi.MPI_INT,mpi.MPI_SUM,shm_comm)
+    if (nfail_tot>0):
+        if (myid==0): printf("shm contiguity FAIL nfail=%d\n",nfail_tot)
+        mpi.MPI_Abort(shm_comm,1)
+    else:
+        if (myid==0): printf("shm contiguity OK\n")
+    memset(recvbuf+l_recvbuf_lo,0,l_recvbuf)
+    memset(psi+nel_l*(nk_a*shm_id/shm_nprocs),0,\
+        nel_l*(nk_a*(shm_id+1)/shm_nprocs-nk_a*shm_id/shm_nprocs)*s_dcplx)
+    mpi.MPI_Barrier(shm_comm)
+    # window tail: state maps, round tags, slot states, LRU, per-node miss maps
+    slot_of_state = <int*>(recvbuf+n_slot*recvlen)
+    cache_need = slot_of_state+nk_a
+    fill_tag = cache_need+nk_a
+    state_of_slot = fill_tag+nk_a
+    lru = state_of_slot+n_slot
+    if shm_id==0:
+        memset(slot_of_state,0xFF,nk_a*s_int)
+        memset(cache_need,0,2*nk_a*s_int)
+        memset(state_of_slot,0xFF,n_slot*s_int)
+    cmap = <char*>(lru+n_slot)
+    for i in range(nmodes):
+        for j in range(nq):
+            BE2[i,j] = BEfactor[i,j]*BEfactor[i,j]*f1
+    state_a = np.zeros((itraj_max,nel),dtype=np.int32)
+    n_occ = np.zeros((itraj_max,nk_a*BANDDEG),dtype=np.int32)
+    for iel in range(nel):
+        state_idx[iel] = state_num[state_s[iel]]
+        state_num[state_s[iel]] += 1
+    for k in range(itraj_max):
+        for iel in range(nel):
+            state_a[k,iel] = state_s[iel]*BANDDEG+state_idx[iel]
+            n_occ[k,state_a[k,iel]] = 1
+    mpi.MPI_Barrier(c_comm)
+
+    if shm_id == 0:
+        sprintf(data_name,"%s/psi-%d.dat",namddir_c,sample)
+        fp = fopen(data_name,"rb")
+        fseek(fp,0,SEEK_SET)
+
+    for it in range(NSW):
+        starttime = mpi.MPI_Wtime()
+        if shm_id == 0:
+            fread(psi,16,nel_l*nk_a,fp)
+        mpi.MPI_Barrier(shm_comm)
+        memset(&pop_sh_p[0],0,nk_a*s_float)
+        memset(&ph_pop_p[0,0],0,nmodes*nq*s_float)
+        for i in range(itraj_max):
+            CacheFill(
+                c_comm,shm_comm,node_comm,myid,nprocs,shm_id,shm_nprocs,
+                node_id,nnode,fill_next,nk_a,nmodes,n_slot,BANDDEG,recvlen,
+                state_a[i],iel_arr,nel,k_proc,epc_a,kqidx_p,
+                recvbuf,slot_of_state,cache_need,fill_tag,state_of_slot,lru,
+                cmap
+            )
+            fill_next += 1
+            # fixed electron order preserves the fssh_sh random sequence
+            n_hop = nel
+            hop_arr = iel_arr
+            for iel in range(nel+1):
+                n_defer = 0
+                for j in range(n_hop):
+                    iel = hop_arr[j]
+                    state_t = <int>(state_a[i,iel]/BANDDEG)
+                    slot = slot_of_state[state_t]
+                    if slot<0:
+                        defer_iel[n_defer] = iel
+                        n_defer += 1
+                        continue
+                    epc_p = <double complex*>(recvbuf+slot*recvlen)
+                    kqidx = <int*>(epc_p+epclen)
+                    E0 = energy[state_t]
+                    for k in range(nk_a):
+                        H_hop[k] = 0
+                        dE[k] = energy[k]-E0
+                    memset(&prop_a[1],0,nk_a*BANDDEG*s_double)
+                    GetHhop(
+                        nmodes,nk_a,nk_a,kqidx,
+                        phonon,BE2,epc_p,f0,H_hop,dE
+                    )
+                    state_a[i,iel] = fsshhop(
+                        it,nmodes,nk_a,nk_a,&psi[iel*nk_a_l],H_hop,dE,
+                        epc_p,kqidx,energy,phonon,BE2,state_a[i,iel],f0,f2,
+                        KbT1,prop,prop_a,ph_pop_t,ph_pop_p,n_occ[i],LHOLE,
+                        BANDDEG
+                    )
+                    pop_sh_p[<int>(state_a[i,iel]/BANDDEG)] += 1
+                # all nodes enter refill collectives together
+                mpi.MPI_Allreduce(
+                    &n_defer,&n_defer_all,1,mpi.MPI_INT,mpi.MPI_SUM,c_comm
+                )
+                if n_defer_all==0:
+                    break
+                CacheFill(
+                    c_comm,shm_comm,node_comm,myid,nprocs,shm_id,shm_nprocs,
+                    node_id,nnode,fill_next,nk_a,nmodes,n_slot,BANDDEG,recvlen,
+                    state_a[i],defer_iel,n_defer,k_proc,epc_a,kqidx_p,
+                    recvbuf,slot_of_state,cache_need,fill_tag,state_of_slot,lru,
+                    cmap
+                )
+                fill_next += 1
+                n_hop = n_defer
+                hop_arr = defer_iel
+
+        mpi.MPI_Reduce(
+            &pop_sh_p[0],&pop_sh[it,0],nk_a,
+            mpi.MPI_FLOAT,mpi.MPI_SUM,0,c_comm
+        )
+        mpi.MPI_Reduce(
+            &ph_pop_p[0,0],&ph_pop[it,0,0],nmodes*nq,
+            mpi.MPI_FLOAT,mpi.MPI_SUM,0,c_comm
+        )
+        endtime = mpi.MPI_Wtime()
+        if myid == 0:
+            printf("FSSH in %d fs: %.5fs.\n",it,endtime-starttime)
+
+    if shm_id == 0: fclose(fp)
+
+    free(ph_pop_t)
+    free(prop)
+    free(prop_a)
+    free(dE)
+    if (node_comm != mpi.MPI_COMM_NULL):
+        mpi.MPI_Comm_free(&node_comm)
+    mpi.MPI_Group_free(&shm_gp)
+    mpi.MPI_Group_free(&split_gp)
+    mpi.MPI_Win_free(&win1)
+    mpi.MPI_Win_free(&win2)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
 cdef void fssh_sh_shm(
     mpi.MPI_Comm c_comm, mpi.MPI_Comm shm_comm, int myid, int nprocs,
     int shm_id, int shm_nprocs, str namddir, int sample, int NTRAJ, int NSW,
@@ -1450,11 +1898,11 @@ def fssh(
                 phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
             )
         else:
-            fssh_sh(
+            fssh_sh_cache(
                 c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,
                 namddir,sample,NTRAJ,NSW,nk_proc,nk_a,nq,n_p,nmodes,
                 nel,dt,KbT,hbar,sigma,state_s,k_proc,kqidx_p,energy,
-                phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
+                phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE,LPHSHM
             )
         endtime1 = mpi.MPI_Wtime()
         if myid == 0:
@@ -1510,11 +1958,11 @@ def fssh(
                     phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
                 )
             else:
-                fssh_sh(
+                fssh_sh_cache(
                     c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,
                     namddir,sample,NTRAJ,NSW,nk_proc,nk_a,nq,n_p,nmodes,
                     nel,dt,KbT,hbar,sigma,state_s,k_proc,kqidx_p,energy,
-                    phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
+                    phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE,LPHSHM
                 )
             endtime1 = mpi.MPI_Wtime()
             if myid == 0:

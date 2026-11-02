@@ -1,7 +1,8 @@
 CC = mpiicc
 H5PATH = /public/apps/HDF5/1.12.1_intel
+SHM_MAX = 32212254720
 
-CFLAGS = -shared -fPIC -O3 -qopenmp -mkl
+CFLAGS = -shared -fPIC -O3 -qopenmp -mkl -DSHM_MAX_BYTES=$(SHM_MAX)
 CFLAGS_HDF5 = -I$(H5PATH)/include -lhdf5 -L$(H5PATH)/lib
 
 LIB = -lmpi -liomp5 -lpthread
