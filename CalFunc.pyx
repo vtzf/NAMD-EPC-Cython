@@ -3,6 +3,7 @@
 
 cimport cython
 import numpy as np
+import ctypes
 cimport numpy as np
 from mpi4py import MPI
 from mpi4py cimport MPI
@@ -279,8 +280,9 @@ cdef void fssh_psi(
 ):
     cdef mpi.MPI_Comm remote_comm
     cdef mpi.MPI_Win win1, win2, win3
-    cdef mpi.MPI_Aint len_psi_byte, len_psi_byte1, len_psi_byte2
+    cdef mpi.MPI_Aint len_psi_byte, len_psi_byte1, len_psi_byte2, len_own
     cdef mpi.MPI_Group split_gp, shm_gp
+    cdef char * own_qp
     cdef int[::1] psi_p_remote, psi_p_remote_num
 
     cdef int s_int = sizeof(int)
@@ -288,7 +290,8 @@ cdef void fssh_psi(
     cdef int s_dcplx = sizeof(double complex)
     cdef long nel_l = nel
 
-    cdef int i, j, k, shm_proc_s, shm_proc_e, ierr, nnode
+    cdef int i, j, k, shm_proc_s, shm_proc_e, ierr, nnode, \
+             nk_a_min, nk_a_max, nfail, nfail_tot, s_own
     cdef int * nodelist
     cdef double wht = 1.0/NELM
     cdef double complex factor = 2*edt/(1j*hbar)
@@ -349,14 +352,11 @@ cdef void fssh_psi(
         for j in range(i+1,nnode+1):
             psi_p_remote[j] += psi_p_remote_num[i]
 
-    if shm_id==0:
-        len_psi_byte = nel_l*nk_a*s_dcplx
-        len_psi_byte1 = nel_l*nk_a*s_dcplx
-        len_psi_byte2 = nel_l*nk_a*s_dcplx
-    else:
-        len_psi_byte = 0
-        len_psi_byte1 = 0
-        len_psi_byte2 = 0
+    nk_a_min = <int>((shm_id*nk_a)/shm_nprocs)
+    nk_a_max = <int>(((shm_id+1)*nk_a)/shm_nprocs)
+    len_psi_byte = nel_l*(nk_a_max-nk_a_min)*s_dcplx
+    len_psi_byte1 = nel_l*(nk_a_max-nk_a_min)*s_dcplx
+    len_psi_byte2 = nel_l*(nk_a_max-nk_a_min)*s_dcplx
 
     mpi.MPI_Win_allocate_shared(
         len_psi_byte,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi_a1,&win1
@@ -368,14 +368,7 @@ cdef void fssh_psi(
         len_psi_byte2,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi_buf,&win3
     )
 
-    if shm_id==0:
-        memset(psi_a1,0,nel_l*nk_a*s_dcplx)
-        memset(psi_a2,0,nel_l*nk_a*s_dcplx)
-        for j in range(nel):
-            i = state_s[j]
-            psi_a1[i*nel_l+j] = 1.0
-            psi_a2[i*nel_l+j] = 1.0
-    else:
+    if shm_id!=0:
         mpi.MPI_Win_shared_query(
             win1,0,&len_psi_byte,&s_dcplx,&psi_a1
         )
@@ -385,7 +378,27 @@ cdef void fssh_psi(
         mpi.MPI_Win_shared_query(
             win3,0,&len_psi_byte2,&s_dcplx,&psi_buf
         )
+    nfail = 0
+    mpi.MPI_Win_shared_query(win1,shm_id,&len_own,&s_own,&own_qp)
+    if (<char*>own_qp-<char*>psi_a1)!=(nel_l*nk_a_min*s_dcplx): nfail += 1
+    mpi.MPI_Win_shared_query(win2,shm_id,&len_own,&s_own,&own_qp)
+    if (<char*>own_qp-<char*>psi_a2)!=(nel_l*nk_a_min*s_dcplx): nfail += 1
+    mpi.MPI_Win_shared_query(win3,shm_id,&len_own,&s_own,&own_qp)
+    if (<char*>own_qp-<char*>psi_buf)!=(nel_l*nk_a_min*s_dcplx): nfail += 1
+    mpi.MPI_Allreduce(&nfail,&nfail_tot,1,mpi.MPI_INT,mpi.MPI_SUM,shm_comm)
+    if nfail_tot>0:
+        if myid==0: printf("shm contiguity FAIL nfail=%d\n",nfail_tot)
+        mpi.MPI_Abort(shm_comm,1)
+    else:
+        if myid==0: printf("shm contiguity OK\n")
+    memset(psi_a1+nel_l*nk_a_min,0,nel_l*(nk_a_max-nk_a_min)*s_dcplx)
+    memset(psi_a2+nel_l*nk_a_min,0,nel_l*(nk_a_max-nk_a_min)*s_dcplx)
     mpi.MPI_Barrier(shm_comm)
+    if shm_id==0:
+        for j in range(nel):
+            i = state_s[j]
+            psi_a1[i*nel_l+j] = 1.0
+            psi_a2[i*nel_l+j] = 1.0
 
     for i in range(nk_proc):
         j = nk_min+i
@@ -614,7 +627,8 @@ cdef void fssh_sh(
 
     cdef int i, j, k, l, m, n, p, state, k_state_p, state_t, \
              t0, t1, it, send_s, send_e, nsend, nsend_set, \
-             ierr, nnode, node_id, inode, iproc, iel, recv_id, n_s_req, n_s_req_b
+             ierr, nnode, node_id, inode, iproc, iel, recv_id, n_s_req, n_s_req_b, \
+             nfail, nfail_tot, s_own
 
     cdef int * nodelist
     cdef int * idx_all
@@ -660,7 +674,9 @@ cdef void fssh_sh(
     cdef mpi.MPI_Comm node_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Win win0, win1, win2, win3
-    cdef mpi.MPI_Aint l_idx_all, l_recvbuf, l_recvtag, l_psi
+    cdef mpi.MPI_Aint l_idx_all, l_recvbuf, l_recvtag, l_psi, l_recvbuf_lo, len_own
+    cdef char * own_qp
+    cdef long l_recvbuf_total
     cdef mpi.MPI_Request * send_req
     cdef mpi.MPI_Request * send_req_b
     cdef mpi.MPI_Request recv_req
@@ -688,14 +704,14 @@ cdef void fssh_sh(
     # alloc shared variables
     if (shm_id==0):
         l_idx_all = nprocs*4*s_int
-        l_recvbuf = shm_nprocs*recvlen
         l_recvtag = nprocs*s_int*2
-        l_psi = nel_l*nk_a*s_dcplx
     else:
         l_idx_all = 0
-        l_recvbuf = 0
         l_recvtag = 0
-        l_psi = 0
+    l_recvbuf_total = shm_nprocs*recvlen
+    l_recvbuf_lo = l_recvbuf_total*shm_id/shm_nprocs
+    l_recvbuf = l_recvbuf_total*(shm_id+1)/shm_nprocs-l_recvbuf_lo
+    l_psi = nel_l*(nk_a*(shm_id+1)/shm_nprocs-nk_a*shm_id/shm_nprocs)*s_dcplx
     mpi.MPI_Win_allocate_shared(
         l_idx_all,s_int,mpi.MPI_INFO_NULL,shm_comm,&idx_all,&win0
     )
@@ -713,6 +729,20 @@ cdef void fssh_sh(
         mpi.MPI_Win_shared_query(win1,0,&l_recvbuf,&s_void,&recvbuf)
         mpi.MPI_Win_shared_query(win2,0,&l_recvtag,&s_int,&recvtag)
         mpi.MPI_Win_shared_query(win3,0,&l_psi,&s_dcplx,&psi)
+    nfail = 0
+    mpi.MPI_Win_shared_query(win1,shm_id,&len_own,&s_own,&own_qp)
+    if (own_qp-recvbuf)!=l_recvbuf_lo: nfail += 1
+    mpi.MPI_Win_shared_query(win3,shm_id,&len_own,&s_own,&own_qp)
+    if (<char*>own_qp-<char*>psi)!=(nel_l*(nk_a*shm_id/shm_nprocs)*s_dcplx): nfail += 1
+    mpi.MPI_Allreduce(&nfail,&nfail_tot,1,mpi.MPI_INT,mpi.MPI_SUM,shm_comm)
+    if nfail_tot>0:
+        if myid==0: printf("shm contiguity FAIL nfail=%d\n",nfail_tot)
+        mpi.MPI_Abort(shm_comm,1)
+    else:
+        if myid==0: printf("shm contiguity OK\n")
+    memset(recvbuf+l_recvbuf_lo,0,l_recvbuf_total*(shm_id+1)/shm_nprocs-l_recvbuf_lo)
+    memset(psi+nel_l*(nk_a*shm_id/shm_nprocs),0,\
+        nel_l*(nk_a*(shm_id+1)/shm_nprocs-nk_a*shm_id/shm_nprocs)*s_dcplx)
     # init BEfactor
     for i in range(nmodes):
         for j in range(nq):
@@ -1016,7 +1046,8 @@ cdef void fssh_sh_shm(
     cdef double f2 = <double>(2.0*dt)/hbar
     cdef double E0
 
-    cdef int i, j, k, l, it, ierr, nnode, node_id, iel, state_t
+    cdef int i, j, k, l, it, ierr, nnode, node_id, iel, state_t, \
+             nfail, nfail_tot, s_own
     cdef int * nodelist
     cdef double complex * psi
 
@@ -1050,7 +1081,8 @@ cdef void fssh_sh_shm(
     cdef mpi.MPI_Comm node_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Win win
-    cdef mpi.MPI_Aint len_psi
+    cdef mpi.MPI_Aint len_psi, len_own
+    cdef char * own_qp
     cdef char data_name[500]
     cdef FILE * fp
     namddir_t = namddir.encode("utf-8")
@@ -1087,8 +1119,7 @@ cdef void fssh_sh_shm(
             n_occ[k,state_a[k,iel]] = 1
     mpi.MPI_Barrier(c_comm)
 
-    if shm_id==0: len_psi = nel_l*nk_a*s_dcplx
-    else: len_psi = 0
+    len_psi = nel_l*(nk_a*(shm_id+1)/shm_nprocs-nk_a*shm_id/shm_nprocs)*s_dcplx
     mpi.MPI_Win_allocate_shared(
         len_psi,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi,&win
     )
@@ -1098,6 +1129,17 @@ cdef void fssh_sh_shm(
         fseek(fp,0,SEEK_SET)
     else:
         mpi.MPI_Win_shared_query(win,0,&len_psi,&s_dcplx,&psi)
+    nfail = 0
+    mpi.MPI_Win_shared_query(win,shm_id,&len_own,&s_own,&own_qp)
+    if (<char*>own_qp-<char*>psi)!=(nel_l*(nk_a*shm_id/shm_nprocs)*s_dcplx): nfail += 1
+    mpi.MPI_Allreduce(&nfail,&nfail_tot,1,mpi.MPI_INT,mpi.MPI_SUM,shm_comm)
+    if nfail_tot>0:
+        if myid==0: printf("shm contiguity FAIL nfail=%d\n",nfail_tot)
+        mpi.MPI_Abort(shm_comm,1)
+    else:
+        if myid==0: printf("shm contiguity OK\n")
+    memset(psi+nel_l*(nk_a*shm_id/shm_nprocs),0,\
+        nel_l*(nk_a*(shm_id+1)/shm_nprocs-nk_a*shm_id/shm_nprocs)*s_dcplx)
     mpi.MPI_Barrier(shm_comm)
 
     for it in range(NSW):
@@ -1317,24 +1359,40 @@ def fssh(
     # alloc phq0, phq, BEfactor
     shm_comm_py = comm.Split_type(MPI.COMM_TYPE_SHARED)
     if LPHSHM:
-        if (shm_id==0):
-            len_phq0 = nq_l*nmodes*s_dcplx
-            len_phq = nq_l*nmodes*s_dcplx
-            len_BE = nq_l*nmodes*s_double
-        else:
-            len_phq0 = 0
-            len_phq = 0
-            len_BE = 0
+        n_phq = nq*nmodes*16
+        n_BE = nq*nmodes*8
+        len_phq0 = n_phq*(shm_id+1)//shm_nprocs-n_phq*shm_id//shm_nprocs
+        len_phq = len_phq0
+        len_BE = n_BE*(shm_id+1)//shm_nprocs-n_BE*shm_id//shm_nprocs
         win1 = MPI.Win.Allocate_shared(len_phq0,s_dcplx,comm=shm_comm_py)
         buf1,s_dcplx = win1.Shared_query(0)
-        phq0 = np.ndarray(buffer=buf1,dtype=np.complex128,shape=(nmodes,nq))
+        base1 = np.ndarray(buffer=buf1,dtype=np.int8,shape=(1,)).ctypes.data
+        phq0 = np.ndarray(buffer=(ctypes.c_char*n_phq).from_address(base1),dtype=np.complex128,shape=(nmodes,nq))
         win2 = MPI.Win.Allocate_shared(len_phq,s_dcplx,comm=shm_comm_py)
         buf2,s_dcplx = win2.Shared_query(0)
-        phq = np.ndarray(buffer=buf2,dtype=np.complex128,shape=(nmodes,nq))
+        base2 = np.ndarray(buffer=buf2,dtype=np.int8,shape=(1,)).ctypes.data
+        phq = np.ndarray(buffer=(ctypes.c_char*n_phq).from_address(base2),dtype=np.complex128,shape=(nmodes,nq))
         win3 = MPI.Win.Allocate_shared(len_BE,s_double,comm=shm_comm_py)
         buf3,s_dcplx = win3.Shared_query(0)
-        BEfactor = np.ndarray(buffer=buf3,dtype=np.float64,shape=(nmodes,nq))
-    
+        base3 = np.ndarray(buffer=buf3,dtype=np.int8,shape=(1,)).ctypes.data
+        BEfactor = np.ndarray(buffer=(ctypes.c_char*n_BE).from_address(base3),dtype=np.float64,shape=(nmodes,nq))
+        nfail = 0
+        own1,_ = win1.Shared_query(shm_id)
+        if np.ndarray(buffer=own1,dtype=np.int8,shape=(1,)).ctypes.data-base1!=n_phq*shm_id//shm_nprocs: nfail += 1
+        own2,_ = win2.Shared_query(shm_id)
+        if np.ndarray(buffer=own2,dtype=np.int8,shape=(1,)).ctypes.data-base2!=n_phq*shm_id//shm_nprocs: nfail += 1
+        own3,_ = win3.Shared_query(shm_id)
+        if np.ndarray(buffer=own3,dtype=np.int8,shape=(1,)).ctypes.data-base3!=n_BE*shm_id//shm_nprocs: nfail += 1
+        nfail_tot = shm_comm_py.allreduce(nfail,op=MPI.SUM)
+        if nfail_tot>0:
+            if myid==0: print("shm contiguity FAIL nfail=%d"%nfail_tot,flush=True)
+            shm_comm_py.Abort(1)
+        else:
+            if myid==0: print("shm contiguity OK",flush=True)
+        np.asarray(phq0).view(np.int8).reshape(n_phq)[n_phq*shm_id//shm_nprocs:n_phq*(shm_id+1)//shm_nprocs] = 0
+        np.asarray(phq).view(np.int8).reshape(n_phq)[n_phq*shm_id//shm_nprocs:n_phq*(shm_id+1)//shm_nprocs] = 0
+        np.asarray(BEfactor).view(np.int8).reshape(n_BE)[n_BE*shm_id//shm_nprocs:n_BE*(shm_id+1)//shm_nprocs] = 0
+
         # Init phq0[nmode,nq] and phq
         mpi.MPI_Barrier(shm_comm)
         if (shm_id==0):

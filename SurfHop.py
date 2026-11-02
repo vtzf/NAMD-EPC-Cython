@@ -4,6 +4,7 @@ import Args
 import readh5
 import readepc
 import sys
+import ctypes
 import numpy as np
 import mpi4py
 from mpi4py import MPI
@@ -104,23 +105,40 @@ def SurfHop():
                 )
             # alloc kqidx, epc_a
             if Args.LEPCSHM:
-                if (shm_id==0):
-                    l_kqidx = nk_s*nk_s*4
-                    l_epc = nk_s*nk_s*nmodes*16
-                else:
-                    l_kqidx = 0
-                    l_epc = 0
+                n_kqidx = nk_s*nk_s*4
+                n_epc = nk_s*nk_s*nmodes*16
+                shm_size = shm_comm.Get_size()
+                l_kqidx = n_kqidx*(shm_id+1)//shm_size-n_kqidx*shm_id//shm_size
+                l_epc = n_epc*(shm_id+1)//shm_size-n_epc*shm_id//shm_size
                 win1 = MPI.Win.Allocate_shared(l_kqidx,4,comm=shm_comm)
                 buf1,s_int = win1.Shared_query(0)
+                base1 = np.ndarray(buffer=buf1,dtype=np.int8,shape=(1,)).ctypes.data
                 kqidx = np.ndarray(
-                    buffer=buf1,dtype=np.int32,shape=(nk_s,nk_s)
+                    buffer=(ctypes.c_char*n_kqidx).from_address(base1),
+                    dtype=np.int32,shape=(nk_s,nk_s)
                 )
                 win = MPI.Win.Allocate_shared(l_epc,16,comm=shm_comm)
                 buf,s_dcplx = win.Shared_query(0)
+                base0 = np.ndarray(buffer=buf,dtype=np.int8,shape=(1,)).ctypes.data
                 epc_a = np.ndarray(
-                    buffer=buf,dtype=np.complex128,
-                    shape=(nmodes,nk_s,nk_s)
+                    buffer=(ctypes.c_char*n_epc).from_address(base0),
+                    dtype=np.complex128,shape=(nmodes,nk_s,nk_s)
                 )
+                nfail = 0
+                own1,_ = win1.Shared_query(shm_id)
+                if np.ndarray(buffer=own1,dtype=np.int8,shape=(1,)).ctypes.data-base1!=n_kqidx*shm_id//shm_size:
+                    nfail += 1
+                own0,_ = win.Shared_query(shm_id)
+                if np.ndarray(buffer=own0,dtype=np.int8,shape=(1,)).ctypes.data-base0!=n_epc*shm_id//shm_size:
+                    nfail += 1
+                nfail_tot = shm_comm.allreduce(nfail,op=MPI.SUM)
+                if nfail_tot>0:
+                    if myid==0: print("shm contiguity FAIL nfail=%d"%nfail_tot,flush=True)
+                    shm_comm.Abort(1)
+                else:
+                    if myid==0: print("shm contiguity OK",flush=True)
+                kqidx.view(np.int8).reshape(n_kqidx)[n_kqidx*shm_id//shm_size:n_kqidx*(shm_id+1)//shm_size] = 0
+                epc_a.view(np.int8).reshape(n_epc)[n_epc*shm_id//shm_size:n_epc*(shm_id+1)//shm_size] = 0
             else:
                 nk_min = (myid_split*nk_s)//iprocs
                 nk_max = ((myid_split+1)*nk_s)//iprocs
@@ -129,15 +147,27 @@ def SurfHop():
                 epc_a = np.zeros((nmodes,nk_proc,nk_s),dtype=np.complex128)
             # alloc phonon
             if Args.LPHSHM:
-                if (shm_id==0):
-                    l_phonon = nmodes*nq*8
-                else:
-                    l_phonon = 0
+                n_phonon = nmodes*nq*8
+                shm_size = shm_comm.Get_size()
+                l_phonon = n_phonon*(shm_id+1)//shm_size-n_phonon*shm_id//shm_size
                 win0 = MPI.Win.Allocate_shared(l_phonon,8,comm=shm_comm)
                 buf0,s_double = win0.Shared_query(0)
+                base0 = np.ndarray(buffer=buf0,dtype=np.int8,shape=(1,)).ctypes.data
                 phonon = np.ndarray(
-                    buffer=buf0,dtype=np.float64,shape=(nmodes,nq)
+                    buffer=(ctypes.c_char*n_phonon).from_address(base0),
+                    dtype=np.float64,shape=(nmodes,nq)
                 )
+                nfail = 0
+                own0,_ = win0.Shared_query(shm_id)
+                if np.ndarray(buffer=own0,dtype=np.int8,shape=(1,)).ctypes.data-base0!=n_phonon*shm_id//shm_size:
+                    nfail += 1
+                nfail_tot = shm_comm.allreduce(nfail,op=MPI.SUM)
+                if nfail_tot>0:
+                    if myid==0: print("shm contiguity FAIL nfail=%d"%nfail_tot,flush=True)
+                    shm_comm.Abort(1)
+                else:
+                    if myid==0: print("shm contiguity OK",flush=True)
+                phonon.view(np.int8).reshape(n_phonon)[n_phonon*shm_id//shm_size:n_phonon*(shm_id+1)//shm_size] = 0
             else:
                 phonon = np.zeros((nmodes,nq),dtype=np.float64)
             comm_split.Barrier()
