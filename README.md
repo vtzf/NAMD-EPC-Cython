@@ -81,8 +81,8 @@ bassel.npy(nk,2): BASSEL
 epc-*.npy(nb,nb): EPTXT
 epcec-*.npy(nb,nb): EPECTXT
 epcph-*.npy(nm,nb): EPPHTXT
-psi-*.npy(nt,nb): PSICT[:,2:nb+2]
-fssh_e_psi-*.npy(nt): PSICT[:,1]
+psi-*.dat: NSW frames of [nel,nk_a] complex128 coefficients, appended frame by frame
+fssh_e_psi-*.npy(NSW,nel): PSICT[:,1]
 fssh_e_sh-*.npy(nt): SHPROP[:,1]
 fssh_pop_sh-*.npy(nt,nb): SHPROP[:,2:nb+2]
 fssh_e_ph-*.npy(nt,nm): PHPROP.*[:,1]

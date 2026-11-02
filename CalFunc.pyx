@@ -8,7 +8,8 @@ from mpi4py import MPI
 from mpi4py cimport MPI
 from mpi4py cimport libmpi as mpi
 from libc.math cimport cos, sin, sqrt, exp, fabs, fmod, M_PI
-from libc.stdio cimport printf
+from libc.stdio cimport sprintf, printf, FILE, \
+     SEEK_SET, SEEK_CUR, SEEK_END, fopen, fseek, fread, fwrite, fclose
 from libc.string cimport memcpy, memset, strcmp
 from libc.stdlib cimport malloc, calloc, free, qsort
 import os
@@ -35,10 +36,21 @@ cdef extern from "mkl.h" nogil:
         CblasUpper=121
         CblasLower=122
 
+    cdef void cblas_dgemv(
+        CBLAS_LAYOUT layout, CBLAS_TRANSPOSE TransA, int M, int N,
+        double alpha, double *A, int lda, double *X, int incX,
+        double beta, double *Y, int incY
+    )
     cdef void cblas_zgemv(
         CBLAS_LAYOUT Layout, CBLAS_TRANSPOSE TransA, int M, int N,
         void *alpha, void *A, int lda, void *X, int incX,
         void *beta, void *Y, int incY
+    )
+    cdef void cblas_zgemm(
+        CBLAS_LAYOUT Layout, CBLAS_TRANSPOSE TransA,
+        CBLAS_TRANSPOSE TransB, int M, int N, int K,
+        void* alpha, void* A, int lda, void* B, int ldb,
+        void* beta, void* C, int ldc
     )
 
 
@@ -166,54 +178,44 @@ cdef inline void GetH(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef inline void TimeProp(
-    mpi.MPI_Comm shm_comm, mpi.MPI_Comm remote_comm, int nnode,
+    mpi.MPI_Comm shm_comm, mpi.MPI_Comm remote_comm, mpi.MPI_Datatype CPLX_N,
+    int shm_id, int nnode, int istep, int estep, int nel, int nk_a,
+    int nk_p, int nk_min, int[::1] psi_p_remote, int[::1] psi_p_remote_num,
     double complex[:,::1] H0_p, double complex[:,::1] dH01,
-    double complex * psi_a1, double complex * psi_a2,
-    double complex * psi_buf, int nk_a, int nk_p, int nk_min,
-    int[::1] psi_p_remote, int[::1] psi_p_remote_num, 
-    int istep, int estep
+    double complex * psi_a1, double complex * psi_a2, double complex * psi_buf
 ):
     cdef int i, j
+    cdef long nel_l = nel
+    cdef long nk_a_l = nk_a
     cdef double complex zero = 0.0
-    cdef double complex half = 0.5
-    cdef double complex one = 1.0
-    cdef double complex psi_t
+    cdef double complex psi_t, factor
+    if istep==0 and estep==0: factor = 0.5
+    else: factor = 1.0
 
     mpi.MPI_Barrier(shm_comm)
-    if istep==0 and estep==0:
-        cblas_zgemv(
-            CblasRowMajor,CblasNoTrans,nk_p,nk_a,
-            &half,&H0_p[0,0],nk_a,psi_a2,1,&zero,psi_buf,1
-        )
-        for i in range(nk_p):
-            psi_a1[nk_min+i] += psi_buf[i]
-        mpi.MPI_Barrier(shm_comm)
+    cblas_zgemm(
+        CblasRowMajor,CblasNoTrans,CblasNoTrans,
+        nk_p,nel,nk_a,&factor,&H0_p[0,0],nk_a,
+        psi_a1,nel,&zero,psi_buf,nel
+    )
+    for i in range(nk_p):
+        for j in range(nel_l):
+            psi_a2[(nk_min+i)*nel_l+j] += psi_buf[i*nel_l+j]
+    mpi.MPI_Barrier(shm_comm)
+    if remote_comm != mpi.MPI_COMM_NULL:
         if nnode > 1:
-            if remote_comm != mpi.MPI_COMM_NULL:
-                mpi.MPI_Allgatherv(
-                    mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                    psi_a1,&psi_p_remote_num[0],&psi_p_remote[0],
-                    mpi.MPI_DOUBLE_COMPLEX,remote_comm
-                )
-    else:
-        cblas_zgemv(
-            CblasRowMajor,CblasNoTrans,nk_p,nk_a,
-            &one,&H0_p[0,0],nk_a,psi_a1,1,&zero,psi_buf,1
-        )
-        for i in range(nk_p):
-            psi_a2[nk_min+i] += psi_buf[i]
-        mpi.MPI_Barrier(shm_comm)
-        if remote_comm != mpi.MPI_COMM_NULL:
-            if nnode > 1:
-                mpi.MPI_Allgatherv(
-                    mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                    psi_a2,&psi_p_remote_num[0],&psi_p_remote[0],
-                    mpi.MPI_DOUBLE_COMPLEX,remote_comm
-                )
-            for i in range(nk_a):
-                psi_t = psi_a1[i]
-                psi_a1[i] = psi_a2[i]
-                psi_a2[i] = psi_t
+            mpi.MPI_Allgatherv(
+                mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                psi_a2,&psi_p_remote_num[0],&psi_p_remote[0],
+                CPLX_N,remote_comm
+            )
+    mpi.MPI_Barrier(shm_comm)
+    if shm_id==0:
+        for i in range(nk_a_l*nel_l):
+            psi_t = psi_a1[i]
+            psi_a1[i] = psi_a2[i]
+            psi_a2[i] = psi_t
+    mpi.MPI_Barrier(shm_comm)
 
     for i in range(nk_p):
         for j in range(nk_a):
@@ -222,25 +224,71 @@ cdef inline void TimeProp(
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cdef void fssh_psi(
-    mpi.MPI_Comm c_comm, int nprocs, int myid, int NSW, int NELM, 
-    double edt, double hbar, int[::1] state_s, 
-    int k_p_m, int nk_a, int nq, int n_p, int nmodes, 
-    int nel, int[::1] k_proc, int[::1] k_proc_num, int[:,::1] kqidx_p,
-    double complex[:,:,::1] epc_a, double[::1] energy, 
-    double complex[:,::1] phq, double complex[:,::1] phq0,
-    double complex[:,::1] psi_t
+cdef inline void WritePsi(
+    mpi.MPI_Comm c_comm, mpi.MPI_Comm shm_comm, int myid, int shm_id,
+    int shm_nprocs, char* namddir, int sample, int istep, int nel, int nk_a,
+    int nel_p, int nel_min, int[::1] nel_proc, int[::1] nel_proc_num,
+    double[::1] e_psi, double* energy, double* e_psi_buf,
+    double* pop_buf, double complex * psi_a, double complex * psi_buf
 ):
-    cdef mpi.MPI_Comm remote_comm, shm_comm
-    cdef mpi.MPI_Win win1, win2
-    cdef mpi.MPI_Aint len_psi_byte, len_psi_byte1
+    cdef int i, nk_a_min, nk_a_max
+    cdef long j
+    cdef long nel_l = nel
+    cdef double complex psi_t
+    cdef char data_name[500]
+    cdef FILE * fp
+
+    mpi.MPI_Barrier(shm_comm)
+    nk_a_min = <int>((shm_id*nk_a)/shm_nprocs)
+    nk_a_max = <int>(((shm_id+1)*nk_a)/shm_nprocs)
+    for i in range(nk_a_min,nk_a_max):
+        for j in range(nel_l):
+            psi_buf[j*nk_a+i] = psi_a[i*nel_l+j]
+    mpi.MPI_Barrier(shm_comm)
+    for j in range(nel_p):
+        for i in range(nk_a):
+            psi_t = psi_buf[(j+nel_min)*nk_a+i]
+            pop_buf[j*nk_a+i] = creal(psi_t)*creal(psi_t) \
+                               +cimag(psi_t)*cimag(psi_t)
+    cblas_dgemv(
+        CblasRowMajor,CblasNoTrans,nel_p,nk_a,
+        1.0,pop_buf,nk_a,energy,1,0.0,e_psi_buf,1
+    )
+    mpi.MPI_Gatherv(
+        e_psi_buf,nel_p,mpi.MPI_DOUBLE,&e_psi[0],
+        &nel_proc_num[0],&nel_proc[0],mpi.MPI_DOUBLE,0,c_comm
+    )
+    if myid == 0:
+        sprintf(data_name,"%s/psi-%d.dat",namddir,sample)
+        if istep == 0: fp = fopen(data_name,"wb")
+        else: fp = fopen(data_name,"ab")
+        fwrite(psi_buf,16,nel_l*nk_a,fp)
+        fclose(fp)
+    mpi.MPI_Barrier(c_comm)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef void fssh_psi(
+    mpi.MPI_Comm c_comm, mpi.MPI_Comm shm_comm, int myid, int nprocs,
+    int shm_id, int shm_nprocs, str namddir, int sample, int NSW, int NELM,
+    int k_p_m, int nk_a, int nq, int n_p, int nmodes, int nel, double edt,
+    double hbar, int[::1] state_s, int[::1] k_proc, int[::1] k_proc_num,
+    int[:,::1] kqidx_p, double[::1] energy, double complex[:,:,::1] epc_a,
+    double complex[:,::1] phq, double complex[:,::1] phq0
+):
+    cdef mpi.MPI_Comm remote_comm
+    cdef mpi.MPI_Win win1, win2, win3
+    cdef mpi.MPI_Aint len_psi_byte, len_psi_byte1, len_psi_byte2
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef int[::1] psi_p_remote, psi_p_remote_num
 
     cdef int s_int = sizeof(int)
+    cdef int s_d = sizeof(double)
     cdef int s_dcplx = sizeof(double complex)
+    cdef long nel_l = nel
 
-    cdef int i, j, k, iel, shm_proc_s, shm_proc_e, ierr, shm_id, shm_nprocs
+    cdef int i, j, k, shm_proc_s, shm_proc_e, ierr, nnode
     cdef int * nodelist
     cdef double wht = 1.0/NELM
     cdef double complex factor = 2*edt/(1j*hbar)
@@ -256,18 +304,34 @@ cdef void fssh_psi(
 
     cdef double complex * psi_a1
     cdef double complex * psi_a2
-    cdef double complex * psi_buf = <double complex*>malloc(nk_proc*s_dcplx)
+    cdef double complex * psi_a_buf = \
+        <double complex*>malloc(nk_proc*nel_l*s_dcplx)
+    cdef double complex * psi_buf
+    cdef int[::1] nel_proc_num = np.zeros((nprocs),dtype=np.int32)
+    cdef int[::1] nel_proc = np.zeros((nprocs+1),dtype=np.int32)
+    for i in range(nprocs):
+        nel_proc[i+1] = ((i+1)*nel)/nprocs
+        nel_proc_num[i] = nel_proc[i+1]-nel_proc[i]
+    cdef int nel_p = nel_proc_num[myid]
+    cdef int nel_min = nel_proc[myid]
+    cdef double * e_psi_buf = <double*>malloc(s_d*nel_p)
+    cdef double * pop_buf = <double*>malloc(s_d*nk_a*nel_p)
+    namddir_t = namddir.encode("utf-8")
+    cdef char* namddir_c = namddir_t
+
     cdef double starttime, endtime
 
-    # get shm_comm
-    mpi.MPI_Comm_split_type(
-        c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
-    )
-    ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
-    ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
-    # create internode group/comm
+    cdef mpi.MPI_Datatype CPLX_N
+    mpi.MPI_Type_contiguous(nel,mpi.MPI_DOUBLE_COMPLEX,&CPLX_N)
+    mpi.MPI_Type_commit(&CPLX_N)
+
+    cdef double[:,::1] e_psi
+    if myid == 0:
+        e_psi = np.zeros((NSW,nel),dtype=np.float64)
+    else:
+        e_psi = np.zeros((NSW,0),dtype=np.float64)
+
     nnode = nprocs/shm_nprocs
-    node_id = myid/shm_nprocs
     nodelist = <int*>malloc(s_int*nnode)
     for i in range(nnode):
         nodelist[i] = i*shm_nprocs
@@ -275,7 +339,6 @@ cdef void fssh_psi(
     mpi.MPI_Group_incl(split_gp,nnode,nodelist,&shm_gp)
     ierr = mpi.MPI_Comm_create(c_comm,shm_gp,&remote_comm)
 
-    # get psi_p range
     psi_p_remote = np.zeros((nnode+1),dtype=np.int32)
     psi_p_remote_num = np.zeros((nnode),dtype=np.int32)
     for i in range(nnode):
@@ -286,12 +349,14 @@ cdef void fssh_psi(
         for j in range(i+1,nnode+1):
             psi_p_remote[j] += psi_p_remote_num[i]
 
-    if (shm_id==0):
-        len_psi_byte = nk_a*s_dcplx
-        len_psi_byte1 = nk_a*s_dcplx
+    if shm_id==0:
+        len_psi_byte = nel_l*nk_a*s_dcplx
+        len_psi_byte1 = nel_l*nk_a*s_dcplx
+        len_psi_byte2 = nel_l*nk_a*s_dcplx
     else:
         len_psi_byte = 0
         len_psi_byte1 = 0
+        len_psi_byte2 = 0
 
     mpi.MPI_Win_allocate_shared(
         len_psi_byte,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi_a1,&win1
@@ -299,13 +364,17 @@ cdef void fssh_psi(
     mpi.MPI_Win_allocate_shared(
         len_psi_byte1,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi_a2,&win2
     )
+    mpi.MPI_Win_allocate_shared(
+        len_psi_byte2,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi_buf,&win3
+    )
 
-    if (shm_id==0):
-        memset(psi_a1,0,nk_a*s_dcplx)
-        memset(psi_a2,0,nk_a*s_dcplx)
-        for iel in range(nel):
-            psi_a1[state_s[iel]] += 1.0/sqrt(nel)
-            psi_a2[state_s[iel]] += 1.0/sqrt(nel)
+    if shm_id==0:
+        memset(psi_a1,0,nel_l*nk_a*s_dcplx)
+        memset(psi_a2,0,nel_l*nk_a*s_dcplx)
+        for j in range(nel):
+            i = state_s[j]
+            psi_a1[i*nel_l+j] = 1.0
+            psi_a2[i*nel_l+j] = 1.0
     else:
         mpi.MPI_Win_shared_query(
             win1,0,&len_psi_byte,&s_dcplx,&psi_a1
@@ -313,6 +382,10 @@ cdef void fssh_psi(
         mpi.MPI_Win_shared_query(
             win2,0,&len_psi_byte1,&s_dcplx,&psi_a2
         )
+        mpi.MPI_Win_shared_query(
+            win3,0,&len_psi_byte2,&s_dcplx,&psi_buf
+        )
+    mpi.MPI_Barrier(shm_comm)
 
     for i in range(nk_proc):
         j = nk_min+i
@@ -324,30 +397,40 @@ cdef void fssh_psi(
     )
     for j in range(NSW):
         starttime = mpi.MPI_Wtime()
-        if shm_id == 0:
-            memcpy(&psi_t[j,0],psi_a1,nk_a*s_dcplx)
+        WritePsi(
+            c_comm,shm_comm,myid,shm_id,shm_nprocs,namddir_c,
+            sample,j,nel,nk_a,nel_p,nel_min,nel_proc,nel_proc_num,
+            e_psi[j],&energy[0],e_psi_buf,pop_buf,psi_a1,psi_buf
+        )
         GetH(
             nmodes,nk_proc,nk_a,nq,nk_min,k_p_m,kqidx_p,
             wht,E_p,epc_a,phq_t,phq0,H0_p,H1_p,dH01
         )
         for k in range(NELM):
             TimeProp(
-                shm_comm,remote_comm,nnode,H0_p,dH01,
-                psi_a1,psi_a2,psi_buf,nk_a,nk_proc,
-                nk_min,psi_p_remote,psi_p_remote_num,j,k
+                shm_comm,remote_comm,CPLX_N,shm_id,nnode,
+                j,k,nel,nk_a,nk_proc,nk_min,psi_p_remote,
+                psi_p_remote_num,H0_p,dH01,psi_a1,psi_a2,psi_a_buf
             )
         endtime = mpi.MPI_Wtime()
         if myid == 0:
             printf("TimeProp in %d fs: %.5fs.\n",j,endtime-starttime)
 
-    mpi.MPI_Comm_free(&shm_comm)
-    mpi.MPI_Comm_free(&remote_comm)
+    if myid == 0:
+        np.save(namddir+'/fssh_e_psi-%d.npy'%(sample),e_psi)
+
+    mpi.MPI_Type_free(&CPLX_N)
+    if remote_comm != mpi.MPI_COMM_NULL:
+        mpi.MPI_Comm_free(&remote_comm)
     mpi.MPI_Group_free(&shm_gp)
     mpi.MPI_Group_free(&split_gp)
     mpi.MPI_Win_free(&win1)
     mpi.MPI_Win_free(&win2)
+    mpi.MPI_Win_free(&win3)
     free(nodelist)
-    free(psi_buf)
+    free(psi_a_buf)
+    free(pop_buf)
+    free(e_psi_buf)
 
 
 @cython.boundscheck(False)
@@ -409,7 +492,7 @@ cdef inline void GetHhop(
 @cython.wraparound(False)
 cdef inline int fsshhop(
     int it, int nmodes, int nk_a,
-    double complex[::1] psi_a, double[::1] H_hop, double *dE, 
+    double complex * psi_a, double[::1] H_hop, double *dE,
     double complex * epc_p, int * kqidx0, double[::1] energy, 
     double[:,::1] phonon, double[:,::1] BE2,
     int state, double f0, double f2, double KbT1,
@@ -507,14 +590,13 @@ cdef inline int fsshhop(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef void fssh_sh(
-    mpi.MPI_Comm c_comm, int nprocs,
-    int myid, int NTRAJ, int NSW, double KbT, double hbar, double sigma, 
-    double dt, int[::1] state_s, int nk_proc, int nk_a, int nq, int n_p, 
-    int nmodes, int nel, int[::1] k_proc, 
-    int[:,::1] kqidx_p, double complex[:,:,::1] epc_a, double[::1] energy,
-    double[:,::1] phonon, double[:,::1] BEfactor, 
-    double complex[:,::1] psi_t, float[:,::1] pop_sh,
-    float[:,:,::1] ph_pop, bint LHOLE, int BANDDEG 
+    mpi.MPI_Comm c_comm, mpi.MPI_Comm shm_comm, int myid, int nprocs,
+    int shm_id, int shm_nprocs, str namddir, int sample, int NTRAJ, int NSW,
+    int nk_proc, int nk_a, int nq, int n_p, int nmodes, int nel, double dt,
+    double KbT, double hbar, double sigma, int[::1] state_s, int[::1] k_proc,
+    int[:,::1] kqidx_p, double[::1] energy, double[:,::1] phonon,
+    double[:,::1] BEfactor, double complex[:,:,::1] epc_a,
+    float[:,::1] pop_sh, float[:,:,::1] ph_pop, int BANDDEG, bint LHOLE
 ):
     cdef double KbT1 = 1.0/KbT
     cdef double f0 = -0.5/(sigma*sigma)
@@ -524,12 +606,12 @@ cdef void fssh_sh(
 
     cdef int i, j, k, l, m, n, p, state, k_state_p, state_t, \
              t0, t1, it, send_s, send_e, nsend, nsend_set, \
-             shm_id, shm_nprocs, ierr, nnode, node_id, \
-             inode, iproc, iel, recv_id, n_s_req, n_s_req_b
+             ierr, nnode, node_id, inode, iproc, iel, recv_id, n_s_req, n_s_req_b
 
     cdef int * nodelist
     cdef int * idx_all
     cdef int * sendset
+    cdef double complex * psi
     cdef double[:,::1] BE2 = np.zeros((nmodes,nq),dtype=np.float64)
     cdef double[::1] H_hop = np.zeros((nk_a),dtype=np.float64)
     cdef float[::1] pop_sh_p = np.zeros((nk_a),dtype=np.float32)
@@ -551,6 +633,8 @@ cdef void fssh_sh(
 
     cdef int epclen = nmodes*nk_a
     cdef long recvlen = epclen*s_dcplx+nk_a*s_int
+    cdef long nel_l = nel
+    cdef long nk_a_l = nk_a
     cdef char ** sendbuf
     cdef double complex *epc_buf
     cdef int * kqidx_buf
@@ -558,20 +642,24 @@ cdef void fssh_sh(
     cdef double complex * epc_p
     cdef int * kqidx
     cdef int * recvtag
-    
+
     cdef double *ph_pop_t = <double*>malloc(nmodes*s_double)
     cdef double *prop = <double*>malloc(nk_a*s_double)
     cdef double *prop_a = <double*>malloc((nk_a*BANDDEG+1)*s_double)
     cdef double *dE = <double*>malloc(nk_a*s_double)
     cdef double starttime, endtime
 
-    cdef mpi.MPI_Comm shm_comm, node_comm
+    cdef mpi.MPI_Comm node_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Win win0, win1, win2, win3
-    cdef mpi.MPI_Aint l_idx_all, l_recvbuf, l_recvtag
-    cdef mpi.MPI_Request * send_req 
+    cdef mpi.MPI_Aint l_idx_all, l_recvbuf, l_recvtag, l_psi
+    cdef mpi.MPI_Request * send_req
     cdef mpi.MPI_Request * send_req_b
     cdef mpi.MPI_Request recv_req
+    cdef char data_name[500]
+    cdef FILE * fp
+    namddir_t = namddir.encode("utf-8")
+    cdef char* namddir_c = namddir_t
 
     # split ntraj
     if NTRAJ % nprocs == 0:
@@ -579,12 +667,6 @@ cdef void fssh_sh(
     else:
         itraj_max = <int>(NTRAJ/nprocs)+1
     ntraj_max = itraj_max*nprocs
-    # get shm_comm
-    mpi.MPI_Comm_split_type(
-        c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
-    )
-    ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
-    ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
     node_id = myid/shm_nprocs
@@ -600,10 +682,12 @@ cdef void fssh_sh(
         l_idx_all = nprocs*4*s_int
         l_recvbuf = shm_nprocs*recvlen
         l_recvtag = nprocs*s_int*2
+        l_psi = nel_l*nk_a*s_dcplx
     else:
         l_idx_all = 0
         l_recvbuf = 0
         l_recvtag = 0
+        l_psi = 0
     mpi.MPI_Win_allocate_shared(
         l_idx_all,s_int,mpi.MPI_INFO_NULL,shm_comm,&idx_all,&win0
     )
@@ -613,10 +697,14 @@ cdef void fssh_sh(
     mpi.MPI_Win_allocate_shared(
         l_recvtag,s_int,mpi.MPI_INFO_NULL,shm_comm,&recvtag,&win2
     )
+    mpi.MPI_Win_allocate_shared(
+        l_psi,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi,&win3
+    )
     if (shm_id!=0):
         mpi.MPI_Win_shared_query(win0,0,&l_idx_all,&s_int,&idx_all)
         mpi.MPI_Win_shared_query(win1,0,&l_recvbuf,&s_void,&recvbuf)
         mpi.MPI_Win_shared_query(win2,0,&l_recvtag,&s_int,&recvtag)
+        mpi.MPI_Win_shared_query(win3,0,&l_psi,&s_dcplx,&psi)
     # init BEfactor
     for i in range(nmodes):
         for j in range(nq):
@@ -633,8 +721,17 @@ cdef void fssh_sh(
             n_occ[k,state_a[k,iel]] = 1
     mpi.MPI_Barrier(c_comm)
 
+    if shm_id==0:
+        sprintf(data_name,"%s/psi-%d.dat",namddir_c,sample)
+        fp = fopen(data_name,"rb")
+        fseek(fp,0,SEEK_SET)
+    mpi.MPI_Barrier(shm_comm)
+
     for it in range(NSW):
         starttime = mpi.MPI_Wtime()
+        if shm_id==0:
+            fread(psi,16,nel_l*nk_a,fp)
+        mpi.MPI_Barrier(shm_comm)
         memset(&pop_sh_p[0],0,nk_a*s_float)
         memset(&ph_pop_p[0,0],0,nmodes*nq*s_float)
         for i in range(itraj_max):
@@ -845,8 +942,8 @@ cdef void fssh_sh(
                     phonon,BE2,epc_p,f0,H_hop,dE
                 )
                 state_a[i,iel] = fsshhop(
-                    it,nmodes,nk_a,psi_t[it],H_hop,dE,epc_p,kqidx,
-                    energy,phonon,BE2,state_a[i,iel],f0,f2,KbT1,
+                    it,nmodes,nk_a,&psi[iel*nk_a_l],H_hop,dE,epc_p,
+                    kqidx,energy,phonon,BE2,state_a[i,iel],f0,f2,KbT1,
                     prop,prop_a,ph_pop_t,ph_pop_p,n_occ[i],LHOLE,BANDDEG
                 )
                 # waitall send and send_sync & free
@@ -875,6 +972,8 @@ cdef void fssh_sh(
         if myid == 0:
             printf("FSSH in %d fs: %.5fs.\n",it,endtime-starttime)
 
+    if shm_id==0: fclose(fp)
+
     free(ph_pop_t)
     free(prop)
     free(prop_a)
@@ -882,7 +981,6 @@ cdef void fssh_sh(
 
     # free
     free(nodelist)
-    mpi.MPI_Comm_free(&shm_comm)
     if (node_comm != mpi.MPI_COMM_NULL):
         mpi.MPI_Comm_free(&node_comm)
     mpi.MPI_Group_free(&shm_gp)
@@ -890,19 +988,19 @@ cdef void fssh_sh(
     mpi.MPI_Win_free(&win0)
     mpi.MPI_Win_free(&win1)
     mpi.MPI_Win_free(&win2)
+    mpi.MPI_Win_free(&win3)
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef void fssh_sh_shm(
-    mpi.MPI_Comm c_comm, int nprocs,
-    int myid, int NTRAJ, int NSW, double KbT, double hbar,
-    double sigma, double dt, int[::1] state_s, int nk_proc,
-    int nk_a, int nq, int n_p, int nmodes, int nel, int[::1] k_proc,
-    int[:,::1] kqidx_p, double complex[:,:,::1] epc_a,
-    double[::1] energy, double[:,::1] phonon, double[:,::1] BEfactor,
-    double complex[:,::1] psi_t, float[:,::1] pop_sh,
-    float[:,:,::1] ph_pop, bint LHOLE, int BANDDEG
+    mpi.MPI_Comm c_comm, mpi.MPI_Comm shm_comm, int myid, int nprocs,
+    int shm_id, int shm_nprocs, str namddir, int sample, int NTRAJ, int NSW,
+    int nk_proc, int nk_a, int nq, int n_p, int nmodes, int nel, double dt,
+    double KbT, double hbar, double sigma, int[::1] state_s, int[::1] k_proc,
+    int[:,::1] kqidx_p, double[::1] energy, double[:,::1] phonon,
+    double[:,::1] BEfactor, double complex[:,:,::1] epc_a,
+    float[:,::1] pop_sh, float[:,:,::1] ph_pop, int BANDDEG, bint LHOLE
 ):
     cdef double KbT1 = 1.0/KbT
     cdef double f0 = -0.5/(sigma*sigma)
@@ -910,9 +1008,9 @@ cdef void fssh_sh_shm(
     cdef double f2 = <double>(2.0*dt)/hbar
     cdef double E0
 
-    cdef int i, j, k, l, it, t0, t1, shm_id, shm_nprocs, ierr,\
-             nnode, node_id, iel, state_t
+    cdef int i, j, k, l, it, t0, t1, ierr, nnode, node_id, iel, state_t
     cdef int * nodelist
+    cdef double complex * psi
 
     cdef double[:,::1] BE2 = np.zeros((nmodes,nq),dtype=np.float64)
     cdef double[::1] H_hop = np.zeros((nk_a),dtype=np.float64)
@@ -930,6 +1028,8 @@ cdef void fssh_sh_shm(
     cdef int s_float = sizeof(float)
     cdef int s_double = sizeof(double)
     cdef int s_dcplx = sizeof(double complex)
+    cdef long nel_l = nel
+    cdef long nk_a_l = nk_a
 
     cdef double complex *epc_buf \
         = <double complex*>malloc(s_dcplx*nmodes*nk_a)
@@ -941,8 +1041,14 @@ cdef void fssh_sh_shm(
     cdef double *dE = <double*>malloc(nk_a*s_double)
     cdef double starttime, endtime
 
-    cdef mpi.MPI_Comm shm_comm, node_comm
+    cdef mpi.MPI_Comm node_comm
     cdef mpi.MPI_Group split_gp, shm_gp
+    cdef mpi.MPI_Win win
+    cdef mpi.MPI_Aint len_psi
+    cdef char data_name[500]
+    cdef FILE * fp
+    namddir_t = namddir.encode("utf-8")
+    cdef char* namddir_c = namddir_t
 
     # split ntraj
     if NTRAJ % nprocs == 0:
@@ -950,12 +1056,6 @@ cdef void fssh_sh_shm(
     else:
         itraj_max = <int>(NTRAJ/nprocs)+1
     ntraj_max = itraj_max*nprocs
-    # get shm_comm
-    mpi.MPI_Comm_split_type(
-        c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
-    )
-    ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
-    ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
     node_id = myid/shm_nprocs
@@ -981,8 +1081,24 @@ cdef void fssh_sh_shm(
             n_occ[k,state_a[k,iel]] = 1
     mpi.MPI_Barrier(c_comm)
 
+    if shm_id==0: len_psi = nel_l*nk_a*s_dcplx
+    else: len_psi = 0
+    mpi.MPI_Win_allocate_shared(
+        len_psi,s_dcplx,mpi.MPI_INFO_NULL,shm_comm,&psi,&win
+    )
+    if shm_id==0:
+        sprintf(data_name,"%s/psi-%d.dat",namddir_c,sample)
+        fp = fopen(data_name,"rb")
+        fseek(fp,0,SEEK_SET)
+    else:
+        mpi.MPI_Win_shared_query(win,0,&len_psi,&s_dcplx,&psi)
+    mpi.MPI_Barrier(shm_comm)
+
     for it in range(NSW):
         starttime = mpi.MPI_Wtime()
+        if shm_id==0:
+            fread(psi,16,nel_l*nk_a,fp)
+        mpi.MPI_Barrier(shm_comm)
         memset(&pop_sh_p[0],0,nk_a*s_float)
         memset(&ph_pop_p[0,0],0,nmodes*nq*s_float)
         for i in range(itraj_max):
@@ -1003,8 +1119,8 @@ cdef void fssh_sh_shm(
                     phonon,BE2,epc_buf,f0,H_hop,dE
                 )
                 state_a[i,iel] = fsshhop(
-                    it,nmodes,nk_a,psi_t[it],H_hop,dE,epc_buf,kqidx_buf,
-                    energy,phonon,BE2,state_a[i,iel],f0,f2,KbT1,
+                    it,nmodes,nk_a,&psi[iel*nk_a_l],H_hop,dE,epc_buf,
+                    kqidx_buf,energy,phonon,BE2,state_a[i,iel],f0,f2,KbT1,
                     prop,prop_a,ph_pop_t,ph_pop_p,n_occ[i],LHOLE,BANDDEG
                 )
                 pop_sh_p[<int>(state_a[i,iel]/BANDDEG)] += 1
@@ -1021,6 +1137,9 @@ cdef void fssh_sh_shm(
         if myid == 0:
             printf("FSSH-SHM in %d fs: %.5fs.\n",it,endtime-starttime)
 
+    if shm_id==0: fclose(fp)
+    mpi.MPI_Win_free(&win)
+
     free(ph_pop_t)
     free(prop)
     free(prop_a)
@@ -1029,7 +1148,6 @@ cdef void fssh_sh_shm(
     # free
     free(epc_buf)
     free(nodelist)
-    mpi.MPI_Comm_free(&shm_comm)
     if (node_comm != mpi.MPI_COMM_NULL):
         mpi.MPI_Comm_free(&node_comm)
     mpi.MPI_Group_free(&shm_gp)
@@ -1133,23 +1251,14 @@ cdef void WriteEPC(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef void FsshOut(
-    int nmodes, int NSW, int nk_a, int nq, int ntraj, 
-    int nel, double complex[:,::1] psi_t,
-    double[::1] energy, double[:,::1] phonon, 
-    double[::1] e_psi, float[:,::1] pop_sh,
-    double[::1] e_sh,
-    float[:,:,::1] ph_pop, double[:,::1] e_ph
+    int nmodes, int NSW, int nk_a, int nq, int ntraj, int nel,
+    double[::1] energy, double[:,::1] phonon, float[:,::1] pop_sh,
+    double[::1] e_sh, float[:,:,::1] ph_pop, double[:,::1] e_ph
 ):
     cdef int i, j, k
-    cdef double psi2
-    cdef double complex psi1
 
     for i in range(NSW):
         for j in range(nk_a):
-            psi1 = psi_t[i,j]
-            psi2 = creal(psi1)*creal(psi1) \
-                 + cimag(psi1)*cimag(psi1)
-            e_psi[i] += psi2*energy[j]
             pop_sh[i,j] /= (ntraj*nel)
             e_sh[i] += pop_sh[i,j]*energy[j]
         for j in range(nmodes):
@@ -1170,15 +1279,12 @@ def fssh(
     bint LPHSHM, int BANDDEG
 ):
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
-    #cdef mpi.MPI_Win win
     cdef mpi.MPI_Comm shm_comm
-    #cdef mpi.MPI_Aint len_psi
-    cdef int myid, nprocs, ierr, shm_id
+    cdef int myid, nprocs, ierr, shm_id, shm_nprocs
     ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
     ierr = mpi.MPI_Comm_rank(c_comm,&myid)
 
-    cdef long len_psi, len_phq, len_phq0, len_BE
-    cdef long NSW_l = NSW
+    cdef long len_phq, len_phq0, len_BE
     cdef long nq_l = nq
     cdef int s_double = sizeof(double)
     cdef int s_dcplx = sizeof(double complex)
@@ -1186,8 +1292,7 @@ def fssh(
     cdef int nk_proc = k_proc_num[myid]
     cdef double[:,::1] BEfactor
     cdef double complex[:,::1] phq0, phq
-    cdef double complex[:,::1] psi_t, psi_tmp
-    cdef double[::1] e_psi, e_sh 
+    cdef double[::1] e_sh
     cdef float[:,::1] pop_sh
     cdef double starttime, endtime, starttime1, endtime1
 
@@ -1205,22 +1310,18 @@ def fssh(
         c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
     )
     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
-    # alloc psi_t, phq0, phq, BEfactor
+    ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
+    # alloc phq0, phq, BEfactor
     shm_comm_py = comm.Split_type(MPI.COMM_TYPE_SHARED)
     if LPHSHM:
         if (shm_id==0):
-            len_psi = NSW_l*nk_a*s_dcplx
             len_phq0 = nq_l*nmodes*s_dcplx
             len_phq = nq_l*nmodes*s_dcplx
             len_BE = nq_l*nmodes*s_double
         else:
-            len_psi = 0
             len_phq0 = 0
             len_phq = 0
             len_BE = 0
-        win = MPI.Win.Allocate_shared(len_psi,s_dcplx,comm=shm_comm_py)
-        buf,s_dcplx = win.Shared_query(0)
-        psi_t = np.ndarray(buffer=buf,dtype=np.complex128,shape=(NSW,nk_a))
         win1 = MPI.Win.Allocate_shared(len_phq0,s_dcplx,comm=shm_comm_py)
         buf1,s_dcplx = win1.Shared_query(0)
         phq0 = np.ndarray(buffer=buf1,dtype=np.complex128,shape=(nmodes,nq))
@@ -1239,13 +1340,6 @@ def fssh(
                 BEfactor,dt,hbar,KbT,phq0,phq
             )
     else:
-        if (shm_id==0):
-            len_psi = NSW_l*nk_a*s_dcplx
-        else:
-            len_psi = 0
-        win = MPI.Win.Allocate_shared(len_psi,s_dcplx,comm=shm_comm_py)
-        buf,s_dcplx = win.Shared_query(0)
-        psi_t = np.ndarray(buffer=buf,dtype=np.complex128,shape=(NSW,nk_a))
         phq0 = np.zeros((nmodes,nq),dtype=np.complex128)
         phq = np.zeros((nmodes,nq),dtype=np.complex128)
         BEfactor = np.zeros((nmodes,nq),dtype=np.float64)
@@ -1266,51 +1360,47 @@ def fssh(
         endtime = mpi.MPI_Wtime()
         if myid == 0:
             printf("Sample %d, EPCTXT time: %.6fs.\n",sample,endtime-starttime)
-        # run TDDFT, get expansion coefficients psi_t
+        # run TDDFT, get expansion coefficients psi
         starttime0 = mpi.MPI_Wtime()
         fssh_psi(
-            c_comm,nprocs,myid,NSW,NELM,edt,hbar,state_s,
-            k_proc_min,nk_a,nq,n_p,nmodes,nel,k_proc,
-            k_proc_num,kqidx_p,epc_a,energy,phq,phq0,psi_t
+            c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,namddir,
+            sample,NSW,NELM,k_proc_min,nk_a,nq,n_p,nmodes,nel,edt,hbar,
+            state_s,k_proc,k_proc_num,kqidx_p,energy,epc_a,phq,phq0
         )
         endtime0 = mpi.MPI_Wtime()
         if myid == 0:
-            np.save(namddir+'/psi-%d.npy'%(sample),psi_t)
             printf("Sample %d, TimeProp time: %.6fs.\n",sample,endtime0-starttime0)
         # run FSSH
-        #psi_t = np.load(namddir+'/psi-%d.npy'%(sample))
         if myid == 0:
             pop_sh = np.zeros((NSW,nk_a),dtype=np.float32)
             ph_pop = np.zeros((NSW,nmodes,nq),dtype=np.float32)
-            e_psi = np.zeros((NSW),dtype=np.float64)
             e_sh = np.zeros((NSW),dtype=np.float64)
             e_ph = np.zeros((NSW,nmodes),dtype=np.float64)
         else:
             pop_sh = np.zeros((0,0),dtype=np.float32)
             ph_pop = np.zeros((0,0,0),dtype=np.float32)
-    
+
         starttime1 = mpi.MPI_Wtime()
         if LEPCSHM:
             fssh_sh_shm(
-                c_comm,nprocs,myid,NTRAJ,NSW,KbT,hbar,sigma,dt,
-                state_s,nk_proc,nk_a,nq,n_p,nmodes,nel,k_proc,
-                kqidx_p,epc_a,energy,phonon,BEfactor,psi_t,pop_sh,
-                ph_pop,LHOLE,BANDDEG
+                c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,
+                namddir,sample,NTRAJ,NSW,nk_proc,nk_a,nq,n_p,nmodes,
+                nel,dt,KbT,hbar,sigma,state_s,k_proc,kqidx_p,energy,
+                phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
             )
         else:
             fssh_sh(
-                c_comm,nprocs,myid,NTRAJ,NSW,KbT,hbar,sigma,dt,
-                state_s,nk_proc,nk_a,nq,n_p,nmodes,nel,k_proc,
-                kqidx_p,epc_a,energy,phonon,BEfactor,psi_t,pop_sh,
-                ph_pop,LHOLE,BANDDEG
+                c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,
+                namddir,sample,NTRAJ,NSW,nk_proc,nk_a,nq,n_p,nmodes,
+                nel,dt,KbT,hbar,sigma,state_s,k_proc,kqidx_p,energy,
+                phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
             )
         endtime1 = mpi.MPI_Wtime()
         if myid == 0:
             FsshOut(
-                nmodes,NSW,nk_a,nq,ntraj_max,nel,psi_t,energy,
-                phonon,e_psi,pop_sh,e_sh,ph_pop,e_ph
+                nmodes,NSW,nk_a,nq,ntraj_max,nel,
+                energy,phonon,pop_sh,e_sh,ph_pop,e_ph
             )
-            np.save(namddir+'/fssh_e_psi-%d.npy'%(sample),e_psi)
             np.save(namddir+'/fssh_pop_sh-%d.npy'%(sample),pop_sh)
             np.save(namddir+'/fssh_e_sh-%d.npy'%(sample),e_sh)
             np.save(namddir+'/fssh_pop_ph-%d.npy'%(sample),ph_pop)
@@ -1328,29 +1418,22 @@ def fssh(
             endtime = mpi.MPI_Wtime()
             if myid == 0:
                 printf("Sample %d, EPCTXT time: %.6fs.\n",sample,endtime-starttime)
-            # run TDDFT, get expansion coefficients psi_t
+            # run TDDFT, get expansion coefficients psi
             starttime0 = mpi.MPI_Wtime()
             fssh_psi(
-                c_comm,nprocs,myid,NSW,NELM,edt,hbar,state_s,
-                k_proc_min,nk_a,nq,n_p,nmodes,nel,k_proc,
-                k_proc_num,kqidx_p,epc_a,energy,phq,phq0,psi_t
+                c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,namddir,
+                sample,NSW,NELM,k_proc_min,nk_a,nq,n_p,nmodes,nel,edt,hbar,
+                state_s,k_proc,k_proc_num,kqidx_p,energy,epc_a,phq,phq0
             )
             endtime0 = mpi.MPI_Wtime()
             if myid == 0:
                 os.system('touch %s'%(namddir+"/RESTART-%d"%(sample)))
-                np.save(namddir+'/psi-%d.npy'%(sample),psi_t)
                 printf("Sample %d, TimeProp time: %.6fs.\n",sample,endtime0-starttime0)
         else:
-            # load psi
-            if (shm_id==0):
-                psi_tmp = np.load(namddir+'/psi-%d.npy'%(sample))
-                memcpy(&psi_t[0,0],&psi_tmp[0,0],len_psi)
-                psi_tmp = None
             # run FSSH
             if myid == 0:
                 pop_sh = np.zeros((NSW,nk_a),dtype=np.float32)
                 ph_pop = np.zeros((NSW,nmodes,nq),dtype=np.float32)
-                e_psi = np.zeros((NSW),dtype=np.float64)
                 e_sh = np.zeros((NSW),dtype=np.float64)
                 e_ph = np.zeros((NSW,nmodes),dtype=np.float64)
             else:
@@ -1360,32 +1443,30 @@ def fssh(
             starttime1 = mpi.MPI_Wtime()
             if LEPCSHM:
                 fssh_sh_shm(
-                    c_comm,nprocs,myid,NTRAJ,NSW,KbT,hbar,sigma,dt,
-                    state_s,nk_proc,nk_a,nq,n_p,nmodes,nel,k_proc,
-                    kqidx_p,epc_a,energy,phonon,BEfactor,psi_t,pop_sh,
-                    ph_pop,LHOLE,BANDDEG
+                    c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,
+                    namddir,sample,NTRAJ,NSW,nk_proc,nk_a,nq,n_p,nmodes,
+                    nel,dt,KbT,hbar,sigma,state_s,k_proc,kqidx_p,energy,
+                    phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
                 )
             else:
                 fssh_sh(
-                    c_comm,nprocs,myid,NTRAJ,NSW,KbT,hbar,sigma,dt,
-                    state_s,nk_proc,nk_a,nq,n_p,nmodes,nel,k_proc,
-                    kqidx_p,epc_a,energy,phonon,BEfactor,psi_t,pop_sh,
-                    ph_pop,LHOLE,BANDDEG
+                    c_comm,shm_comm,myid,nprocs,shm_id,shm_nprocs,
+                    namddir,sample,NTRAJ,NSW,nk_proc,nk_a,nq,n_p,nmodes,
+                    nel,dt,KbT,hbar,sigma,state_s,k_proc,kqidx_p,energy,
+                    phonon,BEfactor,epc_a,pop_sh,ph_pop,BANDDEG,LHOLE
                 )
             endtime1 = mpi.MPI_Wtime()
             if myid == 0:
                FsshOut(
-                   nmodes,NSW,nk_a,nq,ntraj_max,nel,psi_t,energy,
-                   phonon,e_psi,pop_sh,e_sh,ph_pop,e_ph
+                   nmodes,NSW,nk_a,nq,ntraj_max,nel,
+                   energy,phonon,pop_sh,e_sh,ph_pop,e_ph
                )
                #os.system('rm -rf %s'%(namddir+"/RESTART-%d"%(sample)))
-               np.save(namddir+'/fssh_e_psi-%d.npy'%(sample),e_psi)
                np.save(namddir+'/fssh_pop_sh-%d.npy'%(sample),pop_sh)
                np.save(namddir+'/fssh_e_sh-%d.npy'%(sample),e_sh)
                np.save(namddir+'/fssh_pop_ph-%d.npy'%(sample),ph_pop)
                np.save(namddir+'/fssh_e_ph-%d.npy'%(sample),e_ph)
                printf("Sample %d, FSSH time: %.6fs.\n",sample,endtime1-starttime1)
-    MPI.Win.Free(win)
     if LPHSHM:
         MPI.Win.Free(win1)
         MPI.Win.Free(win2)
