@@ -467,7 +467,7 @@ cdef inline void GetState(
 @cython.wraparound(False)
 cdef inline void GetHhop(
     int nmodes, int nk_a,
-    int * kqidx0, double[:,::1] phonon,
+    long mstride, int * kqidx0, double[:,::1] phonon,
     double[:,::1] BE2, double complex * epc_p, 
     double f0, double[::1] H_hop, double *dE
 ):
@@ -482,7 +482,7 @@ cdef inline void GetHhop(
             dE0 = dE[j]+ph
             dE1 = dE[j]-ph
             expdE = exp(dE0*dE0*f0)+exp(dE1*dE1*f0)
-            epc_p0 = epc_p[i*nk_a+j]
+            epc_p0 = epc_p[i*mstride+j]
             epc_p1 = (creal(epc_p0)*creal(epc_p0) \
                      +cimag(epc_p0)*cimag(epc_p0))*BE2[i,qidx]
             H_hop[j] += epc_p1*expdE
@@ -492,7 +492,7 @@ cdef inline void GetHhop(
 @cython.wraparound(False)
 cdef inline int fsshhop(
     int it, int nmodes, int nk_a,
-    double complex * psi_a, double[::1] H_hop, double *dE,
+    long mstride, double complex * psi_a, double[::1] H_hop, double *dE,
     double complex * epc_p, int * kqidx0, double[::1] energy, 
     double[:,::1] phonon, double[:,::1] BE2,
     int state, double f0, double f2, double KbT1,
@@ -505,7 +505,7 @@ cdef inline int fsshhop(
     cdef double complex psi0 = psi_a[state_t0]
     cdef double densitydiag = \
                 f2/(creal(psi0)*creal(psi0)+cimag(psi0)*cimag(psi0))
-    cdef double dEt, prop_t, epc_p1, prop0, prop_sum
+    cdef double dEt, prop_t, epc_p1, prop0, prop_sum, prop_c
     cdef double complex density, epc_p0
 
     cdef double ph_pop_sum, ph_pop0, ph_pop1, \
@@ -523,6 +523,7 @@ cdef inline int fsshhop(
         else: prop[i] = 0.0
 
     if LHOLE:
+        prop_c = 0.0
         for i in range(nk_a):
             prop_t = prop[i]
             if prop_t > 0:
@@ -530,10 +531,14 @@ cdef inline int fsshhop(
                 if dEt<0: prop_t *= exp(dEt*KbT1)
 #                prop_t /= prop_sum
                 for j in range(BANDDEG):
-                    prop_a[i*BANDDEG+j] += prop_t/BANDDEG*j
-                for j in range((i+1)*BANDDEG,nk_a*BANDDEG+1):
-                    prop_a[j] += prop_t
+                    prop_a[i*BANDDEG+j] = prop_c+prop_t/BANDDEG*j
+                prop_c += prop_t
+            else:
+                for j in range(BANDDEG):
+                    prop_a[i*BANDDEG+j] = prop_c
+        prop_a[nk_a*BANDDEG] = prop_c
     else:
+        prop_c = 0.0
         for i in range(nk_a):
             prop_t = prop[i]
             if prop_t > 0:
@@ -541,9 +546,12 @@ cdef inline int fsshhop(
                 if dEt>0: prop_t *= exp(-dEt*KbT1)
 #                prop_t /= prop_sum
                 for j in range(BANDDEG):
-                    prop_a[i*BANDDEG+j] += prop_t/BANDDEG*j
-                for j in range((i+1)*BANDDEG,nk_a*BANDDEG+1):
-                    prop_a[j] += prop_t
+                    prop_a[i*BANDDEG+j] = prop_c+prop_t/BANDDEG*j
+                prop_c += prop_t
+            else:
+                for j in range(BANDDEG):
+                    prop_a[i*BANDDEG+j] = prop_c
+        prop_a[nk_a*BANDDEG] = prop_c
 
     if (prop0<=prop_a[nk_a*BANDDEG]):
         idx_s = 0
@@ -571,7 +579,7 @@ cdef inline int fsshhop(
                 dE1 = dEt-phonon[i,qidx]-1e-8
                 expdE0 = exp(dE0*dE0*f0)
                 expdE1 = exp(dE1*dE1*f0)
-                epc_p0 = epc_p[i*nk_a+state_t]
+                epc_p0 = epc_p[i*mstride+state_t]
                 epc_p1 = (creal(epc_p0)*creal(epc_p0) \
                          +cimag(epc_p0)*cimag(epc_p0))*BE2[i,qidx]
                 ph_pop0 = epc_p1*expdE0
@@ -938,11 +946,11 @@ cdef void fssh_sh(
                     dE[j] = energy[j]-E0
                 memset(&prop_a[1],0,nk_a*BANDDEG*s_double)
                 GetHhop(
-                    nmodes,nk_a,kqidx,
+                    nmodes,nk_a,nk_a,kqidx,
                     phonon,BE2,epc_p,f0,H_hop,dE
                 )
                 state_a[i,iel] = fsshhop(
-                    it,nmodes,nk_a,&psi[iel*nk_a_l],H_hop,dE,epc_p,
+                    it,nmodes,nk_a,nk_a,&psi[iel*nk_a_l],H_hop,dE,epc_p,
                     kqidx,energy,phonon,BE2,state_a[i,iel],f0,f2,KbT1,
                     prop,prop_a,ph_pop_t,ph_pop_p,n_occ[i],LHOLE,BANDDEG
                 )
@@ -1008,7 +1016,7 @@ cdef void fssh_sh_shm(
     cdef double f2 = <double>(2.0*dt)/hbar
     cdef double E0
 
-    cdef int i, j, k, l, it, t0, t1, ierr, nnode, node_id, iel, state_t
+    cdef int i, j, k, l, it, ierr, nnode, node_id, iel, state_t
     cdef int * nodelist
     cdef double complex * psi
 
@@ -1031,8 +1039,6 @@ cdef void fssh_sh_shm(
     cdef long nel_l = nel
     cdef long nk_a_l = nk_a
 
-    cdef double complex *epc_buf \
-        = <double complex*>malloc(s_dcplx*nmodes*nk_a)
     cdef int *kqidx_buf
 
     cdef double *ph_pop_t = <double*>malloc(nmodes*s_double)
@@ -1103,11 +1109,8 @@ cdef void fssh_sh_shm(
         memset(&ph_pop_p[0,0],0,nmodes*nq*s_float)
         for i in range(itraj_max):
             for iel in range(nel):
-                # calculate H_hop from (epc_buf,kqidx)
+                # calculate H_hop from (epc_a,kqidx)
                 state_t = <int>(state_a[i,iel]/BANDDEG)
-                for t0 in range(nmodes):
-                    for t1 in range(nk_a):
-                        epc_buf[t0*nk_a+t1] = epc_a[t0,state_t,t1]
                 E0 = energy[state_t]
                 for j in range(nk_a):
                     H_hop[j] = 0
@@ -1115,13 +1118,14 @@ cdef void fssh_sh_shm(
                 memset(&prop_a[1],0,nk_a*BANDDEG*s_double)
                 kqidx_buf = &kqidx_p[state_t,0]
                 GetHhop(
-                    nmodes,nk_a,kqidx_buf,
-                    phonon,BE2,epc_buf,f0,H_hop,dE
+                    nmodes,nk_a,nk_a_l*nk_a,kqidx_buf,
+                    phonon,BE2,&epc_a[0,state_t,0],f0,H_hop,dE
                 )
                 state_a[i,iel] = fsshhop(
-                    it,nmodes,nk_a,&psi[iel*nk_a_l],H_hop,dE,epc_buf,
-                    kqidx_buf,energy,phonon,BE2,state_a[i,iel],f0,f2,KbT1,
-                    prop,prop_a,ph_pop_t,ph_pop_p,n_occ[i],LHOLE,BANDDEG
+                    it,nmodes,nk_a,nk_a_l*nk_a,&psi[iel*nk_a_l],H_hop,dE,
+                    &epc_a[0,state_t,0],kqidx_buf,energy,phonon,BE2,
+                    state_a[i,iel],f0,f2,KbT1,prop,prop_a,ph_pop_t,ph_pop_p,
+                    n_occ[i],LHOLE,BANDDEG
                 )
                 pop_sh_p[<int>(state_a[i,iel]/BANDDEG)] += 1
 
@@ -1146,7 +1150,6 @@ cdef void fssh_sh_shm(
     free(dE)
 
     # free
-    free(epc_buf)
     free(nodelist)
     if (node_comm != mpi.MPI_COMM_NULL):
         mpi.MPI_Comm_free(&node_comm)
