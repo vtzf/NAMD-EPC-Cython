@@ -180,5 +180,13 @@ After overlap-(dr-)only calculation, run DeepH to obtain unitcell Hamiltonian an
 In the NAMD-EPC-Cython implementation, `inp` file simply adjusts a few parameters for interfacing with DeepEPC and obtaining higher computational efficiency on large-scale simulation. Please refer to `README.md` of NAMD-EPC-Cython for usage.
 When using DeepEPC output in NAMD-k, set `LHDF5 = .F.` in `inp` and copy `config.ini` to the NAMD-k working directory. Set `inDir` to the DeepEPC data directory and `epcDir` to the actual EPC output directory. For `Ispin = 1`, add `_up` or `_dn` before the file extensions of `valname`, `vecname`, `basselname` and `epcname` (e.g. `epcname = epc_all_p-10_up.dat`). See `DeepEPC/example/Ni/nosoc/namd_no_so` for a complete example.
 
+## Post-processing
+
+The `scripts/postprocessing` directory contains workflows for mode-resolved electron–phonon coupling constants, electronic self-energy, and spectral functions. These workflows were originally developed and contributed by Jiale Chen (Key Laboratory of Polar Materials and Devices, Ministry of Education, East China Normal University; NYU-ECNU Institute of Physics, NYU Shanghai; School of Information and Electronic Engineering, East China Normal University; jc12994@nyu.edu), and were used to produce data for Jiale Chen et al., Materials Today Physics 67, 102192 (2026), https://doi.org/10.1016/j.mtphys.2026.102192.
+
+Each subdirectory uses only its own `postprocessing.ini`; `config.ini` is not read. Set the grid, data directories, EPC file names, and analysis parameters there. For `Ispin = 1`, use `spin = up` or `spin = dn` to select the corresponding suffix. The self-energy workflow requires `EpcType = K`, while the coupling workflow requires `EpcType = Q`, both with `IsAllKlist = True`.
+
+The self-energy and coupling scripts read the single merged EPC file produced by the current DeepEPC in per-rank k/q blocks, compute `abs` on each block, and accumulate only the small output arrays. No `g_final` file is required. The supplied job scripts do not delete the original EPC data or reduced results. See the README files in `self_energy`, `lambda`, and `a2f` for the complete workflow.
+
 
 
