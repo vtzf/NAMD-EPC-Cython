@@ -9,7 +9,7 @@ import configparser
 from mpi4py import MPI
 
 conf = configparser.ConfigParser()
-conf.read('config.ini',encoding='utf-8')
+conf.read(sys.argv[1] if len(sys.argv)>1 else 'config.ini',encoding='utf-8')
 
 Ispin = int(conf['epc']['Ispin'])
 if Ispin != 2:
@@ -371,23 +371,23 @@ def ReadH5Olp(OlpName,mat,R_list,key_num,pub_key,nfile):
                 mat[offset:offset+buflen] = f[key_buf][:].reshape(buflen)
         f.close()
     else:
+        mat[:] = 0.0
         for h in range(nfile):
             f=h5py.File(OlpName+'_%d.h5'%h,'r')
-            key_part = list(f.keys())
-            if len(key_part) > 0:
-                for i in range(R_num):
-                    for j in range(key_num[i,2],key_num[i+1,2]):
-                        key_buf = '[%d, %d, %d, %d, %d]'%(
-                            R_list[i,0],R_list[i,1],R_list[i,2],
-                            pub_key[j,0]+1,pub_key[j,1]+1
-                        )
-                        buflen = pub_key[j,4]
-                        offset = pub_key[j,5]
-                        if key_buf in key_part:
-                            mat[offset:offset+buflen] \
-                            = f[key_buf][:].reshape(buflen)
-                        else:
-                            mat[offset:offset+buflen] = 0.0
+            for key_buf in f.keys():
+                key_b1 = json.loads(key_buf)
+                i = np.where(
+                    (R_list[:,0]==key_b1[0])
+                    &(R_list[:,1]==key_b1[1])
+                    &(R_list[:,2]==key_b1[2])
+                )[0][0]
+                j = key_num[i,2]+np.where(
+                    (pub_key[key_num[i,2]:key_num[i+1,2],0]==key_b1[3]-1)
+                    &(pub_key[key_num[i,2]:key_num[i+1,2],1]==key_b1[4]-1)
+                )[0][0]
+                buflen = pub_key[j,4]
+                offset = pub_key[j,5]
+                mat[offset:offset+buflen] = f[key_buf][:].reshape(buflen)
             f.close()
 
 
@@ -536,6 +536,7 @@ def band_cal(inDir,bandDir,knum,k_list):
         vals_p = []
         vecs_p = []
         spinDMs_p = []
+        vec_all_p = np.zeros((kproc_num[myid],norbital*2,nbands),dtype=complex)
     comm.Barrier()
     # eigen buffer
     eigtime = np.zeros((1),dtype=float)
@@ -570,6 +571,7 @@ def band_cal(inDir,bandDir,knum,k_list):
             kpoint[0],kpoint[1],kpoint[2],eigtime[0]),flush=True)
             vec_p[i-kproc_min] = vec_t
         else:
+            vec_all_p[i-kproc_min] = vec_t
             for j in range(nbands):
                 if val_t[j]>=emin and val_t[j]<=emax:
                     print("bassel_p[%5d](ik,ib)=(%d,%d) in id[%d]."%(k_idx_num_p,i,j,myid),flush=True)
@@ -578,6 +580,12 @@ def band_cal(inDir,bandDir,knum,k_list):
                     spinDMs_p.append(spinDM_t[j].copy())
                     k_idx_list.append([i,j])
                     k_idx_num_p += 1
+    if not IsAllKlist:
+        vecbname = inDir+bandDir+vecname.split('.')[0]+'.dat'
+        fh = MPI.File.Open(comm,vecbname,MPI.MODE_CREATE|MPI.MODE_WRONLY)
+        fh.Set_size(knum*norbital*2*nbands*s_dcplx)
+        fh.Write_at_all(kproc[myid]*norbital*2*nbands*s_dcplx,vec_all_p)
+        fh.Close()
     # alloc val/vec & gather
     if myid == 0:
         val = np.zeros((knum,nbands))

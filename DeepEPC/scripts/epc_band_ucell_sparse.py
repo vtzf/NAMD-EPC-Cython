@@ -9,7 +9,7 @@ import configparser
 from mpi4py import MPI
 
 conf = configparser.ConfigParser()
-conf.read('config.ini',encoding='utf-8')
+conf.read(sys.argv[1] if len(sys.argv)>1 else 'config.ini',encoding='utf-8')
 
 Ispin = int(conf['epc']['Ispin'])
 IsH5_u = True if conf['ucell']['IsH5_u']=='True' else False
@@ -199,6 +199,10 @@ def read_key1(h_key,key_idx,pub_key,key_info):
         pub_key[idx_s:idx_e,1] = key_j
         pub_key[idx_s:idx_e,2] = atom_idx0[key_i]
         pub_key[idx_s:idx_e,3] = atom_idx0[key_j]
+        pub_key[idx_s:idx_e,4] = atom_idx0[key_i]*atom_idx0[key_j]
+
+    pub_key[1:key_num[R_num,2],5] \
+    = np.cumsum(pub_key[0:key_num[R_num,2]-1,4])
 
     offset = 0
     for h in range(key_num[R_num,2]):
@@ -227,6 +231,7 @@ def read_key0_sum(key_info):
 
 s_d = 8
 s_int = 4
+s_dcplx = 16
 if (shm_id==0):
     len_Rlist = R_num*3*s_d
     len_keynum = (R_num+1)*4*s_int
@@ -255,7 +260,7 @@ shm_comm.Barrier()
 if (shm_id==0):
     len_ham = (Ispin+1)*key_num[R_num,3]*s_d
     len_olp = key_num[R_num,3]*s_d
-    len_pubkey = key_num[R_num,2]*4*s_int
+    len_pubkey = key_num[R_num,2]*6*s_int
     len_key = key_num[R_num,3]*4*s_int
 else:
     len_ham = 0
@@ -275,7 +280,7 @@ olp = np.ndarray(
 win01 = MPI.Win.Allocate_shared(len_pubkey,s_int,comm=shm_comm)
 buf01,s_int = win01.Shared_query(0)
 pub_key = np.ndarray(
-    buffer=buf01,dtype=np.int32,shape=(key_num[R_num,2],4)
+    buffer=buf01,dtype=np.int32,shape=(key_num[R_num,2],6)
 )
 win02 = MPI.Win.Allocate_shared(len_key,s_int,comm=shm_comm)
 buf02,s_int = win02.Shared_query(0)
@@ -322,35 +327,34 @@ def eig_k(ham,olp,ham_k,olp_k,val,vec,R_list,kpoint,eigtime):
 def ReadH5(Name,mat,R_list,key_num,pub_key,nfile):
     if nfile == 1:
         f=h5py.File(Name+'.h5','r')
-        k = 0
         for i in range(R_num):
             for j in range(key_num[i,2],key_num[i+1,2]):
                 key_buf = '[%d, %d, %d, %d, %d]'%(
                     R_list[i,0],R_list[i,1],R_list[i,2],
                     pub_key[j,0]+1,pub_key[j,1]+1
                 )
-                buflen = pub_key[j,2]*pub_key[j,3]
-                mat[k:k+buflen] = f[key_buf][:].reshape(buflen)
-                k += buflen
+                buflen = pub_key[j,4]
+                offset = pub_key[j,5]
+                mat[offset:offset+buflen] = f[key_buf][:].reshape(buflen)
         f.close()
     else:
+        mat[:] = 0.0
         for h in range(nfile):
             f=h5py.File(Name+'_%d.h5'%h,'r')
-            key_part = list(f.keys())
-            if len(key_part) > 0:
-                k = 0
-                for i in range(R_num):
-                    for j in range(key_num[i,2],key_num[i+1,2]):
-                        key_buf = '[%d, %d, %d, %d, %d]'%(
-                            R_list[i,0],R_list[i,1],R_list[i,2],
-                            pub_key[j,0]+1,pub_key[j,1]+1
-                        )
-                        buflen = pub_key[j,2]*pub_key[j,3]
-                        if key_buf in key_part:
-                            mat[k:k+buflen] = f[key_buf][:].reshape(buflen)
-                        else:
-                            mat[k:k+buflen] = 0.0
-                        k += buflen
+            for key_buf in f.keys():
+                key_b1 = json.loads(key_buf)
+                i = np.where(
+                    (R_list[:,0]==key_b1[0])
+                    &(R_list[:,1]==key_b1[1])
+                    &(R_list[:,2]==key_b1[2])
+                )[0][0]
+                j = key_num[i,2]+np.where(
+                    (pub_key[key_num[i,2]:key_num[i+1,2],0]==key_b1[3]-1)
+                    &(pub_key[key_num[i,2]:key_num[i+1,2],1]==key_b1[4]-1)
+                )[0][0]
+                buflen = pub_key[j,4]
+                offset = pub_key[j,5]
+                mat[offset:offset+buflen] = f[key_buf][:].reshape(buflen)
             f.close()
 
 
@@ -465,6 +469,7 @@ def band_cal(inDir,bandDir,knum,k_list,Ispin):
         if not IsAllKlist:
             vals_p = []
             vecs_p = []
+            vec_all_p = np.zeros((kproc_num[myid],norbital,nbands),dtype=complex)
         comm.Barrier()
         k_idx_list = []
         k_idx_num_p = 0
@@ -485,6 +490,7 @@ def band_cal(inDir,bandDir,knum,k_list,Ispin):
                 kpoint[0],kpoint[1],kpoint[2],eigtime[0]),flush=True)
                 vec_p[i-kproc_min] = vec_t
             else:
+                vec_all_p[i-kproc_min] = vec_t
                 for j in range(nbands):
                     if val_t[j]>=emin and val_t[j]<=emax:
                         print("bassel%s_p[%5d](ik,ib)=(%d,%d) in id[%d]."\
@@ -493,6 +499,14 @@ def band_cal(inDir,bandDir,knum,k_list,Ispin):
                         vecs_p.append(vec_t[:,j].copy())
                         k_idx_list.append([i,j])
                         k_idx_num_p += 1
+
+        if not IsAllKlist:
+            vecbname = inDir+bandDir+vecname.split('.')[0]+'%s.dat'%name_ex[spin]
+            fh = MPI.File.Open(comm,vecbname,\
+                    MPI.MODE_CREATE|MPI.MODE_WRONLY)
+            fh.Set_size(knum*norbital*nbands*s_dcplx)
+            fh.Write_at_all(kproc[myid]*norbital*nbands*s_dcplx,vec_all_p)
+            fh.Close()
 
         comm.Gatherv(val_p,[val,kproc_num*nbands,\
                      kproc[0:nprocs]*nbands,MPI.DOUBLE],root=0)
