@@ -13,7 +13,7 @@ from mpi4py import MPI
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 # load config
 conf = configparser.ConfigParser()
-conf.read('config.ini',encoding='utf-8')
+conf.read(sys.argv[1] if len(sys.argv)>1 else 'config.ini',encoding='utf-8')
 
 Ispin = int(conf['epc']['Ispin'])
 IsH5 = True if conf['epc']['IsH5']=='True' else False
@@ -51,9 +51,6 @@ orbital = [int(i) for i in orbital_list]
 
 IsAllVec = True if conf['epc']['IsAllVec']=='True' else False
 IsAllKlist = True if conf['epc']['IsAllKlist']=='True' else False
-Mb = int(conf['mpi']['M_BLOCK'])
-Nb = int(conf['mpi']['N_BLOCK'])
-nm_block = int(conf['mpi']['NMODES_BLOCK'])
 
 hbar = 6.62607015e-34/(2*np.pi)
 Hartree2eV = 27.211396641308
@@ -183,6 +180,20 @@ shm_comm = comm.Split_type(MPI.COMM_TYPE_SHARED)
 shm_id = shm_comm.Get_rank()
 shm_nprocs = shm_comm.Get_size()
 
+# adaptive ScaLAPACK block size for olp_inv (replaces config M_BLOCK/N_BLOCK):
+# Mb blocks the N dimension (square Mb*Mb for S, required by Cholesky), sized
+# from N so the N*N overlap distributes over the near-square process grid.
+# Nb blocks dr's Np(=N/ncell) dimension in olp_inv, sized from Np (the
+# smallest dimension in play). max grid dim = nprocs//nprow (nprow=largest
+# divisor <= sqrt(nprocs)); cap 128 (block-cyclic granularity: smaller=better
+# load balance, larger=bigger GEMM tile), floor 1 for small dim.
+nprow_sl = 1
+for i in range(1,int(nprocs**0.5)+1):
+    if nprocs%i==0: nprow_sl = i
+max_grid = max(nprow_sl,nprocs//nprow_sl)
+Mb = max(1,min(128,N//max_grid))
+Nb = max(1,min(128,Np//max_grid))
+
 starttime = MPI.Wtime()
 # get sparse matrix info
 s_i = 4
@@ -207,17 +218,22 @@ win02 = MPI.Win.Allocate_shared(len_keynum_dr,s_i,comm=shm_comm)
 buf02,s_i = win02.Shared_query(0)
 key_num_dr = np.ndarray(buffer=buf02,dtype=np.int32,shape=(nfiledr+1,4))
 shm_comm.Barrier()
-if (shm_id==0):
-    readdrSH.GetSparseNum(
-        (inDir if not IsH5 else 'None').encode('utf-8'),
-        (H5HamName if IsH5 else 'None').encode('utf-8'),
-        (H5OlpName if IsH5 else 'None').encode('utf-8'),
-        (H5DrName if IsH5 else 'None').encode('utf-8'),
-        nfileham,nfileolp,nfiledr,atomnum_s,key_num_h,
-        key_num_o,key_num_dr,atom_idx_s,IsH5
-    )
+# read once on rank 0 + Bcast to node leaders (inside GetSparseNum); collective
+readdrSH.GetSparseNum(
+    comm,
+    (inDir if not IsH5 else 'None').encode('utf-8'),
+    (H5HamName if IsH5 else 'None').encode('utf-8'),
+    (H5OlpName if IsH5 else 'None').encode('utf-8'),
+    (H5DrName if IsH5 else 'None').encode('utf-8'),
+    nfileham,nfileolp,nfiledr,atomnum_s,key_num_h,
+    key_num_o,key_num_dr,atom_idx_s,IsH5
+)
 shm_comm.Barrier()
+endtime = MPI.Wtime()
+if myid == 0:
+    print("Reading sparse num info time: %.5fs."%(endtime-starttime),flush=True)
 
+starttime = MPI.Wtime()
 Nkey_h = key_num_h[nfileham,2]
 Nkey_o = key_num_o[nfileolp,2]
 Nkey_dr = key_num_dr[nfiledr,2]
@@ -281,20 +297,21 @@ win4 = MPI.Win.Allocate_shared(len_dr,s_d,comm=shm_comm)
 buf4,s_d = win4.Shared_query(0)
 dr = np.ndarray(buffer=buf4,dtype=float,shape=(3,Nsparse_dr))
 shm_comm.Barrier()
-if (shm_id==0):
-    readdrSH.GetSparseIdx(
-        (inDir if not IsH5 else 'None').encode('utf-8'),
-        (H5HamName if IsH5 else 'None').encode('utf-8'),
-        (H5OlpName if IsH5 else 'None').encode('utf-8'),
-        (H5DrName if IsH5 else 'None').encode('utf-8'),
-        nfileham,nfileolp,nfiledr,atomnum_s,N,key_num_h,
-        key_num_o,key_num_dr,pub_key_h,pub_key_o,pub_key_dr,
-        keyinfo_h,keyinfo_o,keyinfo_dr,atom_idx_s,atom_idx_sum_s,IsH5
-    )
+# read once on rank 0 + Bcast keyinfo to node leaders (inside GetSparseIdx)
+readdrSH.GetSparseIdx(
+    comm,
+    (inDir if not IsH5 else 'None').encode('utf-8'),
+    (H5HamName if IsH5 else 'None').encode('utf-8'),
+    (H5OlpName if IsH5 else 'None').encode('utf-8'),
+    (H5DrName if IsH5 else 'None').encode('utf-8'),
+    nfileham,nfileolp,nfiledr,atomnum_s,N,key_num_h,
+    key_num_o,key_num_dr,pub_key_h,pub_key_o,pub_key_dr,
+    keyinfo_h,keyinfo_o,keyinfo_dr,atom_idx_s,atom_idx_sum_s,IsH5
+)
 shm_comm.Barrier()
 endtime = MPI.Wtime()
 if myid == 0:
-    print("Reading sparse info time: %.5fs."%(endtime-starttime),flush=True)
+    print("Reading sparse idx info time: %.5fs."%(endtime-starttime),flush=True)
 starttime = MPI.Wtime()
 if Ispin != 2:
     readdrSH.GetSparseData(
@@ -393,28 +410,36 @@ if myid == 0:
 
 Npproc_num = np.zeros((nprocs),dtype=np.int32)
 Npproc = np.zeros((nprocs+1),dtype=np.int32)
+# ceil-block split (matches olp_inv descRHSp)
+if Np%nprocs==0:
+    j = Np//nprocs
+    for i in range(nprocs):
+        Npproc_num[i] = j
+else:
+    j = Np//nprocs+1
+    k = Np//j
+    for i in range(k):
+        Npproc_num[i] = j
+    Npproc_num[k] = Np-j*k
 for i in range(nprocs):
-    Np_min = (Np*i)//nprocs
-    Np_max = (Np*(i+1))//nprocs
-    Npproc_num[i] = Np_max-Np_min
-    Npproc[i+1] = Np_max
+    Npproc[i+1] = Npproc[i]+Npproc_num[i]
 Np_num = Npproc_num[myid]
 # calculate drSH[Np_num,Np]
 if Ispin != 2:
     drSH = np.empty((Ispin+1,3,ncell,Np_num*Np),dtype=float)
-    for i in range(Ispin+1):
-        readdrSH.olp_inv(
-            comm,nprocs,myid,olp,olp_keyinfo,Nsparse_o,
-            ham[i],ham_keyinfo,Nsparse_h,dr,drp_csr_ridx,dr_csr_cidx,
-            Nsparse_drp,drp_min,N,ncell,Mb,Nb,drSH[i]
-        )
+    readdrSH.olp_inv(
+        comm,nprocs,myid,olp,olp_keyinfo,Nsparse_o,
+        ham,ham_csr_ridx,ham_csr_cidx,Nsparse_h,
+        dr,drp_csr_ridx,dr_csr_cidx,Nsparse_drp,
+        drp_min,N,ncell,Mb,Nb,Npproc,Npproc_num,drSH
+    )
 else:
     drSH = np.empty((4,3,ncell,Np_num*Np),dtype=complex)
     readdrSH_nc.olp_inv(
         comm,nprocs,myid,olp,olp_keyinfo,Nsparse_o,
         ham,ham_csr_ridx,ham_csr_cidx,Nsparse_h,
-        dr,drp_csr_ridx,dr_csr_cidx,Nsparse_drp,drp_min,
-        N,ncell,Mb,Nb,drSH
+        dr,drp_csr_ridx,dr_csr_cidx,Nsparse_drp,
+        drp_min,N,ncell,Mb,Nb,Npproc,Npproc_num,drSH
     )
 
 # free sparse data
@@ -428,18 +453,8 @@ MPI.Win.Free(win7)
 MPI.Win.Free(win8)
 MPI.Win.Free(win9)
 
-# split nmodes
-natom_block = 1 if nm_block<3 else nm_block//3
-natom_loop = atomnum_u//natom_block
-natom_buffer = natom_block
-if atomnum_u%natom_block != 0:
-    natom_loop += 1
-    natom_buffer += 1
-natom_split = np.zeros((natom_loop+1),dtype=np.int32)
-for i in range(natom_loop):
-    natom_min = (atomnum_u*i)//natom_loop
-    natom_max = (atomnum_u*(i+1))//natom_loop
-    natom_split[i+1] = natom_max
+# the phonon-mode chunk is sized internally (split_nmodes) by every MPIepcNL_*,
+# so no natom_loop/natom_buffer/natom_split is prepared here anymore.
 
 
 # start epc
@@ -474,6 +489,21 @@ if IsAllKlist:
                 np.save(inDir+epcDir+'qpath.npy',kpath)
     kfactor = nkpath
 
+    # part1 k-batch size for MPIepcNL_L/R (and _q): one zgemm serves NB_k k so
+    # drSH is streamed once per batch (read traffic /NB_k). the amortization
+    # benefit saturates at ~ncell (drSH read drops below the drSHexpikR write
+    # floor), so ncell is the optimal target AND the upper limit; a per-proc
+    # byte budget (sitting on top of the ~epc_t footprint) caps it down on tight
+    # nodes. worst-case per-k bytes = MPIepcNL_R (drSHexpikR_B[Np_num*Np] +
+    # bandveckp_B[norb*nbands] + drveck_p_B[Np_num*nbands]).
+    NB_k_buf_gb = 0.5
+    NB_k_byte = (int(Npproc_num.max())*Np+norb*nbands+int(Npproc_num.max())*nbands)*16
+    if Ispin != 2:
+        # non-nc plan-A extra scratch: drSHexpikR_r/i (real, ~1 cplx) + expikR_r/i
+        NB_k_byte += (int(Npproc_num.max())*Np+ncell)*16
+    NB_k_cap = max(1,int(NB_k_buf_gb*1024**3/NB_k_byte))
+    NB_k = max(1,min(ncell,nkpath,NB_k_cap))
+
     for i in range(nprocs):
         knum_min = (knum*i)//nprocs
         knum_max = (knum*(i+1))//nprocs
@@ -499,6 +529,7 @@ if IsAllKlist:
     nmnb2 = nmodes*nbands*nbands
     phvecval_p = np.empty((kproc_num[myid],nmodes*nmodes),dtype=complex)
     epc_t = np.empty((kfactor*kproc_num[myid],nmnb2),dtype=complex)
+#    epc_t = np.empty((1,1),dtype=complex)
 
     # read bandvec & phvecval
     phvalname = conf['epc']['phvalname']
@@ -542,16 +573,16 @@ if IsAllKlist:
             # calculate epc left & right
             if EpcType != 'Q':
                 epcfunc_nl.MPIepcNL_L(
-                    comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                    ncell,knum,natom_split,nq,R_list,nkpath,kpath,
+                    comm,nmodes,Np,nbands,
+                    ncell,knum,nq,R_list,nkpath,kpath,
                     drSH[i],bandveck[i],phvecval_p,kproc,kproc_num,
-                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
                 )
                 epcfunc_nl.MPIepcNL_R(
-                    comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                    ncell,knum,natom_split,nq,R_list,nkpath,kpath,
+                    comm,nmodes,Np,nbands,
+                    ncell,knum,nq,R_list,nkpath,kpath,
                     drSH[i],bandveck[i],phvecval_p,kproc,kproc_num,
-                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
                 )
                 epcfunc_nl.MPIepc_write_p(
                     comm,kfactor,nmnb2,kproc,kproc_num,
@@ -559,16 +590,16 @@ if IsAllKlist:
                 )
             else:
                 epcfunc_nl.MPIepcNL_L_q(
-                    comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                    ncell,knum,natom_split,nq,R_list,nkpath,kpath,
+                    comm,nmodes,Np,nbands,
+                    ncell,knum,nq,R_list,nkpath,kpath,
                     drSH[i],bandveck[i],phvecval_p,kproc,kproc_num,
-                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
                 )
                 epcfunc_nl.MPIepcNL_R_q(
-                    comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                    ncell,knum,natom_split,nq,R_list,nkpath,kpath,
+                    comm,nmodes,Np,nbands,
+                    ncell,knum,nq,R_list,nkpath,kpath,
                     drSH[i],bandveck[i],phvecval_p,kproc,kproc_num,
-                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                    Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
                 )
                 epcfunc_nl.MPIepc_write(
                     comm,nkpath*nmnb2,kproc,kproc_num,
@@ -585,18 +616,18 @@ if IsAllKlist:
         # calculate epc left & right
         if EpcType != 'Q':
             epcfunc_nl_nc.MPIepcNL_L(
-                comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                ncell,knum,2,natom_split,nq,R_list,nkpath,kpath,
+                comm,nmodes,Np,nbands,
+                ncell,knum,2,nq,R_list,nkpath,kpath,
                 drSH,bandveck,phvecval_p,kproc,kproc_num,
-                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
             )
             # SOC: R uses conj(drSH) (H Hermitian -> conj on the transpose)
             np.conjugate(drSH,out=drSH)
             epcfunc_nl_nc.MPIepcNL_R(
-                comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                ncell,knum,2,natom_split,nq,R_list,nkpath,kpath,
+                comm,nmodes,Np,nbands,
+                ncell,knum,2,nq,R_list,nkpath,kpath,
                 drSH,bandveck,phvecval_p,kproc,kproc_num,
-                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
             )
             epcfunc_nl.MPIepc_write_p(
                 comm,kfactor,nmnb2,kproc,kproc_num,
@@ -604,18 +635,18 @@ if IsAllKlist:
             )
         else:
             epcfunc_nl_nc.MPIepcNL_L_q(
-                comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                ncell,knum,2,natom_split,nq,R_list,nkpath,kpath,
+                comm,nmodes,Np,nbands,
+                ncell,knum,2,nq,R_list,nkpath,kpath,
                 drSH,bandveck,phvecval_p,kproc,kproc_num,
-                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
             )
             # SOC: R uses conj(drSH) (H Hermitian -> conj on the transpose)
             np.conjugate(drSH,out=drSH)
             epcfunc_nl_nc.MPIepcNL_R_q(
-                comm,nmodes,natom_loop,natom_buffer,Np,nbands,
-                ncell,knum,2,natom_split,nq,R_list,nkpath,kpath,
+                comm,nmodes,Np,nbands,
+                ncell,knum,2,nq,R_list,nkpath,kpath,
                 drSH,bandveck,phvecval_p,kproc,kproc_num,
-                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
             )
             epcfunc_nl.MPIepc_write(
                 comm,nkpath*nmnb2,kproc,kproc_num,
@@ -661,6 +692,17 @@ else:
         qnum_max = (knum*(i+1))//nprocs
         qproc_num[i] = qnum_max - qnum_min
         qproc[i+1] = qnum_max
+
+    # part1 k-batch size for MPIepcNL_p_L/R (SOC): one zgemm serves NB_k k so
+    # drSH is streamed once per batch. capped at ncell (amortization saturates)
+    # and a per-proc byte budget on the drSHexpikR_B/bandveckp_B batch buffers.
+    NB_k_buf_gb = 0.5
+    NB_k_byte = (int(Npproc_num.max())*Np+norb)*16
+    if Ispin != 2:
+        # non-nc plan-A extra scratch: drSHexpikR_r/i (real, ~1 cplx) + expikR_r/i
+        NB_k_byte += (int(Npproc_num.max())*Np+ncell)*16
+    NB_k_cap = max(1,int(NB_k_buf_gb*1024**3/NB_k_byte))
+    NB_k = max(1,min(ncell,knum_buf,NB_k_cap))
 
     # create shm buffer
     s_dcplx = 16
@@ -720,16 +762,16 @@ else:
             comm.Barrier()
             # calculate epc left & right
             epcfunc_nl.MPIepcNL_p_L(
-                comm,nmodes,natom_loop,natom_buffer,Np,ncell,
-                knum_p[i],knum,natom_split,nq,R_list,drSH[i],bandveck[i],
+                comm,nmodes,Np,ncell,
+                knum_p[i],knum,nq,R_list,drSH[i],bandveck[i],
                 phvecval_p,kproc[i],kproc_num[i],qproc,qproc_num,bassel[i],
-                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
             )
             epcfunc_nl.MPIepcNL_p_R(
-                comm,nmodes,natom_loop,natom_buffer,Np,ncell,
-                knum_p[i],knum,natom_split,nq,R_list,drSH[i],bandveck[i],
+                comm,nmodes,Np,ncell,
+                knum_p[i],knum,nq,R_list,drSH[i],bandveck[i],
                 phvecval_p,kproc[i],kproc_num[i],qproc,qproc_num,bassel[i],
-                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+                Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
             )
             epcfunc_nl.MPIepc_write_p(
                 comm,knum_p[i],nmodes,kproc[i],kproc_num[i],
@@ -746,18 +788,18 @@ else:
         comm.Barrier()
         # calculate epc left & right
         epcfunc_nl_nc.MPIepcNL_p_L(
-            comm,nmodes,natom_loop,natom_buffer,Np,ncell,
-            knum_p[0],knum,2,natom_split,nq,R_list,drSH,bandveck,
+            comm,nmodes,Np,ncell,
+            knum_p[0],knum,2,nq,R_list,drSH,bandveck,
             phvecval_p,kproc[0],kproc_num[0],qproc,qproc_num,bassel[0],
-            Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+            Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
         )
         # SOC: R uses conj(drSH) (H Hermitian -> conj on the transpose)
         np.conjugate(drSH,out=drSH)
         epcfunc_nl_nc.MPIepcNL_p_R(
-            comm,nmodes,natom_loop,natom_buffer,Np,ncell,
-            knum_p[0],knum,2,natom_split,nq,R_list,drSH,bandveck,
+            comm,nmodes,Np,ncell,
+            knum_p[0],knum,2,nq,R_list,drSH,bandveck,
             phvecval_p,kproc[0],kproc_num[0],qproc,qproc_num,bassel[0],
-            Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t
+            Npproc,Npproc_num,atom_idx_sum_u,atom_idx_u,epc_t,NB_k
         )
         epcfunc_nl.MPIepc_write_p(
             comm,knum_p[0],nmodes,kproc[0],kproc_num[0],
@@ -765,6 +807,7 @@ else:
         )
 
 MPI.Win.Free(win2)
+
 endtime = MPI.Wtime()
 if (myid==0):
     print("epc time:%.6fs"%(endtime-starttime),flush=True)

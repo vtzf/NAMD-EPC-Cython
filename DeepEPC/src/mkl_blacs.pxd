@@ -55,6 +55,11 @@ cdef extern from "mkl_scalapack.h" nogil:
         char* uplo, MKL_INT* n, double* a, MKL_INT* ia,
         MKL_INT* ja, MKL_INT* desca, MKL_INT* info
     )
+    cdef void pdpotrs(
+        char* uplo, MKL_INT* n, MKL_INT* nrhs, double* a, MKL_INT* ia,
+        MKL_INT* ja, MKL_INT* desca, double* b, MKL_INT* ib, MKL_INT* jb,
+        MKL_INT* descb, MKL_INT* info
+    )
 
 
 cdef extern from "mkl_blacs.h" nogil:

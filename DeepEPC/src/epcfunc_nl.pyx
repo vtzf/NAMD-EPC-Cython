@@ -5,6 +5,29 @@ cimport cython
 from epc cimport *
 from mkl_cblas cimport *
 
+cdef double SHM_BUDGET_GB = 25.0
+
+
+cdef int split_nmodes(
+    int atomnum_u, long shm_fixed, long phvec_unit,
+    int* natom_split, long* natom_buffer_out
+):
+    cdef long budget = <long>(SHM_BUDGET_GB*1024.0*1024.0*1024.0)
+    cdef int nb_max, natom_block, natom_loop, i
+    nb_max = <int>((budget-shm_fixed)/phvec_unit)
+    if nb_max < 1:
+        nb_max = 1
+    if nb_max > atomnum_u:
+        nb_max = atomnum_u
+    natom_block = nb_max
+    natom_loop = (atomnum_u+natom_block-1)//natom_block
+    natom_buffer_out[0] = (atomnum_u+natom_loop-1)//natom_loop
+    natom_split[0] = 0
+    for i in range(natom_loop):
+        natom_split[i+1] = (atomnum_u*(i+1))//natom_loop
+    return natom_loop
+
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def phvec_read(
@@ -167,43 +190,46 @@ cdef void epckqNL_L(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def MPIepcNL_L(
-    MPI.Comm comm, int nmodes, int natom_loop, long natom_buffer, 
-    int norbital, int nbands, int ncell, int knum, int[::1] natom_split, 
-    int[::1] nq, int[:,::1] R_list, int nkpath, double[:,::1] kpath, double[:,:,::1] drSH,
-    double complex[:,:,::1] bandveck, double complex[:,::1] phvecval_p, 
-    int[::1] kproc, int[::1] kproc_num, int[::1] norb, int[::1] norb_num, 
-    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t
+    MPI.Comm comm, int nmodes,
+    int norbital, int nbands, int ncell, int knum,
+    int[::1] nq, int[:,::1] R_list, int nkpath,
+    double[:,::1] kpath, double[:,:,::1] drSH,
+    double complex[:,:,::1] bandveck, double complex[:,::1] phvecval_p,
+    int[::1] kproc, int[::1] kproc_num, int[::1] norb, int[::1] norb_num,
+    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t,
+    int NB_k
 ):
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
     cdef mpi.MPI_Comm shm_comm, remote_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Aint l_drveck
     cdef mpi.MPI_Win win, win1
-    cdef double complex* phvecval
-    cdef double complex* drSHexpikR
+    cdef double* expikR_r
+    cdef double* expikR_i
+    cdef double* drSHexpikR_buf
+    cdef double complex* drSHexpikR_B
     cdef double complex* drveck_a
     cdef double complex* drveck
     cdef double complex* drveck_t
     cdef double complex* vdrvexpikR
-    cdef double complex* expikR
+    cdef int* kidx_B
     cdef int natom = nmodes/3
     cdef int norbnb = norbital*nbands
     cdef int nbands2 = nbands*nbands
     cdef int s_int = sizeof(int)
     cdef int s_dcplx = sizeof(double complex)
-    cdef int h, i, j, k, l, ik, xyz, shm_proc_s, shm_proc_e, \
+    cdef int h, i, j, k, l, m, n, nb_k, ik, xyz, shm_proc_s, shm_proc_e, \
              ierr, myid, nprocs, shm_id, shm_nprocs, nnode
     cdef int kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
              kpidx_x, kpidx_y, kpidx_z, kpidx_xy, kpidx, \
-             qnum_p, qnum_s, norb_p, norb_s, k1, \
-             nm_num, nm_min, nm_max
+             qnum_p, qnum_s, norb_p, norb_s, k1
     cdef int * nodelist
     cdef int* dr
     cdef int* dr_num
     cdef double kx, ky, kz, RKx, RKy, RKz, RK, \
                 starttime, endtime
-    cdef double complex pi2j = M_PI*2j
+    cdef double pi2 = M_PI*2.0
     cdef double complex c1 = 1.0
     cdef double complex c0 = 0.0
 
@@ -218,7 +244,6 @@ def MPIepcNL_L(
     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
-    node_id = myid/shm_nprocs
     nodelist = <int*>malloc(s_int*nnode)
     for i in range(nnode):
         nodelist[i] = i*shm_nprocs
@@ -238,11 +263,13 @@ def MPIepcNL_L(
     norb_p = norb_num[myid]
     norb_s = norb[myid]
 
-    expikR = <double complex*>malloc(s_dcplx*ncell)
-    drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
+    expikR_r = <double*>malloc(sizeof(double)*NB_k*ncell)
+    expikR_i = <double*>malloc(sizeof(double)*NB_k*ncell)
+    drSHexpikR_buf = <double*>malloc(sizeof(double)*NB_k*norbital*norb_p)
+    drSHexpikR_B = <double complex*>malloc(s_dcplx*NB_k*norbital*norb_p)
+    kidx_B = <int*>malloc(s_int*NB_k)
     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
     drveck_a = <double complex*>malloc(s_dcplx*nkpath*3*norb_p*nbands)
-    phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)
     if (shm_id == 0):
         l_drveck = s_dcplx*3*norbnb
     else:
@@ -258,103 +285,121 @@ def MPIepcNL_L(
     qnum_s = kproc[myid]
 
     if norb_p > 0:
-        for ik in range(nkpath):
-            if nkpath < knum:
-                kidx_x = <int>round(nq[0]*kpath[ik,0])
-                kidx_y = <int>round(nq[1]*kpath[ik,1])
-                kidx_z = <int>round(nq[2]*kpath[ik,2])
-            else:
-                kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
-                kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
-            kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
-            kx = (<double>(kidx_x))/(<double>(nq[0]))
-            ky = (<double>(kidx_y))/(<double>(nq[1]))
-            kz = (<double>(kidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKx = R_list[i,0]*kx
-                RKy = R_list[i,1]*ky
-                RKz = R_list[i,2]*kz
-                RK = RKx + RKy + RKz
-                expikR[i] = cexp(pi2j*RK)
+        for m in range(0,nkpath,NB_k):
+            nb_k = NB_k
+            if m+nb_k > nkpath:
+                nb_k = nkpath-m
+            for n in range(nb_k):
+                ik = m+n
+                if nkpath < knum:
+                    kidx_x = <int>round(nq[0]*kpath[ik,0])
+                    kidx_y = <int>round(nq[1]*kpath[ik,1])
+                    kidx_z = <int>round(nq[2]*kpath[ik,2])
+                else:
+                    kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
+                    kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+                kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
+                kidx_B[n] = kidx
+                kx = (<double>(kidx_x))/(<double>(nq[0]))
+                ky = (<double>(kidx_y))/(<double>(nq[1]))
+                kz = (<double>(kidx_z))/(<double>(nq[2]))
+                for i in range(ncell):
+                    RKx = R_list[i,0]*kx
+                    RKy = R_list[i,1]*ky
+                    RKz = R_list[i,2]*kz
+                    RK = RKx + RKy + RKz
+                    expikR_r[i*nb_k+n] = cos(pi2*RK)
+                    expikR_i[i*nb_k+n] = sin(pi2*RK)
             for xyz in range(3):
-                drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
-                # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
-                    2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
-                    <double*>expikR,2,0.0,<double*>drSHexpikR,2
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_r,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                cblas_zgemm3m(
-                    CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
-                    nbands,norbital,&c1,drSHexpikR,norbital,
-                    &bandveck[kidx,0,0],nbands,&c0,drveck_t,nbands
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j] = drSHexpikR_buf[i*nb_k+n]
+                cblas_dgemm(
+                    CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_i,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j+1] = drSHexpikR_buf[i*nb_k+n]
+                for n in range(nb_k):
+                    ik = m+n
+                    drveck_t = &drveck_a[(ik*3+xyz)*norb_p*nbands]
+                    cblas_zgemm3m(
+                        CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+                        nbands,norbital,&c1,
+                        &drSHexpikR_B[n*norb_p*norbital],norbital,
+                        &bandveck[kidx_B[n],0,0],nbands,&c0,drveck_t,nbands
+                    )
     endtime = mpi.MPI_Wtime()
     if myid == 0:
-        printf("epc_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
-    for h in range(natom_loop):
-        nm_min = natom_split[h]*3
-        nm_max = natom_split[h+1]*3
-        nm_num = nm_max-nm_min
-        starttime = mpi.MPI_Wtime()
-        for ik in range(nkpath):
-            start = mpi.MPI_Wtime()
-            if nkpath < knum:
-                kidx_x = <int>round(nq[0]*kpath[ik,0])
-                kidx_y = <int>round(nq[1]*kpath[ik,1])
-                kidx_z = <int>round(nq[2]*kpath[ik,2])
-            else:
-                kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
-                kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
-            mpi.MPI_Barrier(shm_comm)
-            for xyz in range(3):
-                for j in range(norb_p*nbands):
-                    drveck[xyz*norbnb+norb_s*nbands+j] \
-                    = drveck_a[(ik*3+xyz)*norb_p*nbands+j]
-                if nnode > 1:
-                    mpi.MPI_Barrier(shm_comm)
-                    if (shm_id == 0):
-                        mpi.MPI_Allgatherv(
-                            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                            &drveck[xyz*norbnb],&dr_num[0],&dr[0],
-                            mpi.MPI_DOUBLE_COMPLEX,remote_comm
-                        )
-            mpi.MPI_Barrier(shm_comm)
-            for i in range(qnum_p):
-                k1 = i+qnum_s
-                for j in range(nmodes):
-                    for k in range(nm_num):
-                        phvecval[j*nm_num+k] \
-                        = phvecval_p[i,j*nmodes+k+nm_min]
-                qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
-                qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
-                kpidx_x = (qidx_x+kidx_x)%nq[0]
-                kpidx_y = (qidx_y+kidx_y)%nq[1]
-                kpidx_z = (qidx_z+kidx_z)%nq[2]
-                if kpidx_x<0: kpidx_x += nq[0]
-                if kpidx_y<0: kpidx_y += nq[1]
-                if kpidx_z<0: kpidx_z += nq[2]
-                kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-                epckqNL_L(
-                    drveck,bandveck[kpidx],phvecval,vdrvexpikR,
-                    &c1,&epc_t[ik*qnum_p+i,nm_min*nbands2],nmodes,natom,
-                    nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
-                )
-            end = mpi.MPI_Wtime()
-            if myid == 0:
-                printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
-        endtime = mpi.MPI_Wtime()
-        if myid == 0:
-            printf("epc_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
+        printf("epc_NL(Left) batch part1 time:%12.4fs. NB_k=%d\n",endtime-starttime,NB_k)
+    cdef int kstep = 1, ktmp = nkpath
+    while ktmp >= 10:
+        ktmp //= 10
+        kstep *= 10
+    starttime = mpi.MPI_Wtime()
+    for ik in range(nkpath):
+        if nkpath < knum:
+            kidx_x = <int>round(nq[0]*kpath[ik,0])
+            kidx_y = <int>round(nq[1]*kpath[ik,1])
+            kidx_z = <int>round(nq[2]*kpath[ik,2])
+        else:
+            kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
+            kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+        mpi.MPI_Barrier(shm_comm)
+        for xyz in range(3):
+            for k in range(norb_p*nbands):
+                drveck[xyz*norbnb+norb_s*nbands+k] \
+                = drveck_a[(ik*3+xyz)*norb_p*nbands+k]
+            if nnode > 1:
+                mpi.MPI_Barrier(shm_comm)
+                if (shm_id == 0):
+                    mpi.MPI_Allgatherv(
+                        mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                        &drveck[xyz*norbnb],&dr_num[0],&dr[0],
+                        mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                    )
+        mpi.MPI_Barrier(shm_comm)
+        for i in range(qnum_p):
+            k1 = i+qnum_s
+            qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
+            qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
+            kpidx_x = (qidx_x+kidx_x)%nq[0]
+            kpidx_y = (qidx_y+kidx_y)%nq[1]
+            kpidx_z = (qidx_z+kidx_z)%nq[2]
+            if kpidx_x<0: kpidx_x += nq[0]
+            if kpidx_y<0: kpidx_y += nq[1]
+            if kpidx_z<0: kpidx_z += nq[2]
+            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+            epckqNL_L(
+                drveck,bandveck[kpidx],&phvecval_p[i,0],vdrvexpikR,
+                &c1,&epc_t[ik*qnum_p+i,0],nmodes,natom,
+                nmodes,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
+            )
+        if myid == 0 and (ik+1)%kstep == 0:
+            printf("epc_NL(Left) part2: ik %6d/%6d,%12.4fs.\n",ik+1,nkpath,mpi.MPI_Wtime()-starttime)
+    endtime = mpi.MPI_Wtime()
+    if myid == 0:
+        printf("epc_NL(Left) part2 time:%12.4fs.\n",endtime-starttime)
 
-    free(drSHexpikR)
+    free(expikR_r)
+    free(expikR_i)
+    free(drSHexpikR_buf)
+    free(drSHexpikR_B)
+    free(kidx_B)
     free(vdrvexpikR)
-    free(expikR)
     free(nodelist)
     free(dr)
     free(dr_num)
     free(drveck_a)
-    free(phvecval)
     mpi.MPI_Win_free(&win)
     mpi.MPI_Barrier(c_comm)
 
@@ -398,43 +443,47 @@ cdef void epckqNL_R(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def MPIepcNL_R(
-    MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer, 
-    int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
-    int[::1] nq, int[:,::1] R_list, int nkpath, double[:,::1] kpath, double[:,:,::1] drSH,
+    MPI.Comm comm, int nmodes,
+    int norbital, int nbands, int ncell, int knum,
+    int[::1] nq, int[:,::1] R_list, int nkpath,
+    double[:,::1] kpath, double[:,:,::1] drSH,
     double complex[:,:,::1] bandveck, double complex[:,::1] phvecval_p,
     int[::1] kproc, int[::1] kproc_num, int[::1] norb, int[::1] norb_num,
-    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t
+    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t,
+    int NB_k
 ):
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
     cdef mpi.MPI_Comm shm_comm, remote_comm
     cdef mpi.MPI_Group split_gp, shm_gp
+    cdef mpi.MPI_Aint l_drveck
     cdef mpi.MPI_Win win, win1
-    cdef double complex* phvecval
-    cdef double complex* bandveckp
-    cdef double complex* drSHexpikR
+    cdef double* expikR_r
+    cdef double* expikR_i
+    cdef double* drSHexpikR_buf
+    cdef double complex* drSHexpikR_B
+    cdef double complex* bandveckp_B
     cdef double complex* drveck
-    cdef double complex* drveck_p
+    cdef double complex* drveck_p_B
     cdef double complex* vdrv
     cdef double complex* vdrvexpikR
-    cdef double complex* expikR
+    cdef int* kpidx_B
     cdef int natom = nmodes/3
     cdef int norbnb = norbital*nbands
     cdef int nbands2 = nbands*nbands
     cdef int s_int = sizeof(int)
     cdef int s_dcplx = sizeof(double complex)
-    cdef int h, i, j, k, l, ik, xyz, shm_proc_s, shm_proc_e, \
+    cdef int h, i, j, k, l, m, n, nb_k, ik, xyz, shm_proc_s, shm_proc_e, \
              ierr, myid, nprocs, shm_id, shm_nprocs, nnode
     cdef int kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
              kpidx_x, kpidx_y, kpidx_z, kpidx_xy, kpidx, \
-             qnum_p, qnum_s, norb_p, norb_s, k1, \
-             nm_num, nm_min, nm_max
+             qnum_p, qnum_s, norb_p, norb_s, k1
     cdef int * nodelist
     cdef int* dr
     cdef int* dr_num
     cdef double kpx, kpy, kpz, RKpx, RKpy, RKpz, RKp, \
                 starttime, endtime
-    cdef double complex pi2j = M_PI*2j
+    cdef double pi2 = M_PI*2.0
     cdef double complex c1 = 1.0
     cdef double complex c0 = 0.0
 
@@ -449,7 +498,6 @@ def MPIepcNL_R(
     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
-    node_id = myid/shm_nprocs
     nodelist = <int*>malloc(s_int*nnode)
     for i in range(nnode):
         nodelist[i] = i*shm_nprocs
@@ -470,13 +518,15 @@ def MPIepcNL_R(
     norb_s = norb[myid]
     qnum_p = kproc_num[myid]
     qnum_s = kproc[myid]
-    bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)
-    expikR = <double complex*>malloc(s_dcplx*ncell)
-    drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
+    expikR_r = <double*>malloc(sizeof(double)*NB_k*ncell)
+    expikR_i = <double*>malloc(sizeof(double)*NB_k*ncell)
+    drSHexpikR_buf = <double*>malloc(sizeof(double)*NB_k*norbital*norb_p)
+    drSHexpikR_B = <double complex*>malloc(s_dcplx*NB_k*norbital*norb_p)
+    bandveckp_B = <double complex*>malloc(s_dcplx*NB_k*norbital*nbands)
+    drveck_p_B = <double complex*>malloc(s_dcplx*NB_k*norb_p*nbands)
+    kpidx_B = <int*>malloc(s_int*NB_k)
     vdrv = <double complex*>malloc(s_dcplx*nbands2)
     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
-    drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)
-    phvecval = <double complex*>malloc(s_dcplx*knum*nmodes*natom_buffer*3)
 
     if (shm_id == 0):
         l_drveck = s_dcplx*knum*3*norbnb
@@ -489,104 +539,128 @@ def MPIepcNL_R(
         mpi.MPI_Win_shared_query(win,0,&l_drveck,&s_dcplx,&drveck)
     mpi.MPI_Barrier(shm_comm)
 
-    for h in range(knum):
-        kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
-        kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
-        kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-        kpx = (<double>(kpidx_x))/(<double>(nq[0]))
-        kpy = (<double>(kpidx_y))/(<double>(nq[1]))
-        kpz = (<double>(kpidx_z))/(<double>(nq[2]))
-        for i in range(ncell):
-            RKpx = R_list[i,0]*kpx
-            RKpy = R_list[i,1]*kpy
-            RKpz = R_list[i,2]*kpz
-            RKp = RKpx + RKpy + RKpz
-            expikR[i] = cexp(-1.0*pi2j*RKp)
-        for i in range(norbital):
-            for j in range(nbands):
-                bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+    # barrier / Allgatherv run on ALL ranks; only the MKL dgemm/zgemm is gated by
+    # norb_p>0 (LDA=0 when a rank owns no orbital row). gating the whole loop would
+    # deadlock the shm_comm barrier on norb_p==0 ranks.
+    for m in range(0,knum,NB_k):
+        nb_k = NB_k
+        if m+nb_k > knum:
+            nb_k = knum-m
+        for n in range(nb_k):
+            h = m+n
+            kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+            kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+            kpidx_B[n] = kpidx
+            kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+            kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+            kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+            for i in range(ncell):
+                RKpx = R_list[i,0]*kpx
+                RKpy = R_list[i,1]*kpy
+                RKpz = R_list[i,2]*kpz
+                RKp = RKpx + RKpy + RKpz
+                expikR_r[i*nb_k+n] = cos(pi2*RKp)
+                expikR_i[i*nb_k+n] = -sin(pi2*RKp)
+            for i in range(norbital):
+                for j in range(nbands):
+                    bandveckp_B[n*norbnb+i*nbands+j] = conj(bandveck[kpidx,i,j])
         for xyz in range(3):
             if norb_p > 0:
-                # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
-                    2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
-                    <double*>expikR,2,0.0,<double*>drSHexpikR,2
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_r,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                cblas_zgemm3m(
-                    CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
-                    nbands,norbital,&c1,drSHexpikR,norbital,
-                    bandveckp,nbands,&c0,drveck_p,nbands
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j] = drSHexpikR_buf[i*nb_k+n]
+                cblas_dgemm(
+                    CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_i,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                # drveck_p -> drveck (gather to node comm)
-                for j in range(norb_p*nbands):
-                    drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
-            if nnode > 1:
-                mpi.MPI_Barrier(shm_comm)
-                if (shm_id == 0):
-                    mpi.MPI_Allgatherv(
-                        mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                        &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
-                        mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j+1] = drSHexpikR_buf[i*nb_k+n]
+                for n in range(nb_k):
+                    cblas_zgemm3m(
+                        CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+                        nbands,norbital,&c1,
+                        &drSHexpikR_B[n*norb_p*norbital],norbital,
+                        &bandveckp_B[n*norbnb],nbands,&c0,
+                        &drveck_p_B[n*norb_p*nbands],nbands
                     )
-
+            for n in range(nb_k):
+                h = m+n
+                for j in range(norb_p*nbands):
+                    drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p_B[n*norb_p*nbands+j]
+        if nnode > 1:
+            mpi.MPI_Barrier(shm_comm)
+            if (shm_id == 0):
+                for n in range(nb_k):
+                    h = m+n
+                    for xyz in range(3):
+                        mpi.MPI_Allgatherv(
+                            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                            &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
+                            mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                        )
     mpi.MPI_Barrier(shm_comm)
-    free(drveck_p)
     endtime = mpi.MPI_Wtime()
     if myid == 0:
-        printf("epc_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
+        printf("epc_NL(Right) batch part1 time:%12.4fs. NB_k=%d\n",endtime-starttime,NB_k)
 
-    for h in range(natom_loop):
-        nm_min = natom_split[h]*3
-        nm_max = natom_split[h+1]*3
-        nm_num = nm_max-nm_min
-        starttime = mpi.MPI_Wtime()
-        for ik in range(nkpath):
-            start = mpi.MPI_Wtime()
-            if nkpath < knum:
-                kidx_x = <int>round(nq[0]*kpath[ik,0])
-                kidx_y = <int>round(nq[1]*kpath[ik,1])
-                kidx_z = <int>round(nq[2]*kpath[ik,2])
-            else:
-                kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
-                kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
-            kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
-            for l in range(qnum_p):
-                k1 = l+qnum_s
-                qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
-                qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
-                kpidx_x = (kidx_x+qidx_x)%nq[0]
-                kpidx_y = (kidx_y+qidx_y)%nq[1]
-                kpidx_z = (kidx_z+qidx_z)%nq[2]
-                if kpidx_x<0: kpidx_x += nq[0]
-                if kpidx_y<0: kpidx_y += nq[1]
-                if kpidx_z<0: kpidx_z += nq[2]
-                kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-                for j in range(nmodes):
-                    for k in range(nm_num):
-                        phvecval[j*nm_num+k] \
-                        = phvecval_p[l,j*nmodes+k+nm_min]
-                epckqNL_R(
-                    &drveck[kpidx*3*norbnb],bandveck[kidx],phvecval,vdrv,
-                    vdrvexpikR,&c1,&epc_t[ik*qnum_p+l,nm_min*nbands2],nmodes,natom,
-                    nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
-                )
-            end = mpi.MPI_Wtime()
-            if myid == 0:
-                printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,ik,end-start)
-        endtime = mpi.MPI_Wtime()
-        if myid == 0:
-            printf("epc_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
+    cdef int kstep = 1, ktmp = nkpath
+    while ktmp >= 10:
+        ktmp //= 10
+        kstep *= 10
+    starttime = mpi.MPI_Wtime()
+    for ik in range(nkpath):
+        if nkpath < knum:
+            kidx_x = <int>round(nq[0]*kpath[ik,0])
+            kidx_y = <int>round(nq[1]*kpath[ik,1])
+            kidx_z = <int>round(nq[2]*kpath[ik,2])
+        else:
+            kidx_z = ik%nq[2]; kidx_xy = ik/nq[2]
+            kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+        kidx = (kidx_x*nq[1]+kidx_y)*nq[2]+kidx_z
+        for l in range(qnum_p):
+            k1 = l+qnum_s
+            qidx_z = k1%nq[2]; qidx_xy = k1/nq[2]
+            qidx_y = qidx_xy%nq[1]; qidx_x = qidx_xy/nq[1]
+            kpidx_x = (kidx_x+qidx_x)%nq[0]
+            kpidx_y = (kidx_y+qidx_y)%nq[1]
+            kpidx_z = (kidx_z+qidx_z)%nq[2]
+            if kpidx_x<0: kpidx_x += nq[0]
+            if kpidx_y<0: kpidx_y += nq[1]
+            if kpidx_z<0: kpidx_z += nq[2]
+            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+            epckqNL_R(
+                &drveck[kpidx*3*norbnb],bandveck[kidx],&phvecval_p[l,0],vdrv,
+                vdrvexpikR,&c1,&epc_t[ik*qnum_p+l,0],nmodes,natom,
+                nmodes,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
+            )
+        if myid == 0 and (ik+1)%kstep == 0:
+            printf("epc_NL(Right) part2: ik %6d/%6d,%12.4fs.\n",ik+1,nkpath,mpi.MPI_Wtime()-starttime)
+    endtime = mpi.MPI_Wtime()
+    if myid == 0:
+        printf("epc_NL(Right) part2 time:%12.4fs.\n",endtime-starttime)
 
-    free(bandveckp)
-    free(drSHexpikR)
+    free(expikR_r)
+    free(expikR_i)
+    free(drSHexpikR_buf)
+    free(drSHexpikR_B)
+    free(bandveckp_B)
+    free(drveck_p_B)
+    free(kpidx_B)
     free(vdrv)
     free(vdrvexpikR)
-    free(expikR)
     free(nodelist)
     free(dr)
     free(dr_num)
-    free(phvecval)
     mpi.MPI_Win_free(&win)
     mpi.MPI_Barrier(c_comm)
 
@@ -621,30 +695,38 @@ cdef void epckqNL_p_L(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def MPIepcNL_p_L(
-    MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer, int norbital, 
-    int ncell, int knum, int qnum, int[::1] natom_split, int[::1] nq, 
-    int[:,::1] R_list, double[:,:,::1] drSH, double complex[:,::1] bandveck, 
-    double complex[:,::1] phvecval_p, int[::1] kproc, int[::1] kproc_num, 
-    int[::1] qproc, int[::1] qproc_num, int[:,::1] bassel, int[::1] norb, 
-    int[::1] norb_num, int[::1] norb_u, int[::1] norb_u_num, 
-    double complex[:,::1] epc_t
+    MPI.Comm comm, int nmodes,
+    int norbital, int ncell, int knum, int qnum,
+    int[::1] nq, int[:,::1] R_list,
+    double[:,:,::1] drSH, double complex[:,::1] bandveck,
+    double complex[:,::1] phvecval_p, int[::1] kproc, int[::1] kproc_num,
+    int[::1] qproc, int[::1] qproc_num, int[:,::1] bassel, int[::1] norb,
+    int[::1] norb_num, int[::1] norb_u, int[::1] norb_u_num,
+    double complex[:,::1] epc_t, int NB_k
 ):
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
     cdef mpi.MPI_Comm shm_comm, remote_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Aint l_drveck
     cdef mpi.MPI_Win win, win1
+    cdef double* expikR_r
+    cdef double* expikR_i
+    cdef double* drSHexpikR_buf
     cdef double complex* phvecval
-    cdef double complex* drSHexpikR
+    cdef double complex* drSHexpikR_B
     cdef double complex* drveck
     cdef double complex* drveck_a
     cdef double complex* drveck_t
     cdef double complex* vdrvexpikR
-    cdef double complex* expikR
+    cdef mpi.MPI_Aint l_phvecval
+    cdef double start, end
     cdef int natom = nmodes/3
+    cdef int natom_loop
+    cdef long natom_buffer
+    cdef int* natom_split
     cdef int s_int = sizeof(int)
     cdef int s_dcplx = sizeof(double complex)
-    cdef int h, i, j, k, l, m, xyz, shm_proc_s, shm_proc_e, \
+    cdef int h, i, j, k, l, m, n, nb_k, xyz, shm_proc_s, shm_proc_e, \
              ierr, myid, nprocs, shm_id, shm_nprocs, nnode
     cdef int kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
@@ -656,7 +738,7 @@ def MPIepcNL_p_L(
     cdef int* dr_num
     cdef double kx, ky, kz, RKx, RKy, RKz, RK, \
                 starttime, endtime
-    cdef double complex pi2j = M_PI*2j
+    cdef double pi2 = M_PI*2.0
     cdef double complex c1 = 1.0
     cdef double complex c0 = 0.0
 
@@ -671,7 +753,6 @@ def MPIepcNL_p_L(
     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
-    node_id = myid/shm_nprocs
     nodelist = <int*>malloc(s_int*nnode)
     for i in range(nnode):
         nodelist[i] = i*shm_nprocs
@@ -691,10 +772,18 @@ def MPIepcNL_p_L(
 
     norb_p = norb_num[myid]
     norb_s = norb[myid]
-    expikR = <double complex*>malloc(s_dcplx*ncell)
-    drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
+    expikR_r = <double*>malloc(sizeof(double)*NB_k*ncell)
+    expikR_i = <double*>malloc(sizeof(double)*NB_k*ncell)
+    drSHexpikR_buf = <double*>malloc(sizeof(double)*NB_k*norbital*norb_p)
+    drSHexpikR_B = <double complex*>malloc(s_dcplx*NB_k*norbital*norb_p)
     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
+    natom_split = <int*>malloc(s_int*(natom+1))
+    natom_loop = split_nmodes(
+        natom,<long>qnum*norbital*s_dcplx
+        +<long>3*norbital*s_dcplx,
+        <long>qnum*3*nmodes*s_dcplx,natom_split,&natom_buffer
+    )
     if (shm_id == 0):
         l_phvecval = s_dcplx*qnum*natom_buffer*3*nmodes
         l_drveck = s_dcplx*3*norbital
@@ -716,35 +805,59 @@ def MPIepcNL_p_L(
     knum_s = kproc[myid]
 
     if norb_p > 0:
-        for h in range(knum):
-            k1 = bassel[h,0]
-            kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
-            kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
-            kx = (<double>(kidx_x))/(<double>(nq[0]))
-            ky = (<double>(kidx_y))/(<double>(nq[1]))
-            kz = (<double>(kidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKx = R_list[i,0]*kx
-                RKy = R_list[i,1]*ky
-                RKz = R_list[i,2]*kz
-                RK = RKx + RKy + RKz
-                expikR[i] = cexp(pi2j*RK)
+        for m in range(0,knum,NB_k):
+            nb_k = NB_k
+            if m+nb_k > knum:
+                nb_k = knum-m
+            for n in range(nb_k):
+                h = m+n
+                k1 = bassel[h,0]
+                kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
+                kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+                kx = (<double>(kidx_x))/(<double>(nq[0]))
+                ky = (<double>(kidx_y))/(<double>(nq[1]))
+                kz = (<double>(kidx_z))/(<double>(nq[2]))
+                for i in range(ncell):
+                    RKx = R_list[i,0]*kx
+                    RKy = R_list[i,1]*ky
+                    RKz = R_list[i,2]*kz
+                    RK = RKx + RKy + RKz
+                    expikR_r[i*nb_k+n] = cos(pi2*RK)
+                    expikR_i[i*nb_k+n] = sin(pi2*RK)
             for xyz in range(3):
-                drveck_t = &drveck_a[(h*3+xyz)*norb_p]
-                # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
-                    2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
-                    <double*>expikR,2,0.0,<double*>drSHexpikR,2
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_r,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                cblas_zgemv(
-                    CblasRowMajor,CblasNoTrans,norb_p,
-                    norbital,&c1,drSHexpikR,norbital,
-                    &bandveck[h,0],1,&c0,drveck_t,1
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j] = drSHexpikR_buf[i*nb_k+n]
+                cblas_dgemm(
+                    CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_i,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j+1] = drSHexpikR_buf[i*nb_k+n]
+                for n in range(nb_k):
+                    h = m+n
+                    drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+                    cblas_zgemv(
+                        CblasRowMajor,CblasNoTrans,norb_p,
+                        norbital,&c1,&drSHexpikR_B[n*norb_p*norbital],norbital,
+                        &bandveck[h,0],1,&c0,drveck_t,1
+                    )
     endtime = mpi.MPI_Wtime()
     if myid == 0:
-        printf("epc_p_NL(Left) part1 time:%12.4fs.\n",endtime-starttime)
+        printf("epc_p_NL(Left) part1 time:%12.4fs. NB_k=%d\n",endtime-starttime,NB_k)
+    cdef int kstep = 1, ktmp = knum
+    while ktmp >= 10:
+        ktmp //= 10
+        kstep *= 10
 
     for h in range(natom_loop):
         nm_min = natom_split[h]*3
@@ -757,7 +870,6 @@ def MPIepcNL_p_L(
         )
         starttime = mpi.MPI_Wtime()
         for l in range(knum):
-            start = mpi.MPI_Wtime()
             k1 = bassel[l,0]
             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
@@ -791,20 +903,22 @@ def MPIepcNL_p_L(
                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,
                     natom,nm_num,norbital,norb_u,norb_u_num
                 )
-            end = mpi.MPI_Wtime()
-            if myid == 0:
-                printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
+            if myid == 0 and (l+1)%kstep == 0:
+                printf("epc_p_NL(Left) part2: ik %6d/%6d,%12.4fs.\n",l+1,knum,mpi.MPI_Wtime()-starttime)
         endtime = mpi.MPI_Wtime()
         if myid == 0:
-            printf("epc_p_NL(Left) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
+            printf("epc_p_NL(Left) part2 time:%12.4fs.\n",endtime-starttime)
 
-    free(drSHexpikR)
+    free(expikR_r)
+    free(expikR_i)
+    free(drSHexpikR_buf)
+    free(drSHexpikR_B)
     free(vdrvexpikR)
-    free(expikR)
     free(nodelist)
     free(dr)
     free(dr_num)
     free(drveck_a)
+    free(natom_split)
     mpi.MPI_Win_free(&win)
     mpi.MPI_Win_free(&win1)
     mpi.MPI_Barrier(c_comm)
@@ -840,30 +954,38 @@ cdef void epckqNL_p_R(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def MPIepcNL_p_R(
-    MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer, int norbital, 
-    int ncell, int knum, int qnum, int[::1] natom_split, int[::1] nq,
-    int[:,::1] R_list, double[:,:,::1] drSH, double complex[:,::1] bandveck,
-    double complex[:,::1] phvecval_p, int[::1] kproc, int[::1] kproc_num, 
-    int[::1] qproc, int[::1] qproc_num, int[:,::1] bassel, int[::1] norb, 
-    int[::1] norb_num, int[::1] norb_u, int[::1] norb_u_num, 
-    double complex[:,::1] epc_t
+    MPI.Comm comm, int nmodes,
+    int norbital, int ncell, int knum, int qnum,
+    int[::1] nq, int[:,::1] R_list,
+    double[:,:,::1] drSH, double complex[:,::1] bandveck,
+    double complex[:,::1] phvecval_p, int[::1] kproc, int[::1] kproc_num,
+    int[::1] qproc, int[::1] qproc_num, int[:,::1] bassel, int[::1] norb,
+    int[::1] norb_num, int[::1] norb_u, int[::1] norb_u_num,
+    double complex[:,::1] epc_t, int NB_k
 ):
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
     cdef mpi.MPI_Comm shm_comm, remote_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Win win, win1
+    cdef double* expikR_r
+    cdef double* expikR_i
+    cdef double* drSHexpikR_buf
     cdef double complex* phvecval
-    cdef double complex* bandveckp
-    cdef double complex* drSHexpikR
+    cdef double complex* bandveckp_B
+    cdef double complex* drSHexpikR_B
     cdef double complex* drveck_p
     cdef double complex* drveck_a
     cdef double complex* drveck_t
     cdef double complex* vdrvexpikR
-    cdef double complex* expikR
+    cdef mpi.MPI_Aint l_phvecval
+    cdef double start, end
     cdef int natom = nmodes/3
+    cdef int natom_loop
+    cdef long natom_buffer
+    cdef int* natom_split
     cdef int s_int = sizeof(int)
     cdef int s_dcplx = sizeof(double complex)
-    cdef int h, i, j, k, l, m, xyz, shm_proc_s, shm_proc_e, \
+    cdef int h, i, j, k, l, m, n, nb_k, xyz, shm_proc_s, shm_proc_e, \
              ierr, myid, nprocs, shm_id, shm_nprocs, nnode
     cdef int kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
@@ -875,7 +997,7 @@ def MPIepcNL_p_R(
     cdef int* dr_num
     cdef double kpx, kpy, kpz, RKpx, RKpy, RKpz, RKp, \
                 starttime, endtime
-    cdef double complex pi2j = M_PI*2j
+    cdef double pi2 = M_PI*2.0
     cdef double complex c1 = 1.0
     cdef double complex c0 = 0.0
 
@@ -890,7 +1012,6 @@ def MPIepcNL_p_R(
     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
-    node_id = myid/shm_nprocs
     nodelist = <int*>malloc(s_int*nnode)
     for i in range(nnode):
         nodelist[i] = i*shm_nprocs
@@ -910,11 +1031,18 @@ def MPIepcNL_p_R(
 
     norb_p = norb_num[myid]
     norb_s = norb[myid]
-    bandveckp = <double complex*>malloc(s_dcplx*norbital)
-    expikR = <double complex*>malloc(s_dcplx*ncell)
-    drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
+    expikR_r = <double*>malloc(sizeof(double)*NB_k*ncell)
+    expikR_i = <double*>malloc(sizeof(double)*NB_k*ncell)
+    drSHexpikR_buf = <double*>malloc(sizeof(double)*NB_k*norbital*norb_p)
+    drSHexpikR_B = <double complex*>malloc(s_dcplx*NB_k*norbital*norb_p)
+    bandveckp_B = <double complex*>malloc(s_dcplx*NB_k*norbital)
     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes)
     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p)
+    natom_split = <int*>malloc(s_int*(natom+1))
+    natom_loop = split_nmodes(
+        natom,<long>qnum*norbital*s_dcplx,
+        <long>qnum*3*nmodes*s_dcplx,natom_split,&natom_buffer
+    )
     if (shm_id == 0):
         l_phvecval = s_dcplx*qnum*natom_buffer*3*nmodes
     else:
@@ -930,34 +1058,54 @@ def MPIepcNL_p_R(
     knum_s = kproc[myid]
 
     if norb_p > 0:
-        for h in range(knum):
-            k1 = bassel[h,0]
-            kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
-            kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
-            kpx = (<double>(kpidx_x))/(<double>(nq[0]))
-            kpy = (<double>(kpidx_y))/(<double>(nq[1]))
-            kpz = (<double>(kpidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKpx = R_list[i,0]*kpx
-                RKpy = R_list[i,1]*kpy
-                RKpz = R_list[i,2]*kpz
-                RKp = RKpx + RKpy + RKpz
-                expikR[i] = cexp(-1.0*pi2j*RKp)
-            for i in range(norbital):
-                bandveckp[i] = conj(bandveck[h,i])
+        for m in range(0,knum,NB_k):
+            nb_k = NB_k
+            if m+nb_k > knum:
+                nb_k = knum-m
+            for n in range(nb_k):
+                h = m+n
+                k1 = bassel[h,0]
+                kpidx_z = k1%nq[2]; kpidx_xy = k1/nq[2]
+                kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+                kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+                kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+                kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+                for i in range(ncell):
+                    RKpx = R_list[i,0]*kpx
+                    RKpy = R_list[i,1]*kpy
+                    RKpz = R_list[i,2]*kpz
+                    RKp = RKpx + RKpy + RKpz
+                    expikR_r[i*nb_k+n] = cos(pi2*RKp)
+                    expikR_i[i*nb_k+n] = -sin(pi2*RKp)
+                for i in range(norbital):
+                    bandveckp_B[n*norbital+i] = conj(bandveck[h,i])
             for xyz in range(3):
-                drveck_t = &drveck_a[(h*3+xyz)*norb_p]
-                # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
-                    2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
-                    <double*>expikR,2,0.0,<double*>drSHexpikR,2
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_r,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                cblas_zgemv(
-                    CblasRowMajor,CblasNoTrans,norb_p,
-                    norbital,&c1,drSHexpikR,norbital,
-                    bandveckp,1,&c0,drveck_t,1
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j] = drSHexpikR_buf[i*nb_k+n]
+                cblas_dgemm(
+                    CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_i,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j+1] = drSHexpikR_buf[i*nb_k+n]
+                for n in range(nb_k):
+                    h = m+n
+                    drveck_t = &drveck_a[(h*3+xyz)*norb_p]
+                    cblas_zgemv(
+                        CblasRowMajor,CblasNoTrans,norb_p,
+                        norbital,&c1,&drSHexpikR_B[n*norb_p*norbital],norbital,
+                        &bandveckp_B[n*norbital],1,&c0,drveck_t,1
+                    )
     # drveck_a -> drveck_p (alltoallv)
     drveck_p = <double complex*>malloc(s_dcplx*knum_p*3*norbital)
     drveck_alltoall(
@@ -968,7 +1116,11 @@ def MPIepcNL_p_R(
 
     endtime = mpi.MPI_Wtime()
     if myid == 0:
-        printf("epc_p_NL(Right) part1 time:%12.4fs.\n",endtime-starttime)
+        printf("epc_p_NL(Right) part1 time:%12.4fs. NB_k=%d\n",endtime-starttime,NB_k)
+    cdef int kstep = 1, ktmp = knum
+    while ktmp >= 10:
+        ktmp //= 10
+        kstep *= 10
     for h in range(natom_loop):
         nm_min = natom_split[h]*3
         nm_max = natom_split[h+1]*3
@@ -980,7 +1132,6 @@ def MPIepcNL_p_R(
         )
         starttime = mpi.MPI_Wtime()
         for l in range(knum):
-            start = mpi.MPI_Wtime()
             k1 = bassel[l,0]
             kidx_z = k1%nq[2]; kidx_xy = k1/nq[2]
             kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
@@ -1001,21 +1152,23 @@ def MPIepcNL_p_R(
                     vdrvexpikR,&c1,&epc_t[l*knum_p+i,nm_min],nmodes,
                     natom,nm_num,norbital,norb_u,norb_u_num
                 )
-            end = mpi.MPI_Wtime()
-            if myid == 0:
-                printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,l,end-start)
+            if myid == 0 and (l+1)%kstep == 0:
+                printf("epc_p_NL(Right) part2: ik %6d/%6d,%12.4fs.\n",l+1,knum,mpi.MPI_Wtime()-starttime)
         endtime = mpi.MPI_Wtime()
         if myid == 0:
-            printf("epc_p_NL(Right) part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
+            printf("epc_p_NL(Right) part2 time:%12.4fs.\n",endtime-starttime)
 
-    free(bandveckp)
-    free(drSHexpikR)
+    free(expikR_r)
+    free(expikR_i)
+    free(drSHexpikR_buf)
+    free(drSHexpikR_B)
+    free(bandveckp_B)
     free(vdrvexpikR)
-    free(expikR)
     free(nodelist)
     free(dr)
     free(dr_num)
     free(drveck_p)
+    free(natom_split)
     mpi.MPI_Win_free(&win1)
     mpi.MPI_Barrier(c_comm)
 
@@ -1023,30 +1176,39 @@ def MPIepcNL_p_R(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def MPIepcNL_L_q(
-    MPI.Comm comm, int nmodes, int natom_loop, long natom_buffer,
-    int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
-    int[::1] nq, int[:,::1] R_list, int nqpath, double[:,::1] qpath, double[:,:,::1] drSH,
+    MPI.Comm comm, int nmodes,
+    int norbital, int nbands, int ncell, int knum,
+    int[::1] nq, int[:,::1] R_list, int nqpath,
+    double[:,::1] qpath, double[:,:,::1] drSH,
     double complex[:,:,::1] bandveck, double complex[:,::1] phvecval_p,
     int[::1] kproc, int[::1] kproc_num, int[::1] norb, int[::1] norb_num,
-    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t
+    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t,
+    int NB_k
 ):
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
     cdef mpi.MPI_Comm shm_comm, remote_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Win win, win1
+    cdef double* expikR_r
+    cdef double* expikR_i
+    cdef double* drSHexpikR_buf
     cdef double complex* phvecval
-    cdef double complex* drSHexpikR
+    cdef double complex* drSHexpikR_B
     cdef double complex* drveck_a
     cdef double complex* drveck_p
     cdef double complex* drveck_t
     cdef double complex* vdrvexpikR
-    cdef double complex* expikR
+    cdef mpi.MPI_Aint l_phvecval
+    cdef double start, end
     cdef int natom = nmodes/3
+    cdef int natom_loop
+    cdef long natom_buffer
+    cdef int* natom_split
     cdef int norbnb = norbital*nbands
     cdef int nbands2 = nbands*nbands
     cdef int s_int = sizeof(int)
     cdef int s_dcplx = sizeof(double complex)
-    cdef int h, i, j, k, l, iq, xyz, shm_proc_s, shm_proc_e, \
+    cdef int h, i, j, k, l, m, n, nb_k, iq, xyz, shm_proc_s, shm_proc_e, \
              ierr, myid, nprocs, shm_id, shm_nprocs, nnode
     cdef int kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
@@ -1058,7 +1220,7 @@ def MPIepcNL_L_q(
     cdef int* dr_num
     cdef double kx, ky, kz, RKx, RKy, RKz, RK, \
                 starttime, endtime
-    cdef double complex pi2j = M_PI*2j
+    cdef double pi2 = M_PI*2.0
     cdef double complex c1 = 1.0
     cdef double complex c0 = 0.0
 
@@ -1073,7 +1235,6 @@ def MPIepcNL_L_q(
     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
-    node_id = myid/shm_nprocs
     nodelist = <int*>malloc(s_int*nnode)
     for i in range(nnode):
         nodelist[i] = i*shm_nprocs
@@ -1092,10 +1253,17 @@ def MPIepcNL_L_q(
             dr[j] += dr_num[i]
     norb_p = norb_num[myid]
     norb_s = norb[myid]
-    expikR = <double complex*>malloc(s_dcplx*ncell)
-    drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
+    expikR_r = <double*>malloc(sizeof(double)*NB_k*ncell)
+    expikR_i = <double*>malloc(sizeof(double)*NB_k*ncell)
+    drSHexpikR_buf = <double*>malloc(sizeof(double)*NB_k*norbital*norb_p)
+    drSHexpikR_B = <double complex*>malloc(s_dcplx*NB_k*norbital*norb_p)
     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
     drveck_a = <double complex*>malloc(s_dcplx*knum*3*norb_p*nbands)
+    natom_split = <int*>malloc(s_int*(natom+1))
+    natom_loop = split_nmodes(
+        natom,<long>knum*norbital*nbands*s_dcplx,
+        <long>knum*3*nmodes*s_dcplx,natom_split,&natom_buffer
+    )
     if (shm_id == 0):
         l_phvecval = s_dcplx*knum*natom_buffer*3*nmodes
     else:
@@ -1111,31 +1279,52 @@ def MPIepcNL_L_q(
     knum_s = kproc[myid]
 
     if norb_p > 0:
-        for h in range(knum):
-            kidx_z = h%nq[2]; kidx_xy = h/nq[2]
-            kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
-            kx = (<double>(kidx_x))/(<double>(nq[0]))
-            ky = (<double>(kidx_y))/(<double>(nq[1]))
-            kz = (<double>(kidx_z))/(<double>(nq[2]))
-            for i in range(ncell):
-                RKx = R_list[i,0]*kx
-                RKy = R_list[i,1]*ky
-                RKz = R_list[i,2]*kz
-                RK = RKx + RKy + RKz
-                expikR[i] = cexp(pi2j*RK)
+        for m in range(0,knum,NB_k):
+            nb_k = NB_k
+            if m+nb_k > knum:
+                nb_k = knum-m
+            for n in range(nb_k):
+                h = m+n
+                kidx_z = h%nq[2]; kidx_xy = h/nq[2]
+                kidx_y = kidx_xy%nq[1]; kidx_x = kidx_xy/nq[1]
+                kx = (<double>(kidx_x))/(<double>(nq[0]))
+                ky = (<double>(kidx_y))/(<double>(nq[1]))
+                kz = (<double>(kidx_z))/(<double>(nq[2]))
+                for i in range(ncell):
+                    RKx = R_list[i,0]*kx
+                    RKy = R_list[i,1]*ky
+                    RKz = R_list[i,2]*kz
+                    RK = RKx + RKy + RKz
+                    expikR_r[i*nb_k+n] = cos(pi2*RK)
+                    expikR_i[i*nb_k+n] = sin(pi2*RK)
             for xyz in range(3):
-                drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
-                # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
-                    2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
-                    <double*>expikR,2,0.0,<double*>drSHexpikR,2
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_r,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                cblas_zgemm3m(
-                    CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
-                    nbands,norbital,&c1,drSHexpikR,norbital,
-                    &bandveck[h,0,0],nbands,&c0,drveck_t,nbands
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j] = drSHexpikR_buf[i*nb_k+n]
+                cblas_dgemm(
+                    CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_i,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j+1] = drSHexpikR_buf[i*nb_k+n]
+                for n in range(nb_k):
+                    h = m+n
+                    drveck_t = &drveck_a[(h*3+xyz)*norb_p*nbands]
+                    cblas_zgemm3m(
+                        CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+                        nbands,norbital,&c1,
+                        &drSHexpikR_B[n*norb_p*norbital],norbital,
+                        &bandveck[h,0,0],nbands,&c0,drveck_t,nbands
+                    )
     # drveck_a -> drveck_p (alltoallv)
     drveck_p = <double complex*>malloc(s_dcplx*knum_p*3*norbnb)
     drveck_alltoall(
@@ -1145,7 +1334,11 @@ def MPIepcNL_L_q(
     free(drveck_a)
     endtime = mpi.MPI_Wtime()
     if myid == 0:
-        printf("epc_NL(Left)_q part1 time:%12.4fs.\n",endtime-starttime)
+        printf("epc_NL(Left)_q part1 time:%12.4fs. NB_k=%d\n",endtime-starttime,NB_k)
+    cdef int kstep = 1, ktmp = nqpath
+    while ktmp >= 10:
+        ktmp //= 10
+        kstep *= 10
     for h in range(natom_loop):
         nm_min = natom_split[h]*3
         nm_max = natom_split[h+1]*3
@@ -1157,7 +1350,6 @@ def MPIepcNL_L_q(
         )
         starttime = mpi.MPI_Wtime()
         for iq in range(nqpath):
-            start = mpi.MPI_Wtime()
             if nqpath < knum:
                 qidx_x = <int>round(nq[0]*qpath[iq,0])
                 qidx_y = <int>round(nq[1]*qpath[iq,1])
@@ -1182,20 +1374,22 @@ def MPIepcNL_L_q(
                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,
                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
                 )
-            end = mpi.MPI_Wtime()
-            if myid == 0:
-                printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
+            if myid == 0 and (iq+1)%kstep == 0:
+                printf("epc_NL(Left)_q part2: iq %6d/%6d,%12.4fs.\n",iq+1,nqpath,mpi.MPI_Wtime()-starttime)
         endtime = mpi.MPI_Wtime()
         if myid == 0:
-            printf("epc_NL(Left)_q part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
+            printf("epc_NL(Left)_q part2 time:%12.4fs.\n",endtime-starttime)
 
-    free(drSHexpikR)
+    free(expikR_r)
+    free(expikR_i)
+    free(drSHexpikR_buf)
+    free(drSHexpikR_B)
     free(vdrvexpikR)
-    free(expikR)
     free(nodelist)
     free(dr)
     free(dr_num)
     free(drveck_p)
+    free(natom_split)
     mpi.MPI_Win_free(&win1)
     mpi.MPI_Barrier(c_comm)
 
@@ -1203,32 +1397,42 @@ def MPIepcNL_L_q(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def MPIepcNL_R_q(
-    MPI.Comm comm, int nmodes, int natom_loop, int natom_buffer,
-    int norbital, int nbands, int ncell, int knum, int[::1] natom_split,
-    int[::1] nq, int[:,::1] R_list, int nqpath, double[:,::1] qpath, double[:,:,::1] drSH,
+    MPI.Comm comm, int nmodes,
+    int norbital, int nbands, int ncell, int knum,
+    int[::1] nq, int[:,::1] R_list, int nqpath,
+    double[:,::1] qpath, double[:,:,::1] drSH,
     double complex[:,:,::1] bandveck, double complex[:,::1] phvecval_p,
     int[::1] kproc, int[::1] kproc_num, int[::1] norb, int[::1] norb_num,
-    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t
+    int[::1] norb_u, int[::1] norb_u_num, double complex[:,::1] epc_t,
+    int NB_k
 ):
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
     cdef mpi.MPI_Comm shm_comm, remote_comm
     cdef mpi.MPI_Group split_gp, shm_gp
     cdef mpi.MPI_Aint l_drveck
     cdef mpi.MPI_Win win, win1
+    cdef double* expikR_r
+    cdef double* expikR_i
+    cdef double* drSHexpikR_buf
     cdef double complex* phvecval
-    cdef double complex* bandveckp
-    cdef double complex* drSHexpikR
+    cdef double complex* drSHexpikR_B
+    cdef double complex* bandveckp_B
     cdef double complex* drveck
-    cdef double complex* drveck_p
+    cdef double complex* drveck_p_B
     cdef double complex* vdrv
     cdef double complex* vdrvexpikR
-    cdef double complex* expikR
+    cdef int* kpidx_B
+    cdef mpi.MPI_Aint l_phvecval
+    cdef double start, end
     cdef int natom = nmodes/3
+    cdef int natom_loop
+    cdef long natom_buffer
+    cdef int* natom_split
     cdef int norbnb = norbital*nbands
     cdef int nbands2 = nbands*nbands
     cdef int s_int = sizeof(int)
     cdef int s_dcplx = sizeof(double complex)
-    cdef int h, i, j, k, l, xyz, iq, shm_proc_s, shm_proc_e, \
+    cdef int h, i, j, k, l, m, n, nb_k, xyz, iq, shm_proc_s, shm_proc_e, \
              ierr, myid, nprocs, shm_id, shm_nprocs, nnode
     cdef int kidx_x, kidx_y, kidx_z, kidx_xy, kidx, \
              qidx_x, qidx_y, qidx_z, qidx_xy, qidx, \
@@ -1240,7 +1444,7 @@ def MPIepcNL_R_q(
     cdef int* dr_num
     cdef double kpx, kpy, kpz, RKpx, RKpy, RKpz, RKp, \
                 starttime, endtime
-    cdef double complex pi2j = M_PI*2j
+    cdef double pi2 = M_PI*2.0
     cdef double complex c1 = 1.0
     cdef double complex c0 = 0.0
 
@@ -1255,7 +1459,6 @@ def MPIepcNL_R_q(
     ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
     # create internode group/comm
     nnode = nprocs/shm_nprocs
-    node_id = myid/shm_nprocs
     nodelist = <int*>malloc(s_int*nnode)
     for i in range(nnode):
         nodelist[i] = i*shm_nprocs
@@ -1274,12 +1477,21 @@ def MPIepcNL_R_q(
             dr[j] += dr_num[i]
     norb_p = norb_num[myid]
     norb_s = norb[myid]
-    bandveckp = <double complex*>malloc(s_dcplx*norbital*nbands)
-    expikR = <double complex*>malloc(s_dcplx*ncell)
-    drSHexpikR = <double complex*>malloc(s_dcplx*norbital*norb_p)
+    expikR_r = <double*>malloc(sizeof(double)*NB_k*ncell)
+    expikR_i = <double*>malloc(sizeof(double)*NB_k*ncell)
+    drSHexpikR_buf = <double*>malloc(sizeof(double)*NB_k*norbital*norb_p)
+    drSHexpikR_B = <double complex*>malloc(s_dcplx*NB_k*norbital*norb_p)
+    bandveckp_B = <double complex*>malloc(s_dcplx*NB_k*norbital*nbands)
+    drveck_p_B = <double complex*>malloc(s_dcplx*NB_k*norb_p*nbands)
+    kpidx_B = <int*>malloc(s_int*NB_k)
     vdrv = <double complex*>malloc(s_dcplx*nbands2)
     vdrvexpikR = <double complex*>malloc(s_dcplx*nmodes*nbands2)
-    drveck_p = <double complex*>malloc(s_dcplx*norb_p*nbands)
+    natom_split = <int*>malloc(s_int*(natom+1))
+    natom_loop = split_nmodes(
+        natom,<long>knum*norbital*nbands*s_dcplx
+        +<long>knum*3*norbnb*s_dcplx,
+        <long>knum*3*nmodes*s_dcplx,natom_split,&natom_buffer
+    )
     if (shm_id == 0):
         l_phvecval = s_dcplx*knum*natom_buffer*3*nmodes
         l_drveck = s_dcplx*knum*3*norbnb
@@ -1300,52 +1512,83 @@ def MPIepcNL_R_q(
     knum_p = kproc_num[myid]
     knum_s = kproc[myid]
 
-    for h in range(knum):
-        kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
-        kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
-        kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
-        kpx = (<double>(kpidx_x))/(<double>(nq[0]))
-        kpy = (<double>(kpidx_y))/(<double>(nq[1]))
-        kpz = (<double>(kpidx_z))/(<double>(nq[2]))
-        for i in range(ncell):
-            RKpx = R_list[i,0]*kpx
-            RKpy = R_list[i,1]*kpy
-            RKpz = R_list[i,2]*kpz
-            RKp = RKpx + RKpy + RKpz
-            expikR[i] = cexp(-1.0*pi2j*RKp)
-        for i in range(norbital):
-            for j in range(nbands):
-                bandveckp[i*nbands+j] = conj(bandveck[kpidx,i,j])
+    # barrier / Allgatherv run on ALL ranks; only the MKL dgemm/zgemm is gated by
+    # norb_p>0 (LDA=0 when a rank owns no orbital row). gating the whole loop would
+    # deadlock the shm_comm barrier on norb_p==0 ranks.
+    for m in range(0,knum,NB_k):
+        nb_k = NB_k
+        if m+nb_k > knum:
+            nb_k = knum-m
+        for n in range(nb_k):
+            h = m+n
+            kpidx_z = h%nq[2]; kpidx_xy = h/nq[2]
+            kpidx_y = kpidx_xy%nq[1]; kpidx_x = kpidx_xy/nq[1]
+            kpidx = (kpidx_x*nq[1]+kpidx_y)*nq[2]+kpidx_z
+            kpidx_B[n] = kpidx
+            kpx = (<double>(kpidx_x))/(<double>(nq[0]))
+            kpy = (<double>(kpidx_y))/(<double>(nq[1]))
+            kpz = (<double>(kpidx_z))/(<double>(nq[2]))
+            for i in range(ncell):
+                RKpx = R_list[i,0]*kpx
+                RKpy = R_list[i,1]*kpy
+                RKpz = R_list[i,2]*kpz
+                RKp = RKpx + RKpy + RKpz
+                expikR_r[i*nb_k+n] = cos(pi2*RKp)
+                expikR_i[i*nb_k+n] = -sin(pi2*RKp)
+            for i in range(norbital):
+                for j in range(nbands):
+                    bandveckp_B[n*norbnb+i*nbands+j] = conj(bandveck[kpidx,i,j])
         for xyz in range(3):
             if norb_p > 0:
-                # drSH[nR,norb_p*norb]*expikR[nR,2]
                 cblas_dgemm(
                     CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
-                    2,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
-                    <double*>expikR,2,0.0,<double*>drSHexpikR,2
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_r,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                cblas_zgemm3m(
-                    CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
-                    nbands,norbital,&c1,drSHexpikR,norbital,
-                    bandveckp,nbands,&c0,drveck_p,nbands
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j] = drSHexpikR_buf[i*nb_k+n]
+                cblas_dgemm(
+                    CblasRowMajor,CblasTrans,CblasNoTrans,norb_p*norbital,
+                    nb_k,ncell,1.0,&drSH[xyz,0,0],norb_p*norbital,
+                    expikR_i,nb_k,0.0,drSHexpikR_buf,nb_k
                 )
-                # drveck_p -> drveck (gather to node comm)
-                for j in range(norb_p*nbands):
-                    drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p[j]
-            if nnode > 1:
-                mpi.MPI_Barrier(shm_comm)
-                if (shm_id == 0):
-                    mpi.MPI_Allgatherv(
-                        mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
-                        &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
-                        mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                for n in range(nb_k):
+                    for i in range(norb_p*norbital):
+                        j = n*norb_p*norbital+i
+                        (<double*>drSHexpikR_B)[2*j+1] = drSHexpikR_buf[i*nb_k+n]
+                for n in range(nb_k):
+                    cblas_zgemm3m(
+                        CblasRowMajor,CblasNoTrans,CblasNoTrans,norb_p,
+                        nbands,norbital,&c1,
+                        &drSHexpikR_B[n*norb_p*norbital],norbital,
+                        &bandveckp_B[n*norbnb],nbands,&c0,
+                        &drveck_p_B[n*norb_p*nbands],nbands
                     )
-
+            for n in range(nb_k):
+                h = m+n
+                for j in range(norb_p*nbands):
+                    drveck[(h*3+xyz)*norbnb+norb_s*nbands+j] = drveck_p_B[n*norb_p*nbands+j]
+        if nnode > 1:
+            mpi.MPI_Barrier(shm_comm)
+            if (shm_id == 0):
+                for n in range(nb_k):
+                    h = m+n
+                    for xyz in range(3):
+                        mpi.MPI_Allgatherv(
+                            mpi.MPI_IN_PLACE,0,mpi.MPI_DATATYPE_NULL,
+                            &drveck[(h*3+xyz)*norbnb],&dr_num[0],&dr[0],
+                            mpi.MPI_DOUBLE_COMPLEX,remote_comm
+                        )
     mpi.MPI_Barrier(shm_comm)
-    free(drveck_p)
     endtime = mpi.MPI_Wtime()
     if myid == 0:
-        printf("epc_NL(Right)_q part1 time:%12.4fs.\n",endtime-starttime)
+        printf("epc_NL(Right)_q part1 time:%12.4fs. NB_k=%d\n",endtime-starttime,NB_k)
+    cdef int kstep = 1, ktmp = nqpath
+    while ktmp >= 10:
+        ktmp //= 10
+        kstep *= 10
     for h in range(natom_loop):
         nm_min = natom_split[h]*3
         nm_max = natom_split[h+1]*3
@@ -1357,7 +1600,6 @@ def MPIepcNL_R_q(
         )
         starttime = mpi.MPI_Wtime()
         for iq in range(nqpath):
-            start = mpi.MPI_Wtime()
             if nqpath < knum:
                 qidx_x = <int>round(nq[0]*qpath[iq,0])
                 qidx_y = <int>round(nq[1]*qpath[iq,1])
@@ -1382,21 +1624,25 @@ def MPIepcNL_R_q(
                     vdrvexpikR,&c1,&epc_t[l*nqpath+iq,nm_min*nbands2],nmodes,natom,
                     nm_num,nbands,norbital,nbands2,norbnb,norb_u,norb_u_num
                 )
-            end = mpi.MPI_Wtime()
-            if myid == 0:
-                printf("time in mode loop %d, knum loop %d:%12.4fs.\n",h,iq,end-start)
+            if myid == 0 and (iq+1)%kstep == 0:
+                printf("epc_NL(Right)_q part2: iq %6d/%6d,%12.4fs.\n",iq+1,nqpath,mpi.MPI_Wtime()-starttime)
         endtime = mpi.MPI_Wtime()
         if myid == 0:
-            printf("epc_NL(Right)_q part2 time in mode[%4d,%4d]:%12.4fs.\n",nm_min,nm_min+nm_num,endtime-starttime)
+            printf("epc_NL(Right)_q part2 time:%12.4fs.\n",endtime-starttime)
 
-    free(bandveckp)
-    free(drSHexpikR)
+    free(expikR_r)
+    free(expikR_i)
+    free(drSHexpikR_buf)
+    free(drSHexpikR_B)
+    free(bandveckp_B)
+    free(drveck_p_B)
+    free(kpidx_B)
     free(vdrv)
     free(vdrvexpikR)
-    free(expikR)
     free(nodelist)
     free(dr)
     free(dr_num)
+    free(natom_split)
     mpi.MPI_Win_free(&win)
     mpi.MPI_Win_free(&win1)
     mpi.MPI_Barrier(c_comm)

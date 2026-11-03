@@ -161,30 +161,61 @@ cdef void copy_key(int[:,::1] key_num_src, int[:,::1] key_num_dst):
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def GetSparseNum(
-    char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName, 
+    MPI.Comm comm_py,
+    char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
     int nfileham, int nfileolp, int nfiledr, int atomnum,
-    int[:,::1] key_num_h, int[:,::1] key_num_o, int[:,::1] key_num_dr, 
+    int[:,::1] key_num_h, int[:,::1] key_num_o, int[:,::1] key_num_dr,
     int[::1] atom_idx_py, bint IsH5
 ):
-    cdef int i, j
+    cdef mpi.MPI_Comm c_comm = comm_py.ob_mpi
+    cdef mpi.MPI_Comm shm_comm, remote_comm
+    cdef mpi.MPI_Group world_gp, leader_gp
+    cdef int i, j, myid, nprocs, shm_id, shm_nprocs, nnode, ierr
+    cdef int* nodelist
     cdef char data_name[500]
     global atom_idx
 
-    atom_idx = <int*>malloc(atomnum*sizeof(int))
-    for i in range(atomnum):
-        atom_idx[i] = atom_idx_py[i]
-    if IsH5:
-        readh5_key0(H5HamName,nfileham,key_num_h)
-        readh5_key0(H5OlpName,nfileolp,key_num_o)
-        sprintf(data_name,"%sx",H5DrName)
-        readh5_key0(data_name,nfiledr,key_num_dr)
-    else:
-        sprintf(data_name,"%s/openmx.scfout",inDir)
-        readscfout_key0(data_name,key_num_h)
-        copy_key(key_num_h,key_num_o)
-        copy_key(key_num_h,key_num_dr)
+    # node_comm(remote_comm): one leader per node, root=myid 0 (see MPIepcNL_L).
+    # files are read once on rank 0, then Bcast to the other node leaders.
+    ierr = mpi.MPI_Comm_rank(c_comm,&myid)
+    ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
+    mpi.MPI_Comm_split_type(
+        c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
+    )
+    ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
+    ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
+    nnode = nprocs/shm_nprocs
+    nodelist = <int*>malloc(nnode*sizeof(int))
+    for i in range(nnode):
+        nodelist[i] = i*shm_nprocs
+    mpi.MPI_Comm_group(c_comm,&world_gp)
+    mpi.MPI_Group_incl(world_gp,nnode,nodelist,&leader_gp)
+    ierr = mpi.MPI_Comm_create(c_comm,leader_gp,&remote_comm)
 
-    free(atom_idx)
+    if myid == 0:
+        atom_idx = <int*>malloc(atomnum*sizeof(int))
+        for i in range(atomnum):
+            atom_idx[i] = atom_idx_py[i]
+        if IsH5:
+            readh5_key0(H5HamName,nfileham,key_num_h)
+            readh5_key0(H5OlpName,nfileolp,key_num_o)
+            sprintf(data_name,"%sx",H5DrName)
+            readh5_key0(data_name,nfiledr,key_num_dr)
+        else:
+            sprintf(data_name,"%s/openmx.scfout",inDir)
+            readscfout_key0(data_name,key_num_h)
+            copy_key(key_num_h,key_num_o)
+            copy_key(key_num_h,key_num_dr)
+        free(atom_idx)
+    if shm_id == 0 and nnode > 1:
+        mpi.MPI_Bcast(&key_num_h[0,0],(nfileham+1)*4,mpi.MPI_INT,0,remote_comm)
+        mpi.MPI_Bcast(&key_num_o[0,0],(nfileolp+1)*4,mpi.MPI_INT,0,remote_comm)
+        mpi.MPI_Bcast(&key_num_dr[0,0],(nfiledr+1)*4,mpi.MPI_INT,0,remote_comm)
+    mpi.MPI_Barrier(shm_comm)
+
+    free(nodelist)
+    mpi.MPI_Group_free(&world_gp)
+    mpi.MPI_Group_free(&leader_gp)
 
 
 @cython.boundscheck(False)
@@ -193,36 +224,78 @@ cdef void GetKeyInfo(
     int nfile, int[:,::1] key_num, 
     int[:,::1] pub_key, long[:,::1] key_info
 ):
-    cdef int h, i, j, k, offset
+    cdef int h, i, j, k, offset, N
     cdef long* key_info_t
+    cdef long* key_info_t2
+    cdef long* src
+    cdef long* dst
+    cdef long* tmp
+    cdef long count[256]
+    cdef long maxg, shift, t, pos
 
+    # key_info_t / key_info_t2: ping-pong buffers of (gidx,pos) pairs for the
+    # radix sort; pos is the block-order position, gidx=row*norb+col
     key_info_t = <long*>malloc(key_num[nfile,3]*2*sizeof(long))
+    key_info_t2 = <long*>malloc(key_num[nfile,3]*2*sizeof(long))
 
-    for h in range(key_num[nfile,2]):
-        pub_key[h,5] = 0
-    for h in range(key_num[nfile,2]):
-        for i in range(h+1,key_num[nfile,2]):
-            pub_key[i,5] += pub_key[h,4]
+    # pub_key[h,5]: exclusive prefix sum of block sizes pub_key[:,4] = start
+    # offset (in block order) of key block h; O(Nkey) recurrence
+    pub_key[0,5] = 0
+    for h in range(1,key_num[nfile,2]):
+        pub_key[h,5] = pub_key[h-1,5]+pub_key[h-1,4]
 
+    # fill each pair: gidx = global row-major index of the element, pos = its
+    # block-order position; blocks write to disjoint [pub_key[h,5], +size) ranges
     for h in range(key_num[nfile,2]):
         for i in range(pub_key[h,2]):
             for j in range(pub_key[h,3]):
                 k = i*pub_key[h,3]+j
-                key_info_t[(k+pub_key[h,5])*2] \
+                offset = k+pub_key[h,5]
+                key_info_t[offset*2] \
                 = (atom_idx_sum[pub_key[h,0]]+i)*norb \
                 + (atom_idx_sum[pub_key[h,1]]+j)
+                key_info_t[offset*2+1] = offset
 
-    for i in range(key_num[nfile,3]):
-        key_info_t[i*2+1] = i
-        key_info[i,1] = i
-    qsort(key_info_t,key_num[nfile,3],sizeof(long)*2,&Cmp)
-    for i in range(key_num[nfile,3]):
-        key_info[i,0] = key_info_t[i*2+1]
-    qsort(&key_info[0,0],key_num[nfile,3],sizeof(long)*2,&Cmp)
-    for i in range(key_num[nfile,3]):
-        key_info[i,0] = key_info_t[i*2]
+    # LSD radix sort of the pairs by gidx (unique -> stable/unstable identical):
+    # counting sort byte by byte, ceil(bits(maxg)/8) passes, ping-pong src<->dst
+    N = key_num[nfile,3]
+    maxg = 0
+    for i in range(N):
+        if key_info_t[i*2]>maxg:
+            maxg = key_info_t[i*2]
+    src = key_info_t
+    dst = key_info_t2
+    shift = 0
+    while (maxg>>shift)>0:
+        for j in range(256):
+            count[j] = 0
+        for i in range(N):
+            count[(src[i*2]>>shift)&255] += 1
+        offset = 0
+        for j in range(256):
+            t = count[j]
+            count[j] = offset
+            offset += t
+        for i in range(N):
+            j = <int>((src[i*2]>>shift)&255)
+            pos = count[j]
+            dst[pos*2] = src[i*2]
+            dst[pos*2+1] = src[i*2+1]
+            count[j] += 1
+        tmp = src
+        src = dst
+        dst = tmp
+        shift += 8
+    # src[r] now holds (r-th smallest gidx, its block-order pos sigma(r)).
+    # key_info[r,0] = sorted gidx (forward); key_info[pos,1] = r scatters the
+    # inverse permutation sigma^-1 (block-order pos -> rank) in O(N), replacing
+    # the second qsort the original used only to invert sigma
+    for i in range(N):
+        key_info[i,0] = src[i*2]
+        key_info[src[i*2+1],1] = i
 
     free(key_info_t)
+    free(key_info_t2)
 
 
 @cython.boundscheck(False)
@@ -286,7 +359,10 @@ cdef void readh5_key1(
         )
         status = H5Fclose(f)
 
+    cdef double starttime = mpi.MPI_Wtime()
     GetKeyInfo(nfile,key_num,pub_key,key_info)
+    cdef double endtime = mpi.MPI_Wtime()
+    printf("GetKeyInfo of %s time: %.2fs\n",h5_name,endtime-starttime)
 
 
 @cython.boundscheck(False)
@@ -375,40 +451,74 @@ cdef void copy_key1(
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def GetSparseIdx(
+    MPI.Comm comm_py,
     char* inDir, char* H5HamName, char* H5OlpName, char* H5DrName,
-    int nfileham, int nfileolp, int nfiledr, int atomnum, int norbital, 
+    int nfileham, int nfileolp, int nfiledr, int atomnum, int norbital,
     int[:,::1] key_num_h, int[:,::1] key_num_o, int[:,::1] key_num_dr,
     int[:,::1] pub_key_h, int[:,::1] pub_key_o, int[:,::1] pub_key_dr,
     long[:,::1] keyinfo_h, long[:,::1] keyinfo_o, long[:,::1] keyinfo_dr,
     int[::1] atom_idx_py, int[::1] atom_idx_sum_py, bint IsH5
 ):
-    cdef int h, i, j, offset
+    cdef mpi.MPI_Comm c_comm = comm_py.ob_mpi
+    cdef mpi.MPI_Comm shm_comm, remote_comm
+    cdef mpi.MPI_Group world_gp, leader_gp
+    cdef int h, i, j, offset, myid, nprocs, shm_id, shm_nprocs, nnode, ierr
+    cdef int* nodelist
     cdef char data_name[500]
     global atom_idx
     global atom_idx_sum
     global norb
 
-    norb = norbital
-    atom_idx = <int*>malloc(atomnum*sizeof(int))
-    for i in range(atomnum):
-        atom_idx[i] = atom_idx_py[i]
-    atom_idx_sum = <int*>malloc((atomnum+1)*sizeof(int))
-    for i in range(atomnum+1):
-        atom_idx_sum[i] = atom_idx_sum_py[i]
+    ierr = mpi.MPI_Comm_rank(c_comm,&myid)
+    ierr = mpi.MPI_Comm_size(c_comm,&nprocs)
+    mpi.MPI_Comm_split_type(
+        c_comm,mpi.MPI_COMM_TYPE_SHARED,0,mpi.MPI_INFO_NULL,&shm_comm
+    )
+    ierr = mpi.MPI_Comm_rank(shm_comm,&shm_id)
+    ierr = mpi.MPI_Comm_size(shm_comm,&shm_nprocs)
+    nnode = nprocs/shm_nprocs
+    nodelist = <int*>malloc(nnode*sizeof(int))
+    for i in range(nnode):
+        nodelist[i] = i*shm_nprocs
+    mpi.MPI_Comm_group(c_comm,&world_gp)
+    mpi.MPI_Group_incl(world_gp,nnode,nodelist,&leader_gp)
+    ierr = mpi.MPI_Comm_create(c_comm,leader_gp,&remote_comm)
 
-    if IsH5:
-        readh5_key1(H5HamName,nfileham,key_num_h,pub_key_h,keyinfo_h)
-        readh5_key1(H5OlpName,nfileolp,key_num_o,pub_key_o,keyinfo_o)
-        sprintf(data_name,"%sx",H5DrName)
-        readh5_key1(data_name,nfiledr,key_num_dr,pub_key_dr,keyinfo_dr)
-    else:
-        sprintf(data_name,"%s/openmx.scfout",inDir)
-        readscfout_key1(data_name,nfileham,key_num_h,pub_key_h,keyinfo_h)
-        copy_key1(1,key_num_h,pub_key_h,pub_key_o,keyinfo_h,keyinfo_o)
-        copy_key1(1,key_num_h,pub_key_h,pub_key_dr,keyinfo_h,keyinfo_dr)
+    if myid == 0:
+        norb = norbital
+        atom_idx = <int*>malloc(atomnum*sizeof(int))
+        for i in range(atomnum):
+            atom_idx[i] = atom_idx_py[i]
+        atom_idx_sum = <int*>malloc((atomnum+1)*sizeof(int))
+        for i in range(atomnum+1):
+            atom_idx_sum[i] = atom_idx_sum_py[i]
+        if IsH5:
+            readh5_key1(H5HamName,nfileham,key_num_h,pub_key_h,keyinfo_h)
+            readh5_key1(H5OlpName,nfileolp,key_num_o,pub_key_o,keyinfo_o)
+            sprintf(data_name,"%sx",H5DrName)
+            readh5_key1(data_name,nfiledr,key_num_dr,pub_key_dr,keyinfo_dr)
+        else:
+            sprintf(data_name,"%s/openmx.scfout",inDir)
+            readscfout_key1(data_name,nfileham,key_num_h,pub_key_h,keyinfo_h)
+            copy_key1(1,key_num_h,pub_key_h,pub_key_o,keyinfo_h,keyinfo_o)
+            copy_key1(1,key_num_h,pub_key_h,pub_key_dr,keyinfo_h,keyinfo_dr)
+        free(atom_idx)
+        free(atom_idx_sum)
+    # pub_key + keyinfo are needed on every node leader: GetSparseData still
+    # reads the bulk data in parallel on every node (uses pub_key/keyinfo), and
+    # coo2csridx post-processing uses keyinfo. Bcast both from node 0.
+    if shm_id == 0 and nnode > 1:
+        mpi.MPI_Bcast(&pub_key_h[0,0],key_num_h[nfileham,2]*6,mpi.MPI_INT,0,remote_comm)
+        mpi.MPI_Bcast(&pub_key_o[0,0],key_num_o[nfileolp,2]*6,mpi.MPI_INT,0,remote_comm)
+        mpi.MPI_Bcast(&pub_key_dr[0,0],key_num_dr[nfiledr,2]*6,mpi.MPI_INT,0,remote_comm)
+        mpi.MPI_Bcast(&keyinfo_h[0,0],key_num_h[nfileham,3]*2,mpi.MPI_LONG,0,remote_comm)
+        mpi.MPI_Bcast(&keyinfo_o[0,0],key_num_o[nfileolp,3]*2,mpi.MPI_LONG,0,remote_comm)
+        mpi.MPI_Bcast(&keyinfo_dr[0,0],key_num_dr[nfiledr,3]*2,mpi.MPI_LONG,0,remote_comm)
+    mpi.MPI_Barrier(shm_comm)
 
-    free(atom_idx)
-    free(atom_idx_sum)
+    free(nodelist)
+    mpi.MPI_Group_free(&world_gp)
+    mpi.MPI_Group_free(&leader_gp)
 
 
 @cython.boundscheck(False)
@@ -733,126 +843,85 @@ cdef double sparse1norm(
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cdef void mat_tran(
-    mpi.MPI_Comm comm, int nprocs, int N, int Nproc_len, int* Nproc, 
-    int* Nproc_num, double* matbuf, double* recvbuf
+cdef void sparse2dense_transpose(
+    double[:,::1] dr, int xyz, int[:,::1] ridx, int[::1] cidx,
+    int drp_min, int N, int Np_min, int Np_max, int Np_num,
+    double factor, double* drT
 ):
-    cdef int i, j, k, N1, N2, offset
-    cdef int * count = <int*>malloc(nprocs*sizeof(int))
-    cdef int * displ = <int*>malloc(nprocs*sizeof(int))
+    cdef int h, i, j, icol
 
-    for i in range(nprocs):
-        count[i] = Nproc_len*Nproc_num[i]
-        displ[i] = Nproc_len*Nproc[i]
-    mpi.MPI_Alltoallv(
-        matbuf,count,displ,mpi.MPI_DOUBLE,
-        recvbuf,count,displ,mpi.MPI_DOUBLE,comm
-    )
-    for i in range(nprocs):
-        N1 = Nproc[i]
-        N2 = Nproc_num[i]
-        offset = displ[i]
-        for j in range(Nproc_len):
-            for k in range(N2):
-                matbuf[(k+N1)*Nproc_len+j] = recvbuf[offset+j*N2+k]
-    free(count)
-    free(displ)
+    memset(drT,0,sizeof(double)*N*Np_num)
+    for i in range(Np_min,Np_max):
+        j = i-Np_min
+        for h in range(ridx[0,i],ridx[1,i]):
+            icol = cidx[drp_min+h]
+            drT[j*N+icol] = dr[xyz,drp_min+h]*factor
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cdef void mat_reshape(
-    mpi.MPI_Comm comm, double* olp, 
-    int nprocs, int myid, int N, int Nproc_len, int Nsplit, 
-    int* Nproc, int* Nproc_num, double[:,::1] olp_r
+cdef void mat_reshape_new(
+    double* C, int N, int Np, int Np_num, double[:,::1] olp_r
 ):
-    cdef int i, j, k, l, m, n, offset, N1, N2
-    cdef int s_int = sizeof(int)
-    cdef int s_d = sizeof(double)
-    cdef int Np = N/Nsplit
+    cdef int i, j, k, l
 
-    cdef int * Npproc = <int*>calloc(s_int,nprocs+1)
-    cdef int * Npproc_num = <int*>calloc(s_int,nprocs)
-    cdef int * scount = <int*>malloc(nprocs*sizeof(int))
-    cdef int * sdispl = <int*>malloc(nprocs*sizeof(int))
-    cdef int * rcount = <int*>malloc(nprocs*sizeof(int))
-    cdef int * rdispl = <int*>malloc(nprocs*sizeof(int))
-    cdef double * olp_rbuf
-
-    for i in range(nprocs):
-        Np_min = (Np*i)/nprocs
-        Np_max = (Np*(i+1))/nprocs
-        Npproc_num[i] = Np_max-Np_min
-        Npproc[i+1] = Np_max
-    Np_num = Npproc_num[myid]
-
-    for i in range(nprocs):
-        scount[i] = Nproc_len*Npproc_num[i]
-        rcount[i] = Np_num*Nproc_num[i]
-        sdispl[i] = Nproc_len*Npproc[i]
-        rdispl[i] = Np_num*Nproc[i]
-
-    olp_rbuf = <double*>malloc(s_d*Np_num*N)
-    mpi.MPI_Alltoallv(
-        olp,scount,sdispl,mpi.MPI_DOUBLE,
-        olp_rbuf,rcount,rdispl,mpi.MPI_DOUBLE,comm
-    )
-    offset = 0
-    for j in range(nprocs):
-        N1 = Nproc[j]
-        N2 = Nproc_num[j]
-        offset = rdispl[j]
-        for k in range(Np_num):
-            for l in range(N2):
-                m = (l+N1)/Np
-                n = (l+N1)%Np
-                olp_r[m,k*Np+n] = olp_rbuf[offset+k*N2+l]
-
-    free(Npproc)
-    free(Npproc_num)
-    free(scount)
-    free(sdispl)
-    free(rcount)
-    free(rdispl)
-    free(olp_rbuf)
+    for i in range(Np_num):
+        for j in range(N):
+            k = j/Np
+            l = j%Np
+            olp_r[k,i*Np+l] = C[i*N+j]
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 def olp_inv(
-    MPI.Comm comm, int nprocs, int myid, 
-    double[::1] olp, int[:,::1] olp_keyinfo, int Nsparse_o, 
-    double[::1] ham, int[:,::1] ham_keyinfo, int Nsparse_h,
-    double[:,::1] dr, int[:,::1] dr_csr_ridx, int[::1] dr_csr_cidx, 
-    int Nsparse_dr, int drp_min, int N, int Nsplit, 
-    MKL_INT Mb, MKL_INT Nb, double[:,:,::1] drSH
+    MPI.Comm comm, int nprocs, int myid, double[::1] olp,
+    int[:,::1] olp_keyinfo, int Nsparse_o, double[:,::1] ham,
+    int[:,::1] ham_csr_ridx, int[::1] ham_csr_cidx, int Nsparse_h,
+    double[:,::1] dr, int[:,::1] dr_csr_ridx, int[::1] dr_csr_cidx,
+    int Nsparse_dr, int drp_min, int N, int Nsplit, MKL_INT Mb, MKL_INT Nb,
+    int[::1] Npproc, int[::1] Npproc_num, double[:,:,:,::1] drSH
 ):
+    # drSH[n,i] = dr[i]*S^-1*H[n], n=0..Nspin-1 spin channel, i=0..2 xyz.
+    # Instead of forming the full S^-1 (N columns), Cholesky-factor S once
+    # then solve only the Np(=N/ncell) right-hand-sides of dr's home block.
+    # dr and S are spin-independent, so the Cholesky and the Np-RHS solve are
+    # shared over spins; only the final H[n] multiply and reshape run per spin.
+    # Mb blocks the N dimension of both S and dr (S needs square Mb*Mb for
+    # pdpotrf); Nb blocks dr's Np dimension. Npproc/Npproc_num give the ceil-
+    # block split of Np across procs (same rule as descSp splits N), passed in
+    # so it stays identical to drSH's row split downstream.
     cdef mpi.MPI_Comm c_comm = comm.ob_mpi
-    cdef int i, j, k, Nproc_min, Nproc_max, Nproc_len
+    cdef int i, j, k, n, Nspin
+    cdef int Nproc_min, Nproc_max, Nproc_len, Np, Np_min, Np_max, Np_num
     cdef MKL_INT i1 = 1
     cdef MKL_INT i0 = 0
-    cdef MKL_INT nprow, npcol, myrow, mycol, mb, nb, \
-                 nprow1, npcol1, myrow1, mycol1, mb1, \
-                 ictxt, ictxt1, N_mkl, Nsparse_mkl, \
-                 Nproc_mkl, Np_mkl, lldSp, lldS, info
+    cdef MKL_INT nprow, npcol, myrow, mycol, mb, nb, nb_rhs, \
+                 nprow1, npcol1, myrow1, mycol1, \
+                 nprow2, npcol2, myrow2, mycol2, \
+                 ictxt, ictxt1, ictxt2, N_mkl, Np_mkl, \
+                 Nproc_mkl, NpB_mkl, lldSp, lldS, lldRHS, info
     cdef MKL_INT descSp[9]
     cdef MKL_INT descS[9]
+    cdef MKL_INT descRHS[9]
+    cdef MKL_INT descRHSp[9]
     cdef int s_int = sizeof(int)
     cdef int s_d = sizeof(double)
     cdef int * Nproc
     cdef int * Nproc_num
-    cdef double* olpinvham
     cdef double* matbuf
-    cdef double* olpbuf_pb
-    cdef double* hambuf_pb
-    cdef double f0 = 0.0
-    cdef double f1 = 1.0
-    cdef double lv, starttime, endtime
-    cdef matrix_descr descrdr
-    cdef sparse_matrix_t csrdr
+    cdef double* Sbuf
+    cdef double* Zbuf
+    cdef double* drT
+    cdef double* Cbuf
+    cdef double starttime, endtime
+    cdef matrix_descr descrH
+    cdef sparse_matrix_t csrH[2]
 
     starttime = mpi.MPI_Wtime()
-    # split N
+    Nspin = drSH.shape[0]
+    Np = N/Nsplit
+    # split N over procs (ceil-block, one block/proc; matches descSp/descS)
     Nproc_num = <int*>calloc(s_int,nprocs)
     Nproc = <int*>calloc(s_int,(nprocs+1))
     if (N%nprocs==0):
@@ -871,15 +940,20 @@ def olp_inv(
     Nproc_min = Nproc[myid]
     Nproc_max = Nproc[myid+1]
     Nproc_len = Nproc_num[myid]
+    # Np split is passed in (ceil-block, must match drSH row split & descRHSp)
+    Np_min = Npproc[myid]
+    Np_max = Npproc[myid+1]
+    Np_num = Npproc_num[myid]
     N_mkl = N
-    Nsparse_mkl = Nsparse_dr
+    Np_mkl = Np
     Nproc_mkl = Nproc_num[0]
-    Np_mkl = N/Nsplit
+    NpB_mkl = Npproc_num[0]
 
-    matbuf = <double*>malloc(s_d*N*Nproc_len)
-    # get scalapack info
+    # 3 process grids: ictxt 2D (ScaLAPACK), ictxt1 nprocs*1 (S densify, split
+    # N rows), ictxt2 1*nprocs (dr^T build / Z read, split Np columns)
     blacs_get(&i0,&i0,&ictxt)
     blacs_get(&i0,&i0,&ictxt1)
+    blacs_get(&i0,&i0,&ictxt2)
     nprow = 1
     npcol = nprocs
     for i in range(1,<int>(sqrt(nprocs))+1):
@@ -888,92 +962,106 @@ def olp_inv(
             npcol = nprocs/i
     nprow1 = nprocs
     npcol1 = 1
-
+    nprow2 = 1
+    npcol2 = nprocs
     blacs_gridinit(&ictxt,"Row",&nprow,&npcol)
     blacs_gridinit(&ictxt1,"Row",&nprow1,&npcol1)
+    blacs_gridinit(&ictxt2,"Row",&nprow2,&npcol2)
     blacs_gridinfo(&ictxt,&nprow,&npcol,&myrow,&mycol)
     blacs_gridinfo(&ictxt1,&nprow1,&npcol1,&myrow1,&mycol1)
+    blacs_gridinfo(&ictxt2,&nprow2,&npcol2,&myrow2,&mycol2)
+    # local block dims: S/dr rows on Mb, S cols on Mb (square), dr cols on Nb
     mb = numroc(&N_mkl,&Mb,&myrow,&i0,&nprow)
-    nb = numroc(&N_mkl,&Nb,&mycol,&i0,&npcol)
+    nb = numroc(&N_mkl,&Mb,&mycol,&i0,&npcol)
+    nb_rhs = numroc(&Np_mkl,&Nb,&mycol,&i0,&npcol)
 
     lldSp = Nproc_len
     lldS = <MKL_INT>fmax(mb,1)
-    descinit(descS,&N_mkl,&N_mkl,&Mb,&Nb,&i0,&i0,&ictxt,&lldS,&info)
-    #descinit(descSp,&N_mkl,&N_mkl,&Nproc_mkl,&N_mkl,&i0,&i0,&ictxt1,&lldSp,&info)
-    # In some spacial case,
-    # lldSp = numroc(&N_mkl,&Nproc_mkl,&myrow1,&i0,&nprow1) = 0,
-    # which causes illegal checking results in descinit. Actually,
-    # lldSp = 0 has no influence on data redistribution of pdgemr2d.
-    # Here we manually assign descSp to avoid using descinit.
+    lldRHS = <MKL_INT>fmax(mb,1)
+    # descS [N,N] 2D square Mb*Mb (pdpotrf/pdpotrs), descRHS [N,Np] 2D Mb*Nb
+    descinit(descS,&N_mkl,&N_mkl,&Mb,&Mb,&i0,&i0,&ictxt,&lldS,&info)
+    descinit(descRHS,&N_mkl,&Np_mkl,&Mb,&Nb,&i0,&i0,&ictxt,&lldRHS,&info)
+    # descSp [N,N] 1D (S densify), descRHSp [N,Np] 1D (Np-column split);
+    # manually assigned to skip descinit's lld=0 check on empty procs
     descSp[0] = i1;    descSp[1] = ictxt1;    descSp[2] = N_mkl
     descSp[3] = N_mkl; descSp[4] = Nproc_mkl; descSp[5] = N_mkl
     descSp[6] = i0;    descSp[7] = i0;        descSp[8] = lldSp
+    descRHSp[0] = i1;    descRHSp[1] = ictxt2;  descRHSp[2] = N_mkl
+    descRHSp[3] = Np_mkl; descRHSp[4] = N_mkl;   descRHSp[5] = NpB_mkl
+    descRHSp[6] = i0;    descRHSp[7] = i0;      descRHSp[8] = N_mkl
 
-    olpbuf_pb = <double*>malloc(s_d*mb*nb)
-    hambuf_pb = <double*>malloc(s_d*mb*nb)
-
-    # init ham_pb,olp_pb
+    # Phase1: densify sparse S [N,N] -> 2D block-cyclic, Cholesky once.
+    matbuf = <double*>malloc(s_d*N*Nproc_len)
+    Sbuf = <double*>malloc(s_d*mb*nb)
     sparse2dense_coo(
         olp,olp_keyinfo,N,Nsparse_o,Nproc_min,
         Nproc_max,Nproc_len,1.0,matbuf
     )
     pdgemr2d(
         &N_mkl,&N_mkl,matbuf,&i1,&i1,descSp,
-        olpbuf_pb,&i1,&i1,descS,&ictxt
+        Sbuf,&i1,&i1,descS,&ictxt
     )
-    sparse2dense_coo(
-        ham,ham_keyinfo,N,Nsparse_h,Nproc_min,
-        Nproc_max,Nproc_len,1.0,matbuf
-    )
-    pdgemr2d(
-        &N_mkl,&N_mkl,matbuf,&i1,&i1,descSp,
-        hambuf_pb,&i1,&i1,descS,&ictxt
-    )
-    # calculate S^-1*H
-    pdposv(
-        'U',&N_mkl,&N_mkl,olpbuf_pb,&i1,&i1,
-        descS,hambuf_pb,&i1,&i1,descS,&info
-    )
-    free(olpbuf_pb)
-    olpinvham = <double*>malloc(s_d*N*Nproc_len)
-    pdgemr2d(
-        &N_mkl,&N_mkl,hambuf_pb,&i1,&i1,descS,
-        olpinvham,&i1,&i1,descSp,&ictxt1
-    )
-    free(hambuf_pb)
-    # transpose S^-1*H from fortran to C order
-    mat_tran(
-        c_comm,nprocs,N,Nproc_len,Nproc,
-        Nproc_num,olpinvham,matbuf
-    )
-    descrdr.type = SPARSE_MATRIX_TYPE_GENERAL
-    for i in range(3):
-        mkl_sparse_d_create_csr(
-            &csrdr,SPARSE_INDEX_BASE_ZERO,Np_mkl,N_mkl,
-            &dr_csr_ridx[0,0],&dr_csr_ridx[1,0],
-            &dr_csr_cidx[drp_min],&dr[i,drp_min]
-        )
-        mkl_sparse_optimize(csrdr)
-        # dot(dr,S^-1*H) [Np,N]*[N,Nproc_len]
-        mkl_sparse_d_mm(
-            SPARSE_OPERATION_NON_TRANSPOSE,1.0,csrdr,
-            descrdr,SPARSE_LAYOUT_ROW_MAJOR,olpinvham,
-            lldSp,lldSp,0.0,matbuf,lldSp
-        )
-        # reshape dr*S^-1*H [Np,N]->[nR,(Np)_p,Np]
-        mat_reshape(
-            c_comm,matbuf,nprocs,myid,N,Nproc_len,
-            Nsplit,Nproc,Nproc_num,drSH[i]
-        )
-#        mkl_sparse_destroy(csrdr)
+    free(matbuf)   # only needed to feed S into descS, drop before factorizing
+    pdpotrf('U',&N_mkl,Sbuf,&i1,&i1,descS,&info)   # Sbuf holds L, reused by pdpotrs
 
+    # Nspin spin blocks of real H = ham[n], full [N,N] sparse
+    descrH.type = SPARSE_MATRIX_TYPE_GENERAL
+    for n in range(Nspin):
+        mkl_sparse_d_create_csr(
+            &csrH[n],SPARSE_INDEX_BASE_ZERO,N_mkl,N_mkl,
+            &ham_csr_ridx[0,0],&ham_csr_ridx[1,0],
+            &ham_csr_cidx[0],&ham[n,0]
+        )
+        mkl_sparse_optimize(csrH[n])
+
+    Zbuf = <double*>malloc(s_d*mb*nb_rhs)    # RHS/solution [N,Np] 2D
+    drT = <double*>malloc(s_d*N*Np_num)      # dr^T[i]/Z^T [N,Np_num] column-major
+    Cbuf = <double*>malloc(s_d*N*Np_num)     # H*Z^T [N,Np_num] column-major
+    # Phase2+3: per xyz, solve Z=(dr[i]*S^-1)^T then assemble drSH[n,i]
+    for i in range(3):
+        # dr[i][Np,N] -> dr^T[N,Np_num] column-major (no physical transpose:
+        # ScaLAPACK reads the [Np,N] home block as [N,Np] via +dr^T, factor=+1)
+        sparse2dense_transpose(
+            dr,i,dr_csr_ridx,dr_csr_cidx,drp_min,
+            N,Np_min,Np_max,Np_num,1.0,drT
+        )
+        pdgemr2d(   # 1D Np-column split -> 2D block-cyclic RHS
+            &N_mkl,&Np_mkl,drT,&i1,&i1,descRHSp,
+            Zbuf,&i1,&i1,descRHS,&ictxt
+        )
+        pdpotrs(   # solve S*Zbuf=dr^T -> Zbuf = Z^T = (dr[i]*S^-1)^T [N,Np]
+            'U',&N_mkl,&Np_mkl,Sbuf,&i1,&i1,descS,
+            Zbuf,&i1,&i1,descRHS,&info
+        )
+        pdgemr2d(   # back to [N,Np_num] column-major (this proc's Np columns)
+            &N_mkl,&Np_mkl,Zbuf,&i1,&i1,descRHS,
+            drT,&i1,&i1,descRHSp,&ictxt2
+        )
+        if Np_num>0:
+            for n in range(Nspin):
+                # C = H[n]*Z^T [N,Np_num] col-major; its memory read as
+                # row-major [Np_num,N] is Z*H = dr*S^-1*H (H symmetric),
+                # i.e. the drSH[n,i] row block -> no explicit transpose
+                mkl_sparse_d_mm(
+                    SPARSE_OPERATION_NON_TRANSPOSE,1.0,csrH[n],
+                    descrH,SPARSE_LAYOUT_COLUMN_MAJOR,drT,
+                    Np_num,N_mkl,0.0,Cbuf,N_mkl
+                )
+                # local reshape [Np_num,N] -> [nR,Np_num*Np]
+                mat_reshape_new(Cbuf,N,Np,Np_num,drSH[n,i])
+
+#    for n in range(Nspin):
+#        mkl_sparse_destroy(csrH[n])   # crashes on this MKL build, leak instead
     free(Nproc)
     free(Nproc_num)
-    free(olpinvham)
-    free(matbuf)
+    free(Sbuf)
+    free(Zbuf)
+    free(drT)
+    free(Cbuf)
 
     blacs_gridexit(&ictxt)
     blacs_gridexit(&ictxt1)
+    blacs_gridexit(&ictxt2)
 
     endtime = mpi.MPI_Wtime()
     if myid == 0:

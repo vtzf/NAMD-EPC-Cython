@@ -499,8 +499,8 @@ cdef void mat_reshape(
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def olp_inv(
-    MPI.Comm comm, int nprocs, int myid, double[::1] olp, 
+def olp_inv_old(
+    MPI.Comm comm, int nprocs, int myid, double[::1] olp,
     int[:,::1] olp_keyinfo, int Nsparse_o, double[:,:,::1] ham, 
     int[:,::1] ham_csr_ridx, int[::1] ham_csr_cidx, int Nsparse_h,
     double[:,::1] dr, int[:,::1] dr_csr_ridx, int[::1] dr_csr_cidx,
@@ -527,7 +527,9 @@ def olp_inv(
     cdef double* hambuf_pb
     cdef double f0 = 0.0
     cdef double f1 = 1.0
-    cdef double lv, starttime, endtime
+    cdef double lv, starttime, endtime, tt
+    cdef double t_s2d=0.0, t_redist=0.0, t_solve=0.0, t_opt=0.0
+    cdef double t_hmm=0.0, t_tran=0.0, t_drmm=0.0, t_reshape=0.0
     cdef matrix_descr descrH
     cdef matrix_descr descrdr
     cdef sparse_matrix_t csrH
@@ -595,10 +597,13 @@ def olp_inv(
     olpinv_pb = <double*>malloc(s_d*mb*nb)
 
     # init olp_pb
+    tt = mpi.MPI_Wtime()
     sparse2dense_coo(
         olp,olp_keyinfo,N,Nsparse_o,Nproc_min,
         Nproc_max,Nproc_len,1.0,matbuf
     )
+    t_s2d += mpi.MPI_Wtime()-tt
+    tt = mpi.MPI_Wtime()
     pdgemr2d(
         &N_mkl,&N_mkl,matbuf,&i1,&i1,descSp,
         olpbuf_pb,&i1,&i1,descS,&ictxt
@@ -611,18 +616,23 @@ def olp_inv(
         &N_mkl,&N_mkl,matbuf,&i1,&i1,descSp,
         olpinv_pb,&i1,&i1,descS,&ictxt
     )
+    t_redist += mpi.MPI_Wtime()-tt
     # calculate S^-1 and overwrite olpinv_pb
+    tt = mpi.MPI_Wtime()
     pdposv(
         'U',&N_mkl,&N_mkl,olpbuf_pb,&i1,&i1,
         descS,olpinv_pb,&i1,&i1,descS,&info
     )
+    t_solve += mpi.MPI_Wtime()-tt
     free(olpbuf_pb)
     # transfer olpinv_pb[mb,nb] to olpinv[N,Nproc_len]
     olpinv = <double*>malloc(s_d*N*Nproc_len)
+    tt = mpi.MPI_Wtime()
     pdgemr2d(
         &N_mkl,&N_mkl,olpinv_pb,&i1,&i1,descS,
         olpinv,&i1,&i1,descSp,&ictxt1
     )
+    t_redist += mpi.MPI_Wtime()-tt
     free(olpinv_pb)
     olpinvham = <double*>malloc(s_d*N*Nproc_len)
 
@@ -630,43 +640,55 @@ def olp_inv(
     descrdr.type = SPARSE_MATRIX_TYPE_GENERAL
     for m in range(2):
         for n in range(4):
+            tt = mpi.MPI_Wtime()
             mkl_sparse_d_create_csr(
                 &csrH,SPARSE_INDEX_BASE_ZERO,N_mkl,N_mkl,
                 &ham_csr_ridx[0,0],&ham_csr_ridx[1,0],
                 &ham_csr_cidx[0],&ham[m,n,0]
             )
             mkl_sparse_optimize(csrH)
+            t_opt += mpi.MPI_Wtime()-tt
             # dot(H[m,n],S^-1) [N,N]*[N,Nproc_len]
+            tt = mpi.MPI_Wtime()
             mkl_sparse_d_mm(
                 SPARSE_OPERATION_NON_TRANSPOSE,1.0,csrH,
                 descrH,SPARSE_LAYOUT_ROW_MAJOR,olpinv,
                 lldSp,lldSp,0.0,olpinvham,lldSp
             )
+            t_hmm += mpi.MPI_Wtime()-tt
 #            mkl_sparse_destroy(csrH)
             # H*S^-1 has C order, needs to transpose because
             # in C order, actually matrix is (H*S^-1)^T = S^-1*H
+            tt = mpi.MPI_Wtime()
             mat_tran(
                 c_comm,nprocs,N,Nproc_len,Nproc,
                 Nproc_num,olpinvham,matbuf
             )
+            t_tran += mpi.MPI_Wtime()-tt
             for i in range(3):
+                tt = mpi.MPI_Wtime()
                 mkl_sparse_d_create_csr(
                     &csrdr,SPARSE_INDEX_BASE_ZERO,Np_mkl,N_mkl,
                     &dr_csr_ridx[0,0],&dr_csr_ridx[1,0],
                     &dr_csr_cidx[drp_min],&dr[i,drp_min]
                 )
                 mkl_sparse_optimize(csrdr)
+                t_opt += mpi.MPI_Wtime()-tt
                 # dot(dr,S^-1*H) [Np,N]*[N,Nproc_len]
+                tt = mpi.MPI_Wtime()
                 mkl_sparse_d_mm(
                     SPARSE_OPERATION_NON_TRANSPOSE,1.0,csrdr,
                     descrdr,SPARSE_LAYOUT_ROW_MAJOR,olpinvham,
                     lldSp,lldSp,0.0,matbuf,lldSp
                 )
+                t_drmm += mpi.MPI_Wtime()-tt
                 # reshape dr*S^-1*H [Np,N]->[nR,(Np)_p,Np]
+                tt = mpi.MPI_Wtime()
                 mat_reshape(
                     c_comm,matbuf,nprocs,myid,m,N,Nproc_len,
                     Nsplit,Nproc,Nproc_num,drSH[n,i]
                 )
+                t_reshape += mpi.MPI_Wtime()-tt
 #                mkl_sparse_destroy(csrdr)
 
     free(Nproc)
@@ -677,6 +699,242 @@ def olp_inv(
 
     blacs_gridexit(&ictxt)
     blacs_gridexit(&ictxt1)
+
+    endtime = mpi.MPI_Wtime()
+    if myid == 0:
+        printf("olpinv time: %.5fs.\n",endtime-starttime)
+        printf("  [breakdown] s2d=%.1f redist=%.1f SOLVE(pdposv)=%.1f | opt=%.1f Hmm=%.1f tran=%.1f drmm=%.1f reshape=%.1f\n",
+               t_s2d,t_redist,t_solve,t_opt,t_hmm,t_tran,t_drmm,t_reshape)
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef void sparse2dense_transpose(
+    double[:,::1] dr, int xyz, int[:,::1] ridx, int[::1] cidx,
+    int drp_min, int N, int Np_min, int Np_max, int Np_num,
+    double factor, double* drT
+):
+    cdef int h, i, j, icol
+
+    memset(drT,0,sizeof(double)*N*Np_num)
+    for i in range(Np_min,Np_max):
+        j = i-Np_min
+        for h in range(ridx[0,i],ridx[1,i]):
+            icol = cidx[drp_min+h]
+            drT[j*N+icol] = dr[xyz,drp_min+h]*factor
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+cdef void mat_reshape_new(
+    double* C, int Limag, int N, int Np, int Np_num,
+    double complex[:,::1] olp_r
+):
+    cdef int i, j, k, l
+
+    if Limag:
+        for i in range(Np_num):
+            for j in range(N):
+                k = j/Np
+                l = j%Np
+                olp_r[k,i*Np+l] += 1j*C[i*N+j]
+    else:
+        for i in range(Np_num):
+            for j in range(N):
+                k = j/Np
+                l = j%Np
+                olp_r[k,i*Np+l] = C[i*N+j]
+
+
+@cython.boundscheck(False)
+@cython.wraparound(False)
+def olp_inv(
+    MPI.Comm comm, int nprocs, int myid, double[::1] olp,
+    int[:,::1] olp_keyinfo, int Nsparse_o, double[:,:,::1] ham,
+    int[:,::1] ham_csr_ridx, int[::1] ham_csr_cidx, int Nsparse_h,
+    double[:,::1] dr, int[:,::1] dr_csr_ridx, int[::1] dr_csr_cidx,
+    int Nsparse_dr, int drp_min, int N, int Nsplit, MKL_INT Mb, MKL_INT Nb,
+    int[::1] Npproc, int[::1] Npproc_num, double complex[:,:,:,::1] drSH
+):
+    # drSH[n,i] = dr[i]*S^-1*H[n], n=0..3 spin blocks, i=0..2 xyz.
+    # Instead of forming the full S^-1 (N columns), Cholesky-factor S once
+    # then solve only the Np(=N/ncell) right-hand-sides of dr's home block.
+    # Mb blocks the N dimension of both S and dr (S needs square Mb*Mb for
+    # pdpotrf); Nb blocks dr's Np dimension. Npproc/Npproc_num give the ceil-
+    # block split of Np across procs (same rule as descSp splits N), passed in
+    # so it stays identical to drSH's row split downstream.
+    cdef mpi.MPI_Comm c_comm = comm.ob_mpi
+    cdef int h, i, j, k, m, n
+    cdef int Nproc_min, Nproc_max, Nproc_len, Np, Np_min, Np_max, Np_num
+    cdef MKL_INT i1 = 1
+    cdef MKL_INT i0 = 0
+    cdef MKL_INT nprow, npcol, myrow, mycol, mb, nb, nb_rhs, \
+                 nprow1, npcol1, myrow1, mycol1, \
+                 nprow2, npcol2, myrow2, mycol2, \
+                 ictxt, ictxt1, ictxt2, N_mkl, Np_mkl, \
+                 Nproc_mkl, NpB_mkl, lldSp, lldS, lldRHS, info
+    cdef MKL_INT descSp[9]
+    cdef MKL_INT descS[9]
+    cdef MKL_INT descRHS[9]
+    cdef MKL_INT descRHSp[9]
+    cdef int s_int = sizeof(int)
+    cdef int s_d = sizeof(double)
+    cdef int * Nproc
+    cdef int * Nproc_num
+    cdef double* matbuf
+    cdef double* Sbuf
+    cdef double* Zbuf
+    cdef double* drT
+    cdef double* Cbuf
+    cdef double starttime, endtime
+    cdef matrix_descr descrH
+    cdef sparse_matrix_t csrH[8]
+
+    starttime = mpi.MPI_Wtime()
+    Np = N/Nsplit
+    # split N over procs (ceil-block, one block/proc; matches descSp/descS)
+    Nproc_num = <int*>calloc(s_int,nprocs)
+    Nproc = <int*>calloc(s_int,(nprocs+1))
+    if (N%nprocs==0):
+        j = N/nprocs
+        for i in range(nprocs):
+            Nproc_num[i] = j
+    else:
+        j = N/nprocs+1
+        k = N/j
+        for i in range(k):
+            Nproc_num[i] = j
+        Nproc_num[k] = N-j*k
+    for i in range(nprocs):
+        for j in range(i+1,nprocs+1):
+            Nproc[j] += Nproc_num[i]
+    Nproc_min = Nproc[myid]
+    Nproc_max = Nproc[myid+1]
+    Nproc_len = Nproc_num[myid]
+    # Np split is passed in (ceil-block, must match drSH row split & descRHSp)
+    Np_min = Npproc[myid]
+    Np_max = Npproc[myid+1]
+    Np_num = Npproc_num[myid]
+    N_mkl = N
+    Np_mkl = Np
+    Nproc_mkl = Nproc_num[0]
+    NpB_mkl = Npproc_num[0]
+
+    # 3 process grids: ictxt 2D (ScaLAPACK), ictxt1 nprocs*1 (S densify, split
+    # N rows), ictxt2 1*nprocs (dr^T build / Z read, split Np columns)
+    blacs_get(&i0,&i0,&ictxt)
+    blacs_get(&i0,&i0,&ictxt1)
+    blacs_get(&i0,&i0,&ictxt2)
+    nprow = 1
+    npcol = nprocs
+    for i in range(1,<int>(sqrt(nprocs))+1):
+        if (nprocs%i==0):
+            nprow = i
+            npcol = nprocs/i
+    nprow1 = nprocs
+    npcol1 = 1
+    nprow2 = 1
+    npcol2 = nprocs
+    blacs_gridinit(&ictxt,"Row",&nprow,&npcol)
+    blacs_gridinit(&ictxt1,"Row",&nprow1,&npcol1)
+    blacs_gridinit(&ictxt2,"Row",&nprow2,&npcol2)
+    blacs_gridinfo(&ictxt,&nprow,&npcol,&myrow,&mycol)
+    blacs_gridinfo(&ictxt1,&nprow1,&npcol1,&myrow1,&mycol1)
+    blacs_gridinfo(&ictxt2,&nprow2,&npcol2,&myrow2,&mycol2)
+    # local block dims: S/dr rows on Mb, S cols on Mb (square), dr cols on Nb
+    mb = numroc(&N_mkl,&Mb,&myrow,&i0,&nprow)
+    nb = numroc(&N_mkl,&Mb,&mycol,&i0,&npcol)
+    nb_rhs = numroc(&Np_mkl,&Nb,&mycol,&i0,&npcol)
+
+    lldSp = Nproc_len
+    lldS = <MKL_INT>fmax(mb,1)
+    lldRHS = <MKL_INT>fmax(mb,1)
+    # descS [N,N] 2D square Mb*Mb (pdpotrf/pdpotrs), descRHS [N,Np] 2D Mb*Nb
+    descinit(descS,&N_mkl,&N_mkl,&Mb,&Mb,&i0,&i0,&ictxt,&lldS,&info)
+    descinit(descRHS,&N_mkl,&Np_mkl,&Mb,&Nb,&i0,&i0,&ictxt,&lldRHS,&info)
+    # descSp [N,N] 1D (S densify), descRHSp [N,Np] 1D (Np-column split);
+    # manually assigned to skip descinit's lld=0 check on empty procs
+    descSp[0] = i1;    descSp[1] = ictxt1;    descSp[2] = N_mkl
+    descSp[3] = N_mkl; descSp[4] = Nproc_mkl; descSp[5] = N_mkl
+    descSp[6] = i0;    descSp[7] = i0;        descSp[8] = lldSp
+    descRHSp[0] = i1;    descRHSp[1] = ictxt2;  descRHSp[2] = N_mkl
+    descRHSp[3] = Np_mkl; descRHSp[4] = N_mkl;   descRHSp[5] = NpB_mkl
+    descRHSp[6] = i0;    descRHSp[7] = i0;      descRHSp[8] = N_mkl
+
+    # Phase1: densify sparse S [N,N] -> 2D block-cyclic, Cholesky once.
+    matbuf = <double*>malloc(s_d*N*Nproc_len)
+    Sbuf = <double*>malloc(s_d*mb*nb)
+    sparse2dense_coo(
+        olp,olp_keyinfo,N,Nsparse_o,Nproc_min,
+        Nproc_max,Nproc_len,1.0,matbuf
+    )
+    pdgemr2d(
+        &N_mkl,&N_mkl,matbuf,&i1,&i1,descSp,
+        Sbuf,&i1,&i1,descS,&ictxt
+    )
+    free(matbuf)   # only needed to feed S into descS, drop before factorizing
+    pdpotrf('U',&N_mkl,Sbuf,&i1,&i1,descS,&info)   # Sbuf holds L, reused by pdpotrs
+
+    # 4 spin blocks of H = ham[m,n] (m=0/1 real/imag, n=0..3), full [N,N] sparse
+    descrH.type = SPARSE_MATRIX_TYPE_GENERAL
+    for m in range(2):
+        for n in range(4):
+            mkl_sparse_d_create_csr(
+                &csrH[m*4+n],SPARSE_INDEX_BASE_ZERO,N_mkl,N_mkl,
+                &ham_csr_ridx[0,0],&ham_csr_ridx[1,0],
+                &ham_csr_cidx[0],&ham[m,n,0]
+            )
+            mkl_sparse_optimize(csrH[m*4+n])
+
+    Zbuf = <double*>malloc(s_d*mb*nb_rhs)    # RHS/solution [N,Np] 2D
+    drT = <double*>malloc(s_d*N*Np_num)      # dr^T[i]/Z^T [N,Np_num] column-major
+    Cbuf = <double*>malloc(s_d*N*Np_num)     # H*Z^T [N,Np_num] column-major
+    # Phase2+3: per xyz, solve Z=(dr[i]*S^-1)^T then assemble drSH[n,i]
+    for i in range(3):
+        # dr[i][Np,N] -> dr^T[N,Np_num] column-major (no physical transpose:
+        # ScaLAPACK reads the [Np,N] home block as [N,Np] via +dr^T, factor=+1)
+        sparse2dense_transpose(
+            dr,i,dr_csr_ridx,dr_csr_cidx,drp_min,
+            N,Np_min,Np_max,Np_num,1.0,drT
+        )
+        pdgemr2d(   # 1D Np-column split -> 2D block-cyclic RHS
+            &N_mkl,&Np_mkl,drT,&i1,&i1,descRHSp,
+            Zbuf,&i1,&i1,descRHS,&ictxt
+        )
+        pdpotrs(   # solve S*Zbuf=dr^T -> Zbuf = Z^T = (dr[i]*S^-1)^T [N,Np]
+            'U',&N_mkl,&Np_mkl,Sbuf,&i1,&i1,descS,
+            Zbuf,&i1,&i1,descRHS,&info
+        )
+        pdgemr2d(   # back to [N,Np_num] column-major (this proc's Np columns)
+            &N_mkl,&Np_mkl,Zbuf,&i1,&i1,descRHS,
+            drT,&i1,&i1,descRHSp,&ictxt2
+        )
+        if Np_num>0:
+            for n in range(4):
+                for m in range(2):
+                    # C = H[m,n]*Z^T [N,Np_num] col-major; its memory read as
+                    # row-major [Np_num,N] is Z*H = dr*S^-1*H (H symmetric),
+                    # i.e. the drSH[n,i] row block -> no explicit transpose
+                    mkl_sparse_d_mm(
+                        SPARSE_OPERATION_NON_TRANSPOSE,1.0,csrH[m*4+n],
+                        descrH,SPARSE_LAYOUT_COLUMN_MAJOR,drT,
+                        Np_num,N_mkl,0.0,Cbuf,N_mkl
+                    )
+                    # local reshape [Np_num,N]->[nR,Np_num*Np] + real/imag(m)
+                    mat_reshape_new(Cbuf,m,N,Np,Np_num,drSH[n,i])
+
+#    for i in range(8):
+#        mkl_sparse_destroy(csrH[i])   # crashes on this MKL build, leak instead
+    free(Nproc)
+    free(Nproc_num)
+    free(Sbuf)
+    free(Zbuf)
+    free(drT)
+    free(Cbuf)
+
+    blacs_gridexit(&ictxt)
+    blacs_gridexit(&ictxt1)
+    blacs_gridexit(&ictxt2)
 
     endtime = mpi.MPI_Wtime()
     if myid == 0:
