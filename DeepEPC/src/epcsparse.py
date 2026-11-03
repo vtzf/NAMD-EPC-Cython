@@ -266,6 +266,13 @@ if (shm_id==0):
         ncell,key_num,key_num_s,key_info
     )
 shm_comm.Barrier()
+# get use_perjk_flag
+if Ispin == 2:
+    use_perjk_flag = epcfuncsparse._use_perjk(key_num,key_num_s,ncell,nbands,2)
+else:
+    use_perjk_flag = epcfuncsparse._use_perjk(key_num,key_num_s,ncell,nbands,1)
+#use_perjk_flag = 1-use_perjk_flag
+if myid == 0: print(use_perjk_flag,flush=True)
 if (shm_id==0):
     len_key = key_num_s[ncell,1]*s_int
 else:
@@ -280,6 +287,33 @@ if (shm_id==0):
     readhamilsparse.GetSparseIdxSum(
         ncell,key_num,key_num_s,key_info,key_info_s
     )
+shm_comm.Barrier()
+if shm_id==0:
+    len_col_jk = int(key_num[ncell2,3])*s_int
+    len_row_jk = ncell2*(norbital+1)*s_int
+else:
+    len_col_jk = 0
+    len_row_jk = 0
+win_col_jk = MPI.Win.Allocate_shared(len_col_jk,s_int,comm=shm_comm)
+buf_col_jk,s_int = win_col_jk.Shared_query(0)
+col_idx_jk = np.ndarray(buffer=buf_col_jk,dtype=np.int32,shape=(key_num[ncell2,3],))
+win_row_jk = MPI.Win.Allocate_shared(len_row_jk,s_int,comm=shm_comm)
+buf_row_jk,s_int = win_row_jk.Shared_query(0)
+row_ptr_jk = np.ndarray(buffer=buf_row_jk,dtype=np.int32,shape=(ncell2*(norbital+1),))
+shm_comm.Barrier()
+if shm_id==0:
+    col_idx_jk[:] = key_info[:,0]%norbital
+    for jk in range(ncell2):
+        n = int(key_num[jk,1])
+        m = int(key_num[jk,3])
+        base = jk*(norbital+1)
+        row_ptr_jk[base] = 0
+        if n>0:
+            rows = (key_info[m:m+n,0]//norbital).astype(np.int64)
+            counts = np.bincount(rows,minlength=norbital)
+            row_ptr_jk[base+1:base+norbital+1] = np.cumsum(counts)
+        else:
+            row_ptr_jk[base+1:base+norbital+1] = 0
 shm_comm.Barrier()
 # read H0
 if Ispin == 2:
@@ -323,10 +357,12 @@ else:
 shm_comm.Barrier()
 
 #if (myid == 0):
-#    np.save('key_num.npy',key_num)
-#    np.save('key_num_s.npy',key_num_s)
-#    np.save('key_info.npy',key_info)
-#    np.save('key_info_s.npy',key_info_s)
+#    print(nmodes,nbands,norbital)
+#    np.save('pub_key_ni.npy',pub_key)
+#    np.save('key_num_ni.npy',key_num)
+#    np.save('key_num_s_ni.npy',key_num_s)
+#    np.save('key_info_ni.npy',key_info)
+#    np.save('key_info_s_ni.npy',key_info_s)
 
 # create epcDir
 if myid == 0:
@@ -418,6 +454,30 @@ if IsAllKlist:
         epc_t = np.empty((kproc_num[myid],nmnb2),dtype=complex)
     else:
         epc_t = np.empty((kproc_num[myid]*nkpath,nmnb2),dtype=complex)
+#    epc_t = np.empty((1,1),dtype=complex)
+    # k1-batch size: pick nb_b1 so the build inner loop's co-resident working
+    # set fits socket L3, then clamp to max unique-k1 over procs (one pass).
+    # co-resident (all ~nb_b1*norbnb_l*16): hamilveck hot-slice (xnspin) +
+    # bandveck_b1 batch RHS (xnspin) + dhveck_b1 sparse_mm output (x1)
+    # => denom coeff (2*nspin+1). alpha~1, verified NB_b1=5 for WSe2 at both
+    # 48/96 cores (sweep 66846/66957); transfers via norbital/nbands/nspin/L3.
+    # cap differs by EpcType: K/A flatten k1*knum+k2 into kproc so //knum picks
+    # the source-k1 span; Q partitions the k-grid directly (kproc<knum) so //knum
+    # collapses to 1 and the batchable source-k1 count is just kproc_num.
+    if EpcType == 'Q':
+        NB_b1_cap = int(kproc_num[:nprocs].max())
+    else:
+        NB_b1_cap = int(
+            ((kproc[:nprocs]+kproc_num-1)//knum-kproc[:nprocs]//knum+1).max()
+        )
+    alpha_b1 = 1.0
+    nspin_hv = 2 if Ispin == 2 else 1
+    NB_b1 = int(
+        alpha_b1*epcfuncsparse._get_l3_socket_bytes()
+        /(norbital*nbands*16*(2*nspin_hv+1))
+    )
+    if NB_b1 < 1: NB_b1 = 1
+    if NB_b1 > NB_b1_cap: NB_b1 = NB_b1_cap
    
     mass = get_mass(inDir+infile)
     # read bandvec & phval
@@ -495,26 +555,31 @@ if IsAllKlist:
                     epcfuncsparse.MPIepc(
                         comm,spin,nmodes,nm_num,nm_min,norbital,nbands,ncell,
                         knum,nq,R_list,nkpath,kpath,key_num,key_num_s,key_info,
-                        key_info_s,dhamil,bandveck[spin],phvecval,kproc,kproc_num,epc_t
+                        key_info_s,dhamil,bandveck[spin],phvecval,kproc,kproc_num,epc_t,
+                        use_perjk_flag,col_idx_jk,row_ptr_jk,NB_b1,max(nm_num*ncell,32)
                     )
                 else:
                     epcfuncsparse.MPIepc_q(
                         comm,spin,nmodes,nm_num,nm_min,norbital,nbands,ncell,
                         knum,nq,R_list,nkpath,kpath,key_num,key_num_s,key_info,
-                        key_info_s,dhamil,bandveck[spin],phvecval,kproc,kproc_num,epc_t
+                        key_info_s,dhamil,bandveck[spin],phvecval,kproc,kproc_num,epc_t,
+                        use_perjk_flag,col_idx_jk,row_ptr_jk,NB_b1,max(nm_num*ncell,32)
                     )
             else:
                 if EpcType != 'Q':
                     epcfuncsparse_nc.MPIepc(
                         comm,2,nmodes,nm_num,nm_min,norbital,nbands,ncell,
-                        knum,nq,R_list,nkpath,kpath,key_num,key_num_s,key_info,
-                        key_info_s,dhamil,bandveck,phvecval,kproc,kproc_num,epc_t
+                        knum,nq,R_list,nkpath,kpath,key_num,key_num_s,
+                        key_info,key_info_s,dhamil,bandveck,phvecval,
+                        kproc,kproc_num,epc_t,use_perjk_flag,
+                        col_idx_jk,row_ptr_jk,NB_b1,max(nm_num*ncell,32)
                     )
                 else:
                     epcfuncsparse_nc.MPIepc_q(
                         comm,2,nmodes,nm_num,nm_min,norbital,nbands,ncell,
                         knum,nq,R_list,nkpath,kpath,key_num,key_num_s,key_info,
-                        key_info_s,dhamil,bandveck,phvecval,kproc,kproc_num,epc_t
+                        key_info_s,dhamil,bandveck,phvecval,kproc,kproc_num,epc_t,
+                        use_perjk_flag,col_idx_jk,row_ptr_jk,NB_b1,max(nm_num*ncell,32)
                     )
             end = time.time()
             epctime += end - start
@@ -523,7 +588,7 @@ if IsAllKlist:
             comm,kfactor,kproc,kproc_num,epc_t,
             filename[spin].encode('utf-8')
         )
-    
+
     if (myid==0):
         print("dhamil time:%.6fs"%(dhamiltime),flush=True)
         print("epc time:%.6fs"%(epctime),flush=True)
@@ -626,6 +691,23 @@ else:
     phval = np.where(phval>0,phval,1e-10)
     phval = 1.0/np.sqrt(phval)
 
+    # k1-batch size for the p-path (nbands=1): same cache-aware formula as the
+    # k-path, clamped to the max unique idx1 (bassel k1) over procs/spins.
+    nspin_hv = 2 if Ispin == 2 else 1
+    NB_b1_cap = 1
+    for s in range(spin_loop):
+        cap_s = int((
+            (kproc[s,:nprocs]+kproc_num[s]-1)//knum_p[s]
+            -kproc[s,:nprocs]//knum_p[s]+1
+        ).max())
+        if cap_s > NB_b1_cap: NB_b1_cap = cap_s
+    NB_b1 = int(
+        epcfuncsparse._get_l3_socket_bytes()
+        /(norbital*16*(2*nspin_hv+1))
+    )
+    if NB_b1 < 1: NB_b1 = 1
+    if NB_b1 > NB_b1_cap: NB_b1 = NB_b1_cap
+
     dhamiltime = 0.0
     epctime = 0.0
     for spin in range(spin_loop):
@@ -670,14 +752,16 @@ else:
                     comm,spin,nmodes,nm_num,nm_min,norbital,ncell,
                     knum_p[spin],nq,R_list,key_num,key_num_s,key_info,
                     key_info_s,dhamil,bandveck[spin],phvecval,
-                    kproc[spin],kproc_num[spin],bassel[spin],epc_t
+                    kproc[spin],kproc_num[spin],bassel[spin],epc_t,
+                    use_perjk_flag,col_idx_jk,row_ptr_jk,NB_b1,max(nm_num*ncell,32)
                 )
             else:
                 epcfuncsparse_nc.MPIepc_p(
                     comm,2,nmodes,nm_num,nm_min,norbital,ncell,
                     knum_p[0],nq,R_list,key_num,key_num_s,
                     key_info,key_info_s,dhamil,bandveck,phvecval,
-                    kproc[0],kproc_num[0],bassel[0],epc_t
+                    kproc[0],kproc_num[0],bassel[0],epc_t,
+                    use_perjk_flag,col_idx_jk,row_ptr_jk,NB_b1,max(nm_num*ncell,32)
                 )
             end = time.time()
             epctime += end - start
@@ -702,5 +786,7 @@ MPI.Win.Free(win02)
 MPI.Win.Free(win03)
 MPI.Win.Free(win04)
 MPI.Win.Free(win05)
+MPI.Win.Free(win_col_jk)
+MPI.Win.Free(win_row_jk)
 if dhamil_method[0] != 'C':
     MPI.Win.Free(win06)
