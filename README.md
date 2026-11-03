@@ -21,9 +21,19 @@ To use this implementation, prepare Intel MKL library and C compiler with MPI. P
    Use `make exe` to generate namd-epc target file `namd-epc`.  
    Or instead, use `make` or `make all` to finish the above three processes.  
    `makefile` checks the path of `Python.h`, `numpy/*.h` and `hdf5.h` header files from Python installation directory.
+   `SHM_MAX` sets the per-node FSSH row-cache budget in bytes (default: 32212254720, 30 GiB). It is used when `LEPCSHM = .F.`; `LEPCSHM = .T.` stores the full EPC matrix in shared memory instead. The budget includes cache metadata and other shared arrays. Override it at build time, e.g. `make SHM_MAX=... so`.
 3. Build NAMD-k working directory. Generate `inp` and `INICON` under this folder.  
-   If EPC matrix is output by DeepEPC (`LHDF5 = .F.` in `inp`), please copy `config.ini` to here. Then modify parameter `inDir` in `config.ini` to this NAMD-k working directory.  
-   If `Ispin = 1` in DeepEPC calculation, spin-up and spin-down files are separately stored. Just add "_up" or "_dn" after parameters `valname`, `vecname`, `basselname` and `epcname` in `config.ini`. Then you can perform NAMD-k simulation with selected spin component. Please refer to `DeepEPC/example/Ni/nosoc` for detailed usage.
+   If EPC matrix is output by DeepEPC (`LHDF5 = .F.` in `inp`), please copy `config.ini` to here. Set `inDir` to the DeepEPC data directory relative to this folder, and check `epcDir` and `epcname`.  
+   If `Ispin = 1`, add `_up` or `_dn` before the file extensions of `valname`, `vecname`, `basselname` and `epcname` to select a spin component. For example (spin-up):
+   ```ini
+   inDir = ../7_no_so
+   valname = band_val_k-10_up.npy
+   vecname = band_vec_k-10_up.npy
+   basselname = bassel-10_up.npy
+   epcDir = epc_all
+   epcname = epc_all_p-10_up.dat
+   ```
+   When `IsAllKlist = False`, `_p` is added to `valname` and `vecname` automatically by NAMD-k.
 5. Run `mpirun -np ncore namd-epc` or `sbatch sub_namd`.
 
 Before performing preprocessing and NAMD simulations, some parameters need to be specified in `inp`. We list all the parameters needing to be customized. An example of NAMD `inp` file is listed here.
@@ -56,11 +66,14 @@ Some new tags are added in new version under DeepEPC branch.
   EPMDIR     = '../namdepc/h5files'
   EPMPREF    = 'graphene'
   NAMDDIR    = 'output'
-  LTRANS     = 'L'
+  LTRANS     = 'L'         # 'U': build the upper triangle from the original lower triangle,
+                           #      with conjugate completion
+                           # 'L': build the lower triangle from the original upper triangle
+                           # 'S': build both triangles by Hermitian symmetrization
 
   BANDDEG    = 1           # band degeneracy (still some bugs), just set to 1
-  LEPCSHM    = .F.         # if EPC matrix are smaller than memory of one node, 
-                           # use .T. to speed up surface hopping calculation
+  LEPCSHM    = .F.         # .T.: store the full EPC matrix in shared memory
+                           # .F.: use the bounded EPC row cache controlled by SHM_MAX
   LPHSHM     = .T.         # for nk_s << nq, you can use .T. to store only 
                            # one phonon data on each node to save memory
   LSPLIT     = .F.         # if .T., the program will end after time propagation
@@ -69,6 +82,8 @@ Some new tags are added in new version under DeepEPC branch.
   NM_BLOCK   = 6           # [1,nmodes], smaller number can save more memory when symmetrizing EPC
 /
 ```
+
+Each row of `INICON` defines one sample. The first value is the initial phonon time step used to sample the initial phonon phases for ensemble averaging. It is followed by `(ik, ib)` pairs specifying the initial carrier occupations (1-based). Each `(ik-1, ib-1)` pair must be present in the `bassel` basis list. The number of rows must be at least `NSAMPLE`.
 
 ## After Running NAMD_k
 

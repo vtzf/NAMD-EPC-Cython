@@ -83,9 +83,10 @@ dhamil_method = F					# finite difference method in EPC calculation, similar to 
 
 [ucell]
 IsH5_u = False						# interface type of band calculation, similar to IsH5
-H5HamName_u = out/hamiltonians		# HDf5 unitcell Hamiltonian files are named as
-									# "inDir/dhamilDir/*±*/H5HamName_u.H5"
-H5OlpName_u = output/overlaps		# HDf5 unitcell overlap files are named as "inDir/H5OlpName_u(_*).H5"
+H5HamName_u = out/hamiltonians		# HDF5 unitcell Hamiltonian file
+									# named as "inDir/ucell/H5HamName_u.h5"
+H5OlpName_u = output/overlaps		# HDF5 unitcell overlap files
+									# named as "inDir/ucell/H5OlpName_u(_*).h5"
 H5OlpNum_u = 4						# number of HDF5 files for unitcell overlap matrix
 									# if H5OlpNum_u = N > 1, each file is named as "H5OlpName_u_{0..N-1}.H5"
 infile_in_u = input_u.dat			# OpenMX unitcell input file without atomic information of
@@ -102,16 +103,11 @@ TIME_MAX_HAMIL = 360				# maximum job running time in sub_para.py script
 DHAMIL_BLOCK = 4					# number of MPI processes used to read and store
 									# each supercell Hamiltonian in epcsparse.py
 									# 1 <= DHAMIL_BLOCK <= number of MPI processes in one nnode
-NMODES_BLOCK = 3					# epcsparse: number of perturbation Hamiltonian
-									# read in each calculation loop
-									# epc_nl.py: number of phonon modes of EPC calculated in part2 calculation
-									# 1 <= NMODES_BLOCK <= nmodes and smaller NMODES_BLOCK 
-									# can save memory but may reduce computational efficiency
-# scalapack parameter
-M_BLOCK = 32						# scalapack row block size in epc_nl.py
-N_BLOCK = 32						# scalapack column block size in epc_nl.py
-									# here M_BLOCK = N_BLOCK is needed to avoid some bugs
-									# norbital*ncell > M_BLOCK*nprocs/GCD(nprocs) is recommanded
+NMODES_BLOCK = 3					# epcsparse only: number of perturbation Hamiltonians
+									# read in each calculation loop; 1 <= NMODES_BLOCK <= nmodes
+									# smaller values save memory but may reduce efficiency
+# epc_nl determines phonon-mode chunks and ScaLAPACK block sizes internally;
+# M_BLOCK and N_BLOCK are legacy options and are not used by the current code.
 ```
 
 ## Perform preparing calculations with Python Scripts
@@ -137,7 +133,7 @@ We will firstly show how to use the OpenMX interface of DeepEPC. Run the scripts
    When the number of tasks is small, you can manually submit by running `sbatch subfile`.
 6. `mpirun -np N python epc_band_ucell_sparse(_nc).py`: Energy band calculation.  
    If Ispin = 0 or 1, use epc_band_ucell_sparse.py, otherwise use epc_band_ucell_sparse_nc.py.  
-   If IsAllKlist = False, `valpname`, `vecpanme` and `basselname` are also output in `inDir/bandDir`.
+   If IsAllKlist = False, selected-basis `valpname`, `vecpname` and `basselname` are output in `inDir/bandDir`, together with full-k `vec*.dat` (raw complex128 eigenvectors).
 7. `python epc_fc_ase.py`: Interatomic force constant calculation.
 8. `mpirun -np N python epc_phonon.py`: Phonon dispersion calculation.
 
@@ -182,6 +178,7 @@ After overlap-(dr-)only calculation, run DeepH to obtain unitcell Hamiltonian an
 ## NAMD-k interface with DeepEPC
 
 In the NAMD-EPC-Cython implementation, `inp` file simply adjusts a few parameters for interfacing with DeepEPC and obtaining higher computational efficiency on large-scale simulation. Please refer to `README.md` of NAMD-EPC-Cython for usage.
+When using DeepEPC output in NAMD-k, set `LHDF5 = .F.` in `inp` and copy `config.ini` to the NAMD-k working directory. Set `inDir` to the DeepEPC data directory and `epcDir` to the actual EPC output directory. For `Ispin = 1`, add `_up` or `_dn` before the file extensions of `valname`, `vecname`, `basselname` and `epcname` (e.g. `epcname = epc_all_p-10_up.dat`). See `DeepEPC/example/Ni/nosoc/namd_no_so` for a complete example.
 
 
 
