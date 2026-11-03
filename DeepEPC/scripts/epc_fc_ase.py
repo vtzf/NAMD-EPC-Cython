@@ -52,27 +52,15 @@ Hartree2eV = 27.211396641308
 Bohr2Ang = 0.529177249
 
 
-def get(Dir):
-    idx = [0]*4
-    with open(Dir,'r') as f:
-        info = f.readlines()
-    for i in range(len(info)):
-        if info[i] == "<Atoms.SpeciesAndCoordinates\n":
-            idx[0] = i
-        if info[i] == "Atoms.SpeciesAndCoordinates>\n":
-            idx[1] = i
-        if info[i] == "<Atoms.UnitVectors\n":
-            idx[2] = i
-        if info[i] == "Atoms.UnitVectors>\n":
-            idx[3] = i
-    
-    xyzinfo = np.array([info[i].split() for i in range(idx[0]+1,idx[1])],dtype='U')
-    atomlist = xyzinfo[catom,1]
-    xyz = np.array(xyzinfo[:,2:5],dtype=float)
-    abc = np.array([info[i].split()[0:3] for i in range(idx[2]+1,idx[3])],dtype=float)
+def get_mass():
+    pos = read(poscar_ucell)
+    abc = pos.cell[:]
+    xyz = pos.positions[:]
+    atomlist = list(pos.symbols)
 
-    return xyz,abc,\
-        [atomic_masses[atomic_numbers[atomlist[i]]] for i in np.arange(atomnum)]
+    return xyz, abc, \
+           np.array([atomic_masses[atomic_numbers[atomlist[i]]] \
+           for i in range(atomnum)])
 
 
 def ReadForce(Dir):
@@ -166,7 +154,7 @@ def acoustic(fc):
 
 def ForceConstant(inDir,dhamilDir,phononDir,infile):
     delta = ['x','y','z']
-    abc, xyz, mass = get(inDir+infile)
+    abc, xyz, mass = get_mass()
 
     fc = FC_Part(inDir,dhamilDir,R_num,catom,delta,np.array(mass))
 

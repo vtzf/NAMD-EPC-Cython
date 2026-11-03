@@ -44,6 +44,7 @@ def sub_one():
                 nline_t = calc_nline(outfile[0])
                 if nline < nline_t:
                     nline = nline_t
+                    time.sleep(2)
                 else:
                     break
             os.system('rm -rf *_rst')
@@ -53,10 +54,11 @@ def sub_one():
 
 
 def sub_para_hamil(subfile,hamildir,SUB_NUM,TIME_MAX):
+    orig_cwd = os.getcwd()
     nhamil = len(hamildir)
     if nhamil < SUB_NUM:
         SUB_NUM = nhamil
-    time_tag = np.zeros((nhamil),dtype=np.float64)
+    time_tag = np.full((nhamil),time.time(),dtype=np.float64)
     none_tag = np.zeros((nhamil),dtype=np.int32)
     undone_tag = np.zeros((nhamil),dtype=np.int32)
     done_tag = np.zeros((nhamil),dtype=np.int32)
@@ -76,6 +78,7 @@ def sub_para_hamil(subfile,hamildir,SUB_NUM,TIME_MAX):
                         nline_t = calc_nline(outfile[0])
                         if nline < nline_t:
                             nline = nline_t
+                            time.sleep(2)
                         else:
                             break
                     scfoutfile = glob(hamildir[i]+'/*.scfout')
@@ -84,7 +87,7 @@ def sub_para_hamil(subfile,hamildir,SUB_NUM,TIME_MAX):
                         os.system('rm -rf start_tag *.log *.err *_rst')
                         none_tag[none_num] = i
                         none_num += 1
-                        os.chdir('../../../')
+                        os.chdir(orig_cwd)
                     else:
                         done_tag[done_num] = i
                         done_num += 1
@@ -101,7 +104,7 @@ def sub_para_hamil(subfile,hamildir,SUB_NUM,TIME_MAX):
                         os.system('rm -rf start_tag *.log *.err *_rst')
                         none_tag[none_num] = i
                         none_num += 1
-                        os.chdir('../../../')
+                        os.chdir(orig_cwd)
                     else:
                         undone_tag[undone_num] = i
                         undone_num += 1
@@ -116,7 +119,7 @@ def sub_para_hamil(subfile,hamildir,SUB_NUM,TIME_MAX):
             os.chdir(hamildir[none_tag[i]])
             os.system('sbatch %s'%(subfile))
             os.system('touch start_tag')
-            os.chdir('../../../')
+            os.chdir(orig_cwd)
             time_tag[none_tag[i]] = time.time()
 
 
