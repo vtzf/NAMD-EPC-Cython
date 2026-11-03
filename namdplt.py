@@ -68,10 +68,7 @@ def main():
     inp = pn.read_inp('inp')
     bassel = np.load('bassel.npy')
     b_index = bassel[:,1]
-    LEF = True if inp['LEF'] == '.T.' else False
     LHDF5 = True if inp['LHDF5'] == '.T.' else False
-    EFSTART = int(inp['EFSTART'])
-    EFTIME  = int(inp['EFTIME'])
     LHOLE = True if inp['LHOLE'] == '.T.' else False
     NSW     = int(inp['NSW'])
     if LHOLE: lphinv = -1.0
