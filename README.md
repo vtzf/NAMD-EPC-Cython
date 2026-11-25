@@ -20,6 +20,7 @@ To use this implementation, prepare Intel MKL library and C compiler with MPI. P
    Use `make so` to generate dynamic-link libraries from C code files.  
    Use `make exe` to generate namd-epc target file `namd-epc`.  
    Or instead, use `make` or `make all` to finish the above three processes.  
+   To use a specific Python environment, set `PYPATH` in `makefile` to its installation prefix (the directory containing `bin/python`).
    `makefile` checks the path of `Python.h`, `numpy/*.h` and `hdf5.h` header files from Python installation directory.
    `SHM_MAX` sets the per-node FSSH row-cache budget in bytes (default: 32212254720, 30 GiB). It is used when `LEPCSHM = .F.`; `LEPCSHM = .T.` stores the full EPC matrix in shared memory instead. The budget includes cache metadata and other shared arrays. Override it at build time, e.g. `make SHM_MAX=... so`.
 3. Build NAMD-k working directory. Generate `inp` and `INICON` under this folder.  

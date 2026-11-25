@@ -141,7 +141,9 @@ You can also submit band/phonon tasks if computational cost is large.
 
 ## Perform EPC calculations
 
-There are some simple Python/Cython scripts under `DeepEPC/src` folder. To run there scripts normally, copy them to the working directory. Run `make c` to interpret Cython files as C language files. Then run `make so` to compile C language files into dynamic link library (\*.so) files. The following libraries are required to finish compilation:
+There are some simple Python/Cython scripts under `DeepEPC/src` folder. To run there scripts normally, copy them to the working directory. Run `make c` to interpret Cython files as C language files. Then run `make so` to compile C language files into dynamic link library (\*.so) files.
+To use a specific Python environment, set `PYPATH` in `makefile` to its installation prefix (the directory containing `bin/python`).
+The following libraries are required to finish compilation:
 
 * HDF5 library >= 1.10.5 (H5PATH needs to be specified in makefile)
 * mpiicc compiler & Intel MKL library

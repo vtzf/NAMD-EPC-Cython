@@ -1,4 +1,6 @@
 CC = mpiicc
+PYPATH = /public/apps/anaconda/anaconda3/2023.03
+PYTHON := $(shell if [ -n "$(PYPATH)" ] && [ -x "$(PYPATH)/bin/python" ]; then printf '%s' "$(PYPATH)/bin/python"; else command -v python; fi)
 H5PATH = /public/apps/HDF5/1.12.1_intel
 
 CFLAGS = -shared -fPIC -O3 -qopenmp
@@ -22,14 +24,11 @@ OUT_MODE = 2>/dev/null
 all: c so
 
 c:
-	cython $(PYX)
+	$(PYTHON) -m cython $(PYX)
 
 so:
-	@PYPATH=`which python | awk -F '/bin/python' '{print $$1}'`;\
-	PYINCPATH=`ls $$PYPATH/include/*/Python.h | awk -F '/Python.h' '{print $$1}'`;\
-	PYV=`echo $$PYINCPATH | awk -F '/' '{print $$NF}'`;\
-	echo "python version: $$PYV";\
-	echo "Python path: $$PYPATH";\
+	@PYINCPATH=`$(PYTHON) -c 'import sysconfig; print(sysconfig.get_paths()["include"])'`;\
+	echo "Python executable: $(PYTHON)";\
 	echo "Python include path: $$PYINCPATH";\
 	for src in $(SRC_BLACS); do \
 		$(CC) $$src $(CFLAGS) $(CFLAGS_HDF5) $(LIB) $(LIB_MKL_BLACS) -I$$PYINCPATH -o $${src%.c}.so $(OUT_MODE); \

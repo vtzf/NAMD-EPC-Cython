@@ -1,4 +1,6 @@
 CC = mpiicc
+PYPATH = /public/apps/anaconda/anaconda3/2023.03
+PYTHON := $(shell if [ -n "$(PYPATH)" ] && [ -x "$(PYPATH)/bin/python" ]; then printf '%s' "$(PYPATH)/bin/python"; else command -v python; fi)
 H5PATH = /public/apps/HDF5/1.12.1_intel
 SHM_MAX = 32212254720
 
@@ -13,22 +15,19 @@ EXE = namd-epc
 all: c so exe
 
 c:
-	cython readh5.pyx CalFunc.pyx
+	$(PYTHON) -m cython readh5.pyx CalFunc.pyx
 
 so:
-	@PYPATH=`which python | awk -F '/bin/python' '{print $$1}'`;\
-	PYINCPATH=`ls $$PYPATH/include/*/Python.h | awk -F '/Python.h' '{print $$1}'`;\
-	PYV=`echo $$PYINCPATH | awk -F '/' '{print $$NF}'`;\
-	NPYINCPATH=`ls $$PYPATH/lib/$$PYV/site-packages/numpy/core/include/numpy/arrayobject.h | awk -F '/numpy/arrayobject.h' '{print $$1}'`;\
-	echo "python version: $$PYV";\
+	@PYINCPATH=`$(PYTHON) -c 'import sysconfig; print(sysconfig.get_paths()["include"])'`;\
+	NPYINCPATH=`$(PYTHON) -c 'import numpy; print(numpy.get_include())'`;\
+	echo "Python executable: $(PYTHON)";\
 	echo "Python include path: $$PYINCPATH";\
 	echo "NumPy include path: $$NPYINCPATH";\
 	$(CC) readh5.c $(CFLAGS) $(CFLAGS_HDF5) $(LIB) -I$$PYINCPATH -I$$NPYINCPATH -o readh5.so $(OUT_MODE);\
 	$(CC) CalFunc.c $(CFLAGS) $(LIB) -I$$PYINCPATH -I$$NPYINCPATH -o CalFunc.so $(OUT_MODE)
 
 exe:
-	@PYEXE=$$(ls `which python`);\
-	echo "#!$$PYEXE" > $(EXE);\
+	@echo "#!$(PYTHON)" > $(EXE);\
 	echo "if __name__ == '__main__':" >> $(EXE);\
 	echo "    from SurfHop import SurfHop" >> $(EXE);\
 	echo "    SurfHop()" >> $(EXE);\
