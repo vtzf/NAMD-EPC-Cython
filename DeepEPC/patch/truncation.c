@@ -356,7 +356,7 @@ double truncation(int MD_iter,int UCell_flag)
     NumOLG
   ****************************************************/
 
-    if (UCell_flag == 1)
+    if (UCell_flag >= 1)
     {
         if (measure_time) dtime(&stime);
 
@@ -399,7 +399,7 @@ double truncation(int MD_iter,int UCell_flag)
                        UCell_Box
   ****************************************************/
 
-  if (MD_iter==1 && UCell_flag==1){
+  if (MD_iter==1 && UCell_flag>=1){
 
     /*************************************
       find 
@@ -499,7 +499,7 @@ double truncation(int MD_iter,int UCell_flag)
     List_YOUSO[17] = (int)(Max_OneD_Grids*ScaleSize);
   }
 
-  else if (UCell_flag==1) {
+  else if (UCell_flag>=1) {
 
     if (myid==Host_ID && 0<level_stdout) printf("<UCell_Box> Info. of cutoff energy and num. of grids\n");
 
@@ -2906,8 +2906,9 @@ double truncation(int MD_iter,int UCell_flag)
      allocation of arrays:
   ****************************************************/
 
-  if (UCell_flag==1){
+  if (UCell_flag>=1){
 
+    if (UCell_flag==1){
     N = My_NumGridC;
 
     if (SpinP_switch==3){ /* spin non-collinear */
@@ -3116,6 +3117,8 @@ double truncation(int MD_iter,int UCell_flag)
       }
     }
 
+    }
+
     /* Orbs_Grid */
     size_Orbs_Grid = 0;
     Orbs_Grid = (Type_Orbs_Grid***)malloc(sizeof(Type_Orbs_Grid**)*(Matomnum+1)); 
@@ -3136,7 +3139,7 @@ double truncation(int MD_iter,int UCell_flag)
 
     /* COrbs_Grid */
     size_COrbs_Grid = 0;
-    if (Cnt_switch!=0){
+    if (UCell_flag==1 && Cnt_switch!=0){
       COrbs_Grid = (Type_Orbs_Grid***)malloc(sizeof(Type_Orbs_Grid**)*(Matomnum+MatomnumF+1)); 
       COrbs_Grid[0] = (Type_Orbs_Grid**)malloc(sizeof(Type_Orbs_Grid*)*1); 
       COrbs_Grid[0][0] = (Type_Orbs_Grid*)malloc(sizeof(Type_Orbs_Grid)*1); 
@@ -3190,7 +3193,7 @@ double truncation(int MD_iter,int UCell_flag)
       }
     }
 
-    alloc_first[3] = 0;
+    if (UCell_flag==1) alloc_first[3] = 0;
 
     /* PrintMemory */
 
@@ -3200,6 +3203,7 @@ double truncation(int MD_iter,int UCell_flag)
       if (SpinP_switch==3) mul = 4;
       else                 mul = 2;
 
+      if (UCell_flag==1){
       PrintMemory("truncation: Density_Grid",     sizeof(double)*N*mul,              NULL);
       PrintMemory("truncation: Vxc_Grid",         sizeof(double)*N*mul,              NULL);
       PrintMemory("truncation: RefVxc_Grid",      sizeof(double)*N,                  NULL);
@@ -3215,10 +3219,12 @@ double truncation(int MD_iter,int UCell_flag)
       PrintMemory("truncation: Density_Grid_D",   sizeof(double)*My_NumGridD*mul,    NULL);
       PrintMemory("truncation: Vxc_Grid_D",       sizeof(double)*My_NumGridD*mul,    NULL);
       PrintMemory("truncation: PCCDensity_Grid_D",sizeof(double)*My_NumGridD*2,      NULL);
+      }
       PrintMemory("truncation: Orbs_Grid",        sizeof(Type_Orbs_Grid)*size_Orbs_Grid,   NULL);
       PrintMemory("truncation: COrbs_Grid",       sizeof(Type_Orbs_Grid)*size_COrbs_Grid,  NULL);
       PrintMemory("truncation: Orbs_Grid_FNAN",   sizeof(Type_Orbs_Grid)*size_Orbs_Grid_FNAN,  NULL);
 
+      if (UCell_flag==1){
       if (ProExpn_VNA==0){
         PrintMemory("truncation: VNA_Grid",         sizeof(double)*N,                  NULL);
 	PrintMemory("truncation: VNA_Grid_B",       sizeof(double)*My_NumGridB_AB,   NULL);
@@ -3227,9 +3233,10 @@ double truncation(int MD_iter,int UCell_flag)
 	PrintMemory("truncation: VEF_Grid",         sizeof(double)*N,                NULL);
 	PrintMemory("truncation: VEF_Grid_B",       sizeof(double)*My_NumGridB_AB,   NULL);
       }
+      }
     }
   
-  } /* if (UCell_flag==1) */
+  } /* if (UCell_flag>=1) */
 
   /****************************************************
       Output the truncation data to filename.TRN

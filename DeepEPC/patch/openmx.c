@@ -77,6 +77,13 @@ void Make_VNA_Grid();
 void set_O_nm(double ****O);
 void output_O_nm(double ****O, const char *output_name, int ParallelHDF5, double coefficient);
 
+//tuyy OLP grid line start
+static void Init_OLP_Grid_new()
+{
+  truncation(1,2);
+}
+//tuyy OLP grid line end
+
     int main(int argc, char *argv[])
 { 
   static int numprocs,myid;
@@ -652,7 +659,28 @@ void output_O_nm(double ****O, const char *output_name, int ParallelHDF5, double
     double time1, time2;
     if (ML_flag==1 && myid==Host_ID) Get_VSZ(MD_iter);
     const double Hartree2Ev = 27.2113845;
-    truncation(1, 1);
+
+    //tuyy output options line start
+    int IsDolp = 0;
+    int IsOlppo = 0;
+    if (myid==Host_ID){
+      for (i=0; i<argc; i++){
+        if ( strcmp(argv[i],"-calcOLPmo")==0 )
+          IsDolp = 1;
+        if ( strcmp(argv[i],"-calcOLPpo")==0 )
+          IsOlppo = 1;
+      }
+    }
+    MPI_Bcast(&IsDolp, 1, MPI_INT, Host_ID, MPI_COMM_WORLD1);
+    MPI_Bcast(&IsOlppo, 1, MPI_INT, Host_ID, MPI_COMM_WORLD1);
+    //tuyy output options line end
+
+    //tuyy OLP grid line start
+    if (IsDolp||IsOlppo)
+      Init_OLP_Grid_new();
+    else
+      truncation(1,0);
+    //tuyy OLP grid line end
 
     if (myid==Host_ID)
     {
@@ -666,15 +694,6 @@ void output_O_nm(double ****O, const char *output_name, int ParallelHDF5, double
 
 
     //tuyy line start
-    int IsDolp = 0;
-    if (myid==Host_ID){
-      for (i=0; i<argc; i++){
-        if ( strcmp(argv[i],"-calcOLPmo")==0 )
-          IsDolp = 1;
-      }
-    }
-    MPI_Bcast(&IsDolp, 1, MPI_INT, Host_ID, MPI_COMM_WORLD1);
-    
     if (IsDolp==1)
     {
       time2 = Set_Orbitals_Grid(0);
@@ -766,6 +785,109 @@ void output_O_nm(double ****O, const char *output_name, int ParallelHDF5, double
       OLPmo=NULL;
     }
     //tuyy line end
+
+    //tuyy OLPpo line start
+    if (IsOlppo==1)
+    {
+      if (IsDolp==0) time2 = Set_Orbitals_Grid(0);
+      if (myid==Host_ID)
+      {
+          printf("\n Calc. OLPpo ...\n");
+      }
+      int Mc_AN, Gc_AN, h_AN, Gh_AN, tno0, tno1, Cwan, Hwan;
+      OLPpox=(double****)malloc(sizeof(double***)*(Matomnum+1));
+      OLPpoy=(double****)malloc(sizeof(double***)*(Matomnum+1));
+      OLPpoz=(double****)malloc(sizeof(double***)*(Matomnum+1));
+      FNAN[0] = 0;
+      for (Mc_AN=0; Mc_AN<=Matomnum; Mc_AN++){
+
+        if (Mc_AN==0){
+          Gc_AN = 0;
+          tno0 = 1;
+        }
+        else{
+          Gc_AN = M2G[Mc_AN];
+          Cwan = WhatSpecies[Gc_AN];
+          tno0 = Spe_Total_CNO[Cwan];
+        }
+
+        OLPpox[Mc_AN] = (double***)malloc(sizeof(double**)*(FNAN[Gc_AN]+1));
+        OLPpoy[Mc_AN] = (double***)malloc(sizeof(double**)*(FNAN[Gc_AN]+1));
+        OLPpoz[Mc_AN] = (double***)malloc(sizeof(double**)*(FNAN[Gc_AN]+1));
+        for (h_AN=0; h_AN<=FNAN[Gc_AN]; h_AN++){
+
+          if (Mc_AN==0){
+            tno1 = 1;
+          }
+          else{
+            Gh_AN = natn[Gc_AN][h_AN];
+            Hwan = WhatSpecies[Gh_AN];
+            tno1 = Spe_Total_CNO[Hwan];
+          }
+
+          OLPpox[Mc_AN][h_AN] = (double**)malloc(sizeof(double*)*tno0);
+          OLPpoy[Mc_AN][h_AN] = (double**)malloc(sizeof(double*)*tno0);
+          OLPpoz[Mc_AN][h_AN] = (double**)malloc(sizeof(double*)*tno0);
+          for (i=0; i<tno0; i++){
+            OLPpox[Mc_AN][h_AN][i] = (double*)malloc(sizeof(double)*tno1);
+            OLPpoy[Mc_AN][h_AN][i] = (double*)malloc(sizeof(double)*tno1);
+            OLPpoz[Mc_AN][h_AN][i] = (double*)malloc(sizeof(double)*tno1);
+          }
+        }
+      }
+      Calc_OLPpo2();
+      output_O_nm(OLPpox, "output/overlaps_x", 0, 1.0);
+      output_O_nm(OLPpoy, "output/overlaps_y", 0, 1.0);
+      output_O_nm(OLPpoz, "output/overlaps_z", 0, 1.0);
+      if (myid==Host_ID)
+      {
+          printf("\n Finish calc. OLPpo\n");
+      }
+      FNAN[0] = 0;
+      for (Mc_AN=0; Mc_AN<=Matomnum; Mc_AN++){
+
+        if (Mc_AN==0){
+          Gc_AN = 0;
+          tno0 = 1;
+        }
+        else{
+          Gc_AN = M2G[Mc_AN];
+          Cwan = WhatSpecies[Gc_AN];
+          tno0 = Spe_Total_CNO[Cwan];
+        }
+
+        for (h_AN=0; h_AN<=FNAN[Gc_AN]; h_AN++){
+
+          if (Mc_AN==0){
+            tno1 = 1;
+          }
+          else{
+            Gh_AN = natn[Gc_AN][h_AN];
+            Hwan = WhatSpecies[Gh_AN];
+            tno1 = Spe_Total_CNO[Hwan];
+          }
+
+          for (i=0; i<tno0; i++){
+            free(OLPpox[Mc_AN][h_AN][i]);
+            free(OLPpoy[Mc_AN][h_AN][i]);
+            free(OLPpoz[Mc_AN][h_AN][i]);
+          }
+          free(OLPpox[Mc_AN][h_AN]);
+          free(OLPpoy[Mc_AN][h_AN]);
+          free(OLPpoz[Mc_AN][h_AN]);
+        }
+        free(OLPpox[Mc_AN]);
+        free(OLPpoy[Mc_AN]);
+        free(OLPpoz[Mc_AN]);
+      }
+      free(OLPpox);
+      free(OLPpoy);
+      free(OLPpoz);
+      OLPpox=NULL;
+      OLPpoy=NULL;
+      OLPpoz=NULL;
+    }
+    //tuyy OLPpo line end
 
 
   MPI_Barrier(MPI_COMM_WORLD1);
